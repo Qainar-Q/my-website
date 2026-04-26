@@ -228,12 +228,19 @@
     };
 
     window.deleteComment = async function (id) {
-      const confirmDelete = confirm("Delete this comment?");
-      if (!confirmDelete) return;
+  const password = prompt("Enter admin password:");
 
-      await deleteDoc(doc(db, "comments", id));
-      loadComments();
-    };
+  if (password !== "05925") {
+    alert("Wrong password.");
+    return;
+  }
+
+  const confirmDelete = confirm("Delete this comment?");
+  if (!confirmDelete) return;
+
+  await deleteDoc(doc(db, "comments", id));
+  loadComments();
+};
 
     async function checkIncomingComment() {
       const name = localStorage.getItem("newCommentName");

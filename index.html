@@ -4,22 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qainar's Website</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
+    :root {
+      --accent: #38bdf8;
+      --accent2: #2563eb;
+      --bg: rgba(3, 7, 18, 0.92);
+      --glass: rgba(255,255,255,0.10);
+      --glass-border: rgba(255,255,255,0.18);
+      --text-muted: #cbd5e1;
+      --radius: 18px;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
       color: white;
+      font-family: 'DM Sans', Arial, sans-serif;
       background:
         linear-gradient(rgba(3, 7, 18, 0.62), rgba(3, 7, 18, 0.92)),
         url("cosmic-nebula-space-background.jpg");
@@ -32,7 +37,7 @@
 
     header {
       width: 100%;
-      padding: 20px 70px;
+      padding: 18px 60px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -40,111 +45,91 @@
       top: 0;
       z-index: 1000;
       background: rgba(2, 6, 23, 0.55);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
     }
 
     .logo {
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 1px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     nav {
       display: flex;
       align-items: center;
-      gap: 22px;
+      gap: 20px;
+      flex-wrap: wrap;
     }
 
     nav a {
       color: white;
       text-decoration: none;
       font-weight: 700;
+      font-size: 15px;
       opacity: 0.85;
       transition: 0.25s;
     }
 
-    nav a:hover {
-      color: #38bdf8;
-      opacity: 1;
-    }
+    nav a:hover { color: var(--accent); opacity: 1; }
 
-    .lang-switcher {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-left: 5px;
-    }
+    .lang-switcher { display: flex; gap: 6px; align-items: center; }
 
     .lang-btn {
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      padding: 7px 10px;
-      border-radius: 999px;
-      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
       font-weight: 800;
-      transition: 0.25s;
-      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 5px 11px;
+      cursor: pointer;
+      transition: 0.2s;
+      letter-spacing: 0.5px;
     }
 
-    .lang-btn:hover,
-    .lang-btn.active {
-      background: rgba(56, 189, 248, 0.25);
-      border-color: rgba(56, 189, 248, 0.7);
-      transform: translateY(-2px);
+    .lang-btn:hover, .lang-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: transparent;
+      color: white;
     }
 
-    .auth-box {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-left: 5px;
-    }
+    .auth-box { display: flex; align-items: center; gap: 10px; }
 
-    .login-btn,
-    .logout-btn {
+    .login-btn, .logout-btn {
       border: none;
       cursor: pointer;
       color: white;
+      font-family: 'DM Sans', sans-serif;
       font-weight: 800;
+      font-size: 14px;
       border-radius: 999px;
-      padding: 10px 16px;
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
-      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+      padding: 9px 18px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 8px 22px rgba(37,99,235,0.35);
       transition: 0.25s;
     }
 
-    .login-btn:hover,
-    .logout-btn:hover {
-      transform: translateY(-2px);
-    }
+    .login-btn:hover, .logout-btn:hover { transform: translateY(-2px); }
 
     .user-profile {
       display: none;
       align-items: center;
-      gap: 9px;
-      padding: 7px 10px;
+      gap: 8px;
+      padding: 6px 12px 6px 6px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
       backdrop-filter: blur(12px);
     }
 
-    .user-profile img {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-    }
-
-    .user-profile span {
-      font-size: 13px;
-      font-weight: 700;
-      max-width: 110px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .user-profile img { width: 30px; height: 30px; border-radius: 50%; }
+    .user-profile span { font-size: 13px; font-weight: 700; max-width: 110px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .hero {
       min-height: 100vh;
@@ -156,384 +141,257 @@
     }
 
     .hero-content {
-      max-width: 650px;
+      max-width: 640px;
       animation: fadeUp 0.9s ease forwards;
     }
 
     .tag {
       display: inline-block;
-      padding: 8px 14px;
-      margin-bottom: 22px;
+      padding: 7px 16px;
+      margin-bottom: 24px;
       border-radius: 999px;
-      background: rgba(56, 189, 248, 0.16);
-      border: 1px solid rgba(56, 189, 248, 0.45);
+      background: rgba(56,189,248,0.14);
+      border: 1px solid rgba(56,189,248,0.4);
       color: #7dd3fc;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     .hero h1 {
-      font-size: 76px;
-      line-height: 1.05;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 68px;
+      line-height: 1.08;
       margin-bottom: 22px;
     }
 
     .hero h1 span {
-      color: #38bdf8;
-      text-shadow: 0 0 28px rgba(56, 189, 248, 0.9);
+      color: var(--accent);
+      text-shadow: 0 0 32px rgba(56,189,248,0.85);
     }
 
     .hero p {
-      font-size: 21px;
-      line-height: 1.7;
+      font-size: 19px;
+      line-height: 1.75;
       color: #dbeafe;
-      max-width: 560px;
-      margin-bottom: 34px;
+      max-width: 540px;
+      margin-bottom: 36px;
     }
 
-    .buttons {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-bottom: 45px;
-    }
+    .buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 42px; }
 
     .btn {
       display: inline-block;
-      padding: 15px 28px;
+      padding: 13px 26px;
       border-radius: 14px;
       text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
       font-weight: 800;
+      font-size: 15px;
       transition: 0.3s;
+      border: none;
+      cursor: pointer;
     }
 
     .primary {
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
       color: white;
-      box-shadow: 0 15px 35px rgba(37, 99, 235, 0.45);
+      box-shadow: 0 12px 30px rgba(37,99,235,0.4);
     }
 
     .secondary {
-      background: rgba(255, 255, 255, 0.12);
+      background: var(--glass);
       color: white;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid var(--glass-border);
       backdrop-filter: blur(12px);
     }
 
-    .btn:hover {
-      transform: translateY(-4px);
-    }
+    .btn:hover { transform: translateY(-4px); }
 
-    .stats {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
+    .stats { display: flex; gap: 16px; flex-wrap: wrap; }
 
     .stat {
-      min-width: 140px;
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.11);
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      min-width: 136px;
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
     }
 
     .stat h3 {
-      font-size: 28px;
-      color: #38bdf8;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 26px;
+      color: var(--accent);
       margin-bottom: 5px;
     }
 
-    .stat p {
-      font-size: 13px;
-      margin: 0;
-      color: #cbd5e1;
-    }
+    .stat p { font-size: 13px; color: var(--text-muted); margin: 0; }
 
     .orbit-card {
-      width: 330px;
-      height: 330px;
+      width: 320px; height: 320px;
       border-radius: 32px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.22);
       backdrop-filter: blur(18px);
-      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.45);
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       animation: float 4s ease-in-out infinite;
+      flex-shrink: 0;
     }
 
     .planet {
-      width: 130px;
-      height: 130px;
+      width: 120px; height: 120px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 30%, #67e8f9, #2563eb 55%, #0f172a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 58px;
-      box-shadow: 0 0 40px rgba(56, 189, 248, 0.85);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 52px;
+      box-shadow: 0 0 40px rgba(56,189,248,0.85);
     }
 
     .orbit-card::before {
       content: "";
       position: absolute;
-      width: 220px;
-      height: 220px;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      width: 210px; height: 210px;
+      border: 1px dashed rgba(255,255,255,0.2);
       border-radius: 50%;
-      animation: spin 12s linear infinite;
+      animation: spin 14s linear infinite;
     }
 
-    .orbit-card::after {
-      content: "Qainar";
+    .orbit-dot {
       position: absolute;
-      bottom: 42px;
-      font-size: 28px;
-      font-weight: 800;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(56,189,248,0.9);
+      top: calc(50% - 105px);
+      left: 50%;
+      transform-origin: 0 105px;
+      animation: spin 14s linear infinite;
     }
 
-    .section {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 80px 25px;
+    .orbit-label {
+      font-family: 'Orbitron', sans-serif;
+      position: absolute;
+      bottom: 36px;
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 3px;
     }
+
+    .section { max-width: 1080px; margin: 0 auto; padding: 80px 25px; }
 
     .section-title {
       text-align: center;
-      font-size: 42px;
-      margin-bottom: 16px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
     }
 
-    .section-subtitle {
-      text-align: center;
-      color: #cbd5e1;
-      margin-bottom: 45px;
-      font-size: 18px;
-    }
+    .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 44px; font-size: 17px; }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
+    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
 
     .card {
-      padding: 28px;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 28px 26px;
+      border-radius: 22px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
       backdrop-filter: blur(16px);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.32);
+      box-shadow: 0 18px 45px rgba(0,0,0,0.3);
       transition: 0.3s;
     }
 
-    .card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(56, 189, 248, 0.6);
-    }
-
-    .card h3 {
-      color: #38bdf8;
-      margin-bottom: 12px;
-      font-size: 23px;
-    }
-
-    .card p {
-      color: #e2e8f0;
-      line-height: 1.6;
-      font-size: 15px;
-    }
+    .card:hover { transform: translateY(-8px); border-color: rgba(56,189,248,0.55); }
+    .card h3 { color: var(--accent); margin-bottom: 12px; font-size: 20px; }
+    .card p { color: #e2e8f0; line-height: 1.65; font-size: 15px; }
 
     #chat-btn {
-      position: fixed;
-      right: 25px;
-      bottom: 25px;
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
+      position: fixed; right: 25px; bottom: 25px;
+      width: 60px; height: 60px; border-radius: 50%;
       border: none;
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
-      color: white;
-      font-size: 26px;
-      cursor: pointer;
-      z-index: 2000;
-      box-shadow: 0 15px 35px rgba(37, 99, 235, 0.55);
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; font-size: 24px;
+      cursor: pointer; z-index: 2000;
+      box-shadow: 0 12px 30px rgba(37,99,235,0.55);
       transition: 0.3s;
     }
 
-    #chat-btn:hover {
-      transform: translateY(-4px) scale(1.05);
-    }
+    #chat-btn:hover { transform: translateY(-4px) scale(1.06); }
 
     #chat-panel {
-      position: fixed;
-      right: 25px;
-      bottom: 100px;
-      width: 330px;
-      max-height: 440px;
-      display: none;
-      flex-direction: column;
+      position: fixed; right: 25px; bottom: 96px;
+      width: 330px; max-height: 440px;
+      display: none; flex-direction: column;
       padding: 18px;
-      border-radius: 24px;
-      background: rgba(15, 23, 42, 0.94);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+      border-radius: 22px;
+      background: rgba(10,18,40,0.96);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.55);
       z-index: 1999;
       overflow-y: auto;
     }
 
-    #chat-panel h3 {
-      font-size: 22px;
-      margin-bottom: 12px;
-      color: #38bdf8;
-    }
+    #chat-panel h3 { font-size: 20px; margin-bottom: 12px; color: var(--accent); font-family: 'Orbitron', sans-serif; }
 
     .chat-item {
-      padding: 12px;
-      margin-bottom: 10px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.09);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 12px; margin-bottom: 10px; border-radius: 14px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.10);
     }
 
-    .chat-name {
-      color: #38bdf8;
-      font-weight: 800;
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .chat-text {
-      color: #e5e7eb;
-      font-size: 14px;
-      line-height: 1.45;
-    }
+    .chat-name { color: var(--accent); font-weight: 800; font-size: 13px; margin-bottom: 5px; }
+    .chat-text { color: #e5e7eb; font-size: 14px; line-height: 1.45; }
 
     .chat-link {
-      display: block;
-      margin-top: 12px;
-      padding: 12px;
-      text-align: center;
-      border-radius: 14px;
-      color: white;
-      text-decoration: none;
-      font-weight: 800;
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      display: block; margin-top: 12px; padding: 12px;
+      text-align: center; border-radius: 14px; color: white;
+      text-decoration: none; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
     }
 
-    .loading {
-      color: #cbd5e1;
-      font-size: 14px;
-      text-align: center;
-      padding: 12px;
-    }
+    .loading { color: var(--text-muted); font-size: 14px; text-align: center; padding: 12px; }
 
     footer {
-      padding: 35px;
+      padding: 30px;
       text-align: center;
-      color: #cbd5e1;
-      background: rgba(2, 6, 23, 0.65);
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+      background: rgba(2,6,23,0.65);
+      border-top: 1px solid var(--glass-border);
+      font-size: 14px;
     }
 
     @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(25px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(25px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-18px);
-      }
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-18px); }
     }
-
     @keyframes spin {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
     }
 
     @media (max-width: 900px) {
-      header {
-        padding: 18px 18px;
-        gap: 10px;
-      }
-
-      nav {
-        gap: 10px;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-      }
-
-      nav a {
-        font-size: 13px;
-      }
-
-      .lang-btn {
-        padding: 6px 8px;
-        font-size: 12px;
-      }
-
-      .login-btn,
-      .logout-btn {
-        padding: 8px 10px;
-        font-size: 12px;
-      }
-
-      .user-profile span {
-        display: none;
-      }
-
-      .hero {
-        flex-direction: column;
-        text-align: center;
-        padding: 130px 25px 60px;
-      }
-
-      .hero h1 {
-        font-size: 50px;
-      }
-
-      .hero p {
-        font-size: 17px;
-      }
-
-      .buttons,
-      .stats {
-        justify-content: center;
-      }
-
-      .orbit-card {
-        width: 260px;
-        height: 260px;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      #chat-panel {
-        right: 15px;
-        left: 15px;
-        width: auto;
-      }
+      header { padding: 16px 18px; flex-wrap: wrap; gap: 10px; }
+      nav { gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+      nav a { font-size: 13px; }
+      .login-btn, .logout-btn { padding: 8px 12px; font-size: 13px; }
+      .hero { flex-direction: column; text-align: center; padding: 150px 22px 60px; }
+      .hero h1 { font-size: 38px; }
+      .hero p { font-size: 16px; }
+      .buttons, .stats { justify-content: center; }
+      .orbit-card { width: 250px; height: 250px; }
+      .cards { grid-template-columns: 1fr; }
+      #chat-panel { right: 12px; left: 12px; width: auto; }
     }
   </style>
 </head>
@@ -541,26 +399,25 @@
 <body>
 
   <header>
-    <div class="logo">Qainar</div>
+    <div class="logo">QAINAR</div>
 
     <nav>
-      <a id="nav-home" href="index.html">Home</a>
-      <a id="nav-projects" href="projects.html">Projects</a>
-      <a id="nav-contact" href="contact.html">Contact</a>
+      <a href="index.html" data-i18n="nav_home">Home</a>
+      <a href="projects.html" data-i18n="nav_projects">Projects</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
 
       <div class="lang-switcher">
-        <button class="lang-btn" data-lang="en">🇺🇸 EN</button>
-        <button class="lang-btn" data-lang="kk">🇰🇿 KZ</button>
-        <button class="lang-btn" data-lang="zh">🇨🇳 CN</button>
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="kz">ҚАЗ</button>
       </div>
 
       <div class="auth-box">
-        <button id="login-btn" class="login-btn">Login</button>
-
+        <button id="login-btn" class="login-btn" data-i18n="btn_login">Login</button>
         <div id="user-profile" class="user-profile">
           <img id="user-photo" src="" alt="User">
           <span id="user-name"></span>
-          <button id="logout-btn" class="logout-btn">Logout</button>
+          <button id="logout-btn" class="logout-btn" data-i18n="btn_logout">Logout</button>
         </div>
       </div>
     </nav>
@@ -568,70 +425,51 @@
 
   <section class="hero">
     <div class="hero-content">
-      <div id="hero-tag" class="tag">Space Engineering Portfolio</div>
+      <div class="tag" data-i18n="hero_tag">Space Engineering Portfolio</div>
 
-      <h1 id="hero-title">Hi, I'm <span>Qainar</span> 🚀</h1>
+      <h1 data-i18n="hero_title">Hi, I'm <span>Qainar</span> 🚀</h1>
 
-      <p id="hero-description">
+      <p data-i18n="hero_desc">
         I am a space engineering student building real skills in physics,
         mathematics, web development, and future space technology.
       </p>
 
       <div class="buttons">
-        <a id="btn-projects" class="btn primary" href="projects.html">Explore Projects</a>
-        <a id="btn-comment" class="btn secondary" href="contact.html">Leave a Comment</a>
+        <a class="btn primary" href="projects.html" data-i18n="btn_projects">Explore Projects</a>
+        <a class="btn secondary" href="contact.html" data-i18n="btn_comment">Leave a Comment</a>
+        <button id="hero-login-btn" class="btn primary" data-i18n="btn_google_login">Login with Google</button>
       </div>
 
       <div class="stats">
-        <div class="stat">
-          <h3>01</h3>
-          <p id="stat-one">Space Engineering</p>
-        </div>
-
-        <div class="stat">
-          <h3>02</h3>
-          <p id="stat-two">Firebase Website</p>
-        </div>
-
-        <div class="stat">
-          <h3>03</h3>
-          <p id="stat-three">Study Portfolio</p>
-        </div>
+        <div class="stat"><h3>01</h3><p data-i18n="stat1">Space Engineering</p></div>
+        <div class="stat"><h3>02</h3><p data-i18n="stat2">Firebase Website</p></div>
+        <div class="stat"><h3>03</h3><p data-i18n="stat3">Study Portfolio</p></div>
       </div>
     </div>
 
     <div class="orbit-card">
       <div class="planet">🚀</div>
+      <div class="orbit-dot"></div>
+      <div class="orbit-label">QAINAR</div>
     </div>
   </section>
 
   <section class="section">
-    <h2 id="focus-title" class="section-title">Focus Areas</h2>
-    <p id="focus-subtitle" class="section-subtitle">The main fields I am currently building step by step.</p>
+    <h2 class="section-title" data-i18n="section_title">Focus Areas</h2>
+    <p class="section-subtitle" data-i18n="section_sub">The main fields I am currently building step by step.</p>
 
     <div class="cards">
       <div class="card">
-        <h3 id="card-one-title">🚀 Space Systems</h3>
-        <p id="card-one-text">
-          Aerospace fundamentals, CanSat experience, satellite concepts,
-          and engineering project thinking.
-        </p>
+        <h3>🚀 <span data-i18n="card1_title">Space Systems</span></h3>
+        <p data-i18n="card1_desc">Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.</p>
       </div>
-
       <div class="card">
-        <h3 id="card-two-title">⚙️ Physics</h3>
-        <p id="card-two-text">
-          Mechanics, dynamics, electromagnetism, mathematical modeling,
-          and problem-solving practice.
-        </p>
+        <h3>⚙️ <span data-i18n="card2_title">Physics</span></h3>
+        <p data-i18n="card2_desc">Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.</p>
       </div>
-
       <div class="card">
-        <h3 id="card-three-title">💻 Web Development</h3>
-        <p id="card-three-text">
-          HTML, CSS, JavaScript, Firebase, interactive websites,
-          and real database-connected applications.
-        </p>
+        <h3>💻 <span data-i18n="card3_title">Web Development</span></h3>
+        <p data-i18n="card3_desc">HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.</p>
       </div>
     </div>
   </section>
@@ -639,31 +477,90 @@
   <button id="chat-btn">💬</button>
 
   <div id="chat-panel">
-    <h3 id="chat-title">Latest Comments</h3>
+    <h3 data-i18n="chat_title">Latest Comments</h3>
     <div id="chat-comments">
-      <p id="chat-loading" class="loading">Loading comments...</p>
+      <p class="loading" data-i18n="chat_loading">Loading comments...</p>
     </div>
-    <a id="chat-link" class="chat-link" href="contact.html">Write a Comment</a>
+    <a class="chat-link" href="contact.html" data-i18n="chat_write">Write a Comment</a>
   </div>
 
-  <footer id="footer-text">
+  <footer>
     © 2026 Qainar's Website · Space Engineering · Web Development
   </footer>
 
+  <script>
+    const translations = {
+      en: {
+        nav_home: "Home", nav_projects: "Projects", nav_contact: "Contact",
+        btn_login: "Login", btn_logout: "Logout",
+        hero_tag: "Space Engineering Portfolio",
+        hero_title: `Hi, I'm <span>Qainar</span> 🚀`,
+        hero_desc: "I am a space engineering student building real skills in physics, mathematics, web development, and future space technology.",
+        btn_projects: "Explore Projects", btn_comment: "Leave a Comment", btn_google_login: "Login with Google",
+        stat1: "Space Engineering", stat2: "Firebase Website", stat3: "Study Portfolio",
+        section_title: "Focus Areas", section_sub: "The main fields I am currently building step by step.",
+        card1_title: "Space Systems", card1_desc: "Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.",
+        card2_title: "Physics", card2_desc: "Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.",
+        card3_title: "Web Development", card3_desc: "HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.",
+        chat_title: "Latest Comments", chat_loading: "Loading comments...", chat_write: "Write a Comment",
+      },
+      zh: {
+        nav_home: "首页", nav_projects: "项目", nav_contact: "联系",
+        btn_login: "登录", btn_logout: "退出",
+        hero_tag: "航天工程作品集",
+        hero_title: `你好，我是 <span>Qainar</span> 🚀`,
+        hero_desc: "我是一名航天工程专业的学生，正在物理、数学、网页开发和未来空间技术领域积累真实技能。",
+        btn_projects: "探索项目", btn_comment: "留言评论", btn_google_login: "使用 Google 登录",
+        stat1: "航天工程", stat2: "Firebase 网站", stat3: "学习作品集",
+        section_title: "专注领域", section_sub: "目前正在一步步构建的主要方向。",
+        card1_title: "航天系统", card1_desc: "航空航天基础、CanSat 实践、卫星概念及工程项目思维。",
+        card2_title: "物理学", card2_desc: "力学、动力学、电磁学、数学建模与解题实践。",
+        card3_title: "网页开发", card3_desc: "HTML、CSS、JavaScript、Firebase，构建交互式网站与实际数据库应用。",
+        chat_title: "最新留言", chat_loading: "加载留言中…", chat_write: "写留言",
+      },
+      kz: {
+        nav_home: "Басты бет", nav_projects: "Жобалар", nav_contact: "Байланыс",
+        btn_login: "Кіру", btn_logout: "Шығу",
+        hero_tag: "Ғарыш инженериясы портфолиосы",
+        hero_title: `Сәлем, мен <span>Қайнар</span> 🚀`,
+        hero_desc: "Мен ғарыш инженериясы саласында оқитын студентпін. Физика, математика, веб-әзірлеу және болашақ ғарыш технологияларында нақты дағдыларымды дамытып жатырмын.",
+        btn_projects: "Жобаларды қарау", btn_comment: "Пікір қалдыру", btn_google_login: "Google арқылы кіру",
+        stat1: "Ғарыш инженериясы", stat2: "Firebase сайты", stat3: "Оқу портфолиосы",
+        section_title: "Негізгі бағыттар", section_sub: "Қазір қадамма-қадам дамытып жатқан салаларым.",
+        card1_title: "Ғарыш жүйелері", card1_desc: "Аэроғарыш негіздері, CanSat тәжірибесі, жерсерік тұжырымдамалары және инженерлік жоба ойлауы.",
+        card2_title: "Физика", card2_desc: "Механика, динамика, электромагнетизм, математикалық модельдеу және есеп шешу практикасы.",
+        card3_title: "Веб-әзірлеу", card3_desc: "HTML, CSS, JavaScript, Firebase, интерактивті сайттар және дерекқормен байланысқан қосымшалар.",
+        chat_title: "Соңғы пікірлер", chat_loading: "Пікірлер жүктелуде…", chat_write: "Пікір жазу",
+      }
+    };
+
+    let currentLang = localStorage.getItem("lang") || "en";
+
+    function applyLang(lang) {
+      currentLang = lang;
+      localStorage.setItem("lang", lang);
+      const t = translations[lang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+      document.documentElement.lang = lang === "kz" ? "kk" : lang;
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+    });
+
+    applyLang(currentLang);
+  </script>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      getDocs
-    } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-    import {
-      getAuth,
-      GoogleAuthProvider,
-      signInWithPopup,
-      signOut,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAhn0e4HtF_jnSu4I4JlLgpB8rz_Qnrmpo",
@@ -680,200 +577,39 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    const translations = {
-      en: {
-        title: "Qainar's Website",
-        navHome: "Home",
-        navProjects: "Projects",
-        navContact: "Contact",
-        login: "Login",
-        logout: "Logout",
-        tag: "Space Engineering Portfolio",
-        heroTitle: "Hi, I'm <span>Qainar</span> 🚀",
-        heroDescription: "I am a space engineering student building real skills in physics, mathematics, web development, and future space technology.",
-        projectsButton: "Explore Projects",
-        commentButton: "Leave a Comment",
-        statOne: "Space Engineering",
-        statTwo: "Firebase Website",
-        statThree: "Study Portfolio",
-        focusTitle: "Focus Areas",
-        focusSubtitle: "The main fields I am currently building step by step.",
-        cardOneTitle: "🚀 Space Systems",
-        cardOneText: "Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.",
-        cardTwoTitle: "⚙️ Physics",
-        cardTwoText: "Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.",
-        cardThreeTitle: "💻 Web Development",
-        cardThreeText: "HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.",
-        chatTitle: "Latest Comments",
-        chatLoading: "Loading comments...",
-        noComments: "No comments yet.",
-        commentsError: "Comments could not be loaded.",
-        chatLink: "Write a Comment",
-        footer: "© 2026 Qainar's Website · Space Engineering · Web Development"
-      },
-      kk: {
-        title: "Qainar сайты",
-        navHome: "Басты бет",
-        navProjects: "Жобалар",
-        navContact: "Байланыс",
-        login: "Кіру",
-        logout: "Шығу",
-        tag: "Ғарыш инженериясы портфолиосы",
-        heroTitle: "Сәлем, мен <span>Qainar</span> 🚀",
-        heroDescription: "Мен ғарыш инженериясы бағытында оқимын және физика, математика, веб-әзірлеу мен болашақ ғарыш технологиялары бойынша нақты дағдыларды дамытып жүрмін.",
-        projectsButton: "Жобаларды көру",
-        commentButton: "Пікір қалдыру",
-        statOne: "Ғарыш инженериясы",
-        statTwo: "Firebase сайты",
-        statThree: "Оқу портфолиосы",
-        focusTitle: "Негізгі бағыттар",
-        focusSubtitle: "Қазіргі уақытта біртіндеп дамытып жүрген негізгі салаларым.",
-        cardOneTitle: "🚀 Ғарыш жүйелері",
-        cardOneText: "Аэроғарыш негіздері, CanSat тәжірибесі, спутник ұғымдары және инженерлік жобалау ойлауы.",
-        cardTwoTitle: "⚙️ Физика",
-        cardTwoText: "Механика, динамика, электромагнетизм, математикалық модельдеу және есеп шығару тәжірибесі.",
-        cardThreeTitle: "💻 Веб-әзірлеу",
-        cardThreeText: "HTML, CSS, JavaScript, Firebase, интерактивті сайттар және дерекқормен байланысқан нақты қолданбалар.",
-        chatTitle: "Соңғы пікірлер",
-        chatLoading: "Пікірлер жүктелуде...",
-        noComments: "Әзірге пікір жоқ.",
-        commentsError: "Пікірлерді жүктеу мүмкін болмады.",
-        chatLink: "Пікір жазу",
-        footer: "© 2026 Qainar сайты · Ғарыш инженериясы · Веб-әзірлеу"
-      },
-      zh: {
-        title: "Qainar的网站",
-        navHome: "首页",
-        navProjects: "项目",
-        navContact: "联系",
-        login: "登录",
-        logout: "退出",
-        tag: "航天工程作品集",
-        heroTitle: "你好，我是 <span>Qainar</span> 🚀",
-        heroDescription: "我是一名航天工程学生，正在系统提升物理、数学、网页开发以及未来航天技术方面的真实能力。",
-        projectsButton: "查看项目",
-        commentButton: "留言评论",
-        statOne: "航天工程",
-        statTwo: "Firebase网站",
-        statThree: "学习作品集",
-        focusTitle: "主要方向",
-        focusSubtitle: "这是我目前正在一步一步积累的核心领域。",
-        cardOneTitle: "🚀 航天系统",
-        cardOneText: "航空航天基础、CanSat经验、卫星概念以及工程项目思维。",
-        cardTwoTitle: "⚙️ 物理",
-        cardTwoText: "力学、动力学、电磁学、数学建模以及解题训练。",
-        cardThreeTitle: "💻 网页开发",
-        cardThreeText: "HTML、CSS、JavaScript、Firebase、交互式网站以及连接数据库的真实应用。",
-        chatTitle: "最新评论",
-        chatLoading: "评论加载中...",
-        noComments: "暂无评论。",
-        commentsError: "评论加载失败。",
-        chatLink: "写评论",
-        footer: "© 2026 Qainar的网站 · 航天工程 · 网页开发"
-      }
-    };
-
-    let currentLanguage = localStorage.getItem("qainar_language") || "en";
-
-    function setText(id, text) {
-      const element = document.getElementById(id);
-      if (element) {
-        element.textContent = text;
-      }
-    }
-
-    function setHTML(id, html) {
-      const element = document.getElementById(id);
-      if (element) {
-        element.innerHTML = html;
-      }
-    }
-
-    function applyLanguage(language) {
-      currentLanguage = language;
-      localStorage.setItem("qainar_language", language);
-
-      const t = translations[language];
-
-      document.documentElement.lang = language;
-      document.title = t.title;
-
-      setText("nav-home", t.navHome);
-      setText("nav-projects", t.navProjects);
-      setText("nav-contact", t.navContact);
-      setText("login-btn", t.login);
-      setText("logout-btn", t.logout);
-      setText("hero-tag", t.tag);
-      setHTML("hero-title", t.heroTitle);
-      setText("hero-description", t.heroDescription);
-      setText("btn-projects", t.projectsButton);
-      setText("btn-comment", t.commentButton);
-      setText("stat-one", t.statOne);
-      setText("stat-two", t.statTwo);
-      setText("stat-three", t.statThree);
-      setText("focus-title", t.focusTitle);
-      setText("focus-subtitle", t.focusSubtitle);
-      setText("card-one-title", t.cardOneTitle);
-      setText("card-one-text", t.cardOneText);
-      setText("card-two-title", t.cardTwoTitle);
-      setText("card-two-text", t.cardTwoText);
-      setText("card-three-title", t.cardThreeTitle);
-      setText("card-three-text", t.cardThreeText);
-      setText("chat-title", t.chatTitle);
-      setText("chat-link", t.chatLink);
-      setText("footer-text", t.footer);
-
-      document.querySelectorAll(".lang-btn").forEach((button) => {
-        button.classList.toggle("active", button.dataset.lang === language);
-      });
-    }
-
-    document.querySelectorAll(".lang-btn").forEach((button) => {
-      button.addEventListener("click", () => {
-        applyLanguage(button.dataset.lang);
-        loadChatComments();
-      });
-    });
-
-    const chatButton = document.getElementById("chat-btn");
-    const chatPanel = document.getElementById("chat-panel");
-
-    const loginButton = document.getElementById("login-btn");
+    const chatButton   = document.getElementById("chat-btn");
+    const chatPanel    = document.getElementById("chat-panel");
+    const loginButton  = document.getElementById("login-btn");
+    const heroLoginBtn = document.getElementById("hero-login-btn");
     const logoutButton = document.getElementById("logout-btn");
-    const userProfile = document.getElementById("user-profile");
-    const userPhoto = document.getElementById("user-photo");
-    const userName = document.getElementById("user-name");
+    const userProfile  = document.getElementById("user-profile");
+    const userPhoto    = document.getElementById("user-photo");
+    const userName     = document.getElementById("user-name");
 
     chatButton.addEventListener("click", () => {
       chatPanel.style.display = chatPanel.style.display === "flex" ? "none" : "flex";
     });
 
-    loginButton.addEventListener("click", async () => {
-      try {
-        await signInWithPopup(auth, provider);
-      } catch (error) {
-        alert("Login failed. Please try again.");
-        console.error(error);
-      }
-    });
+    async function loginWithGoogle() {
+      try { await signInWithPopup(auth, provider); }
+      catch (e) { alert("Login failed. Please try again."); console.error(e); }
+    }
 
-    logoutButton.addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-      } catch (error) {
-        console.error(error);
-      }
-    });
+    loginButton.addEventListener("click", loginWithGoogle);
+    heroLoginBtn.addEventListener("click", loginWithGoogle);
+    logoutButton.addEventListener("click", async () => { try { await signOut(auth); } catch(e){ console.error(e); } });
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        loginButton.style.display = "none";
-        userProfile.style.display = "flex";
+        loginButton.style.display  = "none";
+        heroLoginBtn.style.display = "none";
+        userProfile.style.display  = "flex";
         userPhoto.src = user.photoURL || "";
         userName.textContent = user.displayName || "User";
       } else {
-        loginButton.style.display = "inline-block";
-        userProfile.style.display = "none";
+        loginButton.style.display  = "inline-block";
+        heroLoginBtn.style.display = "inline-block";
+        userProfile.style.display  = "none";
         userPhoto.src = "";
         userName.textContent = "";
       }
@@ -881,37 +617,24 @@
 
     async function loadChatComments() {
       const box = document.getElementById("chat-comments");
-      const t = translations[currentLanguage];
-
-      box.innerHTML = `<p class="loading">${t.chatLoading}</p>`;
-
+      box.innerHTML = "";
       try {
-        const querySnapshot = await getDocs(collection(db, "comments"));
-
-        if (querySnapshot.empty) {
-          box.innerHTML = `<p class="loading">${t.noComments}</p>`;
-          return;
-        }
-
-        box.innerHTML = "";
-
-        querySnapshot.forEach((item) => {
-          const data = item.data();
-
+        const snap = await getDocs(collection(db, "comments"));
+        if (snap.empty) { box.innerHTML = '<p class="loading">No comments yet.</p>'; return; }
+        snap.forEach(item => {
+          const d = item.data();
           box.innerHTML = `
             <div class="chat-item">
-              <div class="chat-name">${data.name || "Anonymous"}</div>
-              <div class="chat-text">${data.message || ""}</div>
-            </div>
-          ` + box.innerHTML;
+              <div class="chat-name">${d.name || "Anonymous"}</div>
+              <div class="chat-text">${d.message || ""}</div>
+            </div>` + box.innerHTML;
         });
-      } catch (error) {
-        box.innerHTML = `<p class="loading">${t.commentsError}</p>`;
-        console.error(error);
+      } catch(e) {
+        box.innerHTML = '<p class="loading">Comments could not be loaded.</p>';
+        console.error(e);
       }
     }
 
-    applyLanguage(currentLanguage);
     loadChatComments();
   </script>
 

@@ -50,10 +50,15 @@
       letter-spacing: 1px;
     }
 
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 28px;
       font-weight: 700;
       opacity: 0.85;
       transition: 0.25s;
@@ -62,6 +67,57 @@
     nav a:hover {
       color: #38bdf8;
       opacity: 1;
+    }
+
+    .auth-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-left: 5px;
+    }
+
+    .login-btn,
+    .logout-btn {
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+      transition: 0.25s;
+    }
+
+    .login-btn:hover,
+    .logout-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .user-profile {
+      display: none;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+    }
+
+    .user-profile img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .user-profile span {
+      font-size: 13px;
+      font-weight: 700;
+      max-width: 110px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .hero {
@@ -393,9 +449,16 @@
         padding: 18px 25px;
       }
 
+      nav {
+        gap: 14px;
+      }
+
       nav a {
-        margin-left: 14px;
         font-size: 14px;
+      }
+
+      .auth-box {
+        display: none;
       }
 
       .hero {
@@ -439,10 +502,21 @@
 
   <header>
     <div class="logo">Qainar</div>
+
     <nav>
       <a href="index.html">Home</a>
       <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
+
+      <div class="auth-box">
+        <button id="login-btn" class="login-btn">Login</button>
+
+        <div id="user-profile" class="user-profile">
+          <img id="user-photo" src="" alt="User">
+          <span id="user-name"></span>
+          <button id="logout-btn" class="logout-btn">Logout</button>
+        </div>
+      </div>
     </nav>
   </header>
 
@@ -537,6 +611,13 @@
       collection,
       getDocs
     } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithPopup,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAhn0e4HtF_jnSu4I4JlLgpB8rz_Qnrmpo",
@@ -550,12 +631,51 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
     const chatButton = document.getElementById("chat-btn");
     const chatPanel = document.getElementById("chat-panel");
 
+    const loginButton = document.getElementById("login-btn");
+    const logoutButton = document.getElementById("logout-btn");
+    const userProfile = document.getElementById("user-profile");
+    const userPhoto = document.getElementById("user-photo");
+    const userName = document.getElementById("user-name");
+
     chatButton.addEventListener("click", () => {
       chatPanel.style.display = chatPanel.style.display === "flex" ? "none" : "flex";
+    });
+
+    loginButton.addEventListener("click", async () => {
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (error) {
+        alert("Login failed. Please try again.");
+        console.error(error);
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        loginButton.style.display = "none";
+        userProfile.style.display = "flex";
+        userPhoto.src = user.photoURL || "";
+        userName.textContent = user.displayName || "User";
+      } else {
+        loginButton.style.display = "inline-block";
+        userProfile.style.display = "none";
+        userPhoto.src = "";
+        userName.textContent = "";
+      }
     });
 
     async function loadChatComments() {

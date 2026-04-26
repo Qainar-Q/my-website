@@ -4,210 +4,194 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Projects | Qainar</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+    :root {
+      --accent: #38bdf8;
+      --accent2: #2563eb;
+      --glass: rgba(255,255,255,0.10);
+      --glass-border: rgba(255,255,255,0.18);
+      --text-muted: #cbd5e1;
     }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       min-height: 100vh;
+      font-family: 'DM Sans', Arial, sans-serif;
       background: radial-gradient(circle at top, #1e3a8a, #020617 65%);
       color: white;
     }
-
     header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 20px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(2, 6, 23, 0.75);
-      backdrop-filter: blur(12px);
+      position: fixed; top: 0; width: 100%;
+      padding: 18px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(2,6,23,0.55);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
       z-index: 100;
     }
-
     .logo {
-      font-size: 24px;
-      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px; font-weight: 900; letter-spacing: 2px;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 25px;
-      font-weight: bold;
-      transition: 0.3s;
+    nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    nav a { color: white; text-decoration: none; font-weight: 700; font-size: 15px; opacity: 0.85; transition: 0.25s; }
+    nav a:hover { color: var(--accent); opacity: 1; }
+    .lang-switcher { display: flex; gap: 6px; }
+    .lang-btn {
+      border: 1px solid var(--glass-border); background: var(--glass);
+      color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 800; border-radius: 999px;
+      padding: 5px 11px; cursor: pointer; transition: 0.2s;
     }
-
-    nav a:hover {
-      color: #38bdf8;
+    .lang-btn:hover, .lang-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: transparent; color: white;
     }
-
-    .hero {
-      padding: 150px 8% 60px;
-      text-align: center;
-    }
-
+    .hero { padding: 140px 8% 50px; text-align: center; }
     .hero h1 {
-      font-size: 56px;
-      margin-bottom: 16px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 52px; margin-bottom: 14px;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
-    .hero p {
-      color: #cbd5e1;
-      font-size: 20px;
-    }
-
+    .hero p { color: var(--text-muted); font-size: 19px; }
     .projects {
-      padding: 40px 8% 90px;
+      padding: 30px 8% 80px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
+      gap: 26px;
     }
-
     .card {
-      position: relative;
-      overflow: hidden;
-      min-height: 260px;
-      padding: 32px;
+      position: relative; overflow: hidden;
+      min-height: 250px; padding: 30px;
       border-radius: 24px;
-      background: rgba(255,255,255,0.1);
+      background: var(--glass);
       backdrop-filter: blur(16px);
-      text-decoration: none;
-      color: white;
+      text-decoration: none; color: white;
       box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      border: 1px solid var(--glass-border);
       transition: 0.35s;
     }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background: linear-gradient(135deg, #38bdf8, transparent, #2563eb);
-      opacity: 0;
-      transition: 0.35s;
-      z-index: -1;
-    }
-
     .card:hover {
       transform: translateY(-12px) scale(1.02);
-      background: rgba(56,189,248,0.18);
+      background: rgba(56,189,248,0.16);
+      border-color: rgba(56,189,248,0.5);
     }
-
-    .card:hover::before {
-      opacity: 1;
-    }
-
-    .icon {
-      font-size: 45px;
-      margin-bottom: 22px;
-    }
-
-    .card h2 {
-      font-size: 28px;
-      margin-bottom: 14px;
-    }
-
-    .card p {
-      color: #dbeafe;
-      line-height: 1.6;
-      margin-bottom: 22px;
-    }
-
+    .icon { font-size: 42px; margin-bottom: 18px; }
+    .card h2 { font-family: 'Orbitron', sans-serif; font-size: 22px; margin-bottom: 12px; }
+    .card p { color: #dbeafe; line-height: 1.6; margin-bottom: 20px; font-size: 15px; }
     .tag {
-      display: inline-block;
-      padding: 8px 14px;
+      display: inline-block; padding: 7px 14px;
       border-radius: 999px;
-      background: rgba(59,130,246,0.35);
-      color: #bfdbfe;
-      font-size: 14px;
+      background: rgba(59,130,246,0.3);
+      color: #bfdbfe; font-size: 13px; font-weight: 700;
     }
-
-    .back {
-      text-align: center;
-      padding-bottom: 50px;
-    }
-
-    .back a {
-      color: #38bdf8;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      color: #94a3b8;
-    }
-
+    .back { text-align: center; padding-bottom: 50px; }
+    .back a { color: var(--accent); text-decoration: none; font-weight: 800; font-size: 17px; }
+    footer { text-align: center; padding: 28px; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--glass-border); }
     @media (max-width: 700px) {
-      .hero h1 {
-        font-size: 40px;
-      }
-
-      nav a {
-        margin-left: 12px;
-        font-size: 14px;
-      }
+      header { padding: 16px 18px; flex-wrap: wrap; gap: 10px; }
+      .hero h1 { font-size: 36px; }
+      nav { gap: 10px; flex-wrap: wrap; }
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <div class="logo">Qainar's Website</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="projects.html">Projects</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <header>
+    <div class="logo">QAINAR</div>
+    <nav>
+      <a href="index.html" data-i18n="nav_home">Home</a>
+      <a href="projects.html" data-i18n="nav_projects">Projects</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="kz">ҚАЗ</button>
+      </div>
+    </nav>
+  </header>
 
-<section class="hero">
-  <h1>My Projects 🚀</h1>
-  <p>Engineering, physics, programming, and study progress.</p>
-</section>
+  <section class="hero">
+    <h1 data-i18n="page_title">My Projects 🚀</h1>
+    <p data-i18n="page_sub">Engineering, physics, programming, and study progress.</p>
+  </section>
 
-<section class="projects">
+  <section class="projects">
+    <a href="cansat.html" class="card">
+      <div class="icon">🛰️</div>
+      <h2 data-i18n="card1_title">CanSat</h2>
+      <p data-i18n="card1_desc">My small satellite project experience, sensors, teamwork, and aerospace learning journey.</p>
+      <span class="tag" data-i18n="card1_tag">Space Engineering</span>
+    </a>
+    <a href="physics.html" class="card">
+      <div class="icon">⚙️</div>
+      <h2 data-i18n="card2_title">Physics</h2>
+      <p data-i18n="card2_desc">Mechanics, electromagnetism, formulas, problem solving, and university physics notes.</p>
+      <span class="tag" data-i18n="card2_tag">Mechanics</span>
+    </a>
+    <a href="sat.html" class="card">
+      <div class="icon">📚</div>
+      <h2 data-i18n="card3_title">SAT</h2>
+      <p data-i18n="card3_desc">Reading & Writing practice, grammar rules, transition logic, and score improvement.</p>
+      <span class="tag" data-i18n="card3_tag">Study Log</span>
+    </a>
+  </section>
 
-  <a href="cansat.html" class="card">
-    <div class="icon">🛰️</div>
-    <h2>CanSat</h2>
-    <p>My small satellite project experience, sensors, teamwork, and aerospace learning journey.</p>
-    <span class="tag">Space Engineering</span>
-  </a>
+  <div class="back"><a href="index.html" data-i18n="btn_back">← Back Home</a></div>
+  <footer>© 2026 Qainar's Website · Projects</footer>
 
-  <a href="physics.html" class="card">
-    <div class="icon">⚙️</div>
-    <h2>Physics</h2>
-    <p>Mechanics, electromagnetism, formulas, problem solving, and university physics notes.</p>
-    <span class="tag">Mechanics</span>
-  </a>
+  <script>
+    const translations = {
+      en: {
+        nav_home:"Home", nav_projects:"Projects", nav_contact:"Contact",
+        page_title:"My Projects 🚀", page_sub:"Engineering, physics, programming, and study progress.",
+        card1_title:"CanSat", card1_desc:"My small satellite project experience, sensors, teamwork, and aerospace learning journey.", card1_tag:"Space Engineering",
+        card2_title:"Physics", card2_desc:"Mechanics, electromagnetism, formulas, problem solving, and university physics notes.", card2_tag:"Mechanics",
+        card3_title:"SAT", card3_desc:"Reading & Writing practice, grammar rules, transition logic, and score improvement.", card3_tag:"Study Log",
+        btn_back:"← Back Home",
+      },
+      zh: {
+        nav_home:"首页", nav_projects:"项目", nav_contact:"联系",
+        page_title:"我的项目 🚀", page_sub:"工程、物理、编程与学习进度。",
+        card1_title:"CanSat", card1_desc:"我的小卫星项目经历、传感器、团队合作和航天学习之旅。", card1_tag:"航天工程",
+        card2_title:"物理", card2_desc:"力学、电磁学、公式推导、解题与大学物理笔记。", card2_tag:"力学",
+        card3_title:"SAT", card3_desc:"阅读写作练习、语法规则、衔接逻辑与分数提升。", card3_tag:"学习日志",
+        btn_back:"← 返回首页",
+      },
+      kz: {
+        nav_home:"Басты бет", nav_projects:"Жобалар", nav_contact:"Байланыс",
+        page_title:"Менің жобаларым 🚀", page_sub:"Инженерия, физика, бағдарламалау және оқу ілгерілеуі.",
+        card1_title:"CanSat", card1_desc:"Менің шағын жерсерік жобам, сенсорлар, командалық жұмыс және ғарыш оқу жолы.", card1_tag:"Ғарыш инженериясы",
+        card2_title:"Физика", card2_desc:"Механика, электромагнетизм, формулалар, есеп шешу және университет физикасы.", card2_tag:"Механика",
+        card3_title:"SAT", card3_desc:"Оқу және жазу жаттығулары, грамматика ережелері және балл жақсарту.", card3_tag:"Оқу журналы",
+        btn_back:"← Басты бетке",
+      }
+    };
 
-  <a href="sat.html" class="card">
-    <div class="icon">📚</div>
-    <h2>SAT</h2>
-    <p>Reading & Writing practice, grammar rules, transition logic, and score improvement.</p>
-    <span class="tag">Study Log</span>
-  </a>
+    let currentLang = localStorage.getItem("lang") || "en";
 
-</section>
+    function applyLang(lang) {
+      currentLang = lang;
+      localStorage.setItem("lang", lang);
+      const t = translations[lang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+    }
 
-<div class="back">
-  <a href="index.html">← Back Home</a>
-</div>
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+    });
 
-<footer>
-  © 2026 Qainar's Website. Projects page.
-</footer>
-
+    applyLang(currentLang);
+  </script>
 </body>
 </html>

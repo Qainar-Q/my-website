@@ -4,201 +4,165 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CanSat | Qainar</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+    :root {
+      --accent: #38bdf8;
+      --accent2: #2563eb;
+      --glass: rgba(255,255,255,0.10);
+      --glass-border: rgba(255,255,255,0.18);
+      --text-muted: #cbd5e1;
     }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       min-height: 100vh;
+      font-family: 'DM Sans', Arial, sans-serif;
       background: radial-gradient(circle at top, #0ea5e9, #020617 60%);
       color: white;
     }
-
     header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 20px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(2, 6, 23, 0.75);
-      backdrop-filter: blur(12px);
-      z-index: 100;
+      position: fixed; top: 0; width: 100%;
+      padding: 18px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(2,6,23,0.55); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border); z-index: 100;
     }
-
     .logo {
-      font-size: 24px;
-      font-weight: bold;
+      font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 2px;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 25px;
-      font-weight: bold;
-      transition: 0.3s;
+    nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    nav a { color: white; text-decoration: none; font-weight: 700; font-size: 15px; opacity: 0.85; transition: 0.25s; }
+    nav a:hover { color: var(--accent); opacity: 1; }
+    .lang-switcher { display: flex; gap: 6px; }
+    .lang-btn {
+      border: 1px solid var(--glass-border); background: var(--glass);
+      color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 800; border-radius: 999px;
+      padding: 5px 11px; cursor: pointer; transition: 0.2s;
     }
-
-    nav a:hover {
-      color: #38bdf8;
+    .lang-btn:hover, .lang-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: transparent; color: white;
     }
-
-    .hero {
-      padding: 150px 8% 60px;
-      text-align: center;
-    }
-
+    .hero { padding: 140px 8% 50px; text-align: center; }
     .hero h1 {
-      font-size: 56px;
-      margin-bottom: 15px;
+      font-family: 'Orbitron', sans-serif; font-size: 50px; margin-bottom: 14px;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
-    .hero p {
-      font-size: 20px;
-      color: #dbeafe;
-    }
-
+    .hero p { font-size: 19px; color: #dbeafe; }
     .content {
       padding: 30px 8% 90px;
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 30px;
+      display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px;
     }
-
     .panel {
-      padding: 32px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(15px);
+      padding: 32px; border-radius: 24px;
+      background: var(--glass); backdrop-filter: blur(15px);
       box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      border: 1px solid var(--glass-border);
     }
-
     .panel h2 {
-      margin-bottom: 15px;
-      font-size: 30px;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 14px; font-size: 22px; color: var(--accent);
     }
-
-    .panel p, .panel li {
-      color: #e0f2fe;
-      line-height: 1.7;
-      font-size: 17px;
-    }
-
-    ul {
-      margin-left: 20px;
-    }
-
-    .stats {
-      display: grid;
-      gap: 18px;
-    }
-
+    .panel p, .panel li { color: #e0f2fe; line-height: 1.7; font-size: 16px; }
+    ul { margin-left: 20px; margin-top: 8px; }
+    li { margin-bottom: 6px; }
+    .stats { display: grid; gap: 16px; }
     .stat {
-      padding: 20px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.12);
+      padding: 20px; border-radius: 18px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid var(--glass-border);
     }
-
-    .stat h3 {
-      font-size: 28px;
-      color: #38bdf8;
-    }
-
+    .stat h3 { font-family: 'Orbitron', sans-serif; font-size: 26px; color: var(--accent); margin-bottom: 6px; }
+    .stat p { color: var(--text-muted); font-size: 14px; }
     .btn {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 14px 26px;
-      background: #2563eb;
-      color: white;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
+      display: inline-block; margin-top: 24px; padding: 13px 24px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; border-radius: 12px; text-decoration: none;
+      font-weight: 800; transition: 0.3s;
+      box-shadow: 0 8px 22px rgba(37,99,235,0.35);
     }
-
-    .btn:hover {
-      background: #38bdf8;
-      transform: translateY(-4px);
-    }
-
+    .btn:hover { transform: translateY(-4px); }
     @media (max-width: 800px) {
-      .content {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 42px;
-      }
-
-      nav a {
-        margin-left: 12px;
-        font-size: 14px;
-      }
+      header { padding: 16px 18px; flex-wrap: wrap; gap: 10px; }
+      .content { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 36px; }
+      nav { gap: 10px; flex-wrap: wrap; }
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <div class="logo">Qainar's Website</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="projects.html">Projects</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <header>
+    <div class="logo">QAINAR</div>
+    <nav>
+      <a href="index.html" data-i18n="nav_home">Home</a>
+      <a href="projects.html" data-i18n="nav_projects">Projects</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="kz">ҚАЗ</button>
+      </div>
+    </nav>
+  </header>
 
-<section class="hero">
-  <h1>CanSat Project 🛰️</h1>
-  <p>Small satellite learning, sensors, engineering, and teamwork.</p>
-</section>
+  <section class="hero">
+    <h1 data-i18n="page_title">CanSat Project 🛰️</h1>
+    <p data-i18n="page_sub">Small satellite learning, sensors, engineering, and teamwork.</p>
+  </section>
 
-<section class="content">
-  <div class="panel">
-    <h2>Project Overview</h2>
-    <p>
-      This page records my CanSat learning experience. CanSat is a small satellite
-      simulation project where students learn about aerospace systems, sensors,
-      data collection, teamwork, and engineering design.
-    </p>
-
-    <br>
-
-    <h2>What I Learned</h2>
-    <ul>
-      <li>Basic satellite structure and mission design</li>
-      <li>Sensor data collection and analysis</li>
-      <li>Team communication and project planning</li>
-      <li>Engineering thinking and problem solving</li>
-    </ul>
-
-    <a href="projects.html" class="btn">← Back to Projects</a>
-  </div>
-
-  <div class="panel stats">
-    <div class="stat">
-      <h3>01</h3>
-      <p>Space Engineering Experience</p>
+  <section class="content">
+    <div class="panel">
+      <h2 data-i18n="overview_title">Project Overview</h2>
+      <p data-i18n="overview_desc">This page records my CanSat learning experience. CanSat is a small satellite simulation project where students learn about aerospace systems, sensors, data collection, teamwork, and engineering design.</p>
+      <br>
+      <h2 data-i18n="learned_title">What I Learned</h2>
+      <ul>
+        <li data-i18n="li1">Basic satellite structure and mission design</li>
+        <li data-i18n="li2">Sensor data collection and analysis</li>
+        <li data-i18n="li3">Team communication and project planning</li>
+        <li data-i18n="li4">Engineering thinking and problem solving</li>
+      </ul>
+      <a href="projects.html" class="btn" data-i18n="btn_back">← Back to Projects</a>
     </div>
-
-    <div class="stat">
-      <h3>02</h3>
-      <p>Sensor & Data Practice</p>
+    <div class="panel stats">
+      <div class="stat"><h3>01</h3><p data-i18n="stat1">Space Engineering Experience</p></div>
+      <div class="stat"><h3>02</h3><p data-i18n="stat2">Sensor & Data Practice</p></div>
+      <div class="stat"><h3>03</h3><p data-i18n="stat3">Team Project Skills</p></div>
     </div>
+  </section>
 
-    <div class="stat">
-      <h3>03</h3>
-      <p>Team Project Skills</p>
-    </div>
-  </div>
-</section>
-
-</body>
-</html>
+  <script>
+    const translations = {
+      en: {
+        nav_home:"Home", nav_projects:"Projects", nav_contact:"Contact",
+        page_title:"CanSat Project 🛰️", page_sub:"Small satellite learning, sensors, engineering, and teamwork.",
+        overview_title:"Project Overview", overview_desc:"This page records my CanSat learning experience. CanSat is a small satellite simulation project where students learn about aerospace systems, sensors, data collection, teamwork, and engineering design.",
+        learned_title:"What I Learned",
+        li1:"Basic satellite structure and mission design", li2:"Sensor data collection and analysis",
+        li3:"Team communication and project planning", li4:"Engineering thinking and problem solving",
+        btn_back:"← Back to Projects",
+        stat1:"Space Engineering Experience", stat2:"Sensor & Data Practice", stat3:"Team Project Skills",
+      },
+      zh: {
+        nav_home:"首页", nav_projects:"项目", nav_contact:"联系",
+        page_title:"CanSat 项目 🛰️", page_sub:"小卫星学习、传感器、工程与团队合作。",
+        overview_title:"项目概述", overview_desc:"本页记录我的 CanSat 学习经历。CanSat 是一个小卫星模拟项目，学生在其中学习航天系统、传感器、数据采集、团队合作和工程设计。",
+        learned_title:"我学到了什么",
+        li1:"基本卫星结构与任务设计", li2:"传感器数据采集与分析",
+        li3:"团队沟通与项目规划", li4:"工程思维与问题解决",
+        btn_back:"← 返回项目",
+        stat1:"航天工程经验", stat2:"传感器与数据实践", stat3:"团队项目技能",
+      },
+      kz: {
+        nav_home:"Басты бет", nav_projects:"Жобалар", nav_contact:"Байланыс",
+        page_title:"CanSat Жобасы 🛰️", page_sub:"Шағын жерсерік, сенсорлар, инженерия және командалық жұмыс.",
+        overview_title:"Жоба шолуы", overview_desc:"Бұл бетте менің CanSat оқу тәжірибем жазылған. CanSat — студенттердің ғарыш жүйелерін, сенсорларды, деректер жинауды, командалық жұмысты және инженерлік жобалауды үйренетін шағын жерсерік симуляциясы.",
+        learned_title:"Мен не үйрендім",
+        li1:"Жерсеріктің негізгі құрылымы және миссия жобалауы", li2:"Сенсор деректерін жинау және талдау",
+        li3:"Команда байланысы және жоб

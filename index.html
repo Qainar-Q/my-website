@@ -53,7 +53,7 @@
     nav {
       display: flex;
       align-items: center;
-      gap: 22px;
+      gap: 28px;
     }
 
     nav a {
@@ -73,6 +73,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-left: 5px;
     }
 
     .login-btn,
@@ -178,9 +179,6 @@
       text-decoration: none;
       font-weight: 800;
       transition: 0.3s;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
     }
 
     .primary {
@@ -448,35 +446,25 @@
 
     @media (max-width: 900px) {
       header {
-        padding: 18px 18px;
-        flex-wrap: wrap;
-        gap: 12px;
+        padding: 18px 25px;
       }
 
       nav {
-        gap: 12px;
-        flex-wrap: wrap;
-        justify-content: flex-end;
+        gap: 14px;
       }
 
       nav a {
         font-size: 14px;
       }
 
-      .login-btn,
-      .logout-btn {
-        padding: 8px 12px;
-        font-size: 13px;
-      }
-
-      .user-profile span {
-        max-width: 80px;
+      .auth-box {
+        display: none;
       }
 
       .hero {
         flex-direction: column;
         text-align: center;
-        padding: 150px 25px 60px;
+        padding: 130px 25px 60px;
       }
 
       .hero h1 {
@@ -546,7 +534,6 @@
       <div class="buttons">
         <a class="btn primary" href="projects.html">Explore Projects</a>
         <a class="btn secondary" href="contact.html">Leave a Comment</a>
-        <button id="hero-login-btn" class="btn primary">Login with Google</button>
       </div>
 
       <div class="stats">
@@ -651,7 +638,6 @@
     const chatPanel = document.getElementById("chat-panel");
 
     const loginButton = document.getElementById("login-btn");
-    const heroLoginButton = document.getElementById("hero-login-btn");
     const logoutButton = document.getElementById("logout-btn");
     const userProfile = document.getElementById("user-profile");
     const userPhoto = document.getElementById("user-photo");
@@ -661,17 +647,14 @@
       chatPanel.style.display = chatPanel.style.display === "flex" ? "none" : "flex";
     });
 
-    async function loginWithGoogle() {
+    loginButton.addEventListener("click", async () => {
       try {
         await signInWithPopup(auth, provider);
       } catch (error) {
         alert("Login failed. Please try again.");
         console.error(error);
       }
-    }
-
-    loginButton.addEventListener("click", loginWithGoogle);
-    heroLoginButton.addEventListener("click", loginWithGoogle);
+    });
 
     logoutButton.addEventListener("click", async () => {
       try {
@@ -684,13 +667,11 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         loginButton.style.display = "none";
-        heroLoginButton.style.display = "none";
         userProfile.style.display = "flex";
         userPhoto.src = user.photoURL || "";
         userName.textContent = user.displayName || "User";
       } else {
         loginButton.style.display = "inline-block";
-        heroLoginButton.style.display = "inline-block";
         userProfile.style.display = "none";
         userPhoto.src = "";
         userName.textContent = "";

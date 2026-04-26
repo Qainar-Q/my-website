@@ -11,13 +11,15 @@
 
   <h2>Leave a Comment</h2>
 
-  <input id="name" placeholder="Your name">
+  <input id="name" placeholder="Your name" style="padding:10px;border-radius:8px;border:none;">
   <br><br>
 
-  <textarea id="message" placeholder="Your comment"></textarea>
+  <textarea id="message" placeholder="Your comment" style="padding:10px;border-radius:8px;border:none;"></textarea>
   <br><br>
 
-  <button onclick="sendComment()">Send Comment</button>
+  <button onclick="sendComment()" style="padding:10px 20px;border:none;border-radius:8px;cursor:pointer;">
+    Send Comment
+  </button>
 
   <h2>Comments</h2>
   <div id="comments"></div>
@@ -50,9 +52,25 @@
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
-        commentsDiv.innerHTML += `
-          <p><b>${data.name}</b>: ${data.message}</p>
-        `;
+
+        commentsDiv.innerHTML = `
+          <div style="
+            background:#1e293b;
+            margin:12px auto;
+            padding:15px;
+            border-radius:12px;
+            width:280px;
+            text-align:left;
+            box-shadow:0 4px 12px rgba(0,0,0,0.35);
+          ">
+            <p style="margin:0;font-weight:bold;color:#38bdf8;">
+              ${data.name}
+            </p>
+            <p style="margin:6px 0 0;">
+              ${data.message}
+            </p>
+          </div>
+        ` + commentsDiv.innerHTML;
       });
     }
 
@@ -71,7 +89,6 @@
         time: new Date()
       });
 
-      alert("Comment sent!");
       document.getElementById("name").value = "";
       document.getElementById("message").value = "";
 

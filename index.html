@@ -3,394 +3,493 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Qainar's Website</title>
+  <meta name="description" content="Qainar's Space Engineering Portfolio – physics, web development, and future space technology." />
+  <title>Qainar | Space Engineering Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
 
   <style>
+    /* ══════════════════════════════════════════
+       VARIABLES & RESET
+    ══════════════════════════════════════════ */
     :root {
-      --accent: #38bdf8;
+      --accent:  #38bdf8;
       --accent2: #2563eb;
-      --bg: rgba(3, 7, 18, 0.92);
-      --glass: rgba(255,255,255,0.10);
-      --glass-border: rgba(255,255,255,0.18);
-      --text-muted: #cbd5e1;
-      --radius: 18px;
+      --glow:    rgba(56,189,248,0.85);
+      --glass:   rgba(255,255,255,0.08);
+      --glass-b: rgba(255,255,255,0.16);
+      --muted:   #94a3b8;
+      --r: 20px;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
 
     body {
       min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
       color: white;
-      font-family: 'DM Sans', Arial, sans-serif;
-      background:
-        linear-gradient(rgba(3, 7, 18, 0.62), rgba(3, 7, 18, 0.92)),
-        url("cosmic-nebula-space-background.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
+      background: #020817;
       overflow-x: hidden;
     }
 
-    header {
-      width: 100%;
-      padding: 18px 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    /* ══════════════════════════════════════════
+       PROGRESS BAR
+    ══════════════════════════════════════════ */
+    #progress-bar {
       position: fixed;
-      top: 0;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      z-index: 9999;
+      transition: width 0.1s;
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    /* ══════════════════════════════════════════
+       STAR CANVAS
+    ══════════════════════════════════════════ */
+    #star-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════
+       HEADER
+    ══════════════════════════════════════════ */
+    header {
+      position: fixed; top: 0; width: 100%;
+      padding: 18px 60px;
+      display: flex; justify-content: space-between; align-items: center;
       z-index: 1000;
-      background: rgba(2, 6, 23, 0.55);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
+      transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
+    }
+
+    header.scrolled {
+      background: rgba(2,8,23,0.85);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--glass-b);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+      padding: 13px 60px;
     }
 
     .logo {
       font-family: 'Orbitron', sans-serif;
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, #fff, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 20px; font-weight: 900; letter-spacing: 3px;
+      background: linear-gradient(135deg, #fff 30%, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      cursor: pointer;
     }
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+    nav { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 
     nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 15px;
-      opacity: 0.85;
-      transition: 0.25s;
+      color: white; text-decoration: none;
+      font-weight: 700; font-size: 14px; opacity: 0.8;
+      transition: 0.25s; letter-spacing: 0.3px; position: relative;
     }
+    nav a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.25s;
+    }
+    nav a:hover { opacity: 1; color: var(--accent); }
+    nav a:hover::after { width: 100%; }
 
-    nav a:hover { color: var(--accent); opacity: 1; }
-
-    .lang-switcher { display: flex; gap: 6px; align-items: center; }
-
+    /* lang */
+    .lang-switcher { display: flex; gap: 5px; }
     .lang-btn {
-      border: 1px solid var(--glass-border);
-      background: var(--glass);
-      color: var(--text-muted);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 12px;
-      font-weight: 800;
-      border-radius: 999px;
-      padding: 5px 11px;
-      cursor: pointer;
-      transition: 0.2s;
-      letter-spacing: 0.5px;
+      border: 1px solid var(--glass-b); background: var(--glass);
+      color: var(--muted); font-family: 'DM Sans', sans-serif;
+      font-size: 11px; font-weight: 800; border-radius: 999px;
+      padding: 4px 10px; cursor: pointer; transition: 0.2s; letter-spacing: 0.4px;
     }
-
     .lang-btn:hover, .lang-btn.active {
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-color: transparent;
-      color: white;
+      border-color: transparent; color: white;
     }
 
+    /* auth */
     .auth-box { display: flex; align-items: center; gap: 10px; }
-
     .login-btn, .logout-btn {
-      border: none;
-      cursor: pointer;
-      color: white;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 800;
-      font-size: 14px;
-      border-radius: 999px;
-      padding: 9px 18px;
+      border: none; cursor: pointer; color: white;
+      font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 13px;
+      border-radius: 999px; padding: 9px 18px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 8px 22px rgba(37,99,235,0.35);
-      transition: 0.25s;
+      box-shadow: 0 6px 20px rgba(37,99,235,0.35); transition: 0.25s;
     }
-
-    .login-btn:hover, .logout-btn:hover { transform: translateY(-2px); }
-
+    .login-btn:hover, .logout-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,99,235,0.5); }
     .user-profile {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px 6px 6px;
-      border-radius: 999px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
+      display: none; align-items: center; gap: 8px;
+      padding: 5px 12px 5px 5px; border-radius: 999px;
+      background: var(--glass); border: 1px solid var(--glass-b);
       backdrop-filter: blur(12px);
     }
+    .user-profile img { width: 28px; height: 28px; border-radius: 50%; }
+    .user-profile span { font-size: 13px; font-weight: 700; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .user-profile img { width: 30px; height: 30px; border-radius: 50%; }
-    .user-profile span { font-size: 13px; font-weight: 700; max-width: 110px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
+    /* ══════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════ */
     .hero {
+      position: relative; z-index: 1;
       min-height: 100vh;
-      padding: 140px 80px 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 60px;
+      padding: 140px 80px 80px;
+      display: flex; align-items: center; justify-content: space-between; gap: 60px;
     }
 
-    .hero-content {
-      max-width: 640px;
-      animation: fadeUp 0.9s ease forwards;
-    }
+    .hero-content { max-width: 640px; }
 
     .tag {
-      display: inline-block;
-      padding: 7px 16px;
-      margin-bottom: 24px;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 16px; margin-bottom: 26px;
       border-radius: 999px;
-      background: rgba(56,189,248,0.14);
-      border: 1px solid rgba(56,189,248,0.4);
-      color: #7dd3fc;
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
+      background: rgba(56,189,248,0.12);
+      border: 1px solid rgba(56,189,248,0.35);
+      color: #7dd3fc; font-weight: 700; font-size: 12px;
+      letter-spacing: 1px; text-transform: uppercase;
+      opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards;
+    }
+    .tag-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s infinite;
     }
 
     .hero h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 68px;
-      line-height: 1.08;
-      margin-bottom: 22px;
+      font-size: 66px; line-height: 1.07; margin-bottom: 24px;
+      opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards;
     }
-
-    .hero h1 span {
+    .hero h1 .name {
       color: var(--accent);
-      text-shadow: 0 0 32px rgba(56,189,248,0.85);
+      text-shadow: 0 0 40px rgba(56,189,248,0.7), 0 0 80px rgba(56,189,248,0.3);
+    }
+    .cursor {
+      display: inline-block;
+      width: 3px; height: 0.85em;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 0.9s infinite;
     }
 
     .hero p {
-      font-size: 19px;
-      line-height: 1.75;
-      color: #dbeafe;
-      max-width: 540px;
-      margin-bottom: 36px;
+      font-size: 18px; line-height: 1.8; color: #c5d8f0;
+      max-width: 520px; margin-bottom: 38px;
+      opacity: 0; animation: fadeUp 0.8s 0.4s ease forwards;
     }
 
-    .buttons { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 42px; }
-
+    .buttons {
+      display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px;
+      opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards;
+    }
     .btn {
-      display: inline-block;
-      padding: 13px 26px;
-      border-radius: 14px;
-      text-decoration: none;
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 800;
-      font-size: 15px;
-      transition: 0.3s;
-      border: none;
-      cursor: pointer;
+      display: inline-block; padding: 13px 26px; border-radius: 14px;
+      text-decoration: none; font-family: 'DM Sans', sans-serif;
+      font-weight: 800; font-size: 14px; transition: 0.3s;
+      border: none; cursor: pointer; position: relative; overflow: hidden;
     }
-
+    .btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.12);
+      opacity: 0; transition: 0.2s;
+    }
+    .btn:hover::after { opacity: 1; }
+    .btn:hover { transform: translateY(-4px); }
     .primary {
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white;
-      box-shadow: 0 12px 30px rgba(37,99,235,0.4);
+      color: white; box-shadow: 0 12px 32px rgba(37,99,235,0.4);
     }
-
     .secondary {
-      background: var(--glass);
-      color: white;
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(12px);
+      background: var(--glass); color: white;
+      border: 1px solid var(--glass-b); backdrop-filter: blur(12px);
     }
 
-    .btn:hover { transform: translateY(-4px); }
-
-    .stats { display: flex; gap: 16px; flex-wrap: wrap; }
-
+    /* stats */
+    .stats {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
+    }
     .stat {
-      min-width: 136px;
-      padding: 16px 20px;
-      border-radius: var(--radius);
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
+      min-width: 130px; padding: 18px 20px;
+      border-radius: var(--r);
+      background: var(--glass); border: 1px solid var(--glass-b);
       backdrop-filter: blur(14px);
+      transition: 0.3s;
     }
-
+    .stat:hover { border-color: rgba(56,189,248,0.4); transform: translateY(-4px); }
     .stat h3 {
       font-family: 'Orbitron', sans-serif;
-      font-size: 26px;
-      color: var(--accent);
-      margin-bottom: 5px;
+      font-size: 24px; color: var(--accent); margin-bottom: 5px;
+    }
+    .stat p { font-size: 12px; color: var(--muted); margin: 0; }
+
+    /* social */
+    .social-links {
+      display: flex; gap: 12px; margin-top: 32px;
+      opacity: 0; animation: fadeUp 0.8s 0.85s ease forwards;
+    }
+    .social-link {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: var(--glass); border: 1px solid var(--glass-b);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 18px;
+      transition: 0.3s; backdrop-filter: blur(10px);
+    }
+    .social-link:hover {
+      background: rgba(56,189,248,0.18);
+      border-color: rgba(56,189,248,0.5);
+      transform: translateY(-4px);
     }
 
-    .stat p { font-size: 13px; color: var(--text-muted); margin: 0; }
+    /* ══════════════════════════════════════════
+       ORBIT CARD
+    ══════════════════════════════════════════ */
+    .orbit-wrapper {
+      position: relative; flex-shrink: 0;
+      width: 340px; height: 340px;
+      opacity: 0; animation: fadeUp 0.9s 0.3s ease forwards;
+    }
 
     .orbit-card {
-      width: 320px; height: 320px;
-      border-radius: 32px;
-      background: var(--glass);
-      border: 1px solid rgba(255,255,255,0.22);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 30px 70px rgba(0,0,0,0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      animation: float 4s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-
-    .planet {
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, #67e8f9, #2563eb 55%, #0f172a);
+      width: 100%; height: 100%;
+      border-radius: 36px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
       display: flex; align-items: center; justify-content: center;
-      font-size: 52px;
-      box-shadow: 0 0 40px rgba(56,189,248,0.85);
+      position: relative; overflow: hidden;
+      animation: float 5s ease-in-out infinite;
     }
 
     .orbit-card::before {
-      content: "";
-      position: absolute;
-      width: 210px; height: 210px;
-      border: 1px dashed rgba(255,255,255,0.2);
-      border-radius: 50%;
-      animation: spin 14s linear infinite;
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(56,189,248,0.08) 0%, transparent 60%);
     }
 
-    .orbit-dot {
-      position: absolute;
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 12px rgba(56,189,248,0.9);
-      top: calc(50% - 105px);
-      left: 50%;
-      transform-origin: 0 105px;
-      animation: spin 14s linear infinite;
+    .planet {
+      width: 110px; height: 110px; border-radius: 50%;
+      background: radial-gradient(circle at 32% 28%, #67e8f9, #2563eb 50%, #040d26);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; z-index: 2; position: relative;
+      box-shadow: 0 0 50px rgba(56,189,248,0.7), 0 0 100px rgba(56,189,248,0.2);
     }
+
+    /* orbit rings */
+    .ring {
+      position: absolute; border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,0.15);
+    }
+    .ring-1 { width: 170px; height: 170px; animation: spin 10s linear infinite; }
+    .ring-2 { width: 240px; height: 240px; animation: spin 18s linear infinite reverse; }
+    .ring-3 { width: 310px; height: 310px; animation: spin 28s linear infinite; }
+
+    .dot {
+      position: absolute; border-radius: 50%;
+      box-shadow: 0 0 8px currentColor;
+    }
+    .dot-1 { width: 8px; height: 8px; background: var(--accent); color: var(--accent); top: calc(50% - 85px); left: 50%; transform-origin: 0 85px; animation: spin 10s linear infinite; }
+    .dot-2 { width: 6px; height: 6px; background: #a78bfa; color: #a78bfa; top: calc(50% - 120px); left: 50%; transform-origin: 0 120px; animation: spin 18s linear infinite reverse; }
+    .dot-3 { width: 5px; height: 5px; background: #fb7185; color: #fb7185; top: calc(50% - 155px); left: 50%; transform-origin: 0 155px; animation: spin 28s linear infinite; }
 
     .orbit-label {
       font-family: 'Orbitron', sans-serif;
-      position: absolute;
-      bottom: 36px;
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 3px;
+      position: absolute; bottom: 30px;
+      font-size: 20px; font-weight: 900; letter-spacing: 4px;
+      color: rgba(255,255,255,0.9);
+      z-index: 2;
     }
 
-    .section { max-width: 1080px; margin: 0 auto; padding: 80px 25px; }
+    /* ══════════════════════════════════════════
+       SCROLL REVEAL
+    ══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
 
+    /* ══════════════════════════════════════════
+       ABOUT SECTION
+    ══════════════════════════════════════════ */
+    .section { max-width: 1080px; margin: 0 auto; padding: 80px 25px; position: relative; z-index: 1; }
+
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-tag {
+      display: inline-block; padding: 5px 14px; border-radius: 999px;
+      background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3);
+      color: #7dd3fc; font-size: 11px; font-weight: 800;
+      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px;
+    }
     .section-title {
-      text-align: center;
       font-family: 'Orbitron', sans-serif;
-      font-size: 36px;
-      margin-bottom: 14px;
-      letter-spacing: 1px;
+      font-size: 36px; margin-bottom: 12px; letter-spacing: 1px;
     }
+    .section-sub { color: var(--muted); font-size: 17px; max-width: 520px; margin: 0 auto; line-height: 1.7; }
 
-    .section-subtitle { text-align: center; color: var(--text-muted); margin-bottom: 44px; font-size: 17px; }
+    /* about grid */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+    }
+    .about-card {
+      padding: 32px;
+      border-radius: 24px;
+      background: var(--glass);
+      border: 1px solid var(--glass-b);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+    .about-card h3 { font-family: 'Orbitron', sans-serif; color: var(--accent); font-size: 18px; margin-bottom: 14px; }
+    .about-card p { color: #c5d8f0; line-height: 1.8; font-size: 15px; }
+    .timeline { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
+    .tl-item { display: flex; gap: 14px; align-items: flex-start; }
+    .tl-dot {
+      width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+      box-shadow: 0 0 10px var(--accent); flex-shrink: 0; margin-top: 5px;
+    }
+    .tl-text { font-size: 14px; color: #c5d8f0; line-height: 1.6; }
+    .tl-text strong { color: white; display: block; margin-bottom: 2px; }
 
+    /* ══════════════════════════════════════════
+       FOCUS CARDS
+    ══════════════════════════════════════════ */
     .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
 
     .card {
-      padding: 28px 26px;
-      border-radius: 22px;
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
+      padding: 30px 26px; border-radius: 24px;
+      background: var(--glass); border: 1px solid var(--glass-b);
       backdrop-filter: blur(16px);
-      box-shadow: 0 18px 45px rgba(0,0,0,0.3);
-      transition: 0.3s;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.28);
+      transition: 0.35s; position: relative; overflow: hidden;
     }
+    .card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(56,189,248,0.06) 0%, transparent 60%);
+      opacity: 0; transition: 0.35s;
+    }
+    .card:hover { transform: translateY(-10px); border-color: rgba(56,189,248,0.45); }
+    .card:hover::before { opacity: 1; }
+    .card-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .card h3 { color: var(--accent); margin-bottom: 12px; font-size: 19px; font-family: 'Orbitron', sans-serif; font-size: 16px; }
+    .card p { color: #dbeafe; line-height: 1.7; font-size: 14px; }
 
-    .card:hover { transform: translateY(-8px); border-color: rgba(56,189,248,0.55); }
-    .card h3 { color: var(--accent); margin-bottom: 12px; font-size: 20px; }
-    .card p { color: #e2e8f0; line-height: 1.65; font-size: 15px; }
-
+    /* ══════════════════════════════════════════
+       CHAT BUTTON & PANEL
+    ══════════════════════════════════════════ */
     #chat-btn {
       position: fixed; right: 25px; bottom: 25px;
-      width: 60px; height: 60px; border-radius: 50%;
-      border: none;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white; font-size: 24px;
-      cursor: pointer; z-index: 2000;
-      box-shadow: 0 12px 30px rgba(37,99,235,0.55);
-      transition: 0.3s;
+      width: 58px; height: 58px; border-radius: 50%;
+      border: none; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; font-size: 22px; cursor: pointer; z-index: 2000;
+      box-shadow: 0 10px 30px rgba(37,99,235,0.55); transition: 0.3s;
     }
-
-    #chat-btn:hover { transform: translateY(-4px) scale(1.06); }
+    #chat-btn:hover { transform: translateY(-4px) scale(1.07); box-shadow: 0 16px 40px rgba(37,99,235,0.65); }
 
     #chat-panel {
-      position: fixed; right: 25px; bottom: 96px;
-      width: 330px; max-height: 440px;
+      position: fixed; right: 25px; bottom: 94px;
+      width: 320px; max-height: 420px;
       display: none; flex-direction: column;
-      padding: 18px;
-      border-radius: 22px;
-      background: rgba(10,18,40,0.96);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 25px 60px rgba(0,0,0,0.55);
-      z-index: 1999;
-      overflow-y: auto;
+      padding: 18px; border-radius: 22px;
+      background: rgba(5,12,30,0.97);
+      border: 1px solid var(--glass-b); backdrop-filter: blur(24px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.6); z-index: 1999; overflow-y: auto;
     }
-
-    #chat-panel h3 { font-size: 20px; margin-bottom: 12px; color: var(--accent); font-family: 'Orbitron', sans-serif; }
-
+    #chat-panel h3 { font-family: 'Orbitron', sans-serif; font-size: 16px; margin-bottom: 14px; color: var(--accent); }
     .chat-item {
       padding: 12px; margin-bottom: 10px; border-radius: 14px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09);
     }
-
-    .chat-name { color: var(--accent); font-weight: 800; font-size: 13px; margin-bottom: 5px; }
-    .chat-text { color: #e5e7eb; font-size: 14px; line-height: 1.45; }
-
+    .chat-name { color: var(--accent); font-weight: 800; font-size: 13px; margin-bottom: 4px; }
+    .chat-text { color: #e5e7eb; font-size: 13px; line-height: 1.5; }
+    .chat-time { color: var(--muted); font-size: 11px; margin-top: 6px; }
     .chat-link {
-      display: block; margin-top: 12px; padding: 12px;
-      text-align: center; border-radius: 14px; color: white;
-      text-decoration: none; font-weight: 800;
+      display: block; margin-top: 12px; padding: 11px;
+      text-align: center; border-radius: 12px; color: white;
+      text-decoration: none; font-weight: 800; font-size: 14px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
     }
+    .chat-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 16px; }
 
-    .loading { color: var(--text-muted); font-size: 14px; text-align: center; padding: 12px; }
+    /* ══════════════════════════════════════════
+       BACK TO TOP
+    ══════════════════════════════════════════ */
+    #back-top {
+      position: fixed; left: 25px; bottom: 25px;
+      width: 46px; height: 46px; border-radius: 50%;
+      border: 1px solid var(--glass-b); background: var(--glass);
+      color: white; font-size: 18px; cursor: pointer; z-index: 2000;
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: 0.3s; box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    #back-top.show { opacity: 1; pointer-events: all; }
+    #back-top:hover { background: rgba(56,189,248,0.2); border-color: var(--accent); transform: translateY(-3px); }
 
+    /* ══════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════ */
     footer {
-      padding: 30px;
+      position: relative; z-index: 1;
+      padding: 32px;
       text-align: center;
-      color: var(--text-muted);
-      background: rgba(2,6,23,0.65);
-      border-top: 1px solid var(--glass-border);
-      font-size: 14px;
+      color: var(--muted);
+      background: rgba(2,6,23,0.6);
+      border-top: 1px solid var(--glass-b);
+      font-size: 13px;
     }
 
+    /* ══════════════════════════════════════════
+       KEYFRAMES
+    ══════════════════════════════════════════ */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(25px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
     }
     @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-18px); }
+      0%,100% { transform: translateY(0) rotate(0.3deg); }
+      50%      { transform: translateY(-20px) rotate(-0.3deg); }
     }
     @keyframes spin {
       from { transform: rotate(0deg); }
       to   { transform: rotate(360deg); }
     }
+    @keyframes blink {
+      0%,100% { opacity:1; }
+      50%      { opacity:0; }
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.5; transform:scale(0.7); }
+    }
 
-    @media (max-width: 900px) {
-      header { padding: 16px 18px; flex-wrap: wrap; gap: 10px; }
+    /* ══════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════ */
+    @media (max-width: 960px) {
+      header { padding: 16px 20px; flex-wrap: wrap; gap: 10px; }
+      header.scrolled { padding: 12px 20px; }
       nav { gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
       nav a { font-size: 13px; }
-      .login-btn, .logout-btn { padding: 8px 12px; font-size: 13px; }
-      .hero { flex-direction: column; text-align: center; padding: 150px 22px 60px; }
-      .hero h1 { font-size: 38px; }
-      .hero p { font-size: 16px; }
-      .buttons, .stats { justify-content: center; }
-      .orbit-card { width: 250px; height: 250px; }
-      .cards { grid-template-columns: 1fr; }
+      .hero { flex-direction: column; text-align: center; padding: 140px 22px 70px; gap: 48px; }
+      .hero h1 { font-size: 42px; }
+      .hero p { font-size: 16px; margin: 0 auto 36px; }
+      .buttons, .stats, .social-links { justify-content: center; }
+      .orbit-wrapper { width: 260px; height: 260px; }
+      .ring-3 { display: none; }
+      .about-grid, .cards { grid-template-columns: 1fr; }
       #chat-panel { right: 12px; left: 12px; width: auto; }
     }
   </style>
@@ -398,245 +497,525 @@
 
 <body>
 
-  <header>
-    <div class="logo">QAINAR</div>
+<!-- Progress bar -->
+<div id="progress-bar"></div>
 
-    <nav>
-      <a href="index.html" data-i18n="nav_home">Home</a>
-      <a href="projects.html" data-i18n="nav_projects">Projects</a>
-      <a href="contact.html" data-i18n="nav_contact">Contact</a>
+<!-- Star background -->
+<canvas id="star-canvas"></canvas>
 
-      <div class="lang-switcher">
-        <button class="lang-btn active" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="zh">中文</button>
-        <button class="lang-btn" data-lang="kz">ҚАЗ</button>
+<!-- ══════ HEADER ══════ -->
+<header id="header">
+  <div class="logo">QAINAR</div>
+  <nav>
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="projects.html" data-i18n="nav_projects">Projects</a>
+    <a href="contact.html" data-i18n="nav_contact">Contact</a>
+
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="kz">ҚАЗ</button>
+    </div>
+
+    <div class="auth-box">
+      <button id="login-btn" class="login-btn" data-i18n="btn_login">Login</button>
+      <div id="user-profile" class="user-profile">
+        <img id="user-photo" src="" alt="User">
+        <span id="user-name"></span>
+        <button id="logout-btn" class="logout-btn" data-i18n="btn_logout">Logout</button>
       </div>
+    </div>
+  </nav>
+</header>
 
-      <div class="auth-box">
-        <button id="login-btn" class="login-btn" data-i18n="btn_login">Login</button>
-        <div id="user-profile" class="user-profile">
-          <img id="user-photo" src="" alt="User">
-          <span id="user-name"></span>
-          <button id="logout-btn" class="logout-btn" data-i18n="btn_logout">Logout</button>
-        </div>
+<!-- ══════ HERO ══════ -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="tag">
+      <span class="tag-dot"></span>
+      <span data-i18n="hero_tag">Space Engineering Portfolio</span>
+    </div>
+
+    <h1>
+      <span data-i18n="hero_greeting">Hi, I'm </span><span class="name" id="typewriter-name">Qainar</span><span class="cursor"></span> 🚀
+    </h1>
+
+    <p data-i18n="hero_desc">
+      I am a space engineering student building real skills in physics,
+      mathematics, web development, and future space technology.
+    </p>
+
+    <div class="buttons">
+      <a class="btn primary" href="projects.html" data-i18n="btn_projects">Explore Projects</a>
+      <a class="btn secondary" href="contact.html" data-i18n="btn_comment">Leave a Comment</a>
+      <button id="hero-login-btn" class="btn primary" data-i18n="btn_google_login">Login with Google</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <h3 class="counter" data-target="3">0</h3>
+        <p data-i18n="stat1">Projects</p>
       </div>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <div class="hero-content">
-      <div class="tag" data-i18n="hero_tag">Space Engineering Portfolio</div>
-
-      <h1 data-i18n="hero_title">Hi, I'm <span>Qainar</span> 🚀</h1>
-
-      <p data-i18n="hero_desc">
-        I am a space engineering student building real skills in physics,
-        mathematics, web development, and future space technology.
-      </p>
-
-      <div class="buttons">
-        <a class="btn primary" href="projects.html" data-i18n="btn_projects">Explore Projects</a>
-        <a class="btn secondary" href="contact.html" data-i18n="btn_comment">Leave a Comment</a>
-        <button id="hero-login-btn" class="btn primary" data-i18n="btn_google_login">Login with Google</button>
+      <div class="stat">
+        <h3 class="counter" data-target="2">0</h3>
+        <p data-i18n="stat2">Languages</p>
       </div>
-
-      <div class="stats">
-        <div class="stat"><h3>01</h3><p data-i18n="stat1">Space Engineering</p></div>
-        <div class="stat"><h3>02</h3><p data-i18n="stat2">Firebase Website</p></div>
-        <div class="stat"><h3>03</h3><p data-i18n="stat3">Study Portfolio</p></div>
+      <div class="stat">
+        <h3 class="counter" data-target="1">0</h3>
+        <p data-i18n="stat3">CanSat Mission</p>
       </div>
     </div>
 
-    <div class="orbit-card">
-      <div class="planet">🚀</div>
-      <div class="orbit-dot"></div>
-      <div class="orbit-label">QAINAR</div>
+    <div class="social-links">
+      <a class="social-link" href="mailto:kkay05925@gmail.com" title="Email">✉️</a>
+      <a class="social-link" href="contact.html" title="Comment">💬</a>
+      <a class="social-link" href="projects.html" title="Projects">🚀</a>
     </div>
-  </section>
-
-  <section class="section">
-    <h2 class="section-title" data-i18n="section_title">Focus Areas</h2>
-    <p class="section-subtitle" data-i18n="section_sub">The main fields I am currently building step by step.</p>
-
-    <div class="cards">
-      <div class="card">
-        <h3>🚀 <span data-i18n="card1_title">Space Systems</span></h3>
-        <p data-i18n="card1_desc">Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.</p>
-      </div>
-      <div class="card">
-        <h3>⚙️ <span data-i18n="card2_title">Physics</span></h3>
-        <p data-i18n="card2_desc">Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.</p>
-      </div>
-      <div class="card">
-        <h3>💻 <span data-i18n="card3_title">Web Development</span></h3>
-        <p data-i18n="card3_desc">HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.</p>
-      </div>
-    </div>
-  </section>
-
-  <button id="chat-btn">💬</button>
-
-  <div id="chat-panel">
-    <h3 data-i18n="chat_title">Latest Comments</h3>
-    <div id="chat-comments">
-      <p class="loading" data-i18n="chat_loading">Loading comments...</p>
-    </div>
-    <a class="chat-link" href="contact.html" data-i18n="chat_write">Write a Comment</a>
   </div>
 
-  <footer>
-    © 2026 Qainar's Website · Space Engineering · Web Development
-  </footer>
+  <div class="orbit-wrapper">
+    <div class="orbit-card">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+      <div class="dot dot-1"></div>
+      <div class="dot dot-2"></div>
+      <div class="dot dot-3"></div>
+      <div class="planet">🚀</div>
+      <div class="orbit-label">QAINAR</div>
+    </div>
+  </div>
+</section>
 
-  <script>
-    const translations = {
-      en: {
-        nav_home: "Home", nav_projects: "Projects", nav_contact: "Contact",
-        btn_login: "Login", btn_logout: "Logout",
-        hero_tag: "Space Engineering Portfolio",
-        hero_title: `Hi, I'm <span>Qainar</span> 🚀`,
-        hero_desc: "I am a space engineering student building real skills in physics, mathematics, web development, and future space technology.",
-        btn_projects: "Explore Projects", btn_comment: "Leave a Comment", btn_google_login: "Login with Google",
-        stat1: "Space Engineering", stat2: "Firebase Website", stat3: "Study Portfolio",
-        section_title: "Focus Areas", section_sub: "The main fields I am currently building step by step.",
-        card1_title: "Space Systems", card1_desc: "Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.",
-        card2_title: "Physics", card2_desc: "Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.",
-        card3_title: "Web Development", card3_desc: "HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.",
-        chat_title: "Latest Comments", chat_loading: "Loading comments...", chat_write: "Write a Comment",
-      },
-      zh: {
-        nav_home: "首页", nav_projects: "项目", nav_contact: "联系",
-        btn_login: "登录", btn_logout: "退出",
-        hero_tag: "航天工程作品集",
-        hero_title: `你好，我是 <span>Qainar</span> 🚀`,
-        hero_desc: "我是一名航天工程专业的学生，正在物理、数学、网页开发和未来空间技术领域积累真实技能。",
-        btn_projects: "探索项目", btn_comment: "留言评论", btn_google_login: "使用 Google 登录",
-        stat1: "航天工程", stat2: "Firebase 网站", stat3: "学习作品集",
-        section_title: "专注领域", section_sub: "目前正在一步步构建的主要方向。",
-        card1_title: "航天系统", card1_desc: "航空航天基础、CanSat 实践、卫星概念及工程项目思维。",
-        card2_title: "物理学", card2_desc: "力学、动力学、电磁学、数学建模与解题实践。",
-        card3_title: "网页开发", card3_desc: "HTML、CSS、JavaScript、Firebase，构建交互式网站与实际数据库应用。",
-        chat_title: "最新留言", chat_loading: "加载留言中…", chat_write: "写留言",
-      },
-      kz: {
-        nav_home: "Басты бет", nav_projects: "Жобалар", nav_contact: "Байланыс",
-        btn_login: "Кіру", btn_logout: "Шығу",
-        hero_tag: "Ғарыш инженериясы портфолиосы",
-        hero_title: `Сәлем, мен <span>Қайнар</span> 🚀`,
-        hero_desc: "Мен ғарыш инженериясы саласында оқитын студентпін. Физика, математика, веб-әзірлеу және болашақ ғарыш технологияларында нақты дағдыларымды дамытып жатырмын.",
-        btn_projects: "Жобаларды қарау", btn_comment: "Пікір қалдыру", btn_google_login: "Google арқылы кіру",
-        stat1: "Ғарыш инженериясы", stat2: "Firebase сайты", stat3: "Оқу портфолиосы",
-        section_title: "Негізгі бағыттар", section_sub: "Қазір қадамма-қадам дамытып жатқан салаларым.",
-        card1_title: "Ғарыш жүйелері", card1_desc: "Аэроғарыш негіздері, CanSat тәжірибесі, жерсерік тұжырымдамалары және инженерлік жоба ойлауы.",
-        card2_title: "Физика", card2_desc: "Механика, динамика, электромагнетизм, математикалық модельдеу және есеп шешу практикасы.",
-        card3_title: "Веб-әзірлеу", card3_desc: "HTML, CSS, JavaScript, Firebase, интерактивті сайттар және дерекқормен байланысқан қосымшалар.",
-        chat_title: "Соңғы пікірлер", chat_loading: "Пікірлер жүктелуде…", chat_write: "Пікір жазу",
-      }
-    };
+<!-- ══════ ABOUT ══════ -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag" data-i18n="about_tag">About Me</div>
+    <h2 class="section-title" data-i18n="about_title">Who I Am</h2>
+    <p class="section-sub" data-i18n="about_sub">A student on a mission to reach the stars — one skill at a time.</p>
+  </div>
 
-    let currentLang = localStorage.getItem("lang") || "en";
+  <div class="about-grid">
+    <div class="about-card reveal reveal-delay-1">
+      <h3 data-i18n="about_card1_title">My Story</h3>
+      <p data-i18n="about_card1_desc">I'm Qainar, a space engineering student passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-text"><strong data-i18n="tl1_title">CanSat Project</strong><span data-i18n="tl1_desc">Built and launched a small satellite simulation</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-text"><strong data-i18n="tl2_title">Web Development</strong><span data-i18n="tl2_desc">Created this portfolio with Firebase & JavaScript</span></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-text"><strong data-i18n="tl3_title">Physics Studies</strong><span data-i18n="tl3_desc">Mechanics, dynamics and electromagnetism</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="about-card reveal reveal-delay-2">
+      <h3 data-i18n="about_card2_title">Skills</h3>
+      <p data-i18n="about_card2_desc">Currently growing in these areas:</p>
+      <div style="margin-top:18px; display:flex; flex-direction:column; gap:14px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#c5d8f0;">
+            <span data-i18n="skill1">Physics & Math</span><span>80%</span>
+          </div>
+          <div style="height:8px;border-radius:999px;background:rgba(255,255,255,0.1);overflow:hidden;">
+            <div class="skill-bar" data-width="80" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 1.2s ease;"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#c5d8f0;">
+            <span data-i18n="skill2">Web Development</span><span>70%</span>
+          </div>
+          <div style="height:8px;border-radius:999px;background:rgba(255,255,255,0.1);overflow:hidden;">
+            <div class="skill-bar" data-width="70" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 1.2s ease 0.2s;"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#c5d8f0;">
+            <span data-i18n="skill3">Space Engineering</span><span>65%</span>
+          </div>
+          <div style="height:8px;border-radius:999px;background:rgba(255,255,255,0.1);overflow:hidden;">
+            <div class="skill-bar" data-width="65" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 1.2s ease 0.4s;"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#c5d8f0;">
+            <span data-i18n="skill4">SAT English</span><span>75%</span>
+          </div>
+          <div style="height:8px;border-radius:999px;background:rgba(255,255,255,0.1);overflow:hidden;">
+            <div class="skill-bar" data-width="75" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 1.2s ease 0.6s;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    function applyLang(lang) {
-      currentLang = lang;
-      localStorage.setItem("lang", lang);
-      const t = translations[lang];
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (t[key] !== undefined) el.innerHTML = t[key];
+<!-- ══════ FOCUS AREAS ══════ -->
+<section class="section" style="padding-top:0">
+  <div class="section-header reveal">
+    <div class="section-tag" data-i18n="focus_tag">Focus Areas</div>
+    <h2 class="section-title" data-i18n="section_title">What I Build</h2>
+    <p class="section-sub" data-i18n="section_sub">The main fields I am currently building step by step.</p>
+  </div>
+  <div class="cards">
+    <div class="card reveal reveal-delay-1">
+      <span class="card-icon">🛰️</span>
+      <h3 data-i18n="card1_title">Space Systems</h3>
+      <p data-i18n="card1_desc">Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.</p>
+    </div>
+    <div class="card reveal reveal-delay-2">
+      <span class="card-icon">⚙️</span>
+      <h3 data-i18n="card2_title">Physics</h3>
+      <p data-i18n="card2_desc">Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.</p>
+    </div>
+    <div class="card reveal reveal-delay-3">
+      <span class="card-icon">💻</span>
+      <h3 data-i18n="card3_title">Web Development</h3>
+      <p data-i18n="card3_desc">HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Chat button -->
+<button id="chat-btn">💬</button>
+<div id="chat-panel">
+  <h3 data-i18n="chat_title">Latest Comments</h3>
+  <div id="chat-comments"><p class="chat-empty" data-i18n="chat_loading">Loading…</p></div>
+  <a class="chat-link" href="contact.html" data-i18n="chat_write">Write a Comment</a>
+</div>
+
+<!-- Back to top -->
+<button id="back-top" title="Back to top">↑</button>
+
+<footer>
+  © 2026 Qainar's Website · Space Engineering · Web Development
+</footer>
+
+<!-- ══════════════════════════════════════
+     TRANSLATIONS
+══════════════════════════════════════ -->
+<script>
+const T = {
+  en: {
+    nav_home:"Home", nav_projects:"Projects", nav_contact:"Contact",
+    btn_login:"Login", btn_logout:"Logout",
+    hero_tag:"Space Engineering Portfolio",
+    hero_greeting:"Hi, I'm ",
+    hero_desc:"I am a space engineering student building real skills in physics, mathematics, web development, and future space technology.",
+    btn_projects:"Explore Projects", btn_comment:"Leave a Comment", btn_google_login:"Login with Google",
+    stat1:"Projects", stat2:"Languages", stat3:"CanSat Mission",
+    about_tag:"About Me", about_title:"Who I Am", about_sub:"A student on a mission to reach the stars — one skill at a time.",
+    about_card1_title:"My Story", about_card1_desc:"I'm Qainar, a space engineering student passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.",
+    tl1_title:"CanSat Project", tl1_desc:"Built and launched a small satellite simulation",
+    tl2_title:"Web Development", tl2_desc:"Created this portfolio with Firebase & JavaScript",
+    tl3_title:"Physics Studies", tl3_desc:"Mechanics, dynamics and electromagnetism",
+    about_card2_title:"Skills", about_card2_desc:"Currently growing in these areas:",
+    skill1:"Physics & Math", skill2:"Web Development", skill3:"Space Engineering", skill4:"SAT English",
+    focus_tag:"Focus Areas", section_title:"What I Build", section_sub:"The main fields I am currently building step by step.",
+    card1_title:"Space Systems", card1_desc:"Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.",
+    card2_title:"Physics", card2_desc:"Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.",
+    card3_title:"Web Development", card3_desc:"HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.",
+    chat_title:"Latest Comments", chat_loading:"Loading…", chat_write:"Write a Comment",
+  },
+  zh: {
+    nav_home:"首页", nav_projects:"项目", nav_contact:"联系",
+    btn_login:"登录", btn_logout:"退出",
+    hero_tag:"航天工程作品集",
+    hero_greeting:"你好，我是 ",
+    hero_desc:"我是一名航天工程专业的学生，正在物理、数学、网页开发和未来空间技术领域积累真实技能。",
+    btn_projects:"探索项目", btn_comment:"留言评论", btn_google_login:"使用 Google 登录",
+    stat1:"项目", stat2:"语言", stat3:"CanSat 任务",
+    about_tag:"关于我", about_title:"我是谁", about_sub:"一个以触碰星空为目标、一步一步积累技能的学生。",
+    about_card1_title:"我的故事", about_card1_desc:"我是 Qainar，一名热爱航天、物理和技术的航天工程专业学生。这个网站记录我的学习旅程，展示我的项目。",
+    tl1_title:"CanSat 项目", tl1_desc:"构建并发射了小卫星模拟装置",
+    tl2_title:"网页开发", tl2_desc:"用 Firebase 和 JavaScript 搭建了这个作品集",
+    tl3_title:"物理学习", tl3_desc:"力学、动力学和电磁学",
+    about_card2_title:"技能", about_card2_desc:"目前正在提升的方向：",
+    skill1:"物理与数学", skill2:"网页开发", skill3:"航天工程", skill4:"SAT 英语",
+    focus_tag:"专注领域", section_title:"我在做什么", section_sub:"目前正在一步步构建的主要方向。",
+    card1_title:"航天系统", card1_desc:"航空航天基础、CanSat 实践、卫星概念及工程项目思维。",
+    card2_title:"物理学", card2_desc:"力学、动力学、电磁学、数学建模与解题实践。",
+    card3_title:"网页开发", card3_desc:"HTML、CSS、JavaScript、Firebase，构建交互式网站与实际数据库应用。",
+    chat_title:"最新留言", chat_loading:"加载中…", chat_write:"写留言",
+  },
+  kz: {
+    nav_home:"Басты бет", nav_projects:"Жобалар", nav_contact:"Байланыс",
+    btn_login:"Кіру", btn_logout:"Шығу",
+    hero_tag:"Ғарыш инженериясы портфолиосы",
+    hero_greeting:"Сәлем, мен ",
+    hero_desc:"Мен ғарыш инженериясы саласында оқитын студентпін. Физика, математика, веб-әзірлеу және болашақ ғарыш технологияларында нақты дағдыларымды дамытып жатырмын.",
+    btn_projects:"Жобаларды қарау", btn_comment:"Пікір қалдыру", btn_google_login:"Google арқылы кіру",
+    stat1:"Жобалар", stat2:"Тілдер", stat3:"CanSat миссиясы",
+    about_tag:"Мен туралы", about_title:"Мен кіммін", about_sub:"Жұлдыздарға жету мақсатымен, қадамма-қадам дағды жинайтын студент.",
+    about_card1_title:"Менің тарихым", about_card1_desc:"Мен Қайнармын, аэроғарыш, физика және технологияға құмар ғарыш инженериясы студентімін. Бұл сайтты оқу жолымды бекіту және жобаларымды бөлісу үшін жасадым.",
+    tl1_title:"CanSat жобасы", tl1_desc:"Шағын жерсерік симуляциясын жасадым",
+    tl2_title:"Веб-әзірлеу", tl2_desc:"Firebase және JavaScript-пен портфолио жасадым",
+    tl3_title:"Физика оқуы", tl3_desc:"Механика, динамика және электромагнетизм",
+    about_card2_title:"Дағдылар", about_card2_desc:"Қазір дамытып жатқан салалар:",
+    skill1:"Физика және математика", skill2:"Веб-әзірлеу", skill3:"Ғарыш инженериясы", skill4:"SAT ағылшын тілі",
+    focus_tag:"Негізгі бағыттар", section_title:"Мен не жасаймын", section_sub:"Қазір қадамма-қадам дамытып жатқан салаларым.",
+    card1_title:"Ғарыш жүйелері", card1_desc:"Аэроғарыш негіздері, CanSat тәжірибесі, жерсерік тұжырымдамалары және инженерлік жоба ойлауы.",
+    card2_title:"Физика", card2_desc:"Механика, динамика, электромагнетизм, математикалық модельдеу және есеп шешу практикасы.",
+    card3_title:"Веб-әзірлеу", card3_desc:"HTML, CSS, JavaScript, Firebase, интерактивті сайттар және дерекқормен байланысқан қосымшалар.",
+    chat_title:"Соңғы пікірлер", chat_loading:"Жүктелуде…", chat_write:"Пікір жазу",
+  }
+};
+
+let lang = localStorage.getItem("lang") || "en";
+
+function applyLang(l) {
+  lang = l;
+  localStorage.setItem("lang", l);
+  const t = T[l];
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const k = el.getAttribute("data-i18n");
+    if (t[k] !== undefined) el.innerHTML = t[k];
+  });
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b.dataset.lang === l));
+  document.documentElement.lang = l === "kz" ? "kk" : l;
+}
+
+document.querySelectorAll(".lang-btn").forEach(b => b.addEventListener("click", () => applyLang(b.dataset.lang)));
+applyLang(lang);
+</script>
+
+<!-- ══════════════════════════════════════
+     ANIMATIONS & INTERACTIONS
+══════════════════════════════════════ -->
+<script>
+/* ── Star canvas ── */
+(function(){
+  const canvas = document.getElementById("star-canvas");
+  const ctx = canvas.getContext("2d");
+  let W, H, stars = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  function initStars() {
+    stars = [];
+    for (let i = 0; i < 220; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: Math.random() * 1.4 + 0.2,
+        alpha: Math.random(),
+        speed: Math.random() * 0.004 + 0.001,
+        phase: Math.random() * Math.PI * 2
       });
-      document.querySelectorAll(".lang-btn").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.lang === lang);
-      });
-      document.documentElement.lang = lang === "kz" ? "kk" : lang;
     }
+  }
 
-    document.querySelectorAll(".lang-btn").forEach(btn => {
-      btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    t += 0.012;
+    stars.forEach(s => {
+      const a = 0.35 + 0.65 * Math.abs(Math.sin(t * s.speed * 80 + s.phase));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(180,210,255,${a})`;
+      ctx.fill();
     });
+    requestAnimationFrame(draw);
+  }
 
-    applyLang(currentLang);
-  </script>
+  window.addEventListener("resize", () => { resize(); initStars(); });
+  resize(); initStars(); draw();
+})();
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+/* ── Progress bar ── */
+const bar = document.getElementById("progress-bar");
+window.addEventListener("scroll", () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  bar.style.width = pct + "%";
+});
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyAhn0e4HtF_jnSu4I4JlLgpB8rz_Qnrmpo",
-      authDomain: "qainar-website.firebaseapp.com",
-      projectId: "qainar-website",
-      storageBucket: "qainar-website.firebasestorage.app",
-      messagingSenderId: "728286957196",
-      appId: "1:728286957196:web:c8d7e04c690cd76f2535a9",
-      measurementId: "G-X73HSPDGYB"
-    };
+/* ── Scrolled header ── */
+const hdr = document.getElementById("header");
+window.addEventListener("scroll", () => {
+  hdr.classList.toggle("scrolled", window.scrollY > 40);
+});
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+/* ── Back to top ── */
+const bt = document.getElementById("back-top");
+window.addEventListener("scroll", () => bt.classList.toggle("show", window.scrollY > 400));
+bt.addEventListener("click", () => window.scrollTo({ top:0, behavior:"smooth" }));
 
-    const chatButton   = document.getElementById("chat-btn");
-    const chatPanel    = document.getElementById("chat-panel");
-    const loginButton  = document.getElementById("login-btn");
-    const heroLoginBtn = document.getElementById("hero-login-btn");
-    const logoutButton = document.getElementById("logout-btn");
-    const userProfile  = document.getElementById("user-profile");
-    const userPhoto    = document.getElementById("user-photo");
-    const userName     = document.getElementById("user-name");
+/* ── Scroll reveal ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
+}, { threshold: 0.12 });
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-    chatButton.addEventListener("click", () => {
-      chatPanel.style.display = chatPanel.style.display === "flex" ? "none" : "flex";
-    });
-
-    async function loginWithGoogle() {
-      try { await signInWithPopup(auth, provider); }
-      catch (e) { alert("Login failed. Please try again."); console.error(e); }
+/* ── Skill bars ── */
+const skillObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const bars = e.target.querySelectorAll(".skill-bar");
+      bars.forEach(b => { b.style.width = b.dataset.width + "%"; });
     }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll(".about-card").forEach(el => skillObs.observe(el));
 
-    loginButton.addEventListener("click", loginWithGoogle);
-    heroLoginBtn.addEventListener("click", loginWithGoogle);
-    logoutButton.addEventListener("click", async () => { try { await signOut(auth); } catch(e){ console.error(e); } });
+/* ── Animated counters ── */
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target);
+  let cur = 0;
+  const step = Math.max(1, Math.floor(target / 30));
+  const timer = setInterval(() => {
+    cur = Math.min(cur + step, target);
+    el.textContent = String(cur).padStart(2, "0");
+    if (cur >= target) clearInterval(timer);
+  }, 40);
+}
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        loginButton.style.display  = "none";
-        heroLoginBtn.style.display = "none";
-        userProfile.style.display  = "flex";
-        userPhoto.src = user.photoURL || "";
-        userName.textContent = user.displayName || "User";
-      } else {
-        loginButton.style.display  = "inline-block";
-        heroLoginBtn.style.display = "inline-block";
-        userProfile.style.display  = "none";
-        userPhoto.src = "";
-        userName.textContent = "";
-      }
-    });
-
-    async function loadChatComments() {
-      const box = document.getElementById("chat-comments");
-      box.innerHTML = "";
-      try {
-        const snap = await getDocs(collection(db, "comments"));
-        if (snap.empty) { box.innerHTML = '<p class="loading">No comments yet.</p>'; return; }
-        snap.forEach(item => {
-          const d = item.data();
-          box.innerHTML = `
-            <div class="chat-item">
-              <div class="chat-name">${d.name || "Anonymous"}</div>
-              <div class="chat-text">${d.message || ""}</div>
-            </div>` + box.innerHTML;
-        });
-      } catch(e) {
-        box.innerHTML = '<p class="loading">Comments could not be loaded.</p>';
-        console.error(e);
-      }
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll(".counter").forEach(animateCounter);
+      counterObs.unobserve(e.target);
     }
+  });
+}, { threshold: 0.5 });
+document.querySelector(".stats") && counterObs.observe(document.querySelector(".stats"));
 
-    loadChatComments();
-  </script>
+/* ── Typewriter ── */
+(function(){
+  const el = document.getElementById("typewriter-name");
+  if (!el) return;
+  const names = { en: "Qainar", zh: "Qainar", kz: "Қайнар" };
+  let current = "", target = "", i = 0, deleting = false, timer;
+
+  function tick() {
+    const lng = localStorage.getItem("lang") || "en";
+    target = names[lng] || "Qainar";
+
+    if (!deleting && i <= target.length) {
+      current = target.slice(0, i++);
+      el.textContent = current;
+      timer = setTimeout(tick, i === target.length + 1 ? 2400 : 100);
+    } else if (!deleting && i > target.length) {
+      deleting = true;
+      timer = setTimeout(tick, 60);
+    } else if (deleting && i > 0) {
+      current = target.slice(0, --i);
+      el.textContent = current;
+      timer = setTimeout(tick, 55);
+    } else {
+      deleting = false;
+      timer = setTimeout(tick, 200);
+    }
+  }
+  tick();
+})();
+
+/* ── Chat panel ── */
+document.getElementById("chat-btn").addEventListener("click", () => {
+  const p = document.getElementById("chat-panel");
+  p.style.display = p.style.display === "flex" ? "none" : "flex";
+});
+
+/* ── Relative time ── */
+function timeAgo(date) {
+  const diff = (Date.now() - date.getTime()) / 1000;
+  if (diff < 60)   return "just now";
+  if (diff < 3600) return Math.floor(diff/60) + "m ago";
+  if (diff < 86400) return Math.floor(diff/3600) + "h ago";
+  return Math.floor(diff/86400) + "d ago";
+}
+
+window._timeAgo = timeAgo;
+</script>
+
+<!-- ══════════════════════════════════════
+     FIREBASE
+══════════════════════════════════════ -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+
+const cfg = {
+  apiKey: "AIzaSyAhn0e4HtF_jnSu4I4JlLgpB8rz_Qnrmpo",
+  authDomain: "qainar-website.firebaseapp.com",
+  projectId: "qainar-website",
+  storageBucket: "qainar-website.firebasestorage.app",
+  messagingSenderId: "728286957196",
+  appId: "1:728286957196:web:c8d7e04c690cd76f2535a9",
+  measurementId: "G-X73HSPDGYB"
+};
+
+const app  = initializeApp(cfg);
+const db   = getFirestore(app);
+const auth = getAuth(app);
+const prov = new GoogleAuthProvider();
+
+const loginBtn     = document.getElementById("login-btn");
+const heroLoginBtn = document.getElementById("hero-login-btn");
+const logoutBtn    = document.getElementById("logout-btn");
+const userProfile  = document.getElementById("user-profile");
+const userPhoto    = document.getElementById("user-photo");
+const userName     = document.getElementById("user-name");
+
+async function loginWithGoogle() {
+  try { await signInWithPopup(auth, prov); }
+  catch(e) { alert("Login failed."); console.error(e); }
+}
+
+loginBtn.addEventListener("click", loginWithGoogle);
+heroLoginBtn.addEventListener("click", loginWithGoogle);
+logoutBtn.addEventListener("click", async () => { try { await signOut(auth); } catch(e){console.error(e);} });
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    loginBtn.style.display = heroLoginBtn.style.display = "none";
+    userProfile.style.display = "flex";
+    userPhoto.src = user.photoURL || "";
+    userName.textContent = user.displayName || "User";
+  } else {
+    loginBtn.style.display = heroLoginBtn.style.display = "inline-block";
+    userProfile.style.display = "none";
+  }
+});
+
+/* load comments */
+async function loadComments() {
+  const box = document.getElementById("chat-comments");
+  box.innerHTML = "";
+  try {
+    const snap = await getDocs(collection(db, "comments"));
+    if (snap.empty) { box.innerHTML = '<p class="chat-empty">No comments yet.</p>'; return; }
+
+    const items = [];
+    snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+    items.sort((a,b) => (b.time?.seconds||0) - (a.time?.seconds||0));
+    items.slice(0, 5).forEach(d => {
+      const ago = d.time ? window._timeAgo(new Date(d.time.seconds * 1000)) : "";
+      box.innerHTML += `
+        <div class="chat-item">
+          <div class="chat-name">${d.name || "Anonymous"}</div>
+          <div class="chat-text">${d.message || ""}</div>
+          ${ago ? `<div class="chat-time">${ago}</div>` : ""}
+        </div>`;
+    });
+  } catch(e) {
+    box.innerHTML = '<p class="chat-empty">Could not load.</p>';
+    console.error(e);
+  }
+}
+
+loadComments();
+</script>
 
 </body>
 </html>

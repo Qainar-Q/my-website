@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Contact</title>
+  <title>Qainar's Website</title>
 </head>
 
 <body style="background:#0f172a;color:white;text-align:center;font-family:Arial;">
@@ -9,19 +9,22 @@
   <h1>Contact Me</h1>
   <p>Email: kkay5925@gmail.com</p>
 
-  <h2>Leave a Comment 👇</h2>
+  <h2>Leave a Comment</h2>
 
-  <input id="name" placeholder="Your name"><br><br>
-  <textarea id="comment" placeholder="Your comment"></textarea><br><br>
-  <button onclick="addComment()">Send</button>
+  <input id="name" placeholder="Your name">
+  <br><br>
 
-  <h2>Comments:</h2>
+  <textarea id="message" placeholder="Your comment"></textarea>
+  <br><br>
+
+  <button onclick="sendComment()">Send Comment</button>
+
+  <h2>Comments</h2>
   <div id="comments"></div>
 
   <br>
   <a href="index.html" style="color:lightblue;">← Back Home</a>
 
-  <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
@@ -39,34 +42,41 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // 发送评论
-    window.addComment = async function () {
-      const name = document.getElementById("name").value;
-      const comment = document.getElementById("comment").value;
+    async function loadComments() {
+      const commentsDiv = document.getElementById("comments");
+      commentsDiv.innerHTML = "";
 
-      if (!name || !comment) {
-        alert("Write something first!");
+      const querySnapshot = await getDocs(collection(db, "comments"));
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        commentsDiv.innerHTML += `
+          <p><b>${data.name}</b>: ${data.message}</p>
+        `;
+      });
+    }
+
+    window.sendComment = async function () {
+      const name = document.getElementById("name").value;
+      const message = document.getElementById("message").value;
+
+      if (name === "" || message === "") {
+        alert("Please write your name and comment.");
         return;
       }
 
       await addDoc(collection(db, "comments"), {
         name: name,
-        text: comment
+        message: message,
+        time: new Date()
       });
 
-      location.reload();
+      alert("Comment sent!");
+      document.getElementById("name").value = "";
+      document.getElementById("message").value = "";
+
+      loadComments();
     };
-
-    // 读取评论
-    async function loadComments() {
-      const querySnapshot = await getDocs(collection(db, "comments"));
-      const container = document.getElementById("comments");
-
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        container.innerHTML += `<p><b>${data.name}:</b> ${data.text}</p>`;
-      });
-    }
 
     loadComments();
   </script>

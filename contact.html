@@ -1,160 +1,233 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Qainar's Website</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Qainar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --accent: #38bdf8;
+      --accent2: #2563eb;
+      --glass: rgba(255,255,255,0.10);
+      --glass-border: rgba(255,255,255,0.18);
+      --text-muted: #cbd5e1;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'DM Sans', Arial, sans-serif;
       background: linear-gradient(135deg, #0f172a, #1e3a8a);
       color: white;
       min-height: 100vh;
       text-align: center;
     }
-
+    header {
+      width: 100%;
+      padding: 18px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      background: rgba(2,6,23,0.55);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    nav a {
+      color: white; text-decoration: none;
+      font-weight: 700; font-size: 15px; opacity: 0.85; transition: 0.25s;
+    }
+    nav a:hover { color: var(--accent); opacity: 1; }
+    .lang-switcher { display: flex; gap: 6px; }
+    .lang-btn {
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 800;
+      border-radius: 999px; padding: 5px 11px;
+      cursor: pointer; transition: 0.2s;
+    }
+    .lang-btn:hover, .lang-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: transparent; color: white;
+    }
     .container {
       max-width: 700px;
       margin: 0 auto;
-      padding: 60px 20px;
+      padding: 110px 20px 60px;
     }
-
     .card {
-      background: rgba(255,255,255,0.12);
+      background: var(--glass);
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.18);
+      border: 1px solid var(--glass-border);
       border-radius: 22px;
-      padding: 30px;
+      padding: 36px 30px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.35);
     }
-
     h1 {
-      font-size: 44px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 40px;
       margin-bottom: 10px;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-
-    .email {
-      color: #cbd5e1;
-      margin-bottom: 35px;
-    }
-
+    .email { color: var(--text-muted); margin-bottom: 30px; font-size: 15px; }
+    h2 { font-size: 22px; margin: 24px 0 14px; color: var(--accent); font-family: 'Orbitron', sans-serif; font-size: 18px; }
     input, textarea {
-      width: 90%;
-      max-width: 480px;
-      padding: 14px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 12px;
-      outline: none;
-      font-size: 15px;
+      width: 90%; max-width: 480px;
+      padding: 14px; margin: 8px 0;
+      border: 1px solid var(--glass-border);
+      border-radius: 12px; outline: none;
+      font-size: 15px; font-family: 'DM Sans', sans-serif;
+      background: rgba(255,255,255,0.08); color: white;
     }
-
-    textarea {
-      height: 90px;
-      resize: none;
-    }
-
+    input::placeholder, textarea::placeholder { color: #94a3b8; }
+    textarea { height: 90px; resize: none; }
     button {
-      border: none;
-      border-radius: 12px;
-      padding: 11px 18px;
-      cursor: pointer;
-      font-weight: bold;
+      border: none; border-radius: 12px;
+      padding: 11px 20px; cursor: pointer;
+      font-weight: 800; font-family: 'DM Sans', sans-serif;
       transition: 0.25s;
     }
-
-    button:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-
+    button:hover { transform: translateY(-2px); opacity: 0.9; }
     .send-btn {
-      background: #38bdf8;
-      color: #0f172a;
-      margin-top: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; margin-top: 10px;
+      box-shadow: 0 8px 22px rgba(37,99,235,0.35);
     }
-
     .comment {
       background: rgba(15,23,42,0.85);
-      margin: 15px auto;
+      margin: 14px auto;
       padding: 18px;
       border-radius: 18px;
-      width: 90%;
-      max-width: 480px;
+      width: 90%; max-width: 480px;
       text-align: left;
       box-shadow: 0 8px 25px rgba(0,0,0,0.28);
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--glass-border);
     }
-
-    .comment-name {
-      margin: 0;
-      font-weight: bold;
-      color: #38bdf8;
-      font-size: 17px;
-    }
-
-    .comment-text {
-      margin: 8px 0 15px;
-      color: #e5e7eb;
-      line-height: 1.5;
-    }
-
-    .like-btn {
-      background: #334155;
-      color: white;
-    }
-
-    .delete-btn {
-      background: #ef4444;
-      color: white;
-      margin-left: 10px;
-    }
-
+    .comment-name { margin: 0; font-weight: 800; color: var(--accent); font-size: 16px; }
+    .comment-text { margin: 8px 0 14px; color: #e5e7eb; line-height: 1.5; }
+    .like-btn { background: #334155; color: white; }
+    .delete-btn { background: #ef4444; color: white; margin-left: 10px; }
     .back {
-      display: inline-block;
-      margin-top: 30px;
-      color: #93c5fd;
-      text-decoration: none;
-      font-weight: bold;
+      display: inline-block; margin-top: 28px;
+      color: #93c5fd; text-decoration: none; font-weight: 800;
+    }
+    @media (max-width: 700px) {
+      header { padding: 16px 18px; flex-wrap: wrap; gap: 10px; }
+      nav { gap: 10px; flex-wrap: wrap; }
     }
   </style>
 </head>
-
 <body>
+
+  <header>
+    <div class="logo">QAINAR</div>
+    <nav>
+      <a href="index.html" data-i18n="nav_home">Home</a>
+      <a href="projects.html" data-i18n="nav_projects">Projects</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="kz">ҚАЗ</button>
+      </div>
+    </nav>
+  </header>
 
   <div class="container">
     <div class="card">
-      <h1>Contact Me</h1>
+      <h1 data-i18n="page_title">Contact Me</h1>
       <p class="email">Email: kkay05925@gmail.com</p>
 
-      <h2>Leave a Comment</h2>
+      <h2 data-i18n="form_title">Leave a Comment</h2>
+      <input id="name" data-i18n-placeholder="placeholder_name" placeholder="Your name"><br>
+      <textarea id="message" data-i18n-placeholder="placeholder_msg" placeholder="Write your comment..."></textarea><br>
+      <button class="send-btn" onclick="sendComment()" data-i18n="btn_send">Send Comment</button>
 
-      <input id="name" placeholder="Your name">
-      <br>
-
-      <textarea id="message" placeholder="Write your comment..."></textarea>
-      <br>
-
-      <button class="send-btn" onclick="sendComment()">Send Comment</button>
-
-      <h2>Comments</h2>
+      <h2 data-i18n="comments_title">Comments</h2>
       <div id="comments"></div>
 
-      <a class="back" href="index.html">← Back Home</a>
+      <a class="back" href="index.html" data-i18n="btn_back">← Back Home</a>
     </div>
   </div>
+
+  <script>
+    const translations = {
+      en: {
+        nav_home: "Home", nav_projects: "Projects", nav_contact: "Contact",
+        page_title: "Contact Me", form_title: "Leave a Comment",
+        placeholder_name: "Your name", placeholder_msg: "Write your comment...",
+        btn_send: "Send Comment", comments_title: "Comments", btn_back: "← Back Home",
+        alert_empty: "Please write your name and comment.",
+        prompt_pass: "Enter admin password:", alert_wrong: "Wrong password.",
+        confirm_delete: "Delete this comment?",
+      },
+      zh: {
+        nav_home: "首页", nav_projects: "项目", nav_contact: "联系",
+        page_title: "联系我", form_title: "留言评论",
+        placeholder_name: "你的名字", placeholder_msg: "写下你的留言…",
+        btn_send: "发送留言", comments_title: "留言区", btn_back: "← 返回首页",
+        alert_empty: "请填写名字和留言。",
+        prompt_pass: "请输入管理员密码：", alert_wrong: "密码错误。",
+        confirm_delete: "确定删除这条留言？",
+      },
+      kz: {
+        nav_home: "Басты бет", nav_projects: "Жобалар", nav_contact: "Байланыс",
+        page_title: "Маған хабарласыңыз", form_title: "Пікір қалдыру",
+        placeholder_name: "Атыңыз", placeholder_msg: "Пікіріңізді жазыңыз…",
+        btn_send: "Пікір жіберу", comments_title: "Пікірлер", btn_back: "← Басты бетке",
+        alert_empty: "Атыңызды және пікіріңізді жазыңыз.",
+        prompt_pass: "Әкімші құпия сөзін енгізіңіз:", alert_wrong: "Қате құпия сөз.",
+        confirm_delete: "Бұл пікірді жою керек пе?",
+      }
+    };
+
+    let currentLang = localStorage.getItem("lang") || "en";
+
+    function applyLang(lang) {
+      currentLang = lang;
+      localStorage.setItem("lang", lang);
+      const t = translations[lang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (t[key] !== undefined) el.placeholder = t[key];
+      });
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+    });
+
+    applyLang(currentLang);
+  </script>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
     import {
-      getFirestore,
-      collection,
-      addDoc,
-      getDocs,
-      doc,
-      updateDoc,
-      deleteDoc,
-      increment
+      getFirestore, collection, addDoc, getDocs,
+      doc, updateDoc, deleteDoc, increment
     } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -170,98 +243,70 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    function t(key) {
+      const lang = localStorage.getItem("lang") || "en";
+      return (window._translations && window._translations[lang] && window._translations[lang][key]) || key;
+    }
+    window._translations = {
+      en: { alert_empty:"Please write your name and comment.", prompt_pass:"Enter admin password:", alert_wrong:"Wrong password.", confirm_delete:"Delete this comment?" },
+      zh: { alert_empty:"请填写名字和留言。", prompt_pass:"请输入管理员密码：", alert_wrong:"密码错误。", confirm_delete:"确定删除这条留言？" },
+      kz: { alert_empty:"Атыңызды және пікіріңізді жазыңыз.", prompt_pass:"Әкімші құпия сөзін енгізіңіз:", alert_wrong:"Қате құпия сөз.", confirm_delete:"Бұл пікірді жою керек пе?" }
+    };
+
     async function loadComments() {
-      const commentsDiv = document.getElementById("comments");
-      commentsDiv.innerHTML = "";
-
-      const querySnapshot = await getDocs(collection(db, "comments"));
-
-      querySnapshot.forEach((item) => {
-        const data = item.data();
-        const likes = data.likes || 0;
-
-        commentsDiv.innerHTML = `
+      const box = document.getElementById("comments");
+      box.innerHTML = "";
+      const snap = await getDocs(collection(db, "comments"));
+      snap.forEach(item => {
+        const d = item.data();
+        box.innerHTML = `
           <div class="comment">
-            <p class="comment-name">${data.name}</p>
-            <p class="comment-text">${data.message}</p>
-
-            <button class="like-btn" onclick="likeComment('${item.id}')">
-              👍 ${likes}
-            </button>
-
-            <button class="delete-btn" onclick="deleteComment('${item.id}')">
-              Delete
-            </button>
-          </div>
-        ` + commentsDiv.innerHTML;
+            <p class="comment-name">${d.name}</p>
+            <p class="comment-text">${d.message}</p>
+            <button class="like-btn" onclick="likeComment('${item.id}')">👍 ${d.likes || 0}</button>
+            <button class="delete-btn" onclick="deleteComment('${item.id}')">🗑</button>
+          </div>` + box.innerHTML;
       });
     }
 
     window.sendComment = async function () {
       const name = document.getElementById("name").value;
       const message = document.getElementById("message").value;
-
-      if (name === "" || message === "") {
-        alert("Please write your name and comment.");
-        return;
-      }
-
-      await addDoc(collection(db, "comments"), {
-        name: name,
-        message: message,
-        likes: 0,
-        time: new Date()
-      });
-
+      const lang = localStorage.getItem("lang") || "en";
+      if (!name || !message) { alert(window._translations[lang].alert_empty); return; }
+      await addDoc(collection(db, "comments"), { name, message, likes: 0, time: new Date() });
       document.getElementById("name").value = "";
       document.getElementById("message").value = "";
-
       loadComments();
     };
 
     window.likeComment = async function (id) {
-      await updateDoc(doc(db, "comments", id), {
-        likes: increment(1)
-      });
-
+      await updateDoc(doc(db, "comments", id), { likes: increment(1) });
       loadComments();
     };
 
     window.deleteComment = async function (id) {
-  const password = prompt("Enter admin password:");
+      const lang = localStorage.getItem("lang") || "en";
+      const tr = window._translations[lang];
+      const password = prompt(tr.prompt_pass);
+      if (password !== "05925") { alert(tr.alert_wrong); return; }
+      if (!confirm(tr.confirm_delete)) return;
+      await deleteDoc(doc(db, "comments", id));
+      loadComments();
+    };
 
-  if (password !== "05925") {
-    alert("Wrong password.");
-    return;
-  }
-
-  const confirmDelete = confirm("Delete this comment?");
-  if (!confirmDelete) return;
-
-  await deleteDoc(doc(db, "comments", id));
-  loadComments();
-};
-
-    async function checkIncomingComment() {
+    async function checkIncoming() {
       const name = localStorage.getItem("newCommentName");
       const message = localStorage.getItem("newCommentMessage");
-
       if (name && message) {
-        await addDoc(collection(db, "comments"), {
-          name: name,
-          message: message,
-          likes: 0,
-          time: new Date()
-        });
-
+        await addDoc(collection(db, "comments"), { name, message, likes: 0, time: new Date() });
         localStorage.removeItem("newCommentName");
         localStorage.removeItem("newCommentMessage");
       }
-
       loadComments();
     }
 
-    checkIncomingComment();
+    checkIncoming();
   </script>
 
 </body>

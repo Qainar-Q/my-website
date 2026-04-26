@@ -69,10 +69,37 @@
       opacity: 1;
     }
 
+    .lang-switcher {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-left: 5px;
+    }
+
+    .lang-btn {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 7px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.25s;
+      backdrop-filter: blur(12px);
+    }
+
+    .lang-btn:hover,
+    .lang-btn.active {
+      background: rgba(56, 189, 248, 0.25);
+      border-color: rgba(56, 189, 248, 0.7);
+      transform: translateY(-2px);
+    }
+
     .auth-box {
       display: flex;
       align-items: center;
       gap: 10px;
+      margin-left: 5px;
     }
 
     .login-btn,
@@ -178,9 +205,6 @@
       text-decoration: none;
       font-weight: 800;
       transition: 0.3s;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
     }
 
     .primary {
@@ -449,34 +473,38 @@
     @media (max-width: 900px) {
       header {
         padding: 18px 18px;
-        flex-wrap: wrap;
-        gap: 12px;
+        gap: 10px;
       }
 
       nav {
-        gap: 12px;
+        gap: 10px;
         flex-wrap: wrap;
         justify-content: flex-end;
       }
 
       nav a {
-        font-size: 14px;
+        font-size: 13px;
+      }
+
+      .lang-btn {
+        padding: 6px 8px;
+        font-size: 12px;
       }
 
       .login-btn,
       .logout-btn {
-        padding: 8px 12px;
-        font-size: 13px;
+        padding: 8px 10px;
+        font-size: 12px;
       }
 
       .user-profile span {
-        max-width: 80px;
+        display: none;
       }
 
       .hero {
         flex-direction: column;
         text-align: center;
-        padding: 150px 25px 60px;
+        padding: 130px 25px 60px;
       }
 
       .hero h1 {
@@ -516,9 +544,15 @@
     <div class="logo">Qainar</div>
 
     <nav>
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
+      <a id="nav-home" href="index.html">Home</a>
+      <a id="nav-projects" href="projects.html">Projects</a>
+      <a id="nav-contact" href="contact.html">Contact</a>
+
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">🇺🇸 EN</button>
+        <button class="lang-btn" data-lang="kk">🇰🇿 KZ</button>
+        <button class="lang-btn" data-lang="zh">🇨🇳 CN</button>
+      </div>
 
       <div class="auth-box">
         <button id="login-btn" class="login-btn">Login</button>
@@ -534,35 +568,34 @@
 
   <section class="hero">
     <div class="hero-content">
-      <div class="tag">Space Engineering Portfolio</div>
+      <div id="hero-tag" class="tag">Space Engineering Portfolio</div>
 
-      <h1>Hi, I'm <span>Qainar</span> 🚀</h1>
+      <h1 id="hero-title">Hi, I'm <span>Qainar</span> 🚀</h1>
 
-      <p>
+      <p id="hero-description">
         I am a space engineering student building real skills in physics,
         mathematics, web development, and future space technology.
       </p>
 
       <div class="buttons">
-        <a class="btn primary" href="projects.html">Explore Projects</a>
-        <a class="btn secondary" href="contact.html">Leave a Comment</a>
-        <button id="hero-login-btn" class="btn primary">Login with Google</button>
+        <a id="btn-projects" class="btn primary" href="projects.html">Explore Projects</a>
+        <a id="btn-comment" class="btn secondary" href="contact.html">Leave a Comment</a>
       </div>
 
       <div class="stats">
         <div class="stat">
           <h3>01</h3>
-          <p>Space Engineering</p>
+          <p id="stat-one">Space Engineering</p>
         </div>
 
         <div class="stat">
           <h3>02</h3>
-          <p>Firebase Website</p>
+          <p id="stat-two">Firebase Website</p>
         </div>
 
         <div class="stat">
           <h3>03</h3>
-          <p>Study Portfolio</p>
+          <p id="stat-three">Study Portfolio</p>
         </div>
       </div>
     </div>
@@ -573,29 +606,29 @@
   </section>
 
   <section class="section">
-    <h2 class="section-title">Focus Areas</h2>
-    <p class="section-subtitle">The main fields I am currently building step by step.</p>
+    <h2 id="focus-title" class="section-title">Focus Areas</h2>
+    <p id="focus-subtitle" class="section-subtitle">The main fields I am currently building step by step.</p>
 
     <div class="cards">
       <div class="card">
-        <h3>🚀 Space Systems</h3>
-        <p>
+        <h3 id="card-one-title">🚀 Space Systems</h3>
+        <p id="card-one-text">
           Aerospace fundamentals, CanSat experience, satellite concepts,
           and engineering project thinking.
         </p>
       </div>
 
       <div class="card">
-        <h3>⚙️ Physics</h3>
-        <p>
+        <h3 id="card-two-title">⚙️ Physics</h3>
+        <p id="card-two-text">
           Mechanics, dynamics, electromagnetism, mathematical modeling,
           and problem-solving practice.
         </p>
       </div>
 
       <div class="card">
-        <h3>💻 Web Development</h3>
-        <p>
+        <h3 id="card-three-title">💻 Web Development</h3>
+        <p id="card-three-text">
           HTML, CSS, JavaScript, Firebase, interactive websites,
           and real database-connected applications.
         </p>
@@ -606,14 +639,14 @@
   <button id="chat-btn">💬</button>
 
   <div id="chat-panel">
-    <h3>Latest Comments</h3>
+    <h3 id="chat-title">Latest Comments</h3>
     <div id="chat-comments">
-      <p class="loading">Loading comments...</p>
+      <p id="chat-loading" class="loading">Loading comments...</p>
     </div>
-    <a class="chat-link" href="contact.html">Write a Comment</a>
+    <a id="chat-link" class="chat-link" href="contact.html">Write a Comment</a>
   </div>
 
-  <footer>
+  <footer id="footer-text">
     © 2026 Qainar's Website · Space Engineering · Web Development
   </footer>
 
@@ -647,11 +680,165 @@
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
+    const translations = {
+      en: {
+        title: "Qainar's Website",
+        navHome: "Home",
+        navProjects: "Projects",
+        navContact: "Contact",
+        login: "Login",
+        logout: "Logout",
+        tag: "Space Engineering Portfolio",
+        heroTitle: "Hi, I'm <span>Qainar</span> 🚀",
+        heroDescription: "I am a space engineering student building real skills in physics, mathematics, web development, and future space technology.",
+        projectsButton: "Explore Projects",
+        commentButton: "Leave a Comment",
+        statOne: "Space Engineering",
+        statTwo: "Firebase Website",
+        statThree: "Study Portfolio",
+        focusTitle: "Focus Areas",
+        focusSubtitle: "The main fields I am currently building step by step.",
+        cardOneTitle: "🚀 Space Systems",
+        cardOneText: "Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.",
+        cardTwoTitle: "⚙️ Physics",
+        cardTwoText: "Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.",
+        cardThreeTitle: "💻 Web Development",
+        cardThreeText: "HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.",
+        chatTitle: "Latest Comments",
+        chatLoading: "Loading comments...",
+        noComments: "No comments yet.",
+        commentsError: "Comments could not be loaded.",
+        chatLink: "Write a Comment",
+        footer: "© 2026 Qainar's Website · Space Engineering · Web Development"
+      },
+      kk: {
+        title: "Qainar сайты",
+        navHome: "Басты бет",
+        navProjects: "Жобалар",
+        navContact: "Байланыс",
+        login: "Кіру",
+        logout: "Шығу",
+        tag: "Ғарыш инженериясы портфолиосы",
+        heroTitle: "Сәлем, мен <span>Qainar</span> 🚀",
+        heroDescription: "Мен ғарыш инженериясы бағытында оқимын және физика, математика, веб-әзірлеу мен болашақ ғарыш технологиялары бойынша нақты дағдыларды дамытып жүрмін.",
+        projectsButton: "Жобаларды көру",
+        commentButton: "Пікір қалдыру",
+        statOne: "Ғарыш инженериясы",
+        statTwo: "Firebase сайты",
+        statThree: "Оқу портфолиосы",
+        focusTitle: "Негізгі бағыттар",
+        focusSubtitle: "Қазіргі уақытта біртіндеп дамытып жүрген негізгі салаларым.",
+        cardOneTitle: "🚀 Ғарыш жүйелері",
+        cardOneText: "Аэроғарыш негіздері, CanSat тәжірибесі, спутник ұғымдары және инженерлік жобалау ойлауы.",
+        cardTwoTitle: "⚙️ Физика",
+        cardTwoText: "Механика, динамика, электромагнетизм, математикалық модельдеу және есеп шығару тәжірибесі.",
+        cardThreeTitle: "💻 Веб-әзірлеу",
+        cardThreeText: "HTML, CSS, JavaScript, Firebase, интерактивті сайттар және дерекқормен байланысқан нақты қолданбалар.",
+        chatTitle: "Соңғы пікірлер",
+        chatLoading: "Пікірлер жүктелуде...",
+        noComments: "Әзірге пікір жоқ.",
+        commentsError: "Пікірлерді жүктеу мүмкін болмады.",
+        chatLink: "Пікір жазу",
+        footer: "© 2026 Qainar сайты · Ғарыш инженериясы · Веб-әзірлеу"
+      },
+      zh: {
+        title: "Qainar的网站",
+        navHome: "首页",
+        navProjects: "项目",
+        navContact: "联系",
+        login: "登录",
+        logout: "退出",
+        tag: "航天工程作品集",
+        heroTitle: "你好，我是 <span>Qainar</span> 🚀",
+        heroDescription: "我是一名航天工程学生，正在系统提升物理、数学、网页开发以及未来航天技术方面的真实能力。",
+        projectsButton: "查看项目",
+        commentButton: "留言评论",
+        statOne: "航天工程",
+        statTwo: "Firebase网站",
+        statThree: "学习作品集",
+        focusTitle: "主要方向",
+        focusSubtitle: "这是我目前正在一步一步积累的核心领域。",
+        cardOneTitle: "🚀 航天系统",
+        cardOneText: "航空航天基础、CanSat经验、卫星概念以及工程项目思维。",
+        cardTwoTitle: "⚙️ 物理",
+        cardTwoText: "力学、动力学、电磁学、数学建模以及解题训练。",
+        cardThreeTitle: "💻 网页开发",
+        cardThreeText: "HTML、CSS、JavaScript、Firebase、交互式网站以及连接数据库的真实应用。",
+        chatTitle: "最新评论",
+        chatLoading: "评论加载中...",
+        noComments: "暂无评论。",
+        commentsError: "评论加载失败。",
+        chatLink: "写评论",
+        footer: "© 2026 Qainar的网站 · 航天工程 · 网页开发"
+      }
+    };
+
+    let currentLanguage = localStorage.getItem("qainar_language") || "en";
+
+    function setText(id, text) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.textContent = text;
+      }
+    }
+
+    function setHTML(id, html) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.innerHTML = html;
+      }
+    }
+
+    function applyLanguage(language) {
+      currentLanguage = language;
+      localStorage.setItem("qainar_language", language);
+
+      const t = translations[language];
+
+      document.documentElement.lang = language;
+      document.title = t.title;
+
+      setText("nav-home", t.navHome);
+      setText("nav-projects", t.navProjects);
+      setText("nav-contact", t.navContact);
+      setText("login-btn", t.login);
+      setText("logout-btn", t.logout);
+      setText("hero-tag", t.tag);
+      setHTML("hero-title", t.heroTitle);
+      setText("hero-description", t.heroDescription);
+      setText("btn-projects", t.projectsButton);
+      setText("btn-comment", t.commentButton);
+      setText("stat-one", t.statOne);
+      setText("stat-two", t.statTwo);
+      setText("stat-three", t.statThree);
+      setText("focus-title", t.focusTitle);
+      setText("focus-subtitle", t.focusSubtitle);
+      setText("card-one-title", t.cardOneTitle);
+      setText("card-one-text", t.cardOneText);
+      setText("card-two-title", t.cardTwoTitle);
+      setText("card-two-text", t.cardTwoText);
+      setText("card-three-title", t.cardThreeTitle);
+      setText("card-three-text", t.cardThreeText);
+      setText("chat-title", t.chatTitle);
+      setText("chat-link", t.chatLink);
+      setText("footer-text", t.footer);
+
+      document.querySelectorAll(".lang-btn").forEach((button) => {
+        button.classList.toggle("active", button.dataset.lang === language);
+      });
+    }
+
+    document.querySelectorAll(".lang-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        applyLanguage(button.dataset.lang);
+        loadChatComments();
+      });
+    });
+
     const chatButton = document.getElementById("chat-btn");
     const chatPanel = document.getElementById("chat-panel");
 
     const loginButton = document.getElementById("login-btn");
-    const heroLoginButton = document.getElementById("hero-login-btn");
     const logoutButton = document.getElementById("logout-btn");
     const userProfile = document.getElementById("user-profile");
     const userPhoto = document.getElementById("user-photo");
@@ -661,17 +848,14 @@
       chatPanel.style.display = chatPanel.style.display === "flex" ? "none" : "flex";
     });
 
-    async function loginWithGoogle() {
+    loginButton.addEventListener("click", async () => {
       try {
         await signInWithPopup(auth, provider);
       } catch (error) {
         alert("Login failed. Please try again.");
         console.error(error);
       }
-    }
-
-    loginButton.addEventListener("click", loginWithGoogle);
-    heroLoginButton.addEventListener("click", loginWithGoogle);
+    });
 
     logoutButton.addEventListener("click", async () => {
       try {
@@ -684,13 +868,11 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         loginButton.style.display = "none";
-        heroLoginButton.style.display = "none";
         userProfile.style.display = "flex";
         userPhoto.src = user.photoURL || "";
         userName.textContent = user.displayName || "User";
       } else {
         loginButton.style.display = "inline-block";
-        heroLoginButton.style.display = "inline-block";
         userProfile.style.display = "none";
         userPhoto.src = "";
         userName.textContent = "";
@@ -699,15 +881,19 @@
 
     async function loadChatComments() {
       const box = document.getElementById("chat-comments");
-      box.innerHTML = "";
+      const t = translations[currentLanguage];
+
+      box.innerHTML = `<p class="loading">${t.chatLoading}</p>`;
 
       try {
         const querySnapshot = await getDocs(collection(db, "comments"));
 
         if (querySnapshot.empty) {
-          box.innerHTML = '<p class="loading">No comments yet.</p>';
+          box.innerHTML = `<p class="loading">${t.noComments}</p>`;
           return;
         }
+
+        box.innerHTML = "";
 
         querySnapshot.forEach((item) => {
           const data = item.data();
@@ -720,17 +906,14 @@
           ` + box.innerHTML;
         });
       } catch (error) {
-        box.innerHTML = '<p class="loading">Comments could not be loaded.</p>';
+        box.innerHTML = `<p class="loading">${t.commentsError}</p>`;
         console.error(error);
       }
     }
 
+    applyLanguage(currentLanguage);
     loadChatComments();
   </script>
 
 </body>
-</html>
-
-</body>
-</html>
 </html>

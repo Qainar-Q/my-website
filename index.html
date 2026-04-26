@@ -266,41 +266,89 @@
       font-size: 15px;
     }
 
-    .comments-panel {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 32px;
-      border-radius: 28px;
-      background: rgba(255, 255, 255, 0.11);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    #chat-btn {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      color: white;
+      font-size: 26px;
+      cursor: pointer;
+      z-index: 2000;
+      box-shadow: 0 15px 35px rgba(37, 99, 235, 0.55);
+      transition: 0.3s;
     }
 
-    .comment {
+    #chat-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+    }
+
+    #chat-panel {
+      position: fixed;
+      right: 25px;
+      bottom: 100px;
+      width: 330px;
+      max-height: 440px;
+      display: none;
+      flex-direction: column;
       padding: 18px;
-      margin: 14px 0;
-      border-radius: 18px;
-      background: rgba(15, 23, 42, 0.88);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      text-align: left;
+      border-radius: 24px;
+      background: rgba(15, 23, 42, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+      z-index: 1999;
+      overflow-y: auto;
     }
 
-    .comment-name {
+    #chat-panel h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      color: #38bdf8;
+    }
+
+    .chat-item {
+      padding: 12px;
+      margin-bottom: 10px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .chat-name {
       color: #38bdf8;
       font-weight: 800;
-      margin-bottom: 7px;
+      font-size: 14px;
+      margin-bottom: 5px;
     }
 
-    .comment-text {
+    .chat-text {
       color: #e5e7eb;
-      line-height: 1.5;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .chat-link {
+      display: block;
+      margin-top: 12px;
+      padding: 12px;
+      text-align: center;
+      border-radius: 14px;
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
     }
 
     .loading {
       color: #cbd5e1;
+      font-size: 14px;
       text-align: center;
-      padding: 15px;
+      padding: 12px;
     }
 
     footer {
@@ -376,6 +424,12 @@
 
       .cards {
         grid-template-columns: 1fr;
+      }
+
+      #chat-panel {
+        right: 15px;
+        left: 15px;
+        width: auto;
       }
     }
   </style>
@@ -462,20 +516,15 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="comments-panel">
-      <h2 class="section-title">Latest Comments</h2>
-      <p class="section-subtitle">Comments are synchronized from the contact page.</p>
+  <button id="chat-btn">💬</button>
 
-      <div id="home-comments">
-        <p class="loading">Loading comments...</p>
-      </div>
-
-      <div style="text-align:center; margin-top:25px;">
-        <a class="btn primary" href="contact.html">Write a Comment</a>
-      </div>
+  <div id="chat-panel">
+    <h3>Latest Comments</h3>
+    <div id="chat-comments">
+      <p class="loading">Loading comments...</p>
     </div>
-  </section>
+    <a class="chat-link" href="contact.html">Write a Comment</a>
+  </div>
 
   <footer>
     © 2026 Qainar's Website · Space Engineering · Web Development
@@ -502,38 +551,43 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    async function loadHomeComments() {
-      const commentsBox = document.getElementById("home-comments");
-      commentsBox.innerHTML = "";
+    const chatButton = document.getElementById("chat-btn");
+    const chatPanel = document.getElementById("chat-panel");
+
+    chatButton.addEventListener("click", () => {
+      chatPanel.style.display = chatPanel.style.display === "flex" ? "none" : "flex";
+    });
+
+    async function loadChatComments() {
+      const box = document.getElementById("chat-comments");
+      box.innerHTML = "";
 
       try {
         const querySnapshot = await getDocs(collection(db, "comments"));
 
         if (querySnapshot.empty) {
-          commentsBox.innerHTML = '<p class="loading">No comments yet.</p>';
+          box.innerHTML = '<p class="loading">No comments yet.</p>';
           return;
         }
 
         querySnapshot.forEach((item) => {
           const data = item.data();
 
-          commentsBox.innerHTML = `
-            <div class="comment">
-              <div class="comment-name">${data.name || "Anonymous"}</div>
-              <div class="comment-text">${data.message || ""}</div>
+          box.innerHTML = `
+            <div class="chat-item">
+              <div class="chat-name">${data.name || "Anonymous"}</div>
+              <div class="chat-text">${data.message || ""}</div>
             </div>
-          ` + commentsBox.innerHTML;
+          ` + box.innerHTML;
         });
       } catch (error) {
-        commentsBox.innerHTML = '<p class="loading">Comments could not be loaded.</p>';
+        box.innerHTML = '<p class="loading">Comments could not be loaded.</p>';
         console.error(error);
       }
     }
 
-    loadHomeComments();
+    loadChatComments();
   </script>
 
-</body>
-</html>
 </body>
 </html>

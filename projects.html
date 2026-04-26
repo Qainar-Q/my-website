@@ -2,18 +2,75 @@
 <html>
 <head>
   <title>Projects</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(135deg,#0f172a,#1e3a8a);
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 50px;
+      font-size: 40px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 50px;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      padding: 30px;
+      border-radius: 15px;
+      width: 250px;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      background: rgba(255,255,255,0.2);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 40px;
+      color: lightblue;
+      text-decoration: none;
+      font-size: 18px;
+    }
+  </style>
 </head>
-<body style="background:#0f172a;color:white;text-align:center;font-family:Arial;">
-  <h1>My Projects 🚀</h1>
-  <p>Here are my engineering and study projects.</p>
 
-  <h2>CanSat</h2>
-  <p>Small satellite project experience.</p>
+<body>
 
-  <h2>Physics Problems</h2>
-  <p>Mechanics & Electromagnetism work.</p>
+<h1>My Projects 🚀</h1>
 
-  <br>
-  <a href="index.html" style="color:lightblue;">← Back Home</a>
+<div class="container">
+
+  <div class="card">
+    <h2>CanSat</h2>
+    <p>Small satellite project experience.</p>
+  </div>
+
+  <div class="card">
+    <h2>Physics</h2>
+    <p>Mechanics & Electromagnetism work.</p>
+  </div>
+
+  <div class="card">
+    <h2>SAT</h2>
+    <p>Reading & Writing practice.</p>
+  </div>
+
+</div>
+
+<a href="index.html">← Back Home</a>
+
 </body>
 </html>

@@ -14,55 +14,21 @@
       color: white;
       overflow-x: hidden;
 
-      background:
-        radial-gradient(circle at 50% 45%, rgba(255,255,255,0.4), transparent 3%),
-        radial-gradient(ellipse at center, rgba(56,189,248,0.25), transparent 18%),
-        radial-gradient(ellipse at center, rgba(147,51,234,0.25), transparent 32%),
-        radial-gradient(circle at top, #0f172a, #020617 70%);
-    }
-
-    /* star layer */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
       background-image:
-        radial-gradient(white 1px, transparent 1px),
-        radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
-      background-size: 38px 38px, 90px 90px;
-      opacity: 0.2;
-      z-index: -2;
-    }
+        linear-gradient(rgba(2,6,23,0.4), rgba(2,6,23,0.85)),
+        url("galaxy.jpg");
 
-    /* galaxy swirl */
-    body::after {
-      content: "";
-      position: fixed;
-      inset: -20%;
-      background:
-        conic-gradient(from 20deg,
-          transparent,
-          rgba(56,189,248,0.15),
-          rgba(168,85,247,0.2),
-          rgba(255,255,255,0.15),
-          rgba(56,189,248,0.15),
-          transparent
-        );
-      filter: blur(60px);
-      opacity: 0.7;
-      transform: rotate(-18deg);
-      z-index: -1;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
 
     header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       padding: 20px 60px;
-      background: rgba(2,6,23,0.75);
+      background: rgba(2,6,23,0.7);
       backdrop-filter: blur(10px);
-      position: sticky;
-      top: 0;
     }
 
     nav a {
@@ -76,10 +42,9 @@
       color: #38bdf8;
     }
 
-    /* hero */
     .hero {
       text-align: center;
-      padding: 140px 20px 90px;
+      padding: 150px 20px 100px;
     }
 
     .hero h1 {
@@ -101,13 +66,12 @@
     .btn {
       margin-top: 30px;
       display: inline-block;
-      padding: 14px 28px;
+      padding: 14px 30px;
       border-radius: 14px;
       background: linear-gradient(135deg, #06b6d4, #2563eb);
       color: white;
-      font-weight: bold;
       text-decoration: none;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      font-weight: bold;
       transition: 0.3s;
     }
 
@@ -115,31 +79,11 @@
       transform: translateY(-5px) scale(1.05);
     }
 
-    /* stats */
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      padding: 50px 0;
-    }
-
-    .stat h2 {
-      font-size: 42px;
-      color: #38bdf8;
-      margin: 0;
-    }
-
-    .stat p {
-      margin: 5px 0 0;
-      color: #94a3b8;
-    }
-
-    /* cards */
     .cards {
       display: flex;
       justify-content: center;
       gap: 30px;
-      padding: 60px 20px;
+      padding: 80px 20px;
       flex-wrap: wrap;
     }
 
@@ -149,14 +93,14 @@
       border-radius: 20px;
       background: rgba(255,255,255,0.08);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.15);
       transition: 0.3s;
       text-align: center;
     }
 
     .card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
     .card h3 {
@@ -176,7 +120,7 @@
       border: none;
       font-size: 26px;
       cursor: pointer;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
 
     .chat-box {
@@ -188,7 +132,7 @@
       background: rgba(2,6,23,0.95);
       border-radius: 20px;
       padding: 20px;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
     input, textarea {
@@ -229,39 +173,24 @@
 
 <section class="hero">
   <h1>Hi, I'm <span class="glow">Qainar</span></h1>
-  <p>Space engineering · real systems · building future tech</p>
+  <p>Space engineering · building real future systems</p>
   <a class="btn" href="projects.html">Explore Projects</a>
-</section>
-
-<section class="stats">
-  <div class="stat">
-    <h2>10+</h2>
-    <p>Projects</p>
-  </div>
-  <div class="stat">
-    <h2>∞</h2>
-    <p>Ideas</p>
-  </div>
-  <div class="stat">
-    <h2>1</h2>
-    <p>Mission</p>
-  </div>
 </section>
 
 <section class="cards">
   <div class="card">
     <h3>🚀 Space</h3>
-    <p>satellites · cansat · aerospace systems</p>
+    <p>aerospace · cansat · satellites</p>
   </div>
 
   <div class="card">
     <h3>💻 Code</h3>
-    <p>web apps · firebase · real interaction</p>
+    <p>web · firebase · interaction</p>
   </div>
 
   <div class="card">
     <h3>📘 Study</h3>
-    <p>physics · sat · engineering knowledge</p>
+    <p>physics · math · engineering</p>
   </div>
 </section>
 
@@ -271,7 +200,7 @@
   <h3>Send Message</h3>
 
   <input id="homeName" placeholder="Your name">
-  <textarea id="homeMessage" placeholder="Message..."></textarea>
+  <textarea id="homeMessage" placeholder="Message"></textarea>
 
   <button class="send-btn" onclick="sendToContact()">Send</button>
 </div>
@@ -302,7 +231,5 @@ function sendToContact() {
 }
 </script>
 
-</body>
-</html>
 </body>
 </html>

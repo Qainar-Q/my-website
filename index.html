@@ -1,235 +1,539 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Qainar</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qainar's Website</title>
 
   <style>
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
+      min-height: 100vh;
       color: white;
-      overflow-x: hidden;
-
-      background-image:
-        linear-gradient(rgba(2,6,23,0.4), rgba(2,6,23,0.85)),
-        url("galaxy.jpg");
-
+      background:
+        linear-gradient(rgba(3, 7, 18, 0.62), rgba(3, 7, 18, 0.92)),
+        url("cosmic-nebula-space-background.jpg");
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
       background-attachment: fixed;
+      overflow-x: hidden;
     }
 
     header {
+      width: 100%;
+      padding: 20px 70px;
       display: flex;
       justify-content: space-between;
-      padding: 20px 60px;
-      background: rgba(2,6,23,0.7);
-      backdrop-filter: blur(10px);
+      align-items: center;
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      background: rgba(2, 6, 23, 0.55);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 1px;
     }
 
     nav a {
-      color: #cbd5e1;
-      margin-left: 20px;
+      color: white;
       text-decoration: none;
-      font-weight: bold;
+      margin-left: 28px;
+      font-weight: 700;
+      opacity: 0.85;
+      transition: 0.25s;
     }
 
     nav a:hover {
       color: #38bdf8;
+      opacity: 1;
     }
 
     .hero {
-      text-align: center;
-      padding: 150px 20px 100px;
+      min-height: 100vh;
+      padding: 140px 80px 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 60px;
+    }
+
+    .hero-content {
+      max-width: 650px;
+      animation: fadeUp 0.9s ease forwards;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 14px;
+      margin-bottom: 22px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      color: #7dd3fc;
+      font-weight: 700;
+      font-size: 14px;
     }
 
     .hero h1 {
-      font-size: 70px;
-      margin: 0;
+      font-size: 76px;
+      line-height: 1.05;
+      margin-bottom: 22px;
     }
 
-    .glow {
+    .hero h1 span {
       color: #38bdf8;
-      text-shadow: 0 0 25px #38bdf8;
+      text-shadow: 0 0 28px rgba(56, 189, 248, 0.9);
     }
 
     .hero p {
-      color: #94a3b8;
-      font-size: 20px;
-      margin-top: 20px;
+      font-size: 21px;
+      line-height: 1.7;
+      color: #dbeafe;
+      max-width: 560px;
+      margin-bottom: 34px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 45px;
     }
 
     .btn {
-      margin-top: 30px;
       display: inline-block;
-      padding: 14px 30px;
+      padding: 15px 28px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #06b6d4, #2563eb);
-      color: white;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 800;
       transition: 0.3s;
+    }
+
+    .primary {
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      color: white;
+      box-shadow: 0 15px 35px rgba(37, 99, 235, 0.45);
+    }
+
+    .secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
     }
 
     .btn:hover {
-      transform: translateY(-5px) scale(1.05);
+      transform: translateY(-4px);
     }
 
-    .cards {
+    .stats {
       display: flex;
-      justify-content: center;
-      gap: 30px;
-      padding: 80px 20px;
+      gap: 18px;
       flex-wrap: wrap;
     }
 
-    .card {
-      width: 260px;
-      padding: 25px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.08);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.15);
-      transition: 0.3s;
+    .stat {
+      min-width: 140px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(14px);
+    }
+
+    .stat h3 {
+      font-size: 28px;
+      color: #38bdf8;
+      margin-bottom: 5px;
+    }
+
+    .stat p {
+      font-size: 13px;
+      margin: 0;
+      color: #cbd5e1;
+    }
+
+    .orbit-card {
+      width: 330px;
+      height: 330px;
+      border-radius: 32px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .planet {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #67e8f9, #2563eb 55%, #0f172a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 58px;
+      box-shadow: 0 0 40px rgba(56, 189, 248, 0.85);
+    }
+
+    .orbit-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      animation: spin 12s linear infinite;
+    }
+
+    .orbit-card::after {
+      content: "Qainar";
+      position: absolute;
+      bottom: 42px;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 80px 25px;
+    }
+
+    .section-title {
       text-align: center;
+      font-size: 42px;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #cbd5e1;
+      margin-bottom: 45px;
+      font-size: 18px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      padding: 28px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.32);
+      transition: 0.3s;
     }
 
     .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      transform: translateY(-8px);
+      border-color: rgba(56, 189, 248, 0.6);
     }
 
     .card h3 {
       color: #38bdf8;
+      margin-bottom: 12px;
+      font-size: 23px;
     }
 
-    /* floating button */
-    .floating-btn {
-      position: fixed;
-      right: 30px;
-      bottom: 30px;
-      width: 65px;
-      height: 65px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #06b6d4, #2563eb);
-      color: white;
-      border: none;
-      font-size: 26px;
-      cursor: pointer;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    .card p {
+      color: #e2e8f0;
+      line-height: 1.6;
+      font-size: 15px;
     }
 
-    .chat-box {
-      display: none;
-      position: fixed;
-      right: 30px;
-      bottom: 110px;
-      width: 320px;
-      background: rgba(2,6,23,0.95);
-      border-radius: 20px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.2);
+    .comments-panel {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
     }
 
-    input, textarea {
-      width: 100%;
-      margin: 6px 0;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
+    .comment {
+      padding: 18px;
+      margin: 14px 0;
+      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-align: left;
     }
 
-    .send-btn {
-      width: 100%;
-      padding: 10px;
-      background: #38bdf8;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
+    .comment-name {
+      color: #38bdf8;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+
+    .comment-text {
+      color: #e5e7eb;
+      line-height: 1.5;
+    }
+
+    .loading {
+      color: #cbd5e1;
+      text-align: center;
+      padding: 15px;
     }
 
     footer {
+      padding: 35px;
       text-align: center;
-      padding: 30px;
-      color: #94a3b8;
+      color: #cbd5e1;
+      background: rgba(2, 6, 23, 0.65);
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-18px);
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 900px) {
+      header {
+        padding: 18px 25px;
+      }
+
+      nav a {
+        margin-left: 14px;
+        font-size: 14px;
+      }
+
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 130px 25px 60px;
+      }
+
+      .hero h1 {
+        font-size: 50px;
+      }
+
+      .hero p {
+        font-size: 17px;
+      }
+
+      .buttons,
+      .stats {
+        justify-content: center;
+      }
+
+      .orbit-card {
+        width: 260px;
+        height: 260px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h2>Qainar</h2>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="projects.html">Projects</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <header>
+    <div class="logo">Qainar</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-<section class="hero">
-  <h1>Hi, I'm <span class="glow">Qainar</span></h1>
-  <p>Space engineering · building real future systems</p>
-  <a class="btn" href="projects.html">Explore Projects</a>
-</section>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="tag">Space Engineering Portfolio</div>
 
-<section class="cards">
-  <div class="card">
-    <h3>🚀 Space</h3>
-    <p>aerospace · cansat · satellites</p>
-  </div>
+      <h1>Hi, I'm <span>Qainar</span> 🚀</h1>
 
-  <div class="card">
-    <h3>💻 Code</h3>
-    <p>web · firebase · interaction</p>
-  </div>
+      <p>
+        I am a space engineering student building real skills in physics,
+        mathematics, web development, and future space technology.
+      </p>
 
-  <div class="card">
-    <h3>📘 Study</h3>
-    <p>physics · math · engineering</p>
-  </div>
-</section>
+      <div class="buttons">
+        <a class="btn primary" href="projects.html">Explore Projects</a>
+        <a class="btn secondary" href="contact.html">Leave a Comment</a>
+      </div>
 
-<button class="floating-btn" onclick="toggleChat()">💬</button>
+      <div class="stats">
+        <div class="stat">
+          <h3>01</h3>
+          <p>Space Engineering</p>
+        </div>
 
-<div class="chat-box" id="chatBox">
-  <h3>Send Message</h3>
+        <div class="stat">
+          <h3>02</h3>
+          <p>Firebase Website</p>
+        </div>
 
-  <input id="homeName" placeholder="Your name">
-  <textarea id="homeMessage" placeholder="Message"></textarea>
+        <div class="stat">
+          <h3>03</h3>
+          <p>Study Portfolio</p>
+        </div>
+      </div>
+    </div>
 
-  <button class="send-btn" onclick="sendToContact()">Send</button>
-</div>
+    <div class="orbit-card">
+      <div class="planet">🚀</div>
+    </div>
+  </section>
 
-<footer>
-  © 2026 Qainar
-</footer>
+  <section class="section">
+    <h2 class="section-title">Focus Areas</h2>
+    <p class="section-subtitle">The main fields I am currently building step by step.</p>
 
-<script>
-function toggleChat() {
-  const box = document.getElementById("chatBox");
-  box.style.display = box.style.display === "block" ? "none" : "block";
-}
+    <div class="cards">
+      <div class="card">
+        <h3>🚀 Space Systems</h3>
+        <p>
+          Aerospace fundamentals, CanSat experience, satellite concepts,
+          and engineering project thinking.
+        </p>
+      </div>
 
-function sendToContact() {
-  const name = document.getElementById("homeName").value;
-  const message = document.getElementById("homeMessage").value;
+      <div class="card">
+        <h3>⚙️ Physics</h3>
+        <p>
+          Mechanics, dynamics, electromagnetism, mathematical modeling,
+          and problem-solving practice.
+        </p>
+      </div>
 
-  if (name === "" || message === "") {
-    alert("Write something first");
-    return;
-  }
+      <div class="card">
+        <h3>💻 Web Development</h3>
+        <p>
+          HTML, CSS, JavaScript, Firebase, interactive websites,
+          and real database-connected applications.
+        </p>
+      </div>
+    </div>
+  </section>
 
-  localStorage.setItem("newCommentName", name);
-  localStorage.setItem("newCommentMessage", message);
+  <section class="section">
+    <div class="comments-panel">
+      <h2 class="section-title">Latest Comments</h2>
+      <p class="section-subtitle">Comments are synchronized from the contact page.</p>
 
-  window.location.href = "contact.html";
-}
-</script>
+      <div id="home-comments">
+        <p class="loading">Loading comments...</p>
+      </div>
 
+      <div style="text-align:center; margin-top:25px;">
+        <a class="btn primary" href="contact.html">Write a Comment</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Qainar's Website · Space Engineering · Web Development
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      getDocs
+    } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAhn0e4HtF_jnSu4I4JlLgpB8rz_Qnrmpo",
+      authDomain: "qainar-website.firebaseapp.com",
+      projectId: "qainar-website",
+      storageBucket: "qainar-website.firebasestorage.app",
+      messagingSenderId: "728286957196",
+      appId: "1:728286957196:web:c8d7e04c690cd76f2535a9",
+      measurementId: "G-X73HSPDGYB"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadHomeComments() {
+      const commentsBox = document.getElementById("home-comments");
+      commentsBox.innerHTML = "";
+
+      try {
+        const querySnapshot = await getDocs(collection(db, "comments"));
+
+        if (querySnapshot.empty) {
+          commentsBox.innerHTML = '<p class="loading">No comments yet.</p>';
+          return;
+        }
+
+        querySnapshot.forEach((item) => {
+          const data = item.data();
+
+          commentsBox.innerHTML = `
+            <div class="comment">
+              <div class="comment-name">${data.name || "Anonymous"}</div>
+              <div class="comment-text">${data.message || ""}</div>
+            </div>
+          ` + commentsBox.innerHTML;
+        });
+      } catch (error) {
+        commentsBox.innerHTML = '<p class="loading">Comments could not be loaded.</p>';
+        console.error(error);
+      }
+    }
+
+    loadHomeComments();
+  </script>
+
+</body>
+</html>
 </body>
 </html>

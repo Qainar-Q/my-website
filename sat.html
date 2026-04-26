@@ -4,205 +4,196 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SAT | Qainar</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
+    :root {
+      --accent: #c084fc;
+      --accent2: #7c3aed;
+      --glass: rgba(255,255,255,0.10);
+      --glass-border: rgba(255,255,255,0.18);
+      --text-muted: #ede9fe;
     }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       min-height: 100vh;
+      font-family: 'DM Sans', Arial, sans-serif;
       background: radial-gradient(circle at top, #7c3aed, #020617 60%);
       color: white;
     }
-
     header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 20px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(2, 6, 23, 0.75);
-      backdrop-filter: blur(12px);
-      z-index: 100;
+      position: fixed; top: 0; width: 100%;
+      padding: 18px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: rgba(2,6,23,0.55); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border); z-index: 100;
     }
-
     .logo {
-      font-size: 24px;
-      font-weight: bold;
+      font-family: 'Orbitron', sans-serif; font-size: 20px; font-weight: 900; letter-spacing: 2px;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 25px;
-      font-weight: bold;
-      transition: 0.3s;
+    nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    nav a { color: white; text-decoration: none; font-weight: 700; font-size: 15px; opacity: 0.85; transition: 0.25s; }
+    nav a:hover { color: var(--accent); opacity: 1; }
+    .lang-switcher { display: flex; gap: 6px; }
+    .lang-btn {
+      border: 1px solid var(--glass-border); background: var(--glass);
+      color: var(--text-muted); font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 800; border-radius: 999px;
+      padding: 5px 11px; cursor: pointer; transition: 0.2s;
     }
-
-    nav a:hover {
-      color: #c084fc;
+    .lang-btn:hover, .lang-btn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: transparent; color: white;
     }
-
-    .hero {
-      padding: 150px 8% 60px;
-      text-align: center;
-    }
-
+    .hero { padding: 140px 8% 50px; text-align: center; }
     .hero h1 {
-      font-size: 56px;
-      margin-bottom: 15px;
+      font-family: 'Orbitron', sans-serif; font-size: 50px; margin-bottom: 14px;
+      background: linear-gradient(135deg, #fff, var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-
-    .hero p {
-      font-size: 20px;
-      color: #ede9fe;
-    }
-
+    .hero p { font-size: 19px; color: #ede9fe; }
     .content {
       padding: 30px 8% 90px;
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 30px;
+      display: grid; grid-template-columns: 1.3fr 1fr; gap: 28px;
     }
-
     .panel {
-      padding: 32px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(15px);
+      padding: 32px; border-radius: 24px;
+      background: var(--glass); backdrop-filter: blur(15px);
       box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      border: 1px solid var(--glass-border);
     }
-
     .panel h2 {
-      margin-bottom: 15px;
-      font-size: 30px;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 14px; font-size: 22px; color: var(--accent);
     }
-
-    .panel p, .panel li {
-      color: #ede9fe;
-      line-height: 1.7;
-      font-size: 17px;
-    }
-
-    ul {
-      margin-left: 20px;
-    }
-
-    .progress {
-      margin-top: 18px;
-    }
-
-    .progress p {
-      margin-bottom: 8px;
-    }
-
+    .panel p, .panel li { color: #ede9fe; line-height: 1.7; font-size: 16px; }
+    ul { margin-left: 20px; margin-top: 8px; }
+    li { margin-bottom: 6px; }
+    .progress { margin-top: 16px; }
+    .progress-label { margin-bottom: 7px; font-size: 15px; color: #ede9fe; }
     .bar {
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.18);
-      overflow: hidden;
-      margin-bottom: 18px;
+      height: 11px; border-radius: 999px;
+      background: rgba(255,255,255,0.15); overflow: hidden; margin-bottom: 18px;
     }
-
     .fill {
       height: 100%;
-      background: linear-gradient(90deg, #a855f7, #38bdf8);
+      background: linear-gradient(90deg, var(--accent), #38bdf8);
       border-radius: 999px;
     }
-
     .btn {
-      display: inline-block;
-      margin-top: 25px;
-      padding: 14px 26px;
-      background: #7c3aed;
-      color: white;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
+      display: inline-block; margin-top: 24px; padding: 13px 24px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: white; border-radius: 12px; text-decoration: none;
+      font-weight: 800; transition: 0.3s;
+      box-shadow: 0 8px 22px rgba(124,58,237,0.35);
     }
-
-    .btn:hover {
-      background: #c084fc;
-      transform: translateY(-4px);
-    }
-
+    .btn:hover { transform: translateY(-4px); }
     @media (max-width: 800px) {
-      .content {
-        grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 42px;
-      }
-
-      nav a {
-        margin-left: 12px;
-        font-size: 14px;
-      }
+      header { padding: 16px 18px; flex-wrap: wrap; gap: 10px; }
+      .content { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 36px; }
+      nav { gap: 10px; flex-wrap: wrap; }
     }
   </style>
 </head>
-
 <body>
 
-<header>
-  <div class="logo">Qainar's Website</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="projects.html">Projects</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <header>
+    <div class="logo">QAINAR</div>
+    <nav>
+      <a href="index.html" data-i18n="nav_home">Home</a>
+      <a href="projects.html" data-i18n="nav_projects">Projects</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
+      <div class="lang-switcher">
+        <button class="lang-btn" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="kz">ҚАЗ</button>
+      </div>
+    </nav>
+  </header>
 
-<section class="hero">
-  <h1>SAT Study 📚</h1>
-  <p>Reading, Writing, grammar, logic, and score improvement.</p>
-</section>
+  <section class="hero">
+    <h1 data-i18n="page_title">SAT Study 📚</h1>
+    <p data-i18n="page_sub">Reading, Writing, grammar, logic, and score improvement.</p>
+  </section>
 
-<section class="content">
-  <div class="panel">
-    <h2>Study Focus</h2>
-    <p>
-      This page records my SAT preparation progress, especially Reading & Writing,
-      grammar rules, transition questions, and text logic.
-    </p>
-
-    <br>
-
-    <h2>Main Topics</h2>
-    <ul>
-      <li>Reading comprehension</li>
-      <li>Grammar and punctuation</li>
-      <li>Transition words</li>
-      <li>Practice test review</li>
-      <li>Mistake analysis</li>
-    </ul>
-
-    <a href="projects.html" class="btn">← Back to Projects</a>
-  </div>
-
-  <div class="panel">
-    <h2>Progress</h2>
-
-    <div class="progress">
-      <p>Reading & Writing</p>
-      <div class="bar"><div class="fill" style="width: 70%;"></div></div>
-
-      <p>Grammar</p>
-      <div class="bar"><div class="fill" style="width: 75%;"></div></div>
-
-      <p>Math</p>
-      <div class="bar"><div class="fill" style="width: 80%;"></div></div>
+  <section class="content">
+    <div class="panel">
+      <h2 data-i18n="focus_title">Study Focus</h2>
+      <p data-i18n="focus_desc">This page records my SAT preparation progress, especially Reading & Writing, grammar rules, transition questions, and text logic.</p>
+      <br>
+      <h2 data-i18n="topics_title">Main Topics</h2>
+      <ul>
+        <li data-i18n="li1">Reading comprehension</li>
+        <li data-i18n="li2">Grammar and punctuation</li>
+        <li data-i18n="li3">Transition words</li>
+        <li data-i18n="li4">Practice test review</li>
+        <li data-i18n="li5">Mistake analysis</li>
+      </ul>
+      <a href="projects.html" class="btn" data-i18n="btn_back">← Back to Projects</a>
     </div>
-  </div>
-</section>
+    <div class="panel">
+      <h2 data-i18n="progress_title">Progress</h2>
+      <div class="progress">
+        <p class="progress-label" data-i18n="prog1">Reading & Writing</p>
+        <div class="bar"><div class="fill" style="width:70%"></div></div>
+        <p class="progress-label" data-i18n="prog2">Grammar</p>
+        <div class="bar"><div class="fill" style="width:75%"></div></div>
+        <p class="progress-label" data-i18n="prog3">Math</p>
+        <div class="bar"><div class="fill" style="width:80%"></div></div>
+      </div>
+    </div>
+  </section>
 
+  <script>
+    const translations = {
+      en: {
+        nav_home:"Home", nav_projects:"Projects", nav_contact:"Contact",
+        page_title:"SAT Study 📚", page_sub:"Reading, Writing, grammar, logic, and score improvement.",
+        focus_title:"Study Focus", focus_desc:"This page records my SAT preparation progress, especially Reading & Writing, grammar rules, transition questions, and text logic.",
+        topics_title:"Main Topics",
+        li1:"Reading comprehension", li2:"Grammar and punctuation", li3:"Transition words", li4:"Practice test review", li5:"Mistake analysis",
+        progress_title:"Progress", prog1:"Reading & Writing", prog2:"Grammar", prog3:"Math",
+        btn_back:"← Back to Projects",
+      },
+      zh: {
+        nav_home:"首页", nav_projects:"项目", nav_contact:"联系",
+        page_title:"SAT 备考 📚", page_sub:"阅读、写作、语法、逻辑与分数提升。",
+        focus_title:"学习重点", focus_desc:"本页记录我的 SAT 备考进度，尤其是阅读写作、语法规则、衔接题和文本逻辑。",
+        topics_title:"主要主题",
+        li1:"阅读理解", li2:"语法与标点", li3:"衔接词", li4:"模拟题复习", li5:"错误分析",
+        progress_title:"进度", prog1:"阅读与写作", prog2:"语法", prog3:"数学",
+        btn_back:"← 返回项目",
+      },
+      kz: {
+        nav_home:"Басты бет", nav_projects:"Жобалар", nav_contact:"Байланыс",
+        page_title:"SAT Дайындық 📚", page_sub:"Оқу, жазу, грамматика, логика және балл жақсарту.",
+        focus_title:"Оқу бағыты", focus_desc:"Бұл бетте менің SAT дайындық ілгерілеуім, әсіресе оқу және жазу, грамматика ережелері, өтпелі сұрақтар және мәтін логикасы жазылған.",
+        topics_title:"Негізгі тақырыптар",
+        li1:"Оқу түсінігі", li2:"Грамматика және тыныс белгілері", li3:"Байланыстырушы сөздер", li4:"Жаттықтыру тестін шолу", li5:"Қателерді талдау",
+        progress_title:"Ілгерілеу", prog1:"Оқу және жазу", prog2:"Грамматика", prog3:"Математика",
+        btn_back:"← Жобаларға оралу",
+      }
+    };
+
+    let currentLang = localStorage.getItem("lang") || "en";
+    function applyLang(lang) {
+      currentLang = lang; localStorage.setItem("lang", lang);
+      const t = translations[lang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (t[key] !== undefined) el.innerHTML = t[key];
+      });
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+    }
+    document.querySelectorAll(".lang-btn").forEach(btn => {
+      btn.addEventListener("click", () => applyLang(btn.dataset.lang));
+    });
+    applyLang(currentLang);
+  </script>
 </body>
 </html>

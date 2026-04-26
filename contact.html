@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Qainar's Website</title>
+
   <style>
     body {
       margin: 0;
@@ -234,7 +235,26 @@
       loadComments();
     };
 
-    loadComments();
+    async function checkIncomingComment() {
+      const name = localStorage.getItem("newCommentName");
+      const message = localStorage.getItem("newCommentMessage");
+
+      if (name && message) {
+        await addDoc(collection(db, "comments"), {
+          name: name,
+          message: message,
+          likes: 0,
+          time: new Date()
+        });
+
+        localStorage.removeItem("newCommentName");
+        localStorage.removeItem("newCommentMessage");
+      }
+
+      loadComments();
+    }
+
+    checkIncomingComment();
   </script>
 
 </body>

@@ -1,40 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qainar's Website</title>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
     body {
-      background: linear-gradient(135deg, #020617, #0f172a, #1e3a8a);
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
       color: white;
       min-height: 100vh;
     }
 
     header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 20px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(2, 6, 23, 0.75);
-      backdrop-filter: blur(12px);
-      z-index: 100;
+      padding: 22px 55px;
+      background: rgba(15, 23, 42, 0.85);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
-    .logo {
+    header h1 {
+      margin: 0;
       font-size: 24px;
-      font-weight: bold;
     }
 
     nav a {
@@ -42,257 +33,191 @@
       text-decoration: none;
       margin-left: 25px;
       font-weight: bold;
-      transition: 0.3s;
-    }
-
-    nav a:hover {
-      color: #38bdf8;
     }
 
     .hero {
-      min-height: 100vh;
-      padding: 160px 8% 80px;
       display: flex;
+      justify-content: space-around;
       align-items: center;
-      justify-content: space-between;
-      gap: 50px;
+      padding: 120px 60px;
+      flex-wrap: wrap;
     }
 
-    .hero-text {
-      max-width: 620px;
+    .hero h2 {
+      font-size: 56px;
+      margin: 0;
     }
 
-    .hero-text h1 {
-      font-size: 58px;
-      margin-bottom: 20px;
-    }
-
-    .hero-text span {
+    .blue {
       color: #38bdf8;
     }
 
-    .hero-text p {
-      font-size: 20px;
-      line-height: 1.6;
+    .hero p {
+      font-size: 18px;
       color: #cbd5e1;
-      margin-bottom: 30px;
+      max-width: 420px;
     }
 
     .btn {
       display: inline-block;
-      padding: 14px 28px;
+      margin-top: 20px;
+      padding: 13px 25px;
       background: #2563eb;
       color: white;
       border-radius: 12px;
       text-decoration: none;
       font-weight: bold;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: #38bdf8;
-      transform: translateY(-4px);
     }
 
     .profile-card {
-      width: 330px;
-      padding: 35px;
-      border-radius: 25px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(15px);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.14);
+      border-radius: 24px;
+      padding: 45px;
       text-align: center;
-      transition: 0.3s;
-    }
-
-    .profile-card:hover {
-      transform: translateY(-10px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
     }
 
     .avatar {
-      width: 110px;
-      height: 110px;
+      width: 95px;
+      height: 95px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
-      margin: 0 auto 20px;
+      background: #0ea5e9;
       display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 46px;
+      align-items: center;
+      font-size: 45px;
+      margin: auto;
     }
 
-    .section {
-      padding: 80px 8%;
-      text-align: center;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 25px;
-    }
-
-    .card {
-      padding: 30px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(12px);
-      text-decoration: none;
-      color: white;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-      background: rgba(56,189,248,0.25);
-    }
-
-    .cursor {
-      border-right: 3px solid #38bdf8;
-      padding-right: 5px;
-      animation: blink 0.8s infinite;
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-
-    /* 聊天框 */
-    .chat-button {
+    .floating-btn {
       position: fixed;
-      right: 25px;
-      bottom: 25px;
-      width: 60px;
-      height: 60px;
-      background: #38bdf8;
+      right: 28px;
+      bottom: 28px;
+      width: 65px;
+      height: 65px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: linear-gradient(135deg, #06b6d4, #2563eb);
+      color: white;
+      border: none;
       font-size: 28px;
       cursor: pointer;
-      z-index: 200;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      z-index: 20;
     }
 
     .chat-box {
       display: none;
       position: fixed;
-      right: 25px;
-      bottom: 100px;
-      width: 320px;
+      right: 28px;
+      bottom: 105px;
+      width: 330px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 22px;
       padding: 20px;
-      border-radius: 20px;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(15px);
-      z-index: 200;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      z-index: 20;
     }
 
-    .chat-box input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 10px;
-      border: none;
+    .chat-box h3 {
+      margin-top: 0;
+      text-align: center;
     }
 
-    .chat-box button {
-      width: 100%;
-      padding: 10px;
+    .chat-box input,
+    .chat-box textarea {
+      width: 92%;
+      padding: 12px;
+      margin: 8px 0;
       border-radius: 10px;
       border: none;
-      background: #2563eb;
-      color: white;
+      outline: none;
+    }
+
+    .chat-box textarea {
+      height: 80px;
+      resize: none;
+    }
+
+    .send-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: #38bdf8;
+      color: #0f172a;
+      font-weight: bold;
       cursor: pointer;
     }
 
-    .user { color: #38bdf8; }
-    .bot { color: #cbd5e1; }
-
     footer {
       text-align: center;
-      padding: 30px;
-      color: #94a3b8;
+      padding: 35px;
+      color: #cbd5e1;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">Qainar's Website</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="projects.html">Projects</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
+  <header>
+    <h1>Qainar's Website</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
 
-<section class="hero">
-  <div class="hero-text">
-    <h1>Hi, I'm <span id="typing"></span> 🚀</h1>
-    <p>Space Engineering student building future projects.</p>
-    <a href="projects.html" class="btn">View Projects</a>
+  <section class="hero">
+    <div>
+      <h2>Hi, I'm<br><span class="blue">Qainar</span> 🚀</h2>
+      <p>Space Engineering student building future projects.</p>
+      <a class="btn" href="projects.html">View Projects</a>
+    </div>
+
+    <div class="profile-card">
+      <div class="avatar">🚀</div>
+      <h2>Qainar</h2>
+    </div>
+  </section>
+
+  <button class="floating-btn" onclick="toggleChat()">💬</button>
+
+  <div class="chat-box" id="chatBox">
+    <h3>Send a Message</h3>
+
+    <input id="homeName" placeholder="Your name">
+    <textarea id="homeMessage" placeholder="Write your message..."></textarea>
+
+    <button class="send-btn" onclick="sendToContact()">Send to Contact</button>
   </div>
 
-  <div class="profile-card">
-    <div class="avatar">🚀</div>
-    <h2>Qainar</h2>
-  </div>
-</section>
+  <footer>
+    © 2026 Qainar's Website
+  </footer>
 
-<section class="section">
-  <div class="cards">
-    <a href="cansat.html" class="card"><h3>Engineering</h3></a>
-    <a href="physics.html" class="card"><h3>Physics</h3></a>
-    <a href="sat.html" class="card"><h3>SAT</h3></a>
-  </div>
-</section>
-
-<footer>
-  © 2026 Qainar
-</footer>
-
-<!-- 聊天按钮 -->
-<div class="chat-button" onclick="toggleChat()">💬</div>
-
-<div class="chat-box" id="chatBox">
-  <p class="bot">Hi! Welcome 🚀</p>
-  <input id="msg" placeholder="Type..." />
-  <button onclick="sendMsg()">Send</button>
-  <div id="chat"></div>
-</div>
-
-<script>
-  // 打字
-  const text = "Qainar";
-  let i = 0;
-  function type() {
-    if (i < text.length) {
-      document.getElementById("typing").textContent += text[i];
-      i++;
-      setTimeout(type, 120);
-    } else {
-      document.getElementById("typing").classList.add("cursor");
+  <script>
+    function toggleChat() {
+      const box = document.getElementById("chatBox");
+      box.style.display = box.style.display === "block" ? "none" : "block";
     }
-  }
-  type();
 
-  // 聊天
-  function toggleChat() {
-    const box = document.getElementById("chatBox");
-    box.style.display = box.style.display === "block" ? "none" : "block";
-  }
+    function sendToContact() {
+      const name = document.getElementById("homeName").value;
+      const message = document.getElementById("homeMessage").value;
 
-  function sendMsg() {
-    const msg = document.getElementById("msg").value;
-    const chat = document.getElementById("chat");
-    if (msg) {
-      chat.innerHTML += "<p class='user'>You: " + msg + "</p>";
-      chat.innerHTML += "<p class='bot'>Qainar: Nice message!</p>";
-      document.getElementById("msg").value = "";
+      if (name === "" || message === "") {
+        alert("Please write your name and message.");
+        return;
+      }
+
+      localStorage.setItem("newCommentName", name);
+      localStorage.setItem("newCommentMessage", message);
+
+      window.location.href = "contact.html";
     }
-  }
-</script>
+  </script>
 
 </body>
 </html>

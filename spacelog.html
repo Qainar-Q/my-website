@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Space Log | Qainar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent:  #38bdf8;
+      --accent2: #2563eb;
+      --purple:  #a78bfa;
+      --gold:    #fbbf24;
+      --green:   #34d399;
+      --glass:   rgba(255,255,255,0.07);
+      --glass-b: rgba(255,255,255,0.13);
+      --muted:   #94a3b8;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height:100vh;
+      font-family:'DM Sans',sans-serif;
+      color:white;
+      background:#020817;
+      overflow-x:hidden;
+      cursor:none;
+    }
+
+    /* CURSOR */
+    #cursor {
+      position:fixed; width:12px; height:12px; border-radius:50%;
+      background:var(--accent); pointer-events:none; z-index:99999;
+      transform:translate(-50%,-50%); mix-blend-mode:screen;
+      transition:width .2s,height .2s;
+    }
+    #cursor-ring {
+      position:fixed; width:36px; height:36px; border-radius:50%;
+      border:1.5px solid rgba(56,189,248,0.5); pointer-events:none; z-index:99998;
+      transform:translate(-50%,-50%);
+      transition:width .35s cubic-bezier(.16,1,.3,1),height .35s cubic-bezier(.16,1,.3,1),left .08s linear,top .08s linear;
+    }
+    body:has(a:hover) #cursor,
+    body:has(button:hover) #cursor { width:20px; height:20px; background:#fff; }
+    body:has(a:hover) #cursor-ring,
+    body:has(button:hover) #cursor-ring { width:52px; height:52px; border-color:rgba(56,189,248,0.9); }
+    #mouse-glow {
+      position:fixed; width:500px; height:500px; border-radius:50%;
+      background:radial-gradient(circle,rgba(56,189,248,0.06) 0%,transparent 70%);
+      pointer-events:none; z-index:0; transform:translate(-50%,-50%);
+      transition:left .15s ease,top .15s ease;
+    }
+    #progress-bar {
+      position:fixed; top:0; left:0; height:3px; width:0%;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      z-index:9999; transition:width .1s; box-shadow:0 0 12px var(--accent);
+    }
+    #star-canvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+    /* HEADER */
+    header {
+      position:fixed; top:0; width:100%; padding:18px 60px;
+      display:flex; justify-content:space-between; align-items:center;
+      z-index:1000; background:rgba(2,8,23,0.85);
+      backdrop-filter:blur(24px); border-bottom:1px solid var(--glass-b);
+      box-shadow:0 4px 30px rgba(0,0,0,0.4);
+    }
+    .logo {
+      font-family:'Orbitron',sans-serif; font-size:20px; font-weight:900; letter-spacing:3px;
+      background:linear-gradient(135deg,#fff 30%,var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; cursor:pointer;
+    }
+    nav { display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+    nav a {
+      color:white; text-decoration:none; font-weight:700; font-size:14px; opacity:0.8;
+      transition:.25s; position:relative;
+    }
+    nav a::after {
+      content:''; position:absolute; bottom:-3px; left:0;
+      width:0; height:2px; background:var(--accent); transition:width .25s;
+    }
+    nav a:hover { opacity:1; color:var(--accent); }
+    nav a:hover::after { width:100%; }
+
+    .hamburger {
+      display:none; flex-direction:column; justify-content:center; align-items:center;
+      width:40px; height:40px; cursor:pointer; gap:5px;
+      border:1px solid var(--glass-b); background:var(--glass); border-radius:10px; backdrop-filter:blur(10px);
+    }
+    .hamburger span { display:block; width:20px; height:2px; background:white; border-radius:2px; transition:.3s; }
+    .hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity:0; }
+    .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+    .mobile-nav {
+      position:fixed; top:0; right:-100%; width:min(300px,80vw); height:100vh;
+      background:rgba(2,8,23,0.97); border-left:1px solid var(--glass-b);
+      backdrop-filter:blur(30px); z-index:999; padding:90px 30px 30px;
+      display:flex; flex-direction:column; gap:24px;
+      transition:right .4s cubic-bezier(.16,1,.3,1);
+    }
+    .mobile-nav.open { right:0; }
+    .mobile-nav a {
+      color:white; text-decoration:none; font-size:18px; font-weight:700;
+      padding:12px 0; border-bottom:1px solid var(--glass-b); transition:color .2s;
+    }
+    .mobile-nav a:hover { color:var(--accent); }
+    .mobile-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,0.6);
+      z-index:998; display:none; backdrop-filter:blur(3px);
+    }
+    .mobile-overlay.open { display:block; }
+
+    .lang-switcher { display:flex; gap:5px; }
+    .lang-btn {
+      border:1px solid var(--glass-b); background:var(--glass);
+      color:var(--muted); font-family:'DM Sans',sans-serif;
+      font-size:11px; font-weight:800; border-radius:999px;
+      padding:4px 10px; cursor:pointer; transition:.2s;
+    }
+    .lang-btn:hover,.lang-btn.active {
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border-color:transparent; color:white;
+    }
+
+    /* HERO */
+    .hero {
+      position:relative; z-index:1;
+      min-height:60vh; padding:150px 80px 70px;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center;
+    }
+    .hero-tag {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 18px; margin-bottom:26px; border-radius:999px;
+      background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.35);
+      color:#7dd3fc; font-weight:700; font-size:12px; letter-spacing:1px; text-transform:uppercase;
+      opacity:0; animation:fadeUp .7s .1s ease forwards;
+    }
+    .tag-dot {
+      width:7px; height:7px; border-radius:50%;
+      background:var(--accent); box-shadow:0 0 8px var(--accent); animation:pulse 2s infinite;
+    }
+    .hero h1 {
+      font-family:'Orbitron',sans-serif; font-size:60px; line-height:1.07; margin-bottom:20px;
+      background:linear-gradient(135deg,#fff 30%,var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      opacity:0; animation:fadeUp .8s .25s ease forwards;
+    }
+    .hero p {
+      font-size:18px; color:#c5d8f0; max-width:580px; line-height:1.8;
+      opacity:0; animation:fadeUp .8s .4s ease forwards;
+    }
+
+    /* COUNTDOWN BANNER */
+    .countdown-banner {
+      position:relative; z-index:1;
+      max-width:900px; margin:0 auto 0;
+      padding:0 25px 60px;
+    }
+    .countdown-card {
+      padding:36px 40px; border-radius:28px;
+      background:linear-gradient(135deg, rgba(251,191,36,0.08), rgba(56,189,248,0.06));
+      border:1px solid rgba(251,191,36,0.3);
+      backdrop-filter:blur(20px);
+      box-shadow:0 24px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(251,191,36,0.15);
+      display:flex; align-items:center; gap:32px; flex-wrap:wrap;
+      opacity:0; animation:fadeUp .8s .55s ease forwards;
+    }
+    .countdown-icon { font-size:52px; flex-shrink:0; }
+    .countdown-text h2 {
+      font-family:'Orbitron',sans-serif; font-size:22px; color:var(--gold); margin-bottom:8px;
+    }
+    .countdown-text p { color:#e2d9a8; font-size:15px; line-height:1.7; max-width:560px; }
+    .year-badge {
+      margin-left:auto; flex-shrink:0;
+      font-family:'Orbitron',sans-serif; font-size:48px; font-weight:900;
+      color:var(--gold); opacity:0.9;
+      text-shadow:0 0 40px rgba(251,191,36,0.4);
+    }
+
+    /* SECTION */
+    .section { max-width:980px; margin:0 auto; padding:60px 25px; position:relative; z-index:1; }
+    .section-header { text-align:center; margin-bottom:48px; }
+    .section-tag {
+      display:inline-block; padding:5px 14px; border-radius:999px;
+      background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3);
+      color:#7dd3fc; font-size:11px; font-weight:800; letter-spacing:1.5px;
+      text-transform:uppercase; margin-bottom:14px;
+    }
+    .section-title { font-family:'Orbitron',sans-serif; font-size:32px; margin-bottom:10px; }
+    .section-sub { color:var(--muted); font-size:16px; max-width:500px; margin:0 auto; line-height:1.7; }
+
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(32px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-delay-1 { transition-delay:.1s; }
+    .reveal-delay-2 { transition-delay:.2s; }
+    .reveal-delay-3 { transition-delay:.3s; }
+    .reveal-delay-4 { transition-delay:.4s; }
+
+    /* ROADMAP TIMELINE */
+    .roadmap {
+      position:relative;
+      padding-left:50px;
+    }
+    .roadmap::before {
+      content:''; position:absolute; left:20px; top:8px; bottom:8px; width:2px;
+      background:linear-gradient(180deg,var(--accent),var(--purple),var(--gold),rgba(251,191,36,0.1));
+    }
+    .roadmap-item {
+      position:relative; margin-bottom:32px;
+      padding:26px 28px; border-radius:22px;
+      background:var(--glass); border:1px solid var(--glass-b);
+      backdrop-filter:blur(16px);
+      box-shadow:0 16px 40px rgba(0,0,0,0.2);
+      transition:.3s;
+    }
+    .roadmap-item:hover { transform:translateX(8px); }
+    .roadmap-item.highlight {
+      background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(56,189,248,0.04));
+      border-color:rgba(251,191,36,0.3);
+    }
+    .roadmap-item.highlight:hover { border-color:rgba(251,191,36,0.55); }
+    .roadmap-dot {
+      position:absolute; left:-38px; top:28px;
+      width:20px; height:20px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center; font-size:10px;
+    }
+    .roadmap-dot.blue { background:linear-gradient(135deg,var(--accent),var(--accent2)); box-shadow:0 0 16px rgba(56,189,248,0.6); }
+    .roadmap-dot.purple { background:linear-gradient(135deg,var(--purple),#6d28d9); box-shadow:0 0 16px rgba(167,139,250,0.6); }
+    .roadmap-dot.gold { background:linear-gradient(135deg,var(--gold),#d97706); box-shadow:0 0 16px rgba(251,191,36,0.7); }
+    .roadmap-dot.green { background:linear-gradient(135deg,var(--green),#059669); box-shadow:0 0 16px rgba(52,211,153,0.6); }
+
+    .roadmap-year {
+      font-family:'Orbitron',sans-serif; font-size:12px; font-weight:900;
+      letter-spacing:2px; margin-bottom:8px;
+    }
+    .roadmap-year.blue { color:var(--accent); }
+    .roadmap-year.purple { color:var(--purple); }
+    .roadmap-year.gold { color:var(--gold); }
+    .roadmap-year.green { color:var(--green); }
+
+    .roadmap-title {
+      font-family:'Orbitron',sans-serif; font-size:18px; color:white; margin-bottom:10px;
+    }
+    .roadmap-desc { color:#c5d8f0; font-size:14px; line-height:1.8; }
+    .roadmap-tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+    .rtag {
+      padding:4px 12px; border-radius:999px; font-size:11px; font-weight:800;
+      letter-spacing:0.5px;
+    }
+    .rtag.blue { background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); color:#7dd3fc; }
+    .rtag.purple { background:rgba(167,139,250,0.12); border:1px solid rgba(167,139,250,0.25); color:#c4b5fd; }
+    .rtag.gold { background:rgba(251,191,36,0.12); border:1px solid rgba(251,191,36,0.25); color:#fde68a; }
+    .rtag.green { background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.25); color:#6ee7b7; }
+
+    /* BAIKONUR CARD */
+    .baikonur-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+    .info-card {
+      padding:28px; border-radius:22px;
+      background:var(--glass); border:1px solid var(--glass-b);
+      backdrop-filter:blur(16px); box-shadow:0 18px 48px rgba(0,0,0,0.25);
+      transition:.3s;
+    }
+    .info-card:hover { transform:translateY(-6px); border-color:rgba(56,189,248,0.35); }
+    .info-card-icon { font-size:36px; margin-bottom:14px; }
+    .info-card h3 { font-family:'Orbitron',sans-serif; font-size:16px; color:var(--accent); margin-bottom:10px; }
+    .info-card p { color:#c5d8f0; font-size:14px; line-height:1.8; }
+
+    /* VISION QUOTE */
+    .vision-box {
+      padding:40px 44px; border-radius:28px; text-align:center;
+      background:linear-gradient(135deg,rgba(56,189,248,0.07),rgba(167,139,250,0.06));
+      border:1px solid rgba(167,139,250,0.3);
+      backdrop-filter:blur(20px);
+      box-shadow:0 24px 60px rgba(0,0,0,0.25);
+    }
+    .vision-box .quote-mark {
+      font-family:'Orbitron',sans-serif; font-size:64px; line-height:1;
+      color:var(--purple); opacity:0.4; margin-bottom:12px; display:block;
+    }
+    .vision-box p {
+      font-family:'Orbitron',sans-serif; font-size:18px; line-height:1.7;
+      background:linear-gradient(135deg,#fff,var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      max-width:680px; margin:0 auto 20px;
+    }
+    .vision-box .attribution { color:var(--muted); font-size:13px; font-weight:700; letter-spacing:1px; }
+
+    /* LOG ENTRIES */
+    .log-list { display:flex; flex-direction:column; gap:18px; }
+    .log-item {
+      padding:22px 26px; border-radius:20px;
+      background:var(--glass); border:1px solid var(--glass-b);
+      backdrop-filter:blur(14px); display:flex; gap:18px; align-items:flex-start;
+      transition:.3s;
+    }
+    .log-item:hover { border-color:rgba(56,189,248,0.3); transform:translateX(5px); }
+    .log-emoji { font-size:28px; flex-shrink:0; margin-top:2px; }
+    .log-content {}
+    .log-date { font-size:11px; font-weight:800; color:var(--muted); letter-spacing:1px; margin-bottom:6px; text-transform:uppercase; }
+    .log-title { font-family:'Orbitron',sans-serif; font-size:15px; color:white; margin-bottom:6px; }
+    .log-text { color:#94a3b8; font-size:13px; line-height:1.7; }
+
+    /* METEOR */
+    .meteor {
+      position:fixed; border-radius:999px;
+      background:linear-gradient(90deg,white,transparent);
+      pointer-events:none; z-index:0; opacity:0;
+      animation:meteor linear forwards;
+    }
+
+    /* BACK TO TOP */
+    #back-top {
+      position:fixed; left:25px; bottom:25px;
+      width:46px; height:46px; border-radius:50%;
+      border:1px solid var(--glass-b); background:var(--glass);
+      color:white; font-size:18px; cursor:pointer; z-index:2000;
+      backdrop-filter:blur(12px);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none;
+      transition:.3s; box-shadow:0 8px 24px rgba(0,0,0,0.3);
+    }
+    #back-top.show { opacity:1; pointer-events:all; }
+    #back-top:hover { background:rgba(56,189,248,0.2); border-color:var(--accent); transform:translateY(-3px); }
+
+    footer {
+      position:relative; z-index:1; padding:32px;
+      text-align:center; color:var(--muted);
+      background:rgba(2,6,23,0.6); border-top:1px solid var(--glass-b); font-size:13px;
+    }
+
+    /* KEYFRAMES */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);} }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.7);} }
+    @keyframes spin { from{transform:rotate(0);}to{transform:rotate(360deg);} }
+    @keyframes meteor {
+      0%{transform:translateX(0) translateY(0);opacity:1;}
+      100%{transform:translateX(-600px) translateY(300px);opacity:0;}
+    }
+    @keyframes glow-pulse {
+      0%,100%{box-shadow:0 0 20px rgba(251,191,36,0.3);}
+      50%{box-shadow:0 0 50px rgba(251,191,36,0.7);}
+    }
+
+    @media(max-width:900px){
+      body { cursor:auto; }
+      #cursor,#cursor-ring { display:none; }
+      header { padding:16px 20px; }
+      nav { display:none; }
+      .hamburger { display:flex; }
+      .hero { padding:130px 22px 50px; }
+      .hero h1 { font-size:38px; }
+      .countdown-card { flex-direction:column; gap:20px; }
+      .year-badge { margin-left:0; font-size:36px; }
+      .baikonur-grid { grid-template-columns:1fr; }
+      .countdown-banner { padding:0 16px 50px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="mouse-glow"></div>
+<div id="progress-bar"></div>
+<canvas id="star-canvas"></canvas>
+
+<div class="mobile-overlay" id="mobile-overlay"></div>
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html" data-i18n="nav_home">Home</a>
+  <a href="projects.html" data-i18n="nav_projects">Projects</a>
+  <a href="contact.html" data-i18n="nav_contact">Contact</a>
+  <div class="lang-switcher" style="margin-top:8px;">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+    <button class="lang-btn" data-lang="kz">ҚАЗ</button>
+  </div>
+</div>
+
+<header>
+  <div class="logo">QAINAR</div>
+  <nav>
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="projects.html" data-i18n="nav_projects">Projects</a>
+    <a href="contact.html" data-i18n="nav_contact">Contact</a>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="kz">ҚАЗ</button>
+    </div>
+  </nav>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">
+    <span class="tag-dot"></span>
+    <span data-i18n="hero_tag">Personal Mission Log</span>
+  </div>
+  <h1 data-i18n="hero_title">Space Log 🌌</h1>
+  <p data-i18n="hero_sub">My dreams, goals, and the mission to make Kazakhstan a spacefaring nation — starting from one student, one step at a time.</p>
+</section>
+
+<!-- BAIKONUR COUNTDOWN BANNER -->
+<div class="countdown-banner">
+  <div class="countdown-card reveal">
+    <div class="countdown-icon">🚀</div>
+    <div class="countdown-text">
+      <h2 data-i18n="baikonur_title">Baikonur Cosmodrome — 2050 Deadline</h2>
+      <p data-i18n="baikonur_desc">Kazakhstan's lease of Baikonur to Russia expires in 2050. This is not just a date — it is a challenge. By then, Kazakhstan must have its own scientists, engineers, and space program ready to take ownership of the world's oldest and most legendary launch site.</p>
+    </div>
+    <div class="year-badge">2050</div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<section class="section">
+  <div class="section-header reveal">
+    <div class="section-tag" data-i18n="roadmap_tag">My Roadmap</div>
+    <h2 class="section-title" data-i18n="roadmap_title">The Mission Plan</h2>
+    <p class="section-sub" data-i18n="roadmap_sub">From a student in Almaty to a scientist helping build Kazakhstan's space future.</p>
+  </div>
+
+  <div class="roadmap">
+    <div class="roadmap-item reveal reveal-delay-1">
+      <div class="roadmap-dot blue">🎓</div>
+      <div class="roadmap-year blue" data-i18n="year1">2025 — NOW</div>
+      <div class="roadmap-title" data-i18n="rm1_title">Building the Foundation</div>
+      <div class="roadmap-desc" data-i18n="rm1_desc">Studying physics, mathematics, and web development. Completing the CanSat project — my first hands-on experience with real aerospace engineering. Learning every day, building this portfolio to document the journey.</div>
+      <div class="roadmap-tags">
+        <span class="rtag blue">Physics</span>
+        <span class="rtag blue">CanSat</span>
+        <span class="rtag blue">Web Dev</span>
+        <span class="rtag blue">Mathematics</span>
+      </div>
+    </div>
+
+    <div class="roadmap-item reveal reveal-delay-2">
+      <div class="roadmap-dot purple">🏫</div>
+      <div class="roadmap-year purple" data-i18n="year2">2026–2030 — UNIVERSITY</div>
+      <div class="roadmap-title" data-i18n="rm2_title">Space Engineering Degree</div>
+      <div class="roadmap-desc" data-i18n="rm2_desc">Pursue aerospace or space engineering at a top university — ideally in Kazakhstan, Russia, or internationally. Specialize in orbital mechanics, propulsion systems, or satellite technology. Publish research. Build a network of future scientists.</div>
+      <div class="roadmap-tags">
+        <span class="rtag purple">Aerospace</span>
+        <span class="rtag purple">Research</span>
+        <span class="rtag purple">Orbital Mechanics</span>
+      </div>
+    </div>
+
+    <div class="roadmap-item reveal reveal-delay-3">
+      <div class="roadmap-dot blue">🛰️</div>
+      <div class="roadmap-year blue" data-i18n="year3">2030–2040 — CAREER</div>
+      <div class="roadmap-title" data-i18n="rm3_title">Becoming a Real Space Engineer</div>
+      <div class="roadmap-desc" data-i18n="rm3_desc">Work at a space agency or research institute. Contribute to real satellite missions, launch systems, or planetary science. Gain experience internationally, then bring it back to Kazakhstan. Mentor the next generation of Kazakh space engineers.</div>
+      <div class="roadmap-tags">
+        <span class="rtag blue">Space Agency</span>
+        <span class="rtag blue">Satellite Systems</span>
+        <span class="rtag blue">Research</span>
+      </div>
+    </div>
+
+    <div class="roadmap-item highlight reveal reveal-delay-4">
+      <div class="roadmap-dot gold">🌍</div>
+      <div class="roadmap-year gold" data-i18n="year4">2040–2050 — THE MISSION</div>
+      <div class="roadmap-title" data-i18n="rm4_title">Kazakhstan's Independent Space Era</div>
+      <div class="roadmap-desc" data-i18n="rm4_desc">As the Baikonur lease ends in 2050, Kazakhstan must be ready. The goal: help build an independent Kazakh space program with native scientists and engineers. Baikonur was where Sputnik launched, where Gagarin flew — it belongs to Kazakhstan's future, not just its history.</div>
+      <div class="roadmap-tags">
+        <span class="rtag gold">Baikonur 2050</span>
+        <span class="rtag gold">Kazakhstan Space Agency</span>
+        <span class="rtag gold">National Mission</span>
+      </div>
+    </div>
+
+    <div class="roadmap-item reveal">
+      <div class="roadmap-dot green">🌌</div>
+      <div class="roadmap-year green" data-i18n="year5">2050+ — THE DREAM</div>
+      <div class="roadmap-title" data-i18n="rm5_title">Kazakhstan as a Space Nation</div>
+      <div class="roadmap-desc" data-i18n="rm5_desc">A Kazakhstan that launches its own rockets, trains its own cosmonauts, and contributes to humanity's reach beyond Earth. Not a dream — a plan. It starts here, with one student who decided to care.</div>
+      <div class="roadmap-tags">
+        <span class="rtag green">Deep Space</span>
+        <span class="rtag green">National Pride</span>
+        <span class="rtag green">Legacy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAIKONUR FACTS -->
+<section class="section" style="padding-top:0;">
+  <div class="section-header reveal">
+    <div class="section-tag" data-i18n="bk_tag">Baikonur</div>
+    <h2 class="section-title" data-i18n="bk_title">Why Baikonur Matters</h2>
+    <p class="section-sub" data-i18n="bk_sub">The most historic launch site on Earth — located in Kazakhstan.</p>
+  </div>
+  <div class="baikonur-grid">
+    <div class="info-card reveal reveal-delay-1">
+      <div class="info-card-icon">🛸</div>
+      <h3 data-i18n="bk1_title">First in Space</h3>
+      <p data-i18n="bk1_desc">Sputnik-1, the world's first satellite, launched from Baikonur on October 4, 1957. It was the beginning of the Space Age — and it happened on Kazakh soil.</p>
+    </div>
+    <div class="info-card reveal reveal-delay-2">
+      <div class="info-card-icon">👨‍🚀</div>
+      <h3 data-i18n="bk2_title">Gagarin's Launchpad</h3>
+      <p data-i18n="bk2_desc">Yuri Gagarin became the first human in space from Baikonur on April 12, 1961. Every crewed Russian mission still launches from here today.</p>
+    </div>
+    <div class="info-card reveal reveal-delay-3">
+      <div class="info-card-icon">📋</div>
+      <h3 data-i18n="bk3_title">The Lease</h3>
+      <p data-i18n="bk3_desc">Russia leases Baikonur from Kazakhstan for ~$115 million per year. The current agreement runs until 2050. After that — Kazakhstan decides its own future.</p>
+    </div>
+    <div class="info-card reveal reveal-delay-4">
+      <div class="info-card-icon">🇰🇿</div>
+      <h3 data-i18n="bk4_title">Kazakhstan's Opportunity</h3>
+      <p data-i18n="bk4_desc">2050 is not an ending — it's a beginning. With the right scientists and political will, Kazakhstan can operate Baikonur independently and become a true space power.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VISION QUOTE -->
+<section class="section" style="padding-top:0;">
+  <div class="vision-box reveal">
+    <span class="quote-mark">"</span>
+    <p data-i18n="vision_quote">The stars above Kazakhstan have always been there. Now it's time for Kazakhstan to reach them.</p>
+    <div class="attribution" data-i18n="vision_author">— Qainar, Space Engineering Student, Almaty 🇰🇿</div>
+  </div>
+</section>
+
+<!-- RECENT LOGS -->
+<section class="section" style="padding-top:0;">
+  <div class="section-header reveal">
+    <div class="section-tag" data-i18n="log_tag">Log Entries</div>
+    <h2 class="section-title" data-i18n="log_title">Mission Log</h2>
+    <p class="section-sub" data-i18n="log_sub">Notes from the journey.</p>
+  </div>
+  <div class="log-list">
+    <div class="log-item reveal reveal-delay-1">
+      <div class="log-emoji">🛰️</div>
+      <div class="log-content">
+        <div class="log-date">2025 · Entry 001</div>
+        <div class="log-title" data-i18n="log1_title">CanSat Mission Complete</div>
+        <div class="log-text" data-i18n="log1_text">Successfully built and participated in a CanSat mission — a small satellite simulation measuring atmospheric data during descent. First real engineering project. Realized that this is exactly what I want to do with my life.</div>
+      </div>
+    </div>
+    <div class="log-item reveal reveal-delay-2">
+      <div class="log-emoji">💻</div>
+      <div class="log-content">
+        <div class="log-date">2025 · Entry 002</div>
+        <div class="log-title" data-i18n="log2_title">Built This Portfolio</div>
+        <div class="log-text" data-i18n="log2_text">Created kainar.space using HTML, CSS, JavaScript and Firebase. Multi-language support in Kazakh, English, and Chinese. Learned that building things — even websites — feels the same as engineering: you start with nothing and end with something real.</div>
+      </div>
+    </div>
+    <div class="log-item reveal reveal-delay-3">
+      <div class="log-emoji">🌌</div>
+      <div class="log-content">
+        <div class="log-date">2025 · Entry 003</div>
+        <div class="log-title" data-i18n="log3_title">The Baikonur Realization</div>
+        <div class="log-text" data-i18n="log3_text">Learned that the Baikonur Cosmodrome lease expires in 2050. That's 25 years. I'll be in my 40s — exactly the age when scientists do their most important work. This is not a coincidence. This is a mission.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<button id="back-top" title="Back to top">↑</button>
+
+<footer>
+  © 2026 Qainar's Website · Space Engineering · Kazakhstan 🇰🇿
+</footer>
+
+<!-- TRANSLATIONS -->
+<script>
+const T = {
+  en: {
+    nav_home:"Home", nav_projects:"Projects", nav_contact:"Contact",
+    hero_tag:"Personal Mission Log", hero_title:"Space Log 🌌",
+    hero_sub:"My dreams, goals, and the mission to make Kazakhstan a spacefaring nation — starting from one student, one step at a time.",
+    baikonur_title:"Baikonur Cosmodrome — 2050 Deadline",
+    baikonur_desc:"Kazakhstan's lease of Baikonur to Russia expires in 2050. This is not just a date — it is a challenge. By then, Kazakhstan must have its own scientists, engineers, and space program ready to take ownership of the world's oldest and most legendary launch site.",
+    roadmap_tag:"My Roadmap", roadmap_title:"The Mission Plan",
+    roadmap_sub:"From a student in Almaty to a scientist helping build Kazakhstan's space future.",
+    year1:"2025 — NOW", year2:"2026–2030 — UNIVERSITY", year3:"2030–2040 — CAREER", year4:"2040–2050 — THE MISSION", year5:"2050+ — THE DREAM",
+    rm1_title:"Building the Foundation",
+    rm1_desc:"Studying physics, mathematics, and web development. Completing the CanSat project — my first hands-on experience with real aerospace engineering. Learning every day, building this portfolio to document the journey.",
+    rm2_title:"Space Engineering Degree",
+    rm2_desc:"Pursue aerospace or space engineering at a top university — ideally in Kazakhstan, Russia, or internationally. Specialize in orbital mechanics, propulsion systems, or satellite technology. Publish research. Build a network of future scientists.",
+    rm3_title:"Becoming a Real Space Engineer",
+    rm3_desc:"Work at a space agency or research institute. Contribute to real satellite missions, launch systems, or planetary science. Gain experience internationally, then bring it back to Kazakhstan. Mentor the next generation of Kazakh space engineers.",
+    rm4_title:"Kazakhstan's Independent Space Era",
+    rm4_desc:"As the Baikonur lease ends in 2050, Kazakhstan must be ready. The goal: help build an independent Kazakh space program with native scientists and engineers. Baikonur was where Sputnik launched, where Gagarin flew — it belongs to Kazakhstan's future, not just its history.",
+    rm5_title:"Kazakhstan as a Space Nation",
+    rm5_desc:"A Kazakhstan that launches its own rockets, trains its own cosmonauts, and contributes to humanity's reach beyond Earth. Not a dream — a plan. It starts here, with one student who decided to care.",
+    bk_tag:"Baikonur", bk_title:"Why Baikonur Matters", bk_sub:"The most historic launch site on Earth — located in Kazakhstan.",
+    bk1_title:"First in Space", bk1_desc:"Sputnik-1, the world's first satellite, launched from Baikonur on October 4, 1957. It was the beginning of the Space Age — and it happened on Kazakh soil.",
+    bk2_title:"Gagarin's Launchpad", bk2_desc:"Yuri Gagarin became the first human in space from Baikonur on April 12, 1961. Every crewed Russian mission still launches from here today.",
+    bk3_title:"The Lease", bk3_desc:"Russia leases Baikonur from Kazakhstan for ~$115 million per year. The current agreement runs until 2050. After that — Kazakhstan decides its own future.",
+    bk4_title:"Kazakhstan's Opportunity", bk4_desc:"2050 is not an ending — it's a beginning. With the right scientists and political will, Kazakhstan can operate Baikonur independently and become a true space power.",
+    vision_quote:"The stars above Kazakhstan have always been there. Now it's time for Kazakhstan to reach them.",
+    vision_author:"— Qainar, Space Engineering Student, Almaty 🇰🇿",
+    log_tag:"Log Entries", log_title:"Mission Log", log_sub:"Notes from the journey.",
+    log1_title:"CanSat Mission Complete",
+    log1_text:"Successfully built and participated in a CanSat mission — a small satellite simulation measuring atmospheric data during descent. First real engineering project. Realized that this is exactly what I want to do with my life.",
+    log2_title:"Built This Portfolio",
+    log2_text:"Created kainar.space using HTML, CSS, JavaScript and Firebase. Multi-language support in Kazakh, English, and Chinese. Learned that building things — even websites — feels the same as engineering: you start with nothing and end with something real.",
+    log3_title:"The Baikonur Realization",
+    log3_text:"Learned that the Baikonur Cosmodrome lease expires in 2050. That's 25 years. I'll be in my 40s — exactly the age when scientists do their most important work. This is not a coincidence. This is a mission.",
+  },
+  zh: {
+    nav_home:"首页", nav_projects:"项目", nav_contact:"联系",
+    hero_tag:"个人任务日志", hero_title:"太空日志 🌌",
+    hero_sub:"我的梦想、目标，以及让哈萨克斯坦成为航天大国的使命——从一个学生开始，一步一步。",
+    baikonur_title:"拜科努尔航天基地 — 2050年租约到期",
+    baikonur_desc:"哈萨克斯坦将拜科努尔租给俄罗斯的协议将于2050年到期。这不仅仅是一个日期——这是一个挑战。届时，哈萨克斯坦必须拥有自己的科学家、工程师和航天计划，准备好接管这个世界上最古老、最具传奇色彩的发射基地。",
+    roadmap_tag:"我的路线图", roadmap_title:"任务计划",
+    roadmap_sub:"从阿拉木图的一名学生，到帮助建立哈萨克斯坦航天未来的科学家。",
+    year1:"2025 — 现在", year2:"2026–2030 — 大学", year3:"2030–2040 — 职业生涯", year4:"2040–2050 — 使命", year5:"2050+ — 梦想",
+    rm1_title:"打好基础",
+    rm1_desc:"学习物理、数学和网页开发。完成CanSat项目——我第一次真实的航天工程实践经验。每天学习，建立这个作品集记录旅程。",
+    rm2_title:"航天工程学位",
+    rm2_desc:"在顶尖大学攻读航空航天或航天工程学位——理想情况下在哈萨克斯坦、俄罗斯或国际高校。专攻轨道力学、推进系统或卫星技术。发表研究成果，建立未来科学家网络。",
+    rm3_title:"成为真正的航天工程师",
+    rm3_desc:"在航天机构或研究所工作，参与真实的卫星任务、发射系统或行星科学。积累国际经验，然后带回哈萨克斯坦。培养下一代哈萨克航天工程师。",
+    rm4_title:"哈萨克斯坦独立航天时代",
+    rm4_desc:"随着2050年拜科努尔租约到期，哈萨克斯坦必须做好准备。目标：帮助建立一个拥有本土科学家和工程师的独立哈萨克航天计划。拜科努尔是斯普特尼克升空的地方，是加加林飞翔的地方——它属于哈萨克斯坦的未来，而不仅仅是历史。",
+    rm5_title:"哈萨克斯坦成为航天大国",
+    rm5_desc:"一个能自主发射火箭、培养宇航员、为人类探索宇宙做出贡献的哈萨克斯坦。这不是梦——这是计划。从这里开始，从一个决定在乎的学生开始。",
+    bk_tag:"拜科努尔", bk_title:"为什么拜科努尔如此重要", bk_sub:"地球上最具历史意义的发射基地——位于哈萨克斯坦。",
+    bk1_title:"人类首颗卫星", bk1_desc:"1957年10月4日，世界第一颗卫星斯普特尼克1号从拜科努尔发射。太空时代由此开启——就在哈萨克斯坦的土地上。",
+    bk2_title:"加加林的发射台", bk2_desc:"1961年4月12日，尤里·加加林从拜科努尔成为第一个进入太空的人类。俄罗斯所有载人任务至今仍从这里发射。",
+    bk3_title:"租约协议", bk3_desc:"俄罗斯每年向哈萨克斯坦支付约1.15亿美元租用拜科努尔。现行协议持续至2050年。之后——哈萨克斯坦自己决定未来。",
+    bk4_title:"哈萨克斯坦的机遇", bk4_desc:"2050年不是终点——而是起点。有了合适的科学家和政治意愿，哈萨克斯坦可以独立运营拜科努尔，成为真正的航天大国。",
+    vision_quote:"哈萨克斯坦上空的星星一直都在。现在是哈萨克斯坦触摸它们的时候了。",
+    vision_author:"— Qainar，航天工程专业学生，阿拉木图 🇰🇿",
+    log_tag:"日志条目", log_title:"任务日志", log_sub:"旅程中的笔记。",
+    log1_title:"CanSat任务完成",
+    log1_text:"成功构建并参与了CanSat任务——一个在下降过程中测量大气数据的小型卫星模拟项目。第一个真实的工程项目。意识到这正是我这辈子想做的事。",
+    log2_title:"建立了这个作品集",
+    log2_text:"使用HTML、CSS、JavaScript和Firebase创建了kainar.space，支持哈萨克语、英语和中文三种语言。了解到建造事物——即使是网站——和工程的感觉是一样的：从无到有，创造出真实的东西。",
+    log3_title:"关于拜科努尔的顿悟",
+    log3_text:"得知拜科努尔航天基地的租约将于2050年到期。还有25年。那时我将四十多岁——正是科学家做出最重要工作的年龄。这不是巧合，这是一个使命。",
+  },
+  kz: {
+    nav_home:"Басты бет", nav_projects:"Жобалар", nav_contact:"Байланыс",
+    hero_tag:"Жеке миссия журналы", hero_title:"Ғарыш журналы 🌌",
+    hero_sub:"Менің арман-мақсаттарым және Қазақстанды ғарыш державасына айналдыру миссиясы — бір студенттен басталады, қадамма-қадам.",
+    baikonur_title:"Байқоңыр ғарыш айлағы — 2050 жылғы мерзім",
+    baikonur_desc:"Қазақстанның Байқоңырды Ресейге жалға беру шарты 2050 жылы аяқталады. Бұл жай ғана күн емес — бұл сын. Сол кезге дейін Қазақстанның өз ғалымдары, инженерлері мен ғарыш бағдарламасы болуы тиіс.",
+    roadmap_tag:"Менің жол картам", roadmap_title:"Миссия жоспары",
+    roadmap_sub:"Алматыдағы студенттен Қазақстанның ғарыш болашағын құруға көмектесетін ғалымға дейін.",
+    year1:"2025 — ҚАЗІР", year2:"2026–2030 — УНИВЕРСИТЕТ", year3:"2030–2040 — МАНСАП", year4:"2040–2050 — МИССИЯ", year5:"2050+ — АРМАН",
+    rm1_title:"Негіз қалау",
+    rm1_desc:"Физика, математика және веб-әзірлеуді оқу. CanSat жобасын аяқтау — нақты аэроғарыш инженериясындағы алғашқы тәжірибем. Күн сайын үйрену, осы портфолионы жолды бекіту үшін жасау.",
+    rm2_title:"Ғарыш инженериясы дәрежесі",
+    rm2_desc:"Үздік университетте аэроғарыш немесе ғарыш инженериясы мамандығын оқу — Қазақстанда, Ресейде немесе шетелде. Орбиталық механика, қозғалтқыш жүйелері немесе жерсерік технологиясына маманданып, зерттеу жариялау.",
+    rm3_title:"Нақты ғарыш инженері болу",
+    rm3_desc:"Ғарыш агенттігінде немесе зерттеу институтында жұмыс істеу. Нақты жерсерік миссияларына, іске қосу жүйелеріне үлес қосу. Халықаралық тәжірибе жинап, оны Қазақстанға алып келу.",
+    rm4_title:"Қазақстанның тәуелсіз ғарыш дәуірі",
+    rm4_desc:"2050 жылы Байқоңыр жалдау шарты аяқталғанда, Қазақстан дайын болуы тиіс. Мақсат: өз ғалымдары мен инженерлері бар тәуелсіз қазақ ғарыш бағдарламасын құруға көмектесу. Байқоңыр — Спутник ұшырылған, Гагарин ұшқан жер — ол Қазақстанның болашағына тиесілі.",
+    rm5_title:"Қазақстан — ғарыш державасы",
+    rm5_desc:"Өз зымырандарын ұшыратын, өз ғарышкерлерін дайындайтын және адамзаттың ғарышқа ұмтылысына үлес қосатын Қазақстан. Бұл арман емес — жоспар. Бұл жерден басталады, алаңдауды шешкен бір студенттен.",
+    bk_tag:"Байқоңыр", bk_title:"Байқоңыр неліктен маңызды", bk_sub:"Жердегі ең тарихи іске қосу алаңы — Қазақстанда орналасқан.",
+    bk1_title:"Ғарышта алғашқы", bk1_desc:"1957 жылы 4 қазанда әлемдегі алғашқы жерсерік Спутник-1 Байқоңырдан ұшырылды. Ғарыш дәуірі осылай басталды — қазақ жерінде.",
+    bk2_title:"Гагариннің іске қосу алаңы", bk2_desc:"1961 жылы 12 сәуірде Юрий Гагарин Байқоңырдан ғарышқа ұшқан алғашқы адам болды. Ресейдің барлық ұшқыштар миссиялары осы жерден ұшырылады.",
+    bk3_title:"Жалдау шарты", bk3_desc:"Ресей Байқоңырды Қазақстаннан жылына шамамен 115 миллион долларға жалға алады. Қолданыстағы келісім 2050 жылға дейін. Одан кейін — Қазақстан өз болашағын өзі шешеді.",
+    bk4_title:"Қазақстанның мүмкіндігі", bk4_desc:"2050 жыл — соңы емес, басы. Дұрыс ғалымдар мен саяси ерікпен Қазақстан Байқоңырды тәуелсіз пайдаланып, нақты ғарыш державасына айнала алады.",
+    vision_quote:"Қазақстан үстіндегі жұлдыздар әрқашан болды. Енді Қазақстанның оларға жетер уақыты келді.",
+    vision_author:"— Қайнар, ғарыш инженериясы студенті, Алматы 🇰🇿",
+    log_tag:"Журнал жазбалары", log_title:"Миссия журналы", log_sub:"Жолдағы жазбалар.",
+    log1_title:"CanSat миссиясы аяқталды",
+    log1_text:"CanSat миссиясына сәтті қатысып, оны аяқтадым — түсу кезінде атмосфералық деректерді өлшейтін шағын жерсерік симуляциясы. Алғашқы нақты инженерлік жоба. Өмірімде дәл осыны жасағым келетінін түсіндім.",
+    log2_title:"Бұл портфолионы жасадым",
+    log2_text:"HTML, CSS, JavaScript және Firebase пайдаланып kainar.space сайтын жасадым. Қазақ, ағылшын және қытай тілдерін қолдайды. Нәрселерді жасау — веб-сайт болса да — инженерия сияқты екенін түсіндім: ештеңеден бастап нақты нәрсе жасайсың.",
+    log3_title:"Байқоңыр туралы ашылу",
+    log3_text:"Байқоңыр ғарыш айлағының жалдау шарты 2050 жылы аяқталатынын білдім. Бұл 25 жыл. Сол кезде мен қырықта боламын — ғалымдар ең маңызды жұмыстарын жасайтын жас. Бұл кездейсоқтық емес. Бұл миссия.",
+  }
+};
+
+let lang = localStorage.getItem("lang") || "en";
+function applyLang(l) {
+  lang = l; localStorage.setItem("lang", l);
+  const t = T[l];
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const k = el.getAttribute("data-i18n");
+    if (t[k] !== undefined) el.innerHTML = t[k];
+  });
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.toggle("active", b.dataset.lang === l));
+  document.documentElement.lang = l === "kz" ? "kk" : l;
+}
+document.querySelectorAll(".lang-btn").forEach(b => b.addEventListener("click", () => applyLang(b.dataset.lang)));
+applyLang(lang);
+</script>
+
+<script>
+/* Cursor */
+const cur = document.getElementById("cursor");
+const curRing = document.getElementById("cursor-ring");
+const glow = document.getElementById("mouse-glow");
+document.addEventListener("mousemove", e => {
+  cur.style.left = e.clientX + "px"; cur.style.top = e.clientY + "px";
+  curRing.style.left = e.clientX + "px"; curRing.style.top = e.clientY + "px";
+  glow.style.left = e.clientX + "px"; glow.style.top = e.clientY + "px";
+});
+
+/* Stars */
+(function(){
+  const canvas = document.getElementById("star-canvas");
+  const ctx = canvas.getContext("2d");
+  let W, H, stars = [], scrollY = 0;
+  function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function initStars(){
+    stars = [];
+    for(let i=0;i<220;i++) stars.push({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*1.4+0.2, phase:Math.random()*Math.PI*2,
+      speed:Math.random()*0.004+0.001, parallax:Math.random()*0.14
+    });
+  }
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H); t+=0.012;
+    stars.forEach(s=>{
+      const a=0.35+0.65*Math.abs(Math.sin(t*s.speed*80+s.phase));
+      ctx.beginPath(); ctx.arc(s.x, s.y-scrollY*s.parallax, s.r, 0, Math.PI*2);
+      ctx.fillStyle=`rgba(180,210,255,${a})`; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener("resize",()=>{ resize(); initStars(); });
+  window.addEventListener("scroll",()=>{ scrollY=window.scrollY; });
+  resize(); initStars(); draw();
+})();
+
+/* Meteors */
+function spawnMeteor(){
+  const m = document.createElement("div");
+  m.className = "meteor";
+  const dur = Math.random()*1.2+0.8;
+  m.style.cssText=`left:${Math.random()*window.innerWidth}px;top:${Math.random()*window.innerHeight*0.5}px;width:${Math.random()*120+60}px;height:${Math.random()*1.5+1}px;animation-duration:${dur}s;transform:rotate(-35deg);`;
+  document.body.appendChild(m);
+  setTimeout(()=>m.remove(),(dur+0.2)*1000);
+}
+setInterval(spawnMeteor,3000);
+
+/* Progress bar */
+const bar = document.getElementById("progress-bar");
+window.addEventListener("scroll",()=>{
+  bar.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+"%";
+});
+
+/* Scroll reveal */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("visible"); });
+},{threshold:0.1});
+document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
+
+/* Back to top */
+const bt = document.getElementById("back-top");
+window.addEventListener("scroll",()=>bt.classList.toggle("show",window.scrollY>400));
+bt.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+
+/* Hamburger */
+const hamburger = document.getElementById("hamburger");
+const mobileNav = document.getElementById("mobile-nav");
+const mobileOverlay = document.getElementById("mobile-overlay");
+function toggleMenu(open){
+  hamburger.classList.toggle("open",open);
+  mobileNav.classList.toggle("open",open);
+  mobileOverlay.classList.toggle("open",open);
+  document.body.style.overflow=open?"hidden":"";
+}
+hamburger.addEventListener("click",()=>toggleMenu(!mobileNav.classList.contains("open")));
+mobileOverlay.addEventListener("click",()=>toggleMenu(false));
+document.querySelectorAll(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>toggleMenu(false)));
+</script>
+</body>
+</html>

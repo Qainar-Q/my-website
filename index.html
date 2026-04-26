@@ -7,11 +7,13 @@
   <title>Qainar | Space Engineering Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
-
   <style>
     :root {
       --accent:  #38bdf8;
       --accent2: #2563eb;
+      --purple:  #a78bfa;
+      --gold:    #fbbf24;
+      --green:   #34d399;
       --glow:    rgba(56,189,248,0.85);
       --glass:   rgba(255,255,255,0.07);
       --glass-b: rgba(255,255,255,0.14);
@@ -19,590 +21,501 @@
       --r: 20px;
     }
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
-
+    html { scroll-behavior:smooth; }
     body {
-      min-height: 100vh;
-      font-family: 'DM Sans', sans-serif;
-      color: white;
-      background: #020817;
-      overflow-x: hidden;
-      cursor: none;
+      min-height:100vh;
+      font-family:'DM Sans',sans-serif;
+      color:white;
+      background:#020817;
+      overflow-x:hidden;
+      cursor:none;
     }
 
-    /* ── CUSTOM CURSOR ── */
+    /* CURSOR */
     #cursor {
-      position: fixed;
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: var(--accent);
-      pointer-events: none;
-      z-index: 99999;
-      transform: translate(-50%,-50%);
-      transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.2s;
-      mix-blend-mode: screen;
+      position:fixed; width:12px; height:12px; border-radius:50%;
+      background:var(--accent); pointer-events:none; z-index:99999;
+      transform:translate(-50%,-50%); transition:width .2s,height .2s,background .2s;
+      mix-blend-mode:screen;
     }
     #cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(56,189,248,0.5);
-      pointer-events: none;
-      z-index: 99998;
-      transform: translate(-50%,-50%);
-      transition: width 0.35s cubic-bezier(.16,1,.3,1),
-                  height 0.35s cubic-bezier(.16,1,.3,1),
-                  border-color 0.2s,
-                  left 0.08s linear, top 0.08s linear;
+      position:fixed; width:36px; height:36px; border-radius:50%;
+      border:1.5px solid rgba(56,189,248,0.5); pointer-events:none; z-index:99998;
+      transform:translate(-50%,-50%);
+      transition:width .35s cubic-bezier(.16,1,.3,1),height .35s cubic-bezier(.16,1,.3,1),left .08s linear,top .08s linear;
     }
     body:has(a:hover) #cursor,
-    body:has(button:hover) #cursor { width: 20px; height: 20px; background: #fff; }
+    body:has(button:hover) #cursor { width:20px; height:20px; background:#fff; }
     body:has(a:hover) #cursor-ring,
-    body:has(button:hover) #cursor-ring { width: 52px; height: 52px; border-color: rgba(56,189,248,0.9); }
-
-    /* ── MOUSE GLOW ── */
+    body:has(button:hover) #cursor-ring { width:52px; height:52px; border-color:rgba(56,189,248,0.9); }
     #mouse-glow {
-      position: fixed;
-      width: 500px; height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(56,189,248,0.06) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-      transform: translate(-50%,-50%);
-      transition: left 0.15s ease, top 0.15s ease;
+      position:fixed; width:500px; height:500px; border-radius:50%;
+      background:radial-gradient(circle,rgba(56,189,248,0.06) 0%,transparent 70%);
+      pointer-events:none; z-index:0; transform:translate(-50%,-50%);
+      transition:left .15s ease,top .15s ease;
     }
-
-    /* ── PROGRESS BAR ── */
     #progress-bar {
-      position: fixed; top: 0; left: 0;
-      height: 3px; width: 0%;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      z-index: 9999; transition: width 0.1s;
-      box-shadow: 0 0 12px var(--accent);
+      position:fixed; top:0; left:0; height:3px; width:0%;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      z-index:9999; transition:width .1s; box-shadow:0 0 12px var(--accent);
     }
+    #star-canvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
 
-    /* ── STAR CANVAS ── */
-    #star-canvas {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    }
-
-    /* ── HEADER ── */
+    /* HEADER */
     header {
-      position: fixed; top: 0; width: 100%;
-      padding: 18px 60px;
-      display: flex; justify-content: space-between; align-items: center;
-      z-index: 1000;
-      transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
+      position:fixed; top:0; width:100%; padding:18px 60px;
+      display:flex; justify-content:space-between; align-items:center;
+      z-index:1000; transition:background .4s,box-shadow .4s,padding .3s;
     }
     header.scrolled {
-      background: rgba(2,8,23,0.9);
-      backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--glass-b);
-      box-shadow: 0 4px 30px rgba(0,0,0,0.4);
-      padding: 13px 60px;
+      background:rgba(2,8,23,0.92); backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--glass-b); box-shadow:0 4px 30px rgba(0,0,0,0.4);
+      padding:13px 60px;
     }
     .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 20px; font-weight: 900; letter-spacing: 3px;
-      background: linear-gradient(135deg, #fff 30%, var(--accent));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      cursor: pointer;
+      font-family:'Orbitron',sans-serif; font-size:20px; font-weight:900; letter-spacing:3px;
+      background:linear-gradient(135deg,#fff 30%,var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; cursor:pointer;
     }
-
-    /* desktop nav */
-    nav { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    nav { display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
     nav a {
-      color: white; text-decoration: none;
-      font-weight: 700; font-size: 14px; opacity: 0.8;
-      transition: 0.25s; letter-spacing: 0.3px; position: relative;
+      color:white; text-decoration:none; font-weight:700; font-size:14px; opacity:0.8;
+      transition:.25s; letter-spacing:0.3px; position:relative;
     }
     nav a::after {
-      content: ''; position: absolute; bottom: -3px; left: 0;
-      width: 0; height: 2px; background: var(--accent); transition: width 0.25s;
+      content:''; position:absolute; bottom:-3px; left:0;
+      width:0; height:2px; background:var(--accent); transition:width .25s;
     }
-    nav a:hover { opacity: 1; color: var(--accent); }
-    nav a:hover::after { width: 100%; }
+    nav a:hover { opacity:1; color:var(--accent); }
+    nav a:hover::after { width:100%; }
 
-    /* hamburger */
     .hamburger {
-      display: none;
-      flex-direction: column; justify-content: center; align-items: center;
-      width: 40px; height: 40px; cursor: pointer; gap: 5px;
-      border: none; background: var(--glass); border-radius: 10px;
-      border: 1px solid var(--glass-b); backdrop-filter: blur(10px);
+      display:none; flex-direction:column; justify-content:center; align-items:center;
+      width:40px; height:40px; cursor:pointer; gap:5px;
+      border:1px solid var(--glass-b); background:var(--glass); border-radius:10px; backdrop-filter:blur(10px);
     }
-    .hamburger span {
-      display: block; width: 20px; height: 2px;
-      background: white; border-radius: 2px; transition: 0.3s;
-    }
-    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
-    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
-
-    /* mobile drawer */
+    .hamburger span { display:block; width:20px; height:2px; background:white; border-radius:2px; transition:.3s; }
+    .hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
     .mobile-nav {
-      position: fixed; top: 0; right: -100%;
-      width: min(300px, 80vw); height: 100vh;
-      background: rgba(2,8,23,0.97);
-      border-left: 1px solid var(--glass-b);
-      backdrop-filter: blur(30px);
-      z-index: 999; padding: 90px 30px 30px;
-      display: flex; flex-direction: column; gap: 24px;
-      transition: right 0.4s cubic-bezier(.16,1,.3,1);
+      position:fixed; top:0; right:-100%; width:min(300px,80vw); height:100vh;
+      background:rgba(2,8,23,0.97); border-left:1px solid var(--glass-b);
+      backdrop-filter:blur(30px); z-index:999; padding:90px 30px 30px;
+      display:flex; flex-direction:column; gap:24px;
+      transition:right .4s cubic-bezier(.16,1,.3,1);
     }
-    .mobile-nav.open { right: 0; }
+    .mobile-nav.open { right:0; }
     .mobile-nav a {
-      color: white; text-decoration: none; font-size: 18px; font-weight: 700;
-      padding: 12px 0; border-bottom: 1px solid var(--glass-b);
-      transition: color 0.2s;
+      color:white; text-decoration:none; font-size:18px; font-weight:700;
+      padding:12px 0; border-bottom:1px solid var(--glass-b); transition:color .2s;
     }
-    .mobile-nav a:hover { color: var(--accent); }
+    .mobile-nav a:hover { color:var(--accent); }
     .mobile-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
-      z-index: 998; display: none; backdrop-filter: blur(3px);
+      position:fixed; inset:0; background:rgba(0,0,0,0.6);
+      z-index:998; display:none; backdrop-filter:blur(3px);
     }
-    .mobile-overlay.open { display: block; }
-
-    /* lang */
-    .lang-switcher { display: flex; gap: 5px; }
+    .mobile-overlay.open { display:block; }
+    .lang-switcher { display:flex; gap:5px; }
     .lang-btn {
-      border: 1px solid var(--glass-b); background: var(--glass);
-      color: var(--muted); font-family: 'DM Sans', sans-serif;
-      font-size: 11px; font-weight: 800; border-radius: 999px;
-      padding: 4px 10px; cursor: pointer; transition: 0.2s; letter-spacing: 0.4px;
+      border:1px solid var(--glass-b); background:var(--glass);
+      color:var(--muted); font-family:'DM Sans',sans-serif;
+      font-size:11px; font-weight:800; border-radius:999px;
+      padding:4px 10px; cursor:pointer; transition:.2s; letter-spacing:0.4px;
     }
-    .lang-btn:hover, .lang-btn.active {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-color: transparent; color: white;
+    .lang-btn:hover,.lang-btn.active {
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border-color:transparent; color:white;
     }
-
-    /* auth */
-    .auth-box { display: flex; align-items: center; gap: 10px; }
-    .login-btn, .logout-btn {
-      border: none; cursor: pointer; color: white;
-      font-family: 'DM Sans', sans-serif; font-weight: 800; font-size: 13px;
-      border-radius: 999px; padding: 9px 18px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 6px 20px rgba(37,99,235,0.35); transition: 0.25s;
+    .auth-box { display:flex; align-items:center; gap:10px; }
+    .login-btn,.logout-btn {
+      border:none; cursor:pointer; color:white;
+      font-family:'DM Sans',sans-serif; font-weight:800; font-size:13px;
+      border-radius:999px; padding:9px 18px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 6px 20px rgba(37,99,235,0.35); transition:.25s;
     }
-    .login-btn:hover, .logout-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,99,235,0.5); }
+    .login-btn:hover,.logout-btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(37,99,235,0.5); }
     .user-profile {
-      display: none; align-items: center; gap: 8px;
-      padding: 5px 12px 5px 5px; border-radius: 999px;
-      background: var(--glass); border: 1px solid var(--glass-b);
-      backdrop-filter: blur(12px);
+      display:none; align-items:center; gap:8px;
+      padding:5px 12px 5px 5px; border-radius:999px;
+      background:var(--glass); border:1px solid var(--glass-b); backdrop-filter:blur(12px);
     }
-    .user-profile img { width: 28px; height: 28px; border-radius: 50%; }
-    .user-profile span { font-size: 13px; font-weight: 700; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .user-profile img { width:28px; height:28px; border-radius:50%; }
+    .user-profile span { font-size:13px; font-weight:700; max-width:100px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-    /* ── HERO ── */
+    /* HERO */
     .hero {
-      position: relative; z-index: 1;
-      min-height: 100vh;
-      padding: 140px 80px 80px;
-      display: flex; align-items: center; justify-content: space-between; gap: 60px;
+      position:relative; z-index:1;
+      min-height:100vh; padding:140px 80px 80px;
+      display:flex; align-items:center; justify-content:space-between; gap:60px;
     }
-    .hero-content { max-width: 640px; }
-
+    .hero-content { max-width:640px; }
     .tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 7px 16px; margin-bottom: 26px;
-      border-radius: 999px;
-      background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.35);
-      color: #7dd3fc; font-weight: 700; font-size: 12px;
-      letter-spacing: 1px; text-transform: uppercase;
-      opacity: 0; animation: fadeUp 0.7s 0.1s ease forwards;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 16px; margin-bottom:26px; border-radius:999px;
+      background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.35);
+      color:#7dd3fc; font-weight:700; font-size:12px;
+      letter-spacing:1px; text-transform:uppercase;
+      opacity:0; animation:fadeUp .7s .1s ease forwards;
     }
     .tag-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--accent); box-shadow: 0 0 8px var(--accent);
-      animation: pulse 2s infinite;
+      width:7px; height:7px; border-radius:50%;
+      background:var(--accent); box-shadow:0 0 8px var(--accent); animation:pulse 2s infinite;
     }
-
     .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 66px; line-height: 1.07; margin-bottom: 24px;
-      opacity: 0; animation: fadeUp 0.8s 0.25s ease forwards;
+      font-family:'Orbitron',sans-serif;
+      font-size:66px; line-height:1.07; margin-bottom:24px;
+      opacity:0; animation:fadeUp .8s .25s ease forwards;
     }
     .hero h1 .name {
-      color: var(--accent);
-      text-shadow: 0 0 40px rgba(56,189,248,0.7), 0 0 80px rgba(56,189,248,0.3);
+      color:var(--accent);
+      text-shadow:0 0 40px rgba(56,189,248,0.7),0 0 80px rgba(56,189,248,0.3);
     }
-    .cursor {
-      display: inline-block; width: 3px; height: 0.85em;
-      background: var(--accent); margin-left: 4px;
-      vertical-align: middle; animation: blink 0.9s infinite;
+    .cursor-blink {
+      display:inline-block; width:3px; height:0.85em;
+      background:var(--accent); margin-left:4px;
+      vertical-align:middle; animation:blink .9s infinite;
     }
-
     .hero p {
-      font-size: 18px; line-height: 1.8; color: #c5d8f0;
-      max-width: 520px; margin-bottom: 38px;
-      opacity: 0; animation: fadeUp 0.8s 0.4s ease forwards;
+      font-size:18px; line-height:1.8; color:#c5d8f0; max-width:520px; margin-bottom:38px;
+      opacity:0; animation:fadeUp .8s .4s ease forwards;
     }
-
     .buttons {
-      display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px;
-      opacity: 0; animation: fadeUp 0.8s 0.55s ease forwards;
+      display:flex; gap:14px; flex-wrap:wrap; margin-bottom:48px;
+      opacity:0; animation:fadeUp .8s .55s ease forwards;
     }
     .btn {
-      display: inline-block; padding: 13px 26px; border-radius: 14px;
-      text-decoration: none; font-family: 'DM Sans', sans-serif;
-      font-weight: 800; font-size: 14px; transition: 0.3s;
-      border: none; cursor: pointer; position: relative; overflow: hidden;
+      display:inline-block; padding:13px 26px; border-radius:14px;
+      text-decoration:none; font-family:'DM Sans',sans-serif;
+      font-weight:800; font-size:14px; transition:.3s;
+      border:none; cursor:pointer; position:relative; overflow:hidden;
     }
-    .btn::after {
-      content: ''; position: absolute; inset: 0;
-      background: rgba(255,255,255,0.12); opacity: 0; transition: 0.2s;
-    }
-    .btn:hover::after { opacity: 1; }
-    .btn:hover { transform: translateY(-4px); }
-    .primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white; box-shadow: 0 12px 32px rgba(37,99,235,0.4);
-    }
-    .secondary {
-      background: var(--glass); color: white;
-      border: 1px solid var(--glass-b); backdrop-filter: blur(12px);
-    }
+    .btn::after { content:''; position:absolute; inset:0; background:rgba(255,255,255,0.12); opacity:0; transition:.2s; }
+    .btn:hover::after { opacity:1; }
+    .btn:hover { transform:translateY(-4px); }
+    .primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; box-shadow:0 12px 32px rgba(37,99,235,0.4); }
+    .secondary { background:var(--glass); color:white; border:1px solid var(--glass-b); backdrop-filter:blur(12px); }
 
-    /* stats */
+    /* STATS */
     .stats {
-      display: flex; gap: 14px; flex-wrap: wrap;
-      opacity: 0; animation: fadeUp 0.8s 0.7s ease forwards;
+      display:flex; gap:14px; flex-wrap:wrap;
+      opacity:0; animation:fadeUp .8s .7s ease forwards;
     }
     .stat {
-      min-width: 130px; padding: 18px 20px; border-radius: var(--r);
-      background: var(--glass); border: 1px solid var(--glass-b);
-      backdrop-filter: blur(14px); transition: 0.3s;
+      min-width:130px; padding:18px 20px; border-radius:var(--r);
+      background:var(--glass); border:1px solid var(--glass-b);
+      backdrop-filter:blur(14px); transition:.3s;
     }
-    .stat:hover { border-color: rgba(56,189,248,0.4); transform: translateY(-4px); }
-    .stat h3 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 24px; color: var(--accent); margin-bottom: 5px;
-    }
-    .stat p { font-size: 12px; color: var(--muted); margin: 0; }
+    .stat:hover { border-color:rgba(56,189,248,0.4); transform:translateY(-4px); }
+    .stat h3 { font-family:'Orbitron',sans-serif; font-size:24px; color:var(--accent); margin-bottom:5px; }
+    .stat p { font-size:12px; color:var(--muted); margin:0; }
 
-    /* social */
+    /* SOCIAL */
     .social-links {
-      display: flex; gap: 12px; margin-top: 32px;
-      opacity: 0; animation: fadeUp 0.8s 0.85s ease forwards;
+      display:flex; gap:12px; margin-top:32px;
+      opacity:0; animation:fadeUp .8s .85s ease forwards;
     }
     .social-link {
-      width: 42px; height: 42px; border-radius: 12px;
-      background: var(--glass); border: 1px solid var(--glass-b);
-      display: flex; align-items: center; justify-content: center;
-      text-decoration: none; font-size: 18px; transition: 0.3s;
-      backdrop-filter: blur(10px);
+      width:42px; height:42px; border-radius:12px;
+      background:var(--glass); border:1px solid var(--glass-b);
+      display:flex; align-items:center; justify-content:center;
+      text-decoration:none; font-size:18px; transition:.3s; backdrop-filter:blur(10px);
     }
-    .social-link:hover {
-      background: rgba(56,189,248,0.18); border-color: rgba(56,189,248,0.5);
-      transform: translateY(-4px);
-    }
-
-    /* copy email */
+    .social-link:hover { background:rgba(56,189,248,0.18); border-color:rgba(56,189,248,0.5); transform:translateY(-4px); }
     .copy-email {
-      width: 42px; height: 42px; border-radius: 12px;
-      background: var(--glass); border: 1px solid var(--glass-b);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; transition: 0.3s; backdrop-filter: blur(10px);
-      cursor: pointer; position: relative;
+      width:42px; height:42px; border-radius:12px;
+      background:var(--glass); border:1px solid var(--glass-b);
+      display:flex; align-items:center; justify-content:center;
+      font-size:18px; transition:.3s; backdrop-filter:blur(10px);
+      cursor:pointer; position:relative;
     }
-    .copy-email:hover { background: rgba(56,189,248,0.18); border-color: rgba(56,189,248,0.5); transform: translateY(-4px); }
+    .copy-email:hover { background:rgba(56,189,248,0.18); border-color:rgba(56,189,248,0.5); transform:translateY(-4px); }
     .copy-tooltip {
-      position: absolute; bottom: 52px; left: 50%; transform: translateX(-50%);
-      background: rgba(56,189,248,0.9); color: #020817;
-      font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 999px;
-      white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+      position:absolute; bottom:52px; left:50%; transform:translateX(-50%);
+      background:rgba(56,189,248,0.9); color:#020817;
+      font-size:11px; font-weight:800; padding:4px 10px; border-radius:999px;
+      white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .2s;
     }
-    .copy-email.copied .copy-tooltip { opacity: 1; }
+    .copy-email.copied .copy-tooltip { opacity:1; }
 
-    /* ── ORBIT CARD ── */
+    /* ORBIT CARD */
     .orbit-wrapper {
-      position: relative; flex-shrink: 0;
-      width: 340px; height: 340px;
-      opacity: 0; animation: fadeUp 0.9s 0.3s ease forwards;
+      position:relative; flex-shrink:0; width:340px; height:340px;
+      opacity:0; animation:fadeUp .9s .3s ease forwards;
     }
     .orbit-card {
-      width: 100%; height: 100%; border-radius: 36px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.18);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.15);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden;
-      animation: float 5s ease-in-out infinite;
+      width:100%; height:100%; border-radius:36px;
+      background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.18);
+      backdrop-filter:blur(20px);
+      box-shadow:0 30px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.15);
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+      animation:float 5s ease-in-out infinite;
     }
     .orbit-card::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(circle at 30% 20%, rgba(56,189,248,0.08) 0%, transparent 60%);
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(circle at 30% 20%,rgba(56,189,248,0.08) 0%,transparent 60%);
     }
     .planet {
-      width: 110px; height: 110px; border-radius: 50%;
-      background: radial-gradient(circle at 32% 28%, #67e8f9, #2563eb 50%, #040d26);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 48px; z-index: 2; position: relative;
-      box-shadow: 0 0 50px rgba(56,189,248,0.7), 0 0 100px rgba(56,189,248,0.2);
+      width:110px; height:110px; border-radius:50%;
+      background:radial-gradient(circle at 32% 28%,#67e8f9,#2563eb 50%,#040d26);
+      display:flex; align-items:center; justify-content:center;
+      font-size:48px; z-index:2; position:relative;
+      box-shadow:0 0 50px rgba(56,189,248,0.7),0 0 100px rgba(56,189,248,0.2);
     }
-    .ring {
-      position: absolute; border-radius: 50%;
-      border: 1px dashed rgba(255,255,255,0.15);
-    }
-    .ring-1 { width: 170px; height: 170px; animation: spin 10s linear infinite; }
-    .ring-2 { width: 240px; height: 240px; animation: spin 18s linear infinite reverse; }
-    .ring-3 { width: 310px; height: 310px; animation: spin 28s linear infinite; }
-    .dot { position: absolute; border-radius: 50%; box-shadow: 0 0 8px currentColor; }
+    .ring { position:absolute; border-radius:50%; border:1px dashed rgba(255,255,255,0.15); }
+    .ring-1 { width:170px; height:170px; animation:spin 10s linear infinite; }
+    .ring-2 { width:240px; height:240px; animation:spin 18s linear infinite reverse; }
+    .ring-3 { width:310px; height:310px; animation:spin 28s linear infinite; }
+    .dot { position:absolute; border-radius:50%; box-shadow:0 0 8px currentColor; }
     .dot-1 { width:8px;height:8px;background:var(--accent);color:var(--accent);top:calc(50% - 85px);left:50%;transform-origin:0 85px;animation:spin 10s linear infinite; }
     .dot-2 { width:6px;height:6px;background:#a78bfa;color:#a78bfa;top:calc(50% - 120px);left:50%;transform-origin:0 120px;animation:spin 18s linear infinite reverse; }
     .dot-3 { width:5px;height:5px;background:#fb7185;color:#fb7185;top:calc(50% - 155px);left:50%;transform-origin:0 155px;animation:spin 28s linear infinite; }
     .orbit-label {
-      font-family: 'Orbitron', sans-serif; position: absolute; bottom: 30px;
-      font-size: 20px; font-weight: 900; letter-spacing: 4px;
-      color: rgba(255,255,255,0.9); z-index: 2;
+      font-family:'Orbitron',sans-serif; position:absolute; bottom:30px;
+      font-size:20px; font-weight:900; letter-spacing:4px;
+      color:rgba(255,255,255,0.9); z-index:2;
     }
 
-    /* ── SCROLL REVEAL ── */
-    .reveal {
-      opacity: 0; transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+    /* BAIKONUR BANNER */
+    .baikonur-banner {
+      position:relative; z-index:1;
+      max-width:1080px; margin:0 auto; padding:0 25px 20px;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
+    .baikonur-card {
+      padding:28px 36px; border-radius:24px;
+      background:linear-gradient(135deg,rgba(251,191,36,0.08),rgba(56,189,248,0.05));
+      border:1px solid rgba(251,191,36,0.28);
+      backdrop-filter:blur(16px);
+      display:flex; align-items:center; gap:24px; flex-wrap:wrap;
+      transition:.3s;
+    }
+    .baikonur-card:hover { border-color:rgba(251,191,36,0.5); transform:translateY(-3px); }
+    .bk-icon { font-size:40px; flex-shrink:0; }
+    .bk-text h3 { font-family:'Orbitron',sans-serif; font-size:16px; color:var(--gold); margin-bottom:6px; }
+    .bk-text p { font-size:13px; color:#e2d9a8; line-height:1.6; max-width:600px; }
+    .bk-year {
+      margin-left:auto; flex-shrink:0;
+      font-family:'Orbitron',sans-serif; font-size:42px; font-weight:900;
+      color:var(--gold); opacity:0.85; text-shadow:0 0 30px rgba(251,191,36,0.4);
+    }
+    .bk-link {
+      display:inline-flex; align-items:center; gap:6px; margin-top:10px;
+      color:var(--gold); font-size:13px; font-weight:800; text-decoration:none; transition:gap .2s;
+    }
+    .bk-link:hover { gap:10px; }
 
-    /* ── SECTIONS ── */
-    .section { max-width: 1080px; margin: 0 auto; padding: 80px 25px; position: relative; z-index: 1; }
-    .section-header { text-align: center; margin-bottom: 48px; }
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(32px); transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-delay-1 { transition-delay:.1s; }
+    .reveal-delay-2 { transition-delay:.2s; }
+    .reveal-delay-3 { transition-delay:.3s; }
+    .reveal-delay-4 { transition-delay:.4s; }
+
+    /* SECTIONS */
+    .section { max-width:1080px; margin:0 auto; padding:80px 25px; position:relative; z-index:1; }
+    .section-header { text-align:center; margin-bottom:48px; }
     .section-tag {
-      display: inline-block; padding: 5px 14px; border-radius: 999px;
-      background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3);
-      color: #7dd3fc; font-size: 11px; font-weight: 800;
-      letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px;
+      display:inline-block; padding:5px 14px; border-radius:999px;
+      background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3);
+      color:#7dd3fc; font-size:11px; font-weight:800;
+      letter-spacing:1.5px; text-transform:uppercase; margin-bottom:14px;
     }
-    .section-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 36px; margin-bottom: 12px; letter-spacing: 1px;
-    }
-    .section-sub { color: var(--muted); font-size: 17px; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+    .section-title { font-family:'Orbitron',sans-serif; font-size:36px; margin-bottom:12px; letter-spacing:1px; }
+    .section-sub { color:var(--muted); font-size:17px; max-width:520px; margin:0 auto; line-height:1.7; }
 
-    /* about */
-    .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; }
+    /* ABOUT */
+    .about-grid { display:grid; grid-template-columns:1.4fr 1fr; gap:24px; }
     .about-card {
-      padding: 32px; border-radius: 24px;
-      background: var(--glass); border: 1px solid var(--glass-b);
-      backdrop-filter: blur(16px); box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      padding:32px; border-radius:24px;
+      background:var(--glass); border:1px solid var(--glass-b);
+      backdrop-filter:blur(16px); box-shadow:0 20px 50px rgba(0,0,0,0.25);
     }
-    .about-card h3 { font-family: 'Orbitron', sans-serif; color: var(--accent); font-size: 18px; margin-bottom: 14px; }
-    .about-card p { color: #c5d8f0; line-height: 1.8; font-size: 15px; }
-    .timeline { margin-top: 20px; display: flex; flex-direction: column; gap: 14px; }
-    .tl-item { display: flex; gap: 14px; align-items: flex-start; }
-    .tl-dot {
-      width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
-      box-shadow: 0 0 10px var(--accent); flex-shrink: 0; margin-top: 5px;
-    }
-    .tl-text { font-size: 14px; color: #c5d8f0; line-height: 1.6; }
-    .tl-text strong { color: white; display: block; margin-bottom: 2px; }
+    .about-card h3 { font-family:'Orbitron',sans-serif; color:var(--accent); font-size:18px; margin-bottom:14px; }
+    .about-card p { color:#c5d8f0; line-height:1.8; font-size:15px; }
+    .timeline { margin-top:20px; display:flex; flex-direction:column; gap:14px; }
+    .tl-item { display:flex; gap:14px; align-items:flex-start; }
+    .tl-dot { width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent); flex-shrink:0; margin-top:5px; }
+    .tl-text { font-size:14px; color:#c5d8f0; line-height:1.6; }
+    .tl-text strong { color:white; display:block; margin-bottom:2px; }
 
-    /* focus cards */
-    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
+    /* SKILLS */
+    .skill-bar-wrap { margin-top:18px; display:flex; flex-direction:column; gap:14px; }
+    .skill-row { }
+    .skill-label { display:flex; justify-content:space-between; margin-bottom:6px; font-size:13px; color:#c5d8f0; }
+    .skill-track { height:8px; border-radius:999px; background:rgba(255,255,255,0.1); overflow:hidden; }
+    .skill-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,var(--accent),var(--accent2)); width:0%; transition:width 1.2s ease; }
+
+    /* TECH */
+    .tech-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:16px; }
+    .tech-item {
+      display:flex; flex-direction:column; align-items:center; gap:10px;
+      padding:20px 10px; border-radius:18px;
+      background:var(--glass); border:1px solid var(--glass-b); backdrop-filter:blur(12px);
+      transition:.3s; cursor:default;
+    }
+    .tech-item:hover { transform:translateY(-6px); border-color:rgba(56,189,248,0.4); background:rgba(56,189,248,0.07); }
+    .tech-icon { font-size:32px; }
+    .tech-name { font-size:12px; font-weight:700; color:var(--muted); letter-spacing:0.5px; }
+
+    /* VISITOR */
+    .visitor-bar {
+      display:flex; align-items:center; justify-content:center; gap:18px;
+      padding:18px 30px; border-radius:20px;
+      background:var(--glass); border:1px solid var(--glass-b); backdrop-filter:blur(12px);
+      margin-bottom:60px;
+    }
+    .visitor-dot { width:8px; height:8px; border-radius:50%; background:#22c55e; box-shadow:0 0 10px #22c55e; animation:pulse 2s infinite; }
+    .visitor-text { font-size:14px; color:var(--muted); }
+    .visitor-count { font-family:'Orbitron',sans-serif; font-size:20px; color:var(--accent); font-weight:900; }
+
+    /* PROJECT CARDS */
+    .project-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+    .project-card {
+      border-radius:22px; overflow:hidden;
+      background:var(--glass); border:1px solid var(--glass-b);
+      backdrop-filter:blur(16px); transition:.35s;
+      display:flex; flex-direction:column; text-decoration:none; color:white;
+    }
+    .project-card:hover { transform:translateY(-8px); border-color:rgba(56,189,248,0.4); box-shadow:0 24px 60px rgba(56,189,248,0.1); }
+    .project-card.gold-card:hover { border-color:rgba(251,191,36,0.4); box-shadow:0 24px 60px rgba(251,191,36,0.1); }
+    .project-thumb {
+      height:120px; display:flex; align-items:center; justify-content:center;
+      font-size:44px; position:relative; overflow:hidden;
+      background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(37,99,235,0.08));
+    }
+    .gold-card .project-thumb { background:linear-gradient(135deg,rgba(251,191,36,0.12),rgba(217,119,6,0.06)); }
+    .project-thumb::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 50%,rgba(2,8,23,0.7)); }
+    .project-body { padding:18px; flex:1; display:flex; flex-direction:column; gap:8px; }
+    .project-tag {
+      display:inline-block; padding:3px 10px; border-radius:999px;
+      background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25);
+      color:#7dd3fc; font-size:10px; font-weight:800; letter-spacing:1px; text-transform:uppercase;
+    }
+    .gold-card .project-tag { background:rgba(251,191,36,0.12); border-color:rgba(251,191,36,0.25); color:#fde68a; }
+    .project-body h4 { font-family:'Orbitron',sans-serif; font-size:13px; color:white; }
+    .project-body p { font-size:12px; color:#94a3b8; line-height:1.6; flex:1; }
+    .project-link {
+      display:inline-flex; align-items:center; gap:6px;
+      color:var(--accent); font-size:12px; font-weight:700;
+      margin-top:6px; transition:gap .2s;
+    }
+    .gold-card .project-link { color:var(--gold); }
+    .project-link:hover { gap:10px; }
+
+    /* FOCUS CARDS */
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
     .card {
-      padding: 30px 26px; border-radius: 24px;
-      background: var(--glass); border: 1px solid var(--glass-b);
-      backdrop-filter: blur(16px); box-shadow: 0 18px 48px rgba(0,0,0,0.28);
-      transition: 0.35s; position: relative; overflow: hidden;
+      padding:30px 26px; border-radius:24px;
+      background:var(--glass); border:1px solid var(--glass-b);
+      backdrop-filter:blur(16px); box-shadow:0 18px 48px rgba(0,0,0,0.28);
+      transition:.35s; position:relative; overflow:hidden;
     }
     .card::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(56,189,248,0.06) 0%, transparent 60%);
-      opacity: 0; transition: 0.35s;
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg,rgba(56,189,248,0.06) 0%,transparent 60%);
+      opacity:0; transition:.35s;
     }
-    .card:hover { transform: translateY(-10px); border-color: rgba(56,189,248,0.45); }
-    .card:hover::before { opacity: 1; }
-    .card-icon { font-size: 36px; margin-bottom: 16px; display: block; }
-    .card h3 { color: var(--accent); margin-bottom: 12px; font-family: 'Orbitron', sans-serif; font-size: 16px; }
-    .card p { color: #dbeafe; line-height: 1.7; font-size: 14px; }
+    .card:hover { transform:translateY(-10px); border-color:rgba(56,189,248,0.45); }
+    .card:hover::before { opacity:1; }
+    .card-icon { font-size:36px; margin-bottom:16px; display:block; }
+    .card h3 { color:var(--accent); margin-bottom:12px; font-family:'Orbitron',sans-serif; font-size:16px; }
+    .card p { color:#dbeafe; line-height:1.7; font-size:14px; }
 
-    /* ── TECH STACK SECTION ── */
-    .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 16px;
-    }
-    .tech-item {
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-      padding: 20px 10px; border-radius: 18px;
-      background: var(--glass); border: 1px solid var(--glass-b);
-      backdrop-filter: blur(12px);
-      transition: 0.3s; cursor: default;
-    }
-    .tech-item:hover {
-      transform: translateY(-6px);
-      border-color: rgba(56,189,248,0.4);
-      background: rgba(56,189,248,0.07);
-    }
-    .tech-icon { font-size: 32px; }
-    .tech-name { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; }
-
-    /* ── VISITOR COUNTER ── */
-    .visitor-bar {
-      display: flex; align-items: center; justify-content: center; gap: 18px;
-      padding: 18px 30px; border-radius: 20px;
-      background: var(--glass); border: 1px solid var(--glass-b);
-      backdrop-filter: blur(12px);
-      margin-bottom: 60px;
-    }
-    .visitor-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: #22c55e; box-shadow: 0 0 10px #22c55e;
-      animation: pulse 2s infinite;
-    }
-    .visitor-text { font-size: 14px; color: var(--muted); }
-    .visitor-count { font-family: 'Orbitron', sans-serif; font-size: 20px; color: var(--accent); font-weight: 900; }
-
-    /* ── PROJECT PREVIEW CARDS ── */
-    .project-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
-    .project-card {
-      border-radius: 24px; overflow: hidden;
-      background: var(--glass); border: 1px solid var(--glass-b);
-      backdrop-filter: blur(16px); transition: 0.35s;
-      display: flex; flex-direction: column;
-    }
-    .project-card:hover { transform: translateY(-8px); border-color: rgba(56,189,248,0.4); box-shadow: 0 24px 60px rgba(56,189,248,0.1); }
-    .project-thumb {
-      height: 140px; display: flex; align-items: center; justify-content: center;
-      font-size: 52px;
-      background: linear-gradient(135deg, rgba(56,189,248,0.12), rgba(37,99,235,0.08));
-      position: relative; overflow: hidden;
-    }
-    .project-thumb::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 50%, rgba(2,8,23,0.7));
-    }
-    .project-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
-    .project-tag {
-      display: inline-block; padding: 3px 10px; border-radius: 999px;
-      background: rgba(56,189,248,0.12); border: 1px solid rgba(56,189,248,0.25);
-      color: #7dd3fc; font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
-    }
-    .project-body h4 { font-family: 'Orbitron', sans-serif; font-size: 15px; color: white; }
-    .project-body p { font-size: 13px; color: #94a3b8; line-height: 1.6; flex: 1; }
-    .project-link {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: var(--accent); font-size: 13px; font-weight: 700;
-      text-decoration: none; transition: gap 0.2s;
-      margin-top: 8px;
-    }
-    .project-link:hover { gap: 10px; }
-
-    /* ── CHAT ── */
+    /* CHAT */
     #chat-btn {
-      position: fixed; right: 25px; bottom: 25px;
-      width: 58px; height: 58px; border-radius: 50%;
-      border: none; background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white; font-size: 22px; cursor: pointer; z-index: 2000;
-      box-shadow: 0 10px 30px rgba(37,99,235,0.55); transition: 0.3s;
+      position:fixed; right:25px; bottom:25px;
+      width:58px; height:58px; border-radius:50%;
+      border:none; background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:white; font-size:22px; cursor:pointer; z-index:2000;
+      box-shadow:0 10px 30px rgba(37,99,235,0.55); transition:.3s; position:relative;
     }
-    #chat-btn:hover { transform: translateY(-4px) scale(1.07); box-shadow: 0 16px 40px rgba(37,99,235,0.65); }
+    #chat-btn:hover { transform:translateY(-4px) scale(1.07); }
     #chat-badge {
-      position: absolute; top: -4px; right: -4px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: #ef4444; font-size: 10px; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      display: none;
+      position:absolute; top:-4px; right:-4px;
+      width:18px; height:18px; border-radius:50%;
+      background:#ef4444; font-size:10px; font-weight:800;
+      display:none; align-items:center; justify-content:center;
     }
-
     #chat-panel {
-      position: fixed; right: 25px; bottom: 94px;
-      width: 320px; max-height: 440px;
-      display: none; flex-direction: column;
-      padding: 18px; border-radius: 22px;
-      background: rgba(5,12,30,0.98);
-      border: 1px solid var(--glass-b); backdrop-filter: blur(24px);
-      box-shadow: 0 25px 60px rgba(0,0,0,0.6); z-index: 1999; overflow-y: auto;
-      animation: slideUp 0.3s ease;
+      position:fixed; right:25px; bottom:94px;
+      width:320px; max-height:440px;
+      display:none; flex-direction:column;
+      padding:18px; border-radius:22px;
+      background:rgba(5,12,30,0.98); border:1px solid var(--glass-b);
+      backdrop-filter:blur(24px); box-shadow:0 25px 60px rgba(0,0,0,0.6);
+      z-index:1999; overflow-y:auto; animation:slideUp .3s ease;
     }
-    @keyframes slideUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-    #chat-panel h3 { font-family: 'Orbitron', sans-serif; font-size: 16px; margin-bottom: 14px; color: var(--accent); }
-    .chat-item {
-      padding: 12px; margin-bottom: 10px; border-radius: 14px;
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.09);
-      animation: fadeIn 0.4s ease;
-    }
-    @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
-    .chat-name { color: var(--accent); font-weight: 800; font-size: 13px; margin-bottom: 4px; }
-    .chat-text { color: #e5e7eb; font-size: 13px; line-height: 1.5; }
-    .chat-time { color: var(--muted); font-size: 11px; margin-top: 6px; }
+    @keyframes slideUp { from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);} }
+    #chat-panel h3 { font-family:'Orbitron',sans-serif; font-size:16px; margin-bottom:14px; color:var(--accent); }
+    .chat-item { padding:12px; margin-bottom:10px; border-radius:14px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.09); }
+    .chat-name { color:var(--accent); font-weight:800; font-size:13px; margin-bottom:4px; }
+    .chat-text { color:#e5e7eb; font-size:13px; line-height:1.5; }
+    .chat-time { color:var(--muted); font-size:11px; margin-top:6px; }
     .chat-link {
-      display: block; margin-top: 12px; padding: 11px;
-      text-align: center; border-radius: 12px; color: white;
-      text-decoration: none; font-weight: 800; font-size: 14px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display:block; margin-top:12px; padding:11px; text-align:center;
+      border-radius:12px; color:white; text-decoration:none; font-weight:800; font-size:14px;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
     }
-    .chat-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 16px; }
+    .chat-empty { color:var(--muted); font-size:13px; text-align:center; padding:16px; }
 
-    /* ── BACK TO TOP ── */
+    /* BACK TOP */
     #back-top {
-      position: fixed; left: 25px; bottom: 25px;
-      width: 46px; height: 46px; border-radius: 50%;
-      border: 1px solid var(--glass-b); background: var(--glass);
-      color: white; font-size: 18px; cursor: pointer; z-index: 2000;
-      backdrop-filter: blur(12px);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: 0.3s; box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      position:fixed; left:25px; bottom:25px;
+      width:46px; height:46px; border-radius:50%;
+      border:1px solid var(--glass-b); background:var(--glass); color:white; font-size:18px;
+      cursor:pointer; z-index:2000; backdrop-filter:blur(12px);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none; transition:.3s; box-shadow:0 8px 24px rgba(0,0,0,0.3);
     }
-    #back-top.show { opacity: 1; pointer-events: all; }
-    #back-top:hover { background: rgba(56,189,248,0.2); border-color: var(--accent); transform: translateY(-3px); }
+    #back-top.show { opacity:1; pointer-events:all; }
+    #back-top:hover { background:rgba(56,189,248,0.2); border-color:var(--accent); transform:translateY(-3px); }
 
-    /* ── FOOTER ── */
     footer {
-      position: relative; z-index: 1; padding: 32px;
-      text-align: center; color: var(--muted);
-      background: rgba(2,6,23,0.6); border-top: 1px solid var(--glass-b);
-      font-size: 13px;
+      position:relative; z-index:1; padding:32px;
+      text-align:center; color:var(--muted);
+      background:rgba(2,6,23,0.6); border-top:1px solid var(--glass-b); font-size:13px;
     }
 
-    /* ── KEYFRAMES ── */
-    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes float { 0%,100% { transform:translateY(0) rotate(0.3deg); } 50% { transform:translateY(-20px) rotate(-0.3deg); } }
-    @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
-    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
-    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.7); } }
-    @keyframes meteor {
-      0%   { transform: translateX(0) translateY(0); opacity: 1; }
-      100% { transform: translateX(-600px) translateY(300px); opacity: 0; }
-    }
-
-    /* ── METEORS ── */
     .meteor {
-      position: fixed; border-radius: 999px;
-      background: linear-gradient(90deg, white, transparent);
-      pointer-events: none; z-index: 0;
-      opacity: 0;
-      animation: meteor linear forwards;
+      position:fixed; border-radius:999px;
+      background:linear-gradient(90deg,white,transparent);
+      pointer-events:none; z-index:0; opacity:0; animation:meteor linear forwards;
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 960px) {
-      body { cursor: auto; }
-      #cursor, #cursor-ring { display: none; }
-      header { padding: 16px 20px; }
-      header.scrolled { padding: 12px 20px; }
-      nav { display: none; }
-      .hamburger { display: flex; }
-      .hero { flex-direction: column; text-align: center; padding: 140px 22px 70px; gap: 48px; }
-      .hero h1 { font-size: 42px; }
-      .hero p { font-size: 16px; margin: 0 auto 36px; }
-      .buttons, .stats, .social-links { justify-content: center; }
-      .orbit-wrapper { width: 260px; height: 260px; }
-      .ring-3 { display: none; }
-      .about-grid, .cards, .project-cards { grid-template-columns: 1fr; }
-      .tech-grid { grid-template-columns: repeat(3, 1fr); }
-      #chat-panel { right: 12px; left: 12px; width: auto; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);} }
+    @keyframes float { 0%,100%{transform:translateY(0) rotate(0.3deg);}50%{transform:translateY(-20px) rotate(-0.3deg);} }
+    @keyframes spin { from{transform:rotate(0);}to{transform:rotate(360deg);} }
+    @keyframes blink { 0%,100%{opacity:1;}50%{opacity:0;} }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.7);} }
+    @keyframes meteor { 0%{transform:translateX(0) translateY(0);opacity:1;}100%{transform:translateX(-600px) translateY(300px);opacity:0;} }
+
+    @media(max-width:960px){
+      body { cursor:auto; }
+      #cursor,#cursor-ring { display:none; }
+      header { padding:16px 20px; }
+      header.scrolled { padding:12px 20px; }
+      nav { display:none; }
+      .hamburger { display:flex; }
+      .hero { flex-direction:column; text-align:center; padding:140px 22px 70px; gap:48px; }
+      .hero h1 { font-size:42px; }
+      .hero p { font-size:16px; margin:0 auto 36px; }
+      .buttons,.stats,.social-links { justify-content:center; }
+      .orbit-wrapper { width:260px; height:260px; }
+      .ring-3 { display:none; }
+      .about-grid,.cards { grid-template-columns:1fr; }
+      .project-cards { grid-template-columns:repeat(2,1fr); }
+      .tech-grid { grid-template-columns:repeat(3,1fr); }
+      .bk-year { margin-left:0; font-size:32px; }
+      #chat-panel { right:12px; left:12px; width:auto; }
+    }
+    @media(max-width:500px){
+      .project-cards { grid-template-columns:1fr; }
     }
   </style>
 </head>
-
 <body>
 
 <div id="cursor"></div>
@@ -611,10 +524,7 @@
 <div id="progress-bar"></div>
 <canvas id="star-canvas"></canvas>
 
-<!-- Mobile overlay -->
 <div class="mobile-overlay" id="mobile-overlay"></div>
-
-<!-- Mobile nav drawer -->
 <div class="mobile-nav" id="mobile-nav">
   <a href="index.html" data-i18n="nav_home">Home</a>
   <a href="projects.html" data-i18n="nav_projects">Projects</a>
@@ -626,7 +536,6 @@
   </div>
 </div>
 
-<!-- HEADER -->
 <header id="header">
   <div class="logo">QAINAR</div>
   <nav>
@@ -660,30 +569,26 @@
       <span data-i18n="hero_tag">Space Engineering Portfolio</span>
     </div>
     <h1>
-      <span data-i18n="hero_greeting">Hi, I'm </span><span class="name" id="typewriter-name">Qainar</span><span class="cursor"></span> 🚀
+      <span data-i18n="hero_greeting">Hi, I'm </span><span class="name" id="typewriter-name">Qainar</span><span class="cursor-blink"></span> 🚀
     </h1>
-    <p data-i18n="hero_desc">I am a space engineering student building real skills in physics, mathematics, web development, and future space technology.</p>
+    <p data-i18n="hero_desc">Space engineering student from Kazakhstan. Building real skills in physics, mathematics, and web development — with one goal: make Kazakhstan a space nation by 2050.</p>
     <div class="buttons">
       <a class="btn primary" href="projects.html" data-i18n="btn_projects">Explore Projects</a>
-      <a class="btn secondary" href="contact.html" data-i18n="btn_comment">Leave a Comment</a>
+      <a class="btn secondary" href="spacelog.html" data-i18n="btn_spacelog">🌌 Space Log</a>
       <button id="hero-login-btn" class="btn primary" data-i18n="btn_google_login">Login with Google</button>
     </div>
     <div class="stats">
-      <div class="stat"><h3 class="counter" data-target="3">0</h3><p data-i18n="stat1">Projects</p></div>
-      <div class="stat"><h3 class="counter" data-target="2">0</h3><p data-i18n="stat2">Languages</p></div>
+      <div class="stat"><h3 class="counter" data-target="4">0</h3><p data-i18n="stat1">Projects</p></div>
+      <div class="stat"><h3 class="counter" data-target="3">0</h3><p data-i18n="stat2">Languages</p></div>
       <div class="stat"><h3 class="counter" data-target="1">0</h3><p data-i18n="stat3">CanSat Mission</p></div>
     </div>
     <div class="social-links">
       <a class="social-link" href="mailto:kkay05925@gmail.com" title="Email">✉️</a>
       <a class="social-link" href="contact.html" title="Comment">💬</a>
       <a class="social-link" href="projects.html" title="Projects">🚀</a>
-      <div class="copy-email" id="copy-email-btn" title="Copy Email">
-        📋
-        <div class="copy-tooltip">Copied!</div>
-      </div>
+      <div class="copy-email" id="copy-email-btn" title="Copy Email">📋<div class="copy-tooltip">Copied!</div></div>
     </div>
   </div>
-
   <div class="orbit-wrapper">
     <div class="orbit-card">
       <div class="ring ring-1"></div>
@@ -698,7 +603,22 @@
   </div>
 </section>
 
-<!-- VISITOR COUNTER -->
+<!-- BAIKONUR BANNER -->
+<div class="section" style="padding-bottom:0;">
+  <div class="baikonur-banner" style="padding:0;">
+    <div class="baikonur-card reveal">
+      <div class="bk-icon">🛸</div>
+      <div class="bk-text">
+        <h3 data-i18n="bk_title">Baikonur 2050 — My Mission</h3>
+        <p data-i18n="bk_desc">Kazakhstan's lease of Baikonur Cosmodrome expires in 2050. I want to be one of the scientists ready to build an independent Kazakh space program when that day comes.</p>
+        <a class="bk-link" href="spacelog.html" data-i18n="bk_link">Read the full story →</a>
+      </div>
+      <div class="bk-year">2050</div>
+    </div>
+  </div>
+</div>
+
+<!-- VISITOR -->
 <div class="section" style="padding-bottom:0;">
   <div class="visitor-bar reveal">
     <div class="visitor-dot"></div>
@@ -717,7 +637,7 @@
   <div class="about-grid">
     <div class="about-card reveal reveal-delay-1">
       <h3 data-i18n="about_card1_title">My Story</h3>
-      <p data-i18n="about_card1_desc">I'm Qainar, a space engineering student passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.</p>
+      <p data-i18n="about_card1_desc">I'm Qainar, a space engineering student from Almaty, Kazakhstan. Passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.</p>
       <div class="timeline">
         <div class="tl-item">
           <div class="tl-dot"></div>
@@ -729,45 +649,29 @@
         </div>
         <div class="tl-item">
           <div class="tl-dot"></div>
-          <div class="tl-text"><strong data-i18n="tl3_title">Physics Studies</strong><span data-i18n="tl3_desc">Mechanics, dynamics and electromagnetism</span></div>
+          <div class="tl-text"><strong data-i18n="tl3_title">The 2050 Mission</strong><span data-i18n="tl3_desc">Baikonur lease ends — Kazakhstan must be ready</span></div>
         </div>
       </div>
     </div>
     <div class="about-card reveal reveal-delay-2">
       <h3 data-i18n="about_card2_title">Skills</h3>
       <p data-i18n="about_card2_desc">Currently growing in these areas:</p>
-      <div style="margin-top:18px; display:flex; flex-direction:column; gap:14px;">
-        <div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#c5d8f0;">
-            <span data-i18n="skill1">Physics & Math</span><span>80%</span>
-          </div>
-          <div style="height:8px;border-radius:999px;background:rgba(255,255,255,0.1);overflow:hidden;">
-            <div class="skill-bar" data-width="80" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 1.2s ease;"></div>
-          </div>
+      <div class="skill-bar-wrap">
+        <div class="skill-row">
+          <div class="skill-label"><span data-i18n="skill1">Physics & Math</span><span>80%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-width="80"></div></div>
         </div>
-        <div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#c5d8f0;">
-            <span data-i18n="skill2">Web Development</span><span>70%</span>
-          </div>
-          <div style="height:8px;border-radius:999px;background:rgba(255,255,255,0.1);overflow:hidden;">
-            <div class="skill-bar" data-width="70" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 1.2s ease 0.2s;"></div>
-          </div>
+        <div class="skill-row">
+          <div class="skill-label"><span data-i18n="skill2">Web Development</span><span>70%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-width="70"></div></div>
         </div>
-        <div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#c5d8f0;">
-            <span data-i18n="skill3">Space Engineering</span><span>65%</span>
-          </div>
-          <div style="height:8px;border-radius:999px;background:rgba(255,255,255,0.1);overflow:hidden;">
-            <div class="skill-bar" data-width="65" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 1.2s ease 0.4s;"></div>
-          </div>
+        <div class="skill-row">
+          <div class="skill-label"><span data-i18n="skill3">Space Engineering</span><span>65%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-width="65"></div></div>
         </div>
-        <div>
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#c5d8f0;">
-            <span data-i18n="skill4">SAT English</span><span>75%</span>
-          </div>
-          <div style="height:8px;border-radius:999px;background:rgba(255,255,255,0.1);overflow:hidden;">
-            <div class="skill-bar" data-width="75" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:999px;transition:width 1.2s ease 0.6s;"></div>
-          </div>
+        <div class="skill-row">
+          <div class="skill-label"><span data-i18n="skill4">Kazakh / English</span><span>75%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-width="75"></div></div>
         </div>
       </div>
     </div>
@@ -801,33 +705,42 @@
     <p class="section-sub" data-i18n="proj_sub">A glimpse of what I've built so far.</p>
   </div>
   <div class="project-cards">
-    <div class="project-card reveal reveal-delay-1">
+    <a class="project-card reveal reveal-delay-1" href="cansat.html">
       <div class="project-thumb">🛰️</div>
       <div class="project-body">
         <span class="project-tag" data-i18n="proj1_tag">Space</span>
         <h4 data-i18n="proj1_title">CanSat Mission</h4>
-        <p data-i18n="proj1_desc">Designed and launched a miniature satellite simulation measuring atmospheric data during descent.</p>
-        <a class="project-link" href="projects.html">View Project →</a>
+        <p data-i18n="proj1_desc">Miniature satellite simulation measuring atmospheric data during descent.</p>
+        <span class="project-link">View →</span>
       </div>
-    </div>
-    <div class="project-card reveal reveal-delay-2">
-      <div class="project-thumb">💻</div>
-      <div class="project-body">
-        <span class="project-tag" data-i18n="proj2_tag">Web</span>
-        <h4 data-i18n="proj2_title">This Portfolio</h4>
-        <p data-i18n="proj2_desc">Built a full-stack portfolio with Firebase authentication, real-time comments, and multi-language support.</p>
-        <a class="project-link" href="projects.html">View Project →</a>
-      </div>
-    </div>
-    <div class="project-card reveal reveal-delay-3">
+    </a>
+    <a class="project-card reveal reveal-delay-2" href="physics.html">
       <div class="project-thumb">⚙️</div>
       <div class="project-body">
-        <span class="project-tag" data-i18n="proj3_tag">Physics</span>
-        <h4 data-i18n="proj3_title">Physics Solver</h4>
-        <p data-i18n="proj3_desc">Interactive tool for solving mechanics and dynamics problems with step-by-step explanations.</p>
-        <a class="project-link" href="projects.html">View Project →</a>
+        <span class="project-tag" data-i18n="proj2_tag">Physics</span>
+        <h4 data-i18n="proj2_title">Physics Notes</h4>
+        <p data-i18n="proj2_desc">Mechanics, electromagnetism and key formulas with step-by-step methods.</p>
+        <span class="project-link">View →</span>
       </div>
-    </div>
+    </a>
+    <a class="project-card reveal reveal-delay-3" href="index.html">
+      <div class="project-thumb">💻</div>
+      <div class="project-body">
+        <span class="project-tag" data-i18n="proj3_tag">Web</span>
+        <h4 data-i18n="proj3_title">This Portfolio</h4>
+        <p data-i18n="proj3_desc">Full-stack portfolio with Firebase auth, real-time comments and 3 languages.</p>
+        <span class="project-link">View →</span>
+      </div>
+    </a>
+    <a class="project-card gold-card reveal reveal-delay-4" href="spacelog.html">
+      <div class="project-thumb">🌌</div>
+      <div class="project-body">
+        <span class="project-tag" data-i18n="proj4_tag">Mission</span>
+        <h4 data-i18n="proj4_title">Space Log</h4>
+        <p data-i18n="proj4_desc">Kazakhstan, Baikonur 2050, and my personal mission to the stars.</p>
+        <span class="project-link">View →</span>
+      </div>
+    </a>
   </div>
 </section>
 
@@ -857,22 +770,16 @@
   </div>
 </section>
 
-<!-- Chat button -->
-<button id="chat-btn" style="position:relative;">
-  💬
-  <span id="chat-badge"></span>
-</button>
+<!-- CHAT -->
+<button id="chat-btn" style="position:fixed;">💬<span id="chat-badge"></span></button>
 <div id="chat-panel">
   <h3 data-i18n="chat_title">Latest Comments</h3>
   <div id="chat-comments"><p class="chat-empty" data-i18n="chat_loading">Loading…</p></div>
   <a class="chat-link" href="contact.html" data-i18n="chat_write">Write a Comment</a>
 </div>
-
 <button id="back-top" title="Back to top">↑</button>
 
-<footer>
-  © 2026 Qainar's Website · Space Engineering · Web Development
-</footer>
+<footer>© 2026 Qainar's Website · Space Engineering · Kazakhstan 🇰🇿</footer>
 
 <!-- TRANSLATIONS -->
 <script>
@@ -881,22 +788,26 @@ const T = {
     nav_home:"Home", nav_projects:"Projects", nav_contact:"Contact",
     btn_login:"Login", btn_logout:"Logout",
     hero_tag:"Space Engineering Portfolio", hero_greeting:"Hi, I'm ",
-    hero_desc:"I am a space engineering student building real skills in physics, mathematics, web development, and future space technology.",
-    btn_projects:"Explore Projects", btn_comment:"Leave a Comment", btn_google_login:"Login with Google",
+    hero_desc:"Space engineering student from Kazakhstan. Building real skills in physics, mathematics, and web development — with one goal: make Kazakhstan a space nation by 2050.",
+    btn_projects:"Explore Projects", btn_spacelog:"🌌 Space Log", btn_google_login:"Login with Google",
     stat1:"Projects", stat2:"Languages", stat3:"CanSat Mission",
+    bk_title:"Baikonur 2050 — My Mission",
+    bk_desc:"Kazakhstan's lease of Baikonur Cosmodrome expires in 2050. I want to be one of the scientists ready to build an independent Kazakh space program when that day comes.",
+    bk_link:"Read the full story →",
     visitor_text:"Total visitors:",
     about_tag:"About Me", about_title:"Who I Am", about_sub:"A student on a mission to reach the stars — one skill at a time.",
-    about_card1_title:"My Story", about_card1_desc:"I'm Qainar, a space engineering student passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.",
+    about_card1_title:"My Story", about_card1_desc:"I'm Qainar, a space engineering student from Almaty, Kazakhstan. Passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.",
     tl1_title:"CanSat Project", tl1_desc:"Built and launched a small satellite simulation",
     tl2_title:"Web Development", tl2_desc:"Created this portfolio with Firebase & JavaScript",
-    tl3_title:"Physics Studies", tl3_desc:"Mechanics, dynamics and electromagnetism",
+    tl3_title:"The 2050 Mission", tl3_desc:"Baikonur lease ends — Kazakhstan must be ready",
     about_card2_title:"Skills", about_card2_desc:"Currently growing in these areas:",
-    skill1:"Physics & Math", skill2:"Web Development", skill3:"Space Engineering", skill4:"SAT English",
+    skill1:"Physics & Math", skill2:"Web Development", skill3:"Space Engineering", skill4:"Kazakh / English",
     tech_tag:"Tech Stack", tech_title:"Tools I Use", tech_sub:"The technologies powering my projects.",
     proj_tag:"My Work", proj_title:"Featured Projects", proj_sub:"A glimpse of what I've built so far.",
-    proj1_tag:"Space", proj1_title:"CanSat Mission", proj1_desc:"Designed and launched a miniature satellite simulation measuring atmospheric data during descent.",
-    proj2_tag:"Web", proj2_title:"This Portfolio", proj2_desc:"Built a full-stack portfolio with Firebase authentication, real-time comments, and multi-language support.",
-    proj3_tag:"Physics", proj3_title:"Physics Solver", proj3_desc:"Interactive tool for solving mechanics and dynamics problems with step-by-step explanations.",
+    proj1_tag:"Space", proj1_title:"CanSat Mission", proj1_desc:"Miniature satellite simulation measuring atmospheric data during descent.",
+    proj2_tag:"Physics", proj2_title:"Physics Notes", proj2_desc:"Mechanics, electromagnetism and key formulas with step-by-step methods.",
+    proj3_tag:"Web", proj3_title:"This Portfolio", proj3_desc:"Full-stack portfolio with Firebase auth, real-time comments and 3 languages.",
+    proj4_tag:"Mission", proj4_title:"Space Log", proj4_desc:"Kazakhstan, Baikonur 2050, and my personal mission to the stars.",
     focus_tag:"Focus Areas", section_title:"What I Build", section_sub:"The main fields I am currently building step by step.",
     card1_title:"Space Systems", card1_desc:"Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.",
     card2_title:"Physics", card2_desc:"Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.",
@@ -907,22 +818,26 @@ const T = {
     nav_home:"首页", nav_projects:"项目", nav_contact:"联系",
     btn_login:"登录", btn_logout:"退出",
     hero_tag:"航天工程作品集", hero_greeting:"你好，我是 ",
-    hero_desc:"我是一名航天工程专业的学生，正在物理、数学、网页开发和未来空间技术领域积累真实技能。",
-    btn_projects:"探索项目", btn_comment:"留言评论", btn_google_login:"使用 Google 登录",
+    hero_desc:"来自哈萨克斯坦的航天工程专业学生。在物理、数学和网页开发领域积累真实技能——目标只有一个：2050年前让哈萨克斯坦成为航天大国。",
+    btn_projects:"探索项目", btn_spacelog:"🌌 太空日志", btn_google_login:"使用 Google 登录",
     stat1:"项目", stat2:"语言", stat3:"CanSat 任务",
+    bk_title:"拜科努尔2050——我的使命",
+    bk_desc:"哈萨克斯坦与俄罗斯的拜科努尔租约将于2050年到期。我希望成为那一天能够建立独立哈萨克航天计划的科学家之一。",
+    bk_link:"阅读完整故事 →",
     visitor_text:"总访客数：",
     about_tag:"关于我", about_title:"我是谁", about_sub:"一个以触碰星空为目标、一步一步积累技能的学生。",
-    about_card1_title:"我的故事", about_card1_desc:"我是 Qainar，一名热爱航天、物理和技术的航天工程专业学生。这个网站记录我的学习旅程，展示我的项目。",
+    about_card1_title:"我的故事", about_card1_desc:"我是 Qainar，来自哈萨克斯坦阿拉木图的航天工程专业学生，热爱航天、物理和技术。这个网站记录我的学习旅程。",
     tl1_title:"CanSat 项目", tl1_desc:"构建并发射了小卫星模拟装置",
     tl2_title:"网页开发", tl2_desc:"用 Firebase 和 JavaScript 搭建了这个作品集",
-    tl3_title:"物理学习", tl3_desc:"力学、动力学和电磁学",
+    tl3_title:"2050年使命", tl3_desc:"拜科努尔租约到期——哈萨克斯坦必须做好准备",
     about_card2_title:"技能", about_card2_desc:"目前正在提升的方向：",
-    skill1:"物理与数学", skill2:"网页开发", skill3:"航天工程", skill4:"SAT 英语",
+    skill1:"物理与数学", skill2:"网页开发", skill3:"航天工程", skill4:"哈萨克语 / 英语",
     tech_tag:"技术栈", tech_title:"我使用的工具", tech_sub:"驱动我项目的技术。",
     proj_tag:"我的作品", proj_title:"精选项目", proj_sub:"迄今为止我构建的内容一瞥。",
-    proj1_tag:"航天", proj1_title:"CanSat 任务", proj1_desc:"设计并发射了小型卫星模拟器，在下降过程中测量大气数据。",
-    proj2_tag:"网页", proj2_title:"这个作品集", proj2_desc:"构建了具有 Firebase 认证、实时评论和多语言支持的全栈作品集。",
-    proj3_tag:"物理", proj3_title:"物理求解器", proj3_desc:"用于逐步解决力学和动力学问题的互动工具。",
+    proj1_tag:"航天", proj1_title:"CanSat 任务", proj1_desc:"在下降过程中测量大气数据的小型卫星模拟器。",
+    proj2_tag:"物理", proj2_title:"物理笔记", proj2_desc:"力学、电磁学和关键公式，附逐步解题方法。",
+    proj3_tag:"网页", proj3_title:"这个作品集", proj3_desc:"具有 Firebase 认证、实时评论和三语言支持的全栈作品集。",
+    proj4_tag:"使命", proj4_title:"太空日志", proj4_desc:"哈萨克斯坦、拜科努尔2050和我的个人航天使命。",
     focus_tag:"专注领域", section_title:"我在做什么", section_sub:"目前正在一步步构建的主要方向。",
     card1_title:"航天系统", card1_desc:"航空航天基础、CanSat 实践、卫星概念及工程项目思维。",
     card2_title:"物理学", card2_desc:"力学、动力学、电磁学、数学建模与解题实践。",
@@ -933,22 +848,26 @@ const T = {
     nav_home:"Басты бет", nav_projects:"Жобалар", nav_contact:"Байланыс",
     btn_login:"Кіру", btn_logout:"Шығу",
     hero_tag:"Ғарыш инженериясы портфолиосы", hero_greeting:"Сәлем, мен ",
-    hero_desc:"Мен ғарыш инженериясы саласында оқитын студентпін. Физика, математика, веб-әзірлеу және болашақ ғарыш технологияларында нақты дағдыларымды дамытып жатырмын.",
-    btn_projects:"Жобаларды қарау", btn_comment:"Пікір қалдыру", btn_google_login:"Google арқылы кіру",
+    hero_desc:"Қазақстаннан келген ғарыш инженериясы студентімін. Физика, математика және веб-әзірлеуде нақты дағдылар жинап жатырмын — бір мақсатпен: 2050 жылға дейін Қазақстанды ғарыш державасына айналдыру.",
+    btn_projects:"Жобаларды қарау", btn_spacelog:"🌌 Ғарыш журналы", btn_google_login:"Google арқылы кіру",
     stat1:"Жобалар", stat2:"Тілдер", stat3:"CanSat миссиясы",
+    bk_title:"Байқоңыр 2050 — Менің миссиям",
+    bk_desc:"Қазақстанның Байқоңыр ғарыш айлағын жалдау шарты 2050 жылы аяқталады. Мен сол күні тәуелсіз қазақ ғарыш бағдарламасын құруға дайын ғалымдардың бірі болғым келеді.",
+    bk_link:"Толық оқу →",
     visitor_text:"Барлық келушілер:",
     about_tag:"Мен туралы", about_title:"Мен кіммін", about_sub:"Жұлдыздарға жету мақсатымен, қадамма-қадам дағды жинайтын студент.",
-    about_card1_title:"Менің тарихым", about_card1_desc:"Мен Қайнармын, аэроғарыш, физика және технологияға құмар ғарыш инженериясы студентімін. Бұл сайтты оқу жолымды бекіту және жобаларымды бөлісу үшін жасадым.",
+    about_card1_title:"Менің тарихым", about_card1_desc:"Мен Қайнармын, Алматыдан келген ғарыш инженериясы студентімін. Аэроғарыш, физика және технологияға құмармын. Бұл сайтты оқу жолымды бекіту үшін жасадым.",
     tl1_title:"CanSat жобасы", tl1_desc:"Шағын жерсерік симуляциясын жасадым",
     tl2_title:"Веб-әзірлеу", tl2_desc:"Firebase және JavaScript-пен портфолио жасадым",
-    tl3_title:"Физика оқуы", tl3_desc:"Механика, динамика және электромагнетизм",
+    tl3_title:"2050 жылғы миссия", tl3_desc:"Байқоңыр жалдауы аяқталады — Қазақстан дайын болуы тиіс",
     about_card2_title:"Дағдылар", about_card2_desc:"Қазір дамытып жатқан салалар:",
-    skill1:"Физика және математика", skill2:"Веб-әзірлеу", skill3:"Ғарыш инженериясы", skill4:"SAT ағылшын тілі",
+    skill1:"Физика және математика", skill2:"Веб-әзірлеу", skill3:"Ғарыш инженериясы", skill4:"Қазақша / Ағылшынша",
     tech_tag:"Технологиялар", tech_title:"Мен қолданатын құралдар", tech_sub:"Жобаларымды қуаттандыратын технологиялар.",
     proj_tag:"Менің жұмыстарым", proj_title:"Таңдаулы жобалар", proj_sub:"Мен жасаған нәрселерге бір шолу.",
-    proj1_tag:"Ғарыш", proj1_title:"CanSat миссиясы", proj1_desc:"Түсу кезінде атмосфералық деректерді өлшейтін шағын жерсерік симуляциясын жасадым.",
-    proj2_tag:"Веб", proj2_title:"Бұл портфолио", proj2_desc:"Firebase аутентификациясымен, нақты уақыттағы пікірлермен және көп тілді қолдаумен толық стек портфолиосын жасадым.",
-    proj3_tag:"Физика", proj3_title:"Физика шешуші", proj3_desc:"Механика және динамика есептерін қадамдық түсіндірмелермен шешуге арналған интерактивті құрал.",
+    proj1_tag:"Ғарыш", proj1_title:"CanSat миссиясы", proj1_desc:"Түсу кезінде атмосфералық деректерді өлшейтін шағын жерсерік симуляциясы.",
+    proj2_tag:"Физика", proj2_title:"Физика жазбалары", proj2_desc:"Механика, электромагнетизм және негізгі формулалар.",
+    proj3_tag:"Веб", proj3_title:"Бұл портфолио", proj3_desc:"Firebase аутентификациясы, нақты уақыттағы пікірлер және 3 тілді қолдайтын портфолио.",
+    proj4_tag:"Миссия", proj4_title:"Ғарыш журналы", proj4_desc:"Қазақстан, Байқоңыр 2050 және жұлдыздарға жетудің жеке миссиям.",
     focus_tag:"Негізгі бағыттар", section_title:"Мен не жасаймын", section_sub:"Қазір қадамма-қадам дамытып жатқан салаларым.",
     card1_title:"Ғарыш жүйелері", card1_desc:"Аэроғарыш негіздері, CanSat тәжірибесі, жерсерік тұжырымдамалары және инженерлік жоба ойлауы.",
     card2_title:"Физика", card2_desc:"Механика, динамика, электромагнетизм, математикалық модельдеу және есеп шешу практикасы.",
@@ -959,8 +878,7 @@ const T = {
 
 let lang = localStorage.getItem("lang") || "en";
 function applyLang(l) {
-  lang = l;
-  localStorage.setItem("lang", l);
+  lang = l; localStorage.setItem("lang", l);
   const t = T[l];
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const k = el.getAttribute("data-i18n");
@@ -973,317 +891,212 @@ document.querySelectorAll(".lang-btn").forEach(b => b.addEventListener("click", 
 applyLang(lang);
 </script>
 
-<!-- ANIMATIONS & INTERACTIONS -->
+<!-- INTERACTIONS -->
 <script>
-/* ── Custom cursor ── */
 const cur = document.getElementById("cursor");
 const curRing = document.getElementById("cursor-ring");
 const glow = document.getElementById("mouse-glow");
-let mouseX = 0, mouseY = 0;
-
 document.addEventListener("mousemove", e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  cur.style.left = mouseX + "px";
-  cur.style.top  = mouseY + "px";
-  curRing.style.left = mouseX + "px";
-  curRing.style.top  = mouseY + "px";
-  glow.style.left = mouseX + "px";
-  glow.style.top  = mouseY + "px";
+  cur.style.left = e.clientX+"px"; cur.style.top = e.clientY+"px";
+  curRing.style.left = e.clientX+"px"; curRing.style.top = e.clientY+"px";
+  glow.style.left = e.clientX+"px"; glow.style.top = e.clientY+"px";
 });
 
-/* ── Star canvas with parallax ── */
 (function(){
   const canvas = document.getElementById("star-canvas");
   const ctx = canvas.getContext("2d");
-  let W, H, stars = [];
-  let scrollY = 0;
-
-  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-
-  function initStars() {
+  let W, H, stars = [], scrollY = 0;
+  function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function initStars(){
     stars = [];
-    for (let i = 0; i < 240; i++) {
-      stars.push({
-        x: Math.random() * W, y: Math.random() * H,
-        r: Math.random() * 1.4 + 0.2,
-        alpha: Math.random(),
-        speed: Math.random() * 0.004 + 0.001,
-        phase: Math.random() * Math.PI * 2,
-        parallax: Math.random() * 0.15  /* parallax factor */
-      });
-    }
+    for(let i=0;i<240;i++) stars.push({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*1.4+0.2, phase:Math.random()*Math.PI*2,
+      speed:Math.random()*0.004+0.001, parallax:Math.random()*0.15
+    });
   }
-
-  let t = 0;
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    t += 0.012;
-    stars.forEach(s => {
-      const a = 0.35 + 0.65 * Math.abs(Math.sin(t * s.speed * 80 + s.phase));
-      const py = s.y - scrollY * s.parallax;
-      ctx.beginPath();
-      ctx.arc(s.x, py, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(180,210,255,${a})`;
-      ctx.fill();
+  let t=0;
+  function draw(){
+    ctx.clearRect(0,0,W,H); t+=0.012;
+    stars.forEach(s=>{
+      const a=0.35+0.65*Math.abs(Math.sin(t*s.speed*80+s.phase));
+      ctx.beginPath(); ctx.arc(s.x, s.y-scrollY*s.parallax, s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(180,210,255,${a})`; ctx.fill();
     });
     requestAnimationFrame(draw);
   }
-
-  window.addEventListener("resize", () => { resize(); initStars(); });
-  window.addEventListener("scroll", () => { scrollY = window.scrollY; });
+  window.addEventListener("resize",()=>{ resize(); initStars(); });
+  window.addEventListener("scroll",()=>{ scrollY=window.scrollY; });
   resize(); initStars(); draw();
 })();
 
-/* ── Meteor shower ── */
-function spawnMeteor() {
-  const m = document.createElement("div");
-  m.className = "meteor";
-  const w = Math.random() * 120 + 60;
-  const h = Math.random() * 1.5 + 1;
-  const x = Math.random() * window.innerWidth;
-  const y = Math.random() * window.innerHeight * 0.5;
-  const dur = Math.random() * 1.2 + 0.8;
-  m.style.cssText = `
-    left:${x}px; top:${y}px; width:${w}px; height:${h}px;
-    animation-duration:${dur}s; animation-delay:0s;
-    transform: rotate(${-35 + Math.random()*10}deg);
-  `;
-  document.body.appendChild(m);
-  setTimeout(() => m.remove(), (dur + 0.2) * 1000);
+function spawnMeteor(){
+  const m = document.createElement("div"); m.className="meteor";
+  const dur = Math.random()*1.2+0.8;
+  m.style.cssText=`left:${Math.random()*window.innerWidth}px;top:${Math.random()*window.innerHeight*0.5}px;width:${Math.random()*120+60}px;height:${Math.random()*1.5+1}px;animation-duration:${dur}s;transform:rotate(-35deg);`;
+  document.body.appendChild(m); setTimeout(()=>m.remove(),(dur+0.2)*1000);
 }
+setInterval(spawnMeteor,2800); setTimeout(()=>setInterval(spawnMeteor,2800),1400);
 
-setInterval(spawnMeteor, 2800);
-setTimeout(() => setInterval(spawnMeteor, 2800), 1400);
-
-/* ── Progress bar ── */
 const bar = document.getElementById("progress-bar");
-window.addEventListener("scroll", () => {
-  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
-  bar.style.width = pct + "%";
-});
+window.addEventListener("scroll",()=>{ bar.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+"%"; });
 
-/* ── Scrolled header ── */
 const hdr = document.getElementById("header");
-window.addEventListener("scroll", () => hdr.classList.toggle("scrolled", window.scrollY > 40));
+window.addEventListener("scroll",()=>hdr.classList.toggle("scrolled",window.scrollY>40));
 
-/* ── Back to top ── */
 const bt = document.getElementById("back-top");
-window.addEventListener("scroll", () => bt.classList.toggle("show", window.scrollY > 400));
-bt.addEventListener("click", () => window.scrollTo({ top:0, behavior:"smooth" }));
+window.addEventListener("scroll",()=>bt.classList.toggle("show",window.scrollY>400));
+bt.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
 
-/* ── Scroll reveal ── */
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("visible"); });
-}, { threshold: 0.12 });
-document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("visible"); });
+},{threshold:0.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 
-/* ── Skill bars ── */
-const skillObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) e.target.querySelectorAll(".skill-bar").forEach(b => { b.style.width = b.dataset.width + "%"; });
-  });
-}, { threshold: 0.3 });
-document.querySelectorAll(".about-card").forEach(el => skillObs.observe(el));
+const skillObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.querySelectorAll(".skill-fill").forEach(b=>{ b.style.width=b.dataset.width+"%"; }); });
+},{threshold:0.3});
+document.querySelectorAll(".about-card").forEach(el=>skillObs.observe(el));
 
-/* ── Animated counters ── */
-function animateCounter(el) {
-  const target = parseInt(el.dataset.target);
-  let cur = 0;
-  const step = Math.max(1, Math.floor(target / 30));
-  const timer = setInterval(() => {
-    cur = Math.min(cur + step, target);
-    el.textContent = String(cur).padStart(2, "0");
-    if (cur >= target) clearInterval(timer);
-  }, 40);
+function animateCounter(el){
+  const target = parseInt(el.dataset.target); let c=0;
+  const step = Math.max(1,Math.floor(target/30));
+  const timer = setInterval(()=>{ c=Math.min(c+step,target); el.textContent=String(c).padStart(2,"0"); if(c>=target) clearInterval(timer); },40);
 }
-const counterObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll(".counter").forEach(animateCounter);
-      counterObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.5 });
+const counterObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.querySelectorAll(".counter").forEach(animateCounter); counterObs.unobserve(e.target); } });
+},{threshold:0.5});
 document.querySelector(".stats") && counterObs.observe(document.querySelector(".stats"));
 
-/* ── Typewriter ── */
 (function(){
   const el = document.getElementById("typewriter-name");
-  if (!el) return;
-  const names = { en: "Qainar", zh: "Qainar", kz: "Қайнар" };
-  let current = "", target = "", i = 0, deleting = false;
-
-  function tick() {
-    const lng = localStorage.getItem("lang") || "en";
-    target = names[lng] || "Qainar";
-    if (!deleting && i <= target.length) {
-      current = target.slice(0, i++);
-      el.textContent = current;
-      setTimeout(tick, i === target.length + 1 ? 2400 : 100);
-    } else if (!deleting && i > target.length) {
-      deleting = true; setTimeout(tick, 60);
-    } else if (deleting && i > 0) {
-      current = target.slice(0, --i);
-      el.textContent = current; setTimeout(tick, 55);
-    } else { deleting = false; setTimeout(tick, 200); }
+  if(!el) return;
+  const names = {en:"Qainar",zh:"Qainar",kz:"Қайнар"};
+  let current="",target="",i=0,deleting=false;
+  function tick(){
+    const lng=localStorage.getItem("lang")||"en";
+    target=names[lng]||"Qainar";
+    if(!deleting&&i<=target.length){ current=target.slice(0,i++); el.textContent=current; setTimeout(tick,i===target.length+1?2400:100); }
+    else if(!deleting&&i>target.length){ deleting=true; setTimeout(tick,60); }
+    else if(deleting&&i>0){ current=target.slice(0,--i); el.textContent=current; setTimeout(tick,55); }
+    else { deleting=false; setTimeout(tick,200); }
   }
   tick();
 })();
 
-/* ── Hamburger menu ── */
 const hamburger = document.getElementById("hamburger");
 const mobileNav = document.getElementById("mobile-nav");
 const mobileOverlay = document.getElementById("mobile-overlay");
+function toggleMenu(open){ hamburger.classList.toggle("open",open); mobileNav.classList.toggle("open",open); mobileOverlay.classList.toggle("open",open); document.body.style.overflow=open?"hidden":""; }
+hamburger.addEventListener("click",()=>toggleMenu(!mobileNav.classList.contains("open")));
+mobileOverlay.addEventListener("click",()=>toggleMenu(false));
+document.querySelectorAll(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>toggleMenu(false)));
 
-function toggleMenu(open) {
-  hamburger.classList.toggle("open", open);
-  mobileNav.classList.toggle("open", open);
-  mobileOverlay.classList.toggle("open", open);
-  document.body.style.overflow = open ? "hidden" : "";
-}
-
-hamburger.addEventListener("click", () => toggleMenu(!mobileNav.classList.contains("open")));
-mobileOverlay.addEventListener("click", () => toggleMenu(false));
-document.querySelectorAll(".mobile-nav a").forEach(a => a.addEventListener("click", () => toggleMenu(false)));
-
-/* ── Chat panel ── */
-document.getElementById("chat-btn").addEventListener("click", () => {
-  const p = document.getElementById("chat-panel");
-  p.style.display = p.style.display === "flex" ? "none" : "flex";
-  document.getElementById("chat-badge").style.display = "none";
+document.getElementById("chat-btn").addEventListener("click",()=>{
+  const p=document.getElementById("chat-panel");
+  p.style.display=p.style.display==="flex"?"none":"flex";
+  document.getElementById("chat-badge").style.display="none";
 });
 
-/* ── Copy email ── */
-document.getElementById("copy-email-btn").addEventListener("click", () => {
-  navigator.clipboard.writeText("kkay05925@gmail.com").then(() => {
-    const btn = document.getElementById("copy-email-btn");
-    btn.classList.add("copied");
-    setTimeout(() => btn.classList.remove("copied"), 2000);
+document.getElementById("copy-email-btn").addEventListener("click",()=>{
+  navigator.clipboard.writeText("kkay05925@gmail.com").then(()=>{
+    const btn=document.getElementById("copy-email-btn"); btn.classList.add("copied");
+    setTimeout(()=>btn.classList.remove("copied"),2000);
   });
 });
 
-/* ── Relative time ── */
-function timeAgo(date) {
-  const diff = (Date.now() - date.getTime()) / 1000;
-  if (diff < 60)    return "just now";
-  if (diff < 3600)  return Math.floor(diff/60) + "m ago";
-  if (diff < 86400) return Math.floor(diff/3600) + "h ago";
-  return Math.floor(diff/86400) + "d ago";
+function timeAgo(date){
+  const diff=(Date.now()-date.getTime())/1000;
+  if(diff<60) return "just now";
+  if(diff<3600) return Math.floor(diff/60)+"m ago";
+  if(diff<86400) return Math.floor(diff/3600)+"h ago";
+  return Math.floor(diff/86400)+"d ago";
 }
-window._timeAgo = timeAgo;
+window._timeAgo=timeAgo;
 </script>
 
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getFirestore, collection, getDocs, doc, setDoc, onSnapshot, getDoc, increment }
+import { getFirestore, collection, getDocs, doc, setDoc, onSnapshot, getDoc }
   from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
 const cfg = {
-  apiKey: "AIzaSyAhn0e4HtF_jnSu4I4JlLgpB8rz_Qnrmpo",
-  authDomain: "qainar-website.firebaseapp.com",
-  projectId: "qainar-website",
-  storageBucket: "qainar-website.firebasestorage.app",
-  messagingSenderId: "728286957196",
-  appId: "1:728286957196:web:c8d7e04c690cd76f2535a9",
-  measurementId: "G-X73HSPDGYB"
+  apiKey:"AIzaSyAhn0e4HtF_jnSu4I4JlLgpB8rz_Qnrmpo",
+  authDomain:"qainar-website.firebaseapp.com",
+  projectId:"qainar-website",
+  storageBucket:"qainar-website.firebasestorage.app",
+  messagingSenderId:"728286957196",
+  appId:"1:728286957196:web:c8d7e04c690cd76f2535a9",
+  measurementId:"G-X73HSPDGYB"
 };
 
-const app  = initializeApp(cfg);
-const db   = getFirestore(app);
-const auth = getAuth(app);
-const prov = new GoogleAuthProvider();
+const app=initializeApp(cfg);
+const db=getFirestore(app);
+const auth=getAuth(app);
+const prov=new GoogleAuthProvider();
 
-/* ── Visitor counter ── */
-async function trackVisitor() {
+async function trackVisitor(){
   try {
-    const ref = doc(db, "meta", "visitors");
-    const snap = await getDoc(ref);
-    if (!snap.exists()) {
-      await setDoc(ref, { count: 1 });
-    } else {
-      await setDoc(ref, { count: (snap.data().count || 0) + 1 }, { merge: true });
-    }
-    const updated = await getDoc(ref);
-    const el = document.getElementById("visitor-count");
-    if (el) el.textContent = (updated.data().count || 0).toLocaleString();
-  } catch(e) {
-    const el = document.getElementById("visitor-count");
-    if (el) el.textContent = "—";
-  }
+    const ref=doc(db,"meta","visitors");
+    const snap=await getDoc(ref);
+    await setDoc(ref,{count:(snap.exists()?snap.data().count:0)+1},{merge:true});
+    const updated=await getDoc(ref);
+    const el=document.getElementById("visitor-count");
+    if(el) el.textContent=(updated.data().count||0).toLocaleString();
+  } catch(e){ const el=document.getElementById("visitor-count"); if(el) el.textContent="—"; }
 }
 trackVisitor();
 
-/* ── Auth ── */
-const loginBtn     = document.getElementById("login-btn");
-const heroLoginBtn = document.getElementById("hero-login-btn");
-const logoutBtn    = document.getElementById("logout-btn");
-const userProfile  = document.getElementById("user-profile");
-const userPhoto    = document.getElementById("user-photo");
-const userName     = document.getElementById("user-name");
+const loginBtn=document.getElementById("login-btn");
+const heroLoginBtn=document.getElementById("hero-login-btn");
+const logoutBtn=document.getElementById("logout-btn");
+const userProfile=document.getElementById("user-profile");
+const userPhoto=document.getElementById("user-photo");
+const userName=document.getElementById("user-name");
 
-async function loginWithGoogle() {
-  try { await signInWithPopup(auth, prov); }
-  catch(e) { alert("Login failed."); console.error(e); }
-}
+async function loginWithGoogle(){ try{ await signInWithPopup(auth,prov); }catch(e){ alert("Login failed."); } }
+loginBtn.addEventListener("click",loginWithGoogle);
+heroLoginBtn.addEventListener("click",loginWithGoogle);
+logoutBtn.addEventListener("click",async()=>{ try{ await signOut(auth); }catch(e){} });
 
-loginBtn.addEventListener("click", loginWithGoogle);
-heroLoginBtn.addEventListener("click", loginWithGoogle);
-logoutBtn.addEventListener("click", async () => { try { await signOut(auth); } catch(e){} });
-
-onAuthStateChanged(auth, user => {
-  if (user) {
-    loginBtn.style.display = heroLoginBtn.style.display = "none";
-    userProfile.style.display = "flex";
-    userPhoto.src = user.photoURL || "";
-    userName.textContent = user.displayName || "User";
+onAuthStateChanged(auth,user=>{
+  if(user){
+    loginBtn.style.display=heroLoginBtn.style.display="none";
+    userProfile.style.display="flex";
+    userPhoto.src=user.photoURL||"";
+    userName.textContent=user.displayName||"User";
   } else {
-    loginBtn.style.display = heroLoginBtn.style.display = "inline-block";
-    userProfile.style.display = "none";
+    loginBtn.style.display=heroLoginBtn.style.display="inline-block";
+    userProfile.style.display="none";
   }
 });
 
-/* ── Real-time comments listener ── */
-let firstLoad = true;
-let commentCount = 0;
+let firstLoad=true, commentCount=0;
+const box=document.getElementById("chat-comments");
+const badge=document.getElementById("chat-badge");
 
-const box = document.getElementById("chat-comments");
-const badge = document.getElementById("chat-badge");
-
-onSnapshot(collection(db, "comments"), (snap) => {
-  const items = [];
-  snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-  items.sort((a,b) => (b.time?.seconds||0) - (a.time?.seconds||0));
-
-  /* show new comment badge if panel is closed and new comments came in */
-  const panel = document.getElementById("chat-panel");
-  if (!firstLoad && items.length > commentCount && panel.style.display !== "flex") {
-    badge.style.display = "flex";
-    badge.textContent = items.length - commentCount;
-  }
-  commentCount = items.length;
-
-  box.innerHTML = "";
-  if (items.length === 0) {
-    box.innerHTML = '<p class="chat-empty">No comments yet.</p>';
-  } else {
-    items.slice(0, 5).forEach(d => {
-      const ago = d.time ? window._timeAgo(new Date(d.time.seconds * 1000)) : "";
-      const div = document.createElement("div");
-      div.className = "chat-item";
-      div.innerHTML = `
-        <div class="chat-name">${d.name || "Anonymous"}</div>
-        <div class="chat-text">${d.message || ""}</div>
-        ${ago ? `<div class="chat-time">${ago}</div>` : ""}
-      `;
+onSnapshot(collection(db,"comments"),snap=>{
+  const items=[];
+  snap.forEach(d=>items.push({id:d.id,...d.data()}));
+  items.sort((a,b)=>(b.time?.seconds||0)-(a.time?.seconds||0));
+  const panel=document.getElementById("chat-panel");
+  if(!firstLoad&&items.length>commentCount&&panel.style.display!=="flex"){ badge.style.display="flex"; badge.textContent=items.length-commentCount; }
+  commentCount=items.length;
+  box.innerHTML="";
+  if(items.length===0){ box.innerHTML='<p class="chat-empty">No comments yet.</p>'; }
+  else {
+    items.slice(0,5).forEach(d=>{
+      const ago=d.time?window._timeAgo(new Date(d.time.seconds*1000)):"";
+      const div=document.createElement("div"); div.className="chat-item";
+      div.innerHTML=`<div class="chat-name">${d.name||"Anonymous"}</div><div class="chat-text">${d.message||""}</div>${ago?`<div class="chat-time">${ago}</div>`:""}`;
       box.appendChild(div);
     });
   }
-  firstLoad = false;
+  firstLoad=false;
 });
 </script>
-
 </body>
 </html>

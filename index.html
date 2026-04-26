@@ -59,7 +59,7 @@
     }
 
     .hero-text {
-      max-width: 600px;
+      max-width: 620px;
     }
 
     .hero-text h1 {
@@ -162,6 +162,18 @@
       line-height: 1.5;
     }
 
+    .cursor {
+      border-right: 3px solid #38bdf8;
+      padding-right: 5px;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+
     footer {
       text-align: center;
       padding: 30px;
@@ -188,57 +200,76 @@
 
 <body>
 
-  <header>
-    <div class="logo">Qainar's Website</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-  </header>
+<header>
+  <div class="logo">Qainar's Website</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
 
-  <section class="hero">
-    <div class="hero-text">
-      <h1>Hi, I'm <span>Qainar</span> 🚀</h1>
-      <p>
-        I am a Space Engineering student building my future through engineering,
-        technology, physics, programming, and personal projects.
-      </p>
-      <a href="projects.html" class="btn">View My Projects</a>
-    </div>
+<section class="hero">
+  <div class="hero-text">
+    <h1>Hi, I'm <span id="typing"></span> 🚀</h1>
+    <p>
+      I am a Space Engineering student building my future through engineering,
+      technology, physics, programming, and real projects.
+    </p>
+    <a href="projects.html" class="btn">View My Projects</a>
+  </div>
 
-    <div class="profile-card">
-      <div class="avatar">🚀</div>
-      <h2>Qainar</h2>
-      <p>Space Engineering Student</p>
-      <p>KazNU | Future Engineer</p>
-    </div>
-  </section>
+  <div class="profile-card">
+    <div class="avatar">🚀</div>
+    <h2>Qainar</h2>
+    <p>Space Engineering Student</p>
+    <p>KazNU | Future Engineer</p>
+  </div>
+</section>
 
-  <section class="section">
-    <h2>What I Focus On</h2>
+<section class="section">
+  <h2>What I Focus On</h2>
 
-    <div class="cards">
-      <a href="projects.html" class="card">
-        <h3>Engineering</h3>
-        <p>Space engineering, CanSat, mechanics, and technical projects.</p>
-      </a>
+  <div class="cards">
+    <a href="cansat.html" class="card">
+      <h3>Engineering</h3>
+      <p>Space engineering, CanSat, mechanics, and technical projects.</p>
+    </a>
 
-      <a href="projects.html" class="card">
-        <h3>Physics</h3>
-        <p>Mechanics, electromagnetism, formulas, and problem solving.</p>
-      </a>
+    <a href="physics.html" class="card">
+      <h3>Physics</h3>
+      <p>Mechanics, electromagnetism, formulas, and problem solving.</p>
+    </a>
 
-      <a href="projects.html" class="card">
-        <h3>Programming</h3>
-        <p>HTML, CSS, JavaScript, and future web applications.</p>
-      </a>
-    </div>
-  </section>
+    <a href="sat.html" class="card">
+      <h3>Programming & SAT</h3>
+      <p>HTML, CSS, JavaScript, English, and test preparation.</p>
+    </a>
+  </div>
+</section>
 
-  <footer>
-    © 2026 Qainar's Website. Built with HTML & CSS.
-  </footer>
+<footer>
+  © 2026 Qainar's Website. Built with HTML, CSS & JS.
+</footer>
+
+<script>
+  const text = "Qainar";
+  let i = 0;
+  const speed = 120;
+  const typingElement = document.getElementById("typing");
+
+  function typeWriter() {
+    if (i < text.length) {
+      typingElement.textContent += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    } else {
+      typingElement.classList.add("cursor");
+    }
+  }
+
+  typeWriter();
+</script>
 
 </body>
 </html>

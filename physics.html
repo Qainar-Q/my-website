@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Қатты дене динамикасы | Qainar</title>
+  <title data-title>Қатты дене динамикасы | Qainar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=IBM+Plex+Sans:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
   <script>
@@ -108,6 +108,9 @@
       transition: all 0.2s;
     }
     .back-btn:hover { color: var(--cyan); border-color: rgba(34,211,238,0.35); background: rgba(34,211,238,0.06); }
+    .lang-switcher { display:flex; gap:6px; align-items:center; }
+    .lang-btn { border:1px solid var(--border); background:var(--surface); color:var(--slate); padding:7px 12px; border-radius:999px; cursor:pointer; font-family:var(--font-body); font-weight:700; font-size:12px; transition:.2s; }
+    .lang-btn:hover,.lang-btn.active { color:#001018; background:linear-gradient(135deg,var(--cyan),var(--blue)); border-color:transparent; box-shadow:0 0 18px rgba(34,211,238,.22); }
 
     /* ─── HERO ─── */
     .hero {
@@ -397,6 +400,8 @@
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
       header { padding: 0 18px; }
+      .lang-btn { padding:6px 9px; font-size:11px; }
+      .back-btn { padding:7px 10px; font-size:12px; }
       .hero { padding: 88px 5% 36px; }
       .section { padding: 0 5% 60px; }
       .cards-2, .review-grid { grid-template-columns: 1fr; }
@@ -409,23 +414,28 @@
 
   <header>
     <div class="logo">QAINAR</div>
-    <a href="projects.html" class="back-btn">← Жобаларға оралу</a>
+    <div class="lang-switcher" aria-label="Language switcher">
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn active" data-lang="kz" onclick="setLang('kz')">ҚАЗ</button>
+    </div>
+    <a href="projects.html" class="back-btn" data-i18n="back">← Жобаларға оралу</a>
   </header>
 
   <!-- ── HERO ── -->
   <section class="hero">
     <div class="hero-eyebrow">
-      <span>🎓</span> Емтиханға дайындық · Теориялық механика
+      <span>🎓</span> <span data-i18n="hero_eyebrow">Емтиханға дайындық · Теориялық механика</span>
     </div>
-    <h1>Қатты дене динамикасы</h1>
-    <p class="hero-sub">Гироскоп прецессиясы · Гироскоптық момент · Лагранж теңдеуі</p>
+    <h1 data-i18n="hero_title">Қатты дене динамикасы</h1>
+    <p class="hero-sub" data-i18n="hero_sub">Гироскоп прецессиясы · Гироскоптық момент · Лагранж теңдеуі</p>
   </section>
 
   <!-- ── NAV ── -->
   <div class="nav-pills">
-    <div class="pill active" onclick="showSection('gyro',this)">1 · Гироскоп &amp; Прецессия</div>
-    <div class="pill" onclick="showSection('lagrange',this)">2 · Лагранж теңдеуі</div>
-    <div class="pill" onclick="showSection('review',this)">📝 Жылдам қайталау</div>
+    <div class="pill active" onclick="showSection('gyro',this)" data-i18n="pill_gyro">1 · Гироскоп &amp; Прецессия</div>
+    <div class="pill" onclick="showSection('lagrange',this)" data-i18n="pill_lagrange">2 · Лагранж теңдеуі</div>
+    <div class="pill" onclick="showSection('review',this)" data-i18n="pill_review">📝 Жылдам қайталау</div>
   </div>
 
   <!-- ══════════════════════════════════════════════
@@ -434,115 +444,115 @@
   <div class="section active" id="s-gyro">
 
     <div class="sec-header">
-      <h2>Гироскоптың еріксіз прецессиясы<br>және гироскоптық момент</h2>
-      <p>Гироскоп осінің сыртқы күш немесе оны алып жүретін дененің қозғалысы нәтижесінде мәжбүрлі бұрылуы — <strong>еріксіз прецессия</strong>. Бұл бөлімде гироскоптық моменттің физикалық мәні мен формуласы шығарылады.</p>
+      <h2 data-i18n="gyro_h2">Гироскоптың еріксіз прецессиясы<br>және гироскоптық момент</h2>
+      <p data-i18n="gyro_intro">Гироскоп осінің сыртқы күш немесе оны алып жүретін дененің қозғалысы нәтижесінде мәжбүрлі бұрылуы — <strong>еріксіз прецессия</strong>. Бұл бөлімде гироскоптық моменттің физикалық мәні мен формуласы шығарылады.</p>
     </div>
 
     <!-- DEFINITION CARDS -->
     <div class="cards-2">
       <div class="info-card">
-        <h4>Анықтама</h4>
-        <p>Гироскоп — симметрия осі бойымен жоғары бұрыштық жылдамдықпен айналатын қатты дене. Егер оны алып жүретін дене (кеме, ұшақ, зымыран) бұрылса, гироскоп осі де бұрылуға мәжбүр болады. Бұл қозғалыс <strong>еріксіз прецессия</strong> деп аталады.</p>
+        <h4 data-i18n="def_title">Анықтама</h4>
+        <p data-i18n="gyro_def">Гироскоп — симметрия осі бойымен жоғары бұрыштық жылдамдықпен айналатын қатты дене. Егер оны алып жүретін дене (кеме, ұшақ, зымыран) бұрылса, гироскоп осі де бұрылуға мәжбүр болады. Бұл қозғалыс <strong>еріксіз прецессия</strong> деп аталады.</p>
       </div>
       <div class="info-card">
-        <h4>Негізгі белгілер</h4>
+        <h4 data-i18n="symbols_title">Негізгі белгілер</h4>
         <ul>
-          <li><strong>$\omega_1$</strong> — меншікті айналу бұрыштық жылдамдығы</li>
-          <li><strong>$\omega_2$</strong> — еріксіз прецессия бұрыштық жылдамдығы</li>
-          <li><strong>$C$</strong> — симметрия осіне қатысты инерция моменті</li>
-          <li><strong>$H = C\omega_1$</strong> — кинетикалық момент</li>
-          <li><strong>$\theta$</strong> — $\vec{H}$ мен $\vec{\omega}_2$ арасындағы бұрыш</li>
-          <li><strong>$M_r$</strong> — гироскоптық (реактивті) момент</li>
+          <li data-i18n="sym_w1"><strong>$\omega_1$</strong> — меншікті айналу бұрыштық жылдамдығы</li>
+          <li data-i18n="sym_w2"><strong>$\omega_2$</strong> — еріксіз прецессия бұрыштық жылдамдығы</li>
+          <li data-i18n="sym_C"><strong>$C$</strong> — симметрия осіне қатысты инерция моменті</li>
+          <li data-i18n="sym_H"><strong>$H = C\omega_1$</strong> — кинетикалық момент</li>
+          <li data-i18n="sym_theta"><strong>$\theta$</strong> — $\vec{H}$ мен $\vec{\omega}_2$ арасындағы бұрыш</li>
+          <li data-i18n="sym_Mr"><strong>$M_r$</strong> — гироскоптық (реактивті) момент</li>
         </ul>
       </div>
     </div>
 
     <!-- THEORY -->
-    <div class="sub-h">Кинетикалық момент және оның өзгеруі</div>
+    <div class="sub-h" data-i18n="gyro_sub_kinetic">Кинетикалық момент және оның өзгеруі</div>
     <div class="theory-text">
-      <p>Гироскоп өз симметрия осі бойымен $\omega_1$ бұрыштық жылдамдықпен айналады. Инерция моменті $C$ болса, кинетикалық момент:</p>
+      <p data-i18n="gyro_kin1">Гироскоп өз симметрия осі бойымен $\omega_1$ бұрыштық жылдамдықпен айналады. Инерция моменті $C$ болса, кинетикалық момент:</p>
       <p style="text-align:center; margin:14px 0;">$$\vec{H} = C\,\vec{\omega}_1$$</p>
-      <p>Вектор $\vec{H}$ гироскоп симметрия осімен бағыттас. $\omega_2$ бұрыштық жылдамдықпен еріксіз прецессия жасалғанда $\vec{H}$ бағыты өзгереді. Осы өзгерісті тудыру үшін сыртқы момент керек, ал Ньютонның III заңы бойынша гироскоп денеге кері реакция моменті береді — <strong>гироскоптық момент</strong>.</p>
+      <p data-i18n="gyro_kin2">Вектор $\vec{H}$ гироскоп симметрия осімен бағыттас. $\omega_2$ бұрыштық жылдамдықпен еріксіз прецессия жасалғанда $\vec{H}$ бағыты өзгереді. Осы өзгерісті тудыру үшін сыртқы момент керек, ал Ньютонның III заңы бойынша гироскоп денеге кері реакция моменті береді — <strong>гироскоптық момент</strong>.</p>
     </div>
 
     <!-- DERIVATION FLOW -->
-    <div class="sub-h">Формуланың шығару логикасы</div>
+    <div class="sub-h" data-i18n="derivation_logic">Формуланың шығару логикасы</div>
     <div class="flow">
       <div class="flow-step">
-        <div class="fs-num">1-қадам</div>
-        <div class="fs-text">Гироскопқа О нүктесіне қатысты сыртқы күштер моменті беріледі: $M_O^{(e)}$</div>
+        <div class="fs-num" data-i18n="step1">1-қадам</div>
+        <div class="fs-text" data-i18n="gyro_flow1">Гироскопқа О нүктесіне қатысты сыртқы күштер моменті беріледі: $M_O^{(e)}$</div>
       </div>
       <div class="flow-arrow">↓</div>
       <div class="flow-step">
-        <div class="fs-num">2-қадам</div>
-        <div class="fs-text">Гироскоп осі $\omega_2$ жылдамдықпен прецессия жасайды — $\vec{H}$ бағыты өзгереді</div>
+        <div class="fs-num" data-i18n="step2">2-қадам</div>
+        <div class="fs-text" data-i18n="gyro_flow2">Гироскоп осі $\omega_2$ жылдамдықпен прецессия жасайды — $\vec{H}$ бағыты өзгереді</div>
       </div>
       <div class="flow-arrow">↓</div>
       <div class="flow-step">
-        <div class="fs-num">3-қадам</div>
-        <div class="fs-text">Сыртқы момент: $\vec{M}_O^{(e)} = \vec{\omega}_2 \times C\vec{\omega}_1 = \vec{\omega}_2 \times \vec{H}$</div>
+        <div class="fs-num" data-i18n="step3">3-қадам</div>
+        <div class="fs-text" data-i18n="gyro_flow3">Сыртқы момент: $\vec{M}_O^{(e)} = \vec{\omega}_2 \times C\vec{\omega}_1 = \vec{\omega}_2 \times \vec{H}$</div>
       </div>
       <div class="flow-arrow">↓</div>
       <div class="flow-step highlight">
-        <div class="fs-num">4-қадам — Ньютонның III заңы</div>
-        <div class="fs-text">Гироскоп денеге кері реактивті момент береді:<br>$\vec{M}_r = -\vec{M}_O^{(e)} = \vec{H} \times \vec{\omega}_2$</div>
+        <div class="fs-num" data-i18n="step4_newton">4-қадам — Ньютонның III заңы</div>
+        <div class="fs-text" data-i18n="gyro_flow4">Гироскоп денеге кері реактивті момент береді:<br>$\vec{M}_r = -\vec{M}_O^{(e)} = \vec{H} \times \vec{\omega}_2$</div>
       </div>
       <div class="flow-arrow">↓</div>
       <div class="flow-step result">
-        <div class="fs-num">✓ Нәтиже</div>
-        <div class="fs-text">$\vec{M}_r = \vec{H} \times \vec{\omega}_2 \;\Rightarrow\; M_r = C\omega_1\omega_2\sin\theta$</div>
+        <div class="fs-num" data-i18n="result">✓ Нәтиже</div>
+        <div class="fs-text" data-i18n="gyro_flow_result">$\vec{M}_r = \vec{H} \times \vec{\omega}_2 \;\Rightarrow\; M_r = C\omega_1\omega_2\sin\theta$</div>
       </div>
     </div>
 
     <!-- FORMULA BOXES -->
     <div class="formula-box">
-      <div class="f-label">Гироскоптық момент — векторлық және скалярлық түрі</div>
+      <div class="f-label" data-i18n="gyro_moment_label">Гироскоптық момент — векторлық және скалярлық түрі</div>
       <div class="f-main">$$\vec{M}_r = \vec{H} \times \vec{\omega}_2$$</div>
       <div class="f-main">$$M_r = H\,\omega_2\sin\theta = C\,\omega_1\,\omega_2\sin\theta$$</div>
-      <div class="f-note">мұндағы: $H = C\omega_1$ — кинетикалық момент; $\;\theta$ — $\vec{H}$ мен $\vec{\omega}_2$ арасындағы бұрыш.<br>Модуль формуласы векторлық көбейтінді ережесінен шығады: $|\vec{H}\times\vec{\omega}_2| = H\omega_2\sin\theta$</div>
+      <div class="f-note" data-i18n="gyro_moment_note">мұндағы: $H = C\omega_1$ — кинетикалық момент; $\;\theta$ — $\vec{H}$ мен $\vec{\omega}_2$ арасындағы бұрыш.<br>Модуль формуласы векторлық көбейтінді ережесінен шығады: $|\vec{H}\times\vec{\omega}_2| = H\omega_2\sin\theta$</div>
     </div>
 
     <div class="formula-box amber">
-      <div class="f-label">Қос күш моменті арқылы</div>
+      <div class="f-label" data-i18n="couple_label">Қос күш моменті арқылы</div>
       <div class="f-main">$$Q\cdot h = M_r = C\,\omega_1\,\omega_2\sin\theta \;\;\Rightarrow\;\; Q = \frac{C\,\omega_1\,\omega_2\sin\theta}{h}$$</div>
-      <div class="f-note">мұндағы: $h$ — қос күштің иіні, $\;Q$ — күштің шамасы. Гироскоптық момент подшипниктерге түсетін қысым немесе қос күш ретінде байқалады.</div>
+      <div class="f-note" data-i18n="couple_note">мұндағы: $h$ — қос күштің иіні, $\;Q$ — күштің шамасы. Гироскоптық момент подшипниктерге түсетін қысым немесе қос күш ретінде байқалады.</div>
     </div>
 
     <!-- 3D VISUALIZATION -->
-    <div class="sub-h">Интерактивті 3D визуализация</div>
+    <div class="sub-h" data-i18n="interactive_3d">Интерактивті 3D визуализация</div>
     <div class="canvas-wrap">
       <canvas id="gyro-canvas" height="460"></canvas>
     </div>
 
     <div class="sliders-row">
       <div class="slider-item">
-        <div class="slider-label">$\omega_1$ — меншікті айналу</div>
+        <div class="slider-label" data-i18n="sl_w1">$\omega_1$ — меншікті айналу</div>
         <div class="slider-val" id="w1-val">3.0</div>
         <input type="range" id="sl-w1" min="0.5" max="8" step="0.1" value="3">
       </div>
       <div class="slider-item">
-        <div class="slider-label">$\omega_2$ — прецессия</div>
+        <div class="slider-label" data-i18n="sl_w2">$\omega_2$ — прецессия</div>
         <div class="slider-val" id="w2-val">1.5</div>
         <input type="range" id="sl-w2" min="0.1" max="4" step="0.1" value="1.5">
       </div>
       <div class="slider-item">
-        <div class="slider-label">$\theta$ — бұрыш (°)</div>
+        <div class="slider-label" data-i18n="sl_theta">$\theta$ — бұрыш (°)</div>
         <div class="slider-val" id="theta-val">60°</div>
         <input type="range" id="sl-theta" min="15" max="165" step="1" value="60">
       </div>
     </div>
 
     <div class="formula-box" style="margin-top:0">
-      <div class="f-label">Нақты есептелген мән ($C = 1$ кг·м²)</div>
+      <div class="f-label" data-i18n="calc_value">Нақты есептелген мән ($C = 1$ кг·м²)</div>
       <div class="f-main" id="mr-display">$M_r = 3.897$ Н·м</div>
       <div class="f-note" id="mr-note">$M_r = 1 \times 3.0 \times 1.5 \times \sin(60°) = 3.897$ Н·м</div>
     </div>
 
     <!-- ZHUKOVSKY -->
-    <div class="sub-h amber">Жуковский ережесі</div>
+    <div class="sub-h amber" data-i18n="zhuk_sub">Жуковский ережесі</div>
     <div class="zhuk-rule-box">
-      <h5>⚡ Жуковский ережесі</h5>
-      <p>Жылдам айналыстағы гироскоп осіне еріксіз прецессия берілсе, гироскоп осі <em>ең қысқа жолмен</em> прецессия осіне параллель орналасуға ұмтылады. Нәтижесінде $\vec{\omega}_1$ мен $\vec{\omega}_2$ векторлары туралас болуға тырысады.</p>
+      <h5 data-i18n="zhuk_title">⚡ Жуковский ережесі</h5>
+      <p data-i18n="zhuk_text">Жылдам айналыстағы гироскоп осіне еріксіз прецессия берілсе, гироскоп осі <em>ең қысқа жолмен</em> прецессия осіне параллель орналасуға ұмтылады. Нәтижесінде $\vec{\omega}_1$ мен $\vec{\omega}_2$ векторлары туралас болуға тырысады.</p>
     </div>
 
     <div class="zhuk-wrap">
@@ -553,29 +563,29 @@
       </div>
       <div class="zhuk-text">
         <div>
-          <span class="badge badge-blue">$\vec{\omega}_1$ — гироскоп осі</span>
-          <p>Гироскоп осінің бастапқы бағыты прецессия осіне қатысты $\theta$ бұрыш жасайды.</p>
+          <span class="badge badge-blue" data-i18n="badge_w1">$\vec{\omega}_1$ — гироскоп осі</span>
+          <p data-i18n="zhuk_side1">Гироскоп осінің бастапқы бағыты прецессия осіне қатысты $\theta$ бұрыш жасайды.</p>
         </div>
         <div>
-          <span class="badge badge-amber">Ең қысқа жол</span>
-          <p>Гироскоп осі прецессия осіне минималды бұрыш арқылы жетуге тырысады.</p>
+          <span class="badge badge-amber" data-i18n="shortest_badge">Ең қысқа жол</span>
+          <p data-i18n="zhuk_side2">Гироскоп осі прецессия осіне минималды бұрыш арқылы жетуге тырысады.</p>
         </div>
         <div style="padding:14px 16px; background:rgba(245,158,11,0.08); border-radius:var(--r-sm); border:1px solid rgba(245,158,11,0.22);">
-          <p style="color:#fde68a; margin-top:0; font-size:13px; line-height:1.65;"><strong style="color:#f59e0b;">Физикалық мағынасы:</strong> Гироскоп прецессия осімен туралануға «бағынуға» тырысады. Осылайша гироскоп навигациялық жүйелерде бағытты сақтайды.</p>
+          <p style="color:#fde68a; margin-top:0; font-size:13px; line-height:1.65;" data-i18n="zhuk_meaning_side"><strong style="color:#f59e0b;">Физикалық мағынасы:</strong> Гироскоп прецессия осімен туралануға «бағынуға» тырысады. Осылайша гироскоп навигациялық жүйелерде бағытты сақтайды.</p>
         </div>
       </div>
     </div>
 
     <!-- PHYSICAL MEANING -->
     <div class="answer-box" style="margin-top:22px;">
-      <h4>Физикалық мағынасы</h4>
-      <p>Гироскоп осі еріксіз бұрылғанда кинетикалық момент вектор $\vec{H}$ бағыты өзгереді. Бұрыштық моменттің уақыт бойынша өзгеруі сыртқы моментке тең болуы тиіс (импульс моменті теоремасы). Сондықтан гироскоп симметрия осінің бағытын өзгертуге қарсы реактивті гироскоптық момент тудырады. Бұл момент подшипниктерге түсетін қысым немесе қос күш моменті түрінде байқалады. Кеме мен ұшақтардың навигациялық жүйелері осы принципке негізделген.</p>
+      <h4 data-i18n="physical_meaning_title">Физикалық мағынасы</h4>
+      <p data-i18n="gyro_physical_meaning">Гироскоп осі еріксіз бұрылғанда кинетикалық момент вектор $\vec{H}$ бағыты өзгереді. Бұрыштық моменттің уақыт бойынша өзгеруі сыртқы моментке тең болуы тиіс (импульс моменті теоремасы). Сондықтан гироскоп симметрия осінің бағытын өзгертуге қарсы реактивті гироскоптық момент тудырады. Бұл момент подшипниктерге түсетін қысым немесе қос күш моменті түрінде байқалады. Кеме мен ұшақтардың навигациялық жүйелері осы принципке негізделген.</p>
     </div>
 
     <!-- EXAM ANSWER -->
     <div class="answer-box green">
-      <h4>📝 Қысқаша емтихан жауабы</h4>
-      <p><strong>Еріксіз прецессия</strong> — гироскоп осінің сыртқы байланыс немесе дененің қозғалысынан $\omega_2$ бұрыштық жылдамдықпен мәжбүрлі бұрылуы. Гироскоп симметрия осі бойымен $\omega_1$ жылдамдықпен айналады, оның кинетикалық моменті $H = C\omega_1$. Еріксіз прецессия кезінде $\vec{H}$ бағыты өзгереді. Сыртқы момент: $\vec{M}_O^{(e)} = \vec{\omega}_2 \times \vec{H}$. Ньютонның III заңы бойынша гироскоп денеге кері момент береді — <strong>гироскоптық момент:</strong> $\vec{M}_r = \vec{H} \times \vec{\omega}_2$, модулі: <strong>$M_r = C\omega_1\omega_2\sin\theta$</strong>. Қос күш арқылы: $Q = M_r / h$. Жуковский ережесі: гироскоп осі ең қысқа жолмен прецессия осіне параллель орналасуға тырысады.</p>
+      <h4 data-i18n="exam_answer_title">📝 Қысқаша емтихан жауабы</h4>
+      <p data-i18n="gyro_exam_answer"><strong>Еріксіз прецессия</strong> — гироскоп осінің сыртқы байланыс немесе дененің қозғалысынан $\omega_2$ бұрыштық жылдамдықпен мәжбүрлі бұрылуы. Гироскоп симметрия осі бойымен $\omega_1$ жылдамдықпен айналады, оның кинетикалық моменті $H = C\omega_1$. Еріксіз прецессия кезінде $\vec{H}$ бағыты өзгереді. Сыртқы момент: $\vec{M}_O^{(e)} = \vec{\omega}_2 \times \vec{H}$. Ньютонның III заңы бойынша гироскоп денеге кері момент береді — <strong>гироскоптық момент:</strong> $\vec{M}_r = \vec{H} \times \vec{\omega}_2$, модулі: <strong>$M_r = C\omega_1\omega_2\sin\theta$</strong>. Қос күш арқылы: $Q = M_r / h$. Жуковский ережесі: гироскоп осі ең қысқа жолмен прецессия осіне параллель орналасуға тырысады.</p>
     </div>
   </div><!-- /s-gyro -->
 
@@ -586,135 +596,135 @@
   <div class="section" id="s-lagrange">
 
     <div class="sec-header">
-      <h2>Лагранждың екінші текті теңдеулері</h2>
-      <p>Идеал, голономды байланыстары бар механикалық жүйенің қозғалысы жалпылама координаталар арқылы сипатталады. Байланыс реакцияларын тікелей есептемей-ақ қозғалыс теңдеулерін алуға болады.</p>
+      <h2 data-i18n="lag_h2">Лагранждың екінші текті теңдеулері</h2>
+      <p data-i18n="lag_intro">Идеал, голономды байланыстары бар механикалық жүйенің қозғалысы жалпылама координаталар арқылы сипатталады. Байланыс реакцияларын тікелей есептемей-ақ қозғалыс теңдеулерін алуға болады.</p>
     </div>
 
     <div class="cards-2">
       <div class="info-card">
-        <h4>Анықтама</h4>
-        <p>Лагранждың 2-ші текті теңдеулері <strong>идеал, голономды байланыстары бар</strong> жүйелердің қозғалысын сипаттайды. Жалпылама координаталар саны $s$ — жүйенің еркіндік дәрежесіне тең. Байланыс реакцияларын табудың қажеті жоқ.</p>
+        <h4 data-i18n="def_title">Анықтама</h4>
+        <p data-i18n="lag_def">Лагранждың 2-ші текті теңдеулері <strong>идеал, голономды байланыстары бар</strong> жүйелердің қозғалысын сипаттайды. Жалпылама координаталар саны $s$ — жүйенің еркіндік дәрежесіне тең. Байланыс реакцияларын табудың қажеті жоқ.</p>
       </div>
       <div class="info-card">
-        <h4>Негізгі белгілер</h4>
+        <h4 data-i18n="symbols_title">Негізгі белгілер</h4>
         <ul>
-          <li><strong>$s = 3n - l$</strong> — еркіндік дәрежелер саны</li>
-          <li><strong>$q_i$</strong> — жалпылама координата</li>
-          <li><strong>$\dot{q}_i$</strong> — жалпылама жылдамдық</li>
-          <li><strong>$T$</strong> — кинетикалық энергия</li>
-          <li><strong>$\Pi$</strong> — потенциалдық энергия</li>
-          <li><strong>$\mathcal{L} = T - \Pi$</strong> — Лагранж функциясы</li>
-          <li><strong>$Q_i$</strong> — жалпылама күш</li>
+          <li data-i18n="lag_sym_s"><strong>$s = 3n - l$</strong> — еркіндік дәрежелер саны</li>
+          <li data-i18n="lag_sym_q"><strong>$q_i$</strong> — жалпылама координата</li>
+          <li data-i18n="lag_sym_qdot"><strong>$\dot{q}_i$</strong> — жалпылама жылдамдық</li>
+          <li data-i18n="lag_sym_T"><strong>$T$</strong> — кинетикалық энергия</li>
+          <li data-i18n="lag_sym_Pi"><strong>$\Pi$</strong> — потенциалдық энергия</li>
+          <li data-i18n="lag_sym_L"><strong>$\mathcal{L} = T - \Pi$</strong> — Лагранж функциясы</li>
+          <li data-i18n="lag_sym_Q"><strong>$Q_i$</strong> — жалпылама күш</li>
         </ul>
       </div>
     </div>
 
     <!-- Steps 1–3 -->
-    <div class="sub-h">Негіздері: виртуаль орын ауыстыру мен жалпылама күш</div>
+    <div class="sub-h" data-i18n="lag_sub_basics">Негіздері: виртуаль орын ауыстыру мен жалпылама күш</div>
     <div class="theory-text">
-      <p>$n$ нүктеден, $l$ голономды байланыстан тұратын жүйенің <strong>еркіндік дәрежесі:</strong> $s = 3n - l$. Жүйе орны $s$ тәуелсіз жалпылама координатамен анықталады: $q_1, q_2, \ldots, q_s$.</p>
-      <p>Нүктелердің радиус-векторлары жалпылама координаталар арқылы жазылады: $\;\vec{r}_\nu = \vec{r}_\nu(q_1,\ldots,q_s,t)$. Виртуаль орын ауыстыру ($dt=0$ кезінде):
+      <p data-i18n="lag_basic1">$n$ нүктеден, $l$ голономды байланыстан тұратын жүйенің <strong>еркіндік дәрежесі:</strong> $s = 3n - l$. Жүйе орны $s$ тәуелсіз жалпылама координатамен анықталады: $q_1, q_2, \ldots, q_s$.</p>
+      <p data-i18n="lag_basic2">Нүктелердің радиус-векторлары жалпылама координаталар арқылы жазылады: $\;\vec{r}_\nu = \vec{r}_\nu(q_1,\ldots,q_s,t)$. Виртуаль орын ауыстыру ($dt=0$ кезінде):
       $$\delta\vec{r}_\nu = \sum_{i=1}^{s}\frac{\partial\vec{r}_\nu}{\partial q_i}\,\delta q_i$$</p>
-      <p><strong>Жалпылама күш</strong> актив күштердің виртуаль жұмысынан анықталады:
+      <p data-i18n="lag_basic3"><strong>Жалпылама күш</strong> актив күштердің виртуаль жұмысынан анықталады:
       $$Q_i = \sum_\nu \vec{F}_\nu \cdot \frac{\partial\vec{r}_\nu}{\partial q_i}$$</p>
     </div>
 
     <!-- Dalamber-Lagrange -->
-    <div class="sub-h">Даламбер–Лагранж принципі</div>
+    <div class="sub-h" data-i18n="dl_principle">Даламбер–Лагранж принципі</div>
     <div class="theory-text">
-      <p>Идеал байланыстары бар жүйе үшін:
+      <p data-i18n="dl_text1">Идеал байланыстары бар жүйе үшін:
       $$\sum_{\nu=1}^{n}\left(\vec{F}_\nu - m_\nu\vec{w}_\nu\right)\cdot\delta\vec{r}_\nu = 0$$</p>
-      <p>Идеал байланыстар үшін байланыс реакцияларының виртуаль жұмысы нөлге тең. Сондықтан реакциялар теңдеуге кірмейді — бұл осы әдістің <strong>басты артықшылығы.</strong></p>
+      <p data-i18n="dl_text2">Идеал байланыстар үшін байланыс реакцияларының виртуаль жұмысы нөлге тең. Сондықтан реакциялар теңдеуге кірмейді — бұл осы әдістің <strong>басты артықшылығы.</strong></p>
     </div>
 
     <!-- MAIN EQUATIONS -->
     <div class="formula-box">
-      <div class="f-label">Лагранждың 2-ші текті теңдеуі — жалпы түрі</div>
+      <div class="f-label" data-i18n="lag_general_label">Лагранждың 2-ші текті теңдеуі — жалпы түрі</div>
       <div class="f-main">$$\frac{d}{dt}\!\left(\frac{\partial T}{\partial \dot{q}_i}\right) - \frac{\partial T}{\partial q_i} = Q_i, \qquad i = 1,2,\ldots,s$$</div>
-      <div class="f-note">$T$ — кинетикалық энергия, $\;q_i$ — жалпылама координата, $\;\dot{q}_i$ — жалпылама жылдамдық, $\;Q_i$ — жалпылама күш, $\;s$ — еркіндік дәрежелер саны.</div>
+      <div class="f-note" data-i18n="lag_general_note">$T$ — кинетикалық энергия, $\;q_i$ — жалпылама координата, $\;\dot{q}_i$ — жалпылама жылдамдық, $\;Q_i$ — жалпылама күш, $\;s$ — еркіндік дәрежелер саны.</div>
     </div>
 
     <div class="formula-box green">
-      <div class="f-label">Консерватив жүйе үшін — Лагранж функциясы арқылы</div>
+      <div class="f-label" data-i18n="lag_cons_label">Консерватив жүйе үшін — Лагранж функциясы арқылы</div>
       <div class="f-main">$$\mathcal{L} = T - \Pi \quad\Rightarrow\quad \frac{d}{dt}\!\left(\frac{\partial \mathcal{L}}{\partial \dot{q}_i}\right) - \frac{\partial \mathcal{L}}{\partial q_i} = 0$$</div>
-      <div class="f-note">Актив күштер потенциалды болса: $Q_i = -\partial\Pi/\partial q_i$. Консерватив емес күштер болса: оң жақта $Q_i^*$ жазылады.</div>
+      <div class="f-note" data-i18n="lag_cons_note">Актив күштер потенциалды болса: $Q_i = -\partial\Pi/\partial q_i$. Консерватив емес күштер болса: оң жақта $Q_i^*$ жазылады.</div>
     </div>
 
     <!-- ALGORITHM -->
-    <div class="sub-h green">Қолдану алгоритмі</div>
+    <div class="sub-h green" data-i18n="algorithm">Қолдану алгоритмі</div>
     <div class="steps">
       <div class="step green">
         <div class="step-num">1</div>
         <div class="step-body">
-          <strong>Еркіндік дәрежесін анықтау</strong>
-          <p>$n$ нүкте, $l$ байланыс болса: <strong>$s = 3n - l$</strong>. $s$ теңдеу жазылады.</p>
+          <strong data-i18n="alg1_title">Еркіндік дәрежесін анықтау</strong>
+          <p data-i18n="alg1_text">$n$ нүкте, $l$ байланыс болса: <strong>$s = 3n - l$</strong>. $s$ теңдеу жазылады.</p>
         </div>
       </div>
       <div class="step green">
         <div class="step-num">2</div>
         <div class="step-body">
-          <strong>Жалпылама координаталарды таңдау</strong>
-          <p>$s$ тәуелсіз параметр: $q_1, q_2, \ldots, q_s$ — бұрыш, ұзындық немесе кез келген шама.</p>
+          <strong data-i18n="alg2_title">Жалпылама координаталарды таңдау</strong>
+          <p data-i18n="alg2_text">$s$ тәуелсіз параметр: $q_1, q_2, \ldots, q_s$ — бұрыш, ұзындық немесе кез келген шама.</p>
         </div>
       </div>
       <div class="step green">
         <div class="step-num">3</div>
         <div class="step-body">
-          <strong>Радиус-векторлар мен жылдамдықтар</strong>
-          <p>$\vec{r}_\nu = \vec{r}_\nu(q_1,\ldots,q_s,t)$, &ensp; жылдамдық: $\vec{v}_\nu = \sum_i \frac{\partial\vec{r}_\nu}{\partial q_i}\dot{q}_i + \frac{\partial\vec{r}_\nu}{\partial t}$</p>
+          <strong data-i18n="alg3_title">Радиус-векторлар мен жылдамдықтар</strong>
+          <p data-i18n="alg3_text">$\vec{r}_\nu = \vec{r}_\nu(q_1,\ldots,q_s,t)$, &ensp; жылдамдық: $\vec{v}_\nu = \sum_i \frac{\partial\vec{r}_\nu}{\partial q_i}\dot{q}_i + \frac{\partial\vec{r}_\nu}{\partial t}$</p>
         </div>
       </div>
       <div class="step green">
         <div class="step-num">4</div>
         <div class="step-body">
-          <strong>Кинетикалық энергия $T$</strong>
-          <p>$T = \sum_\nu m_\nu v_\nu^2/2$ — жалпылама координаталар мен жылдамдықтар арқылы өрнектеледі.</p>
+          <strong data-i18n="alg4_title">Кинетикалық энергия $T$</strong>
+          <p data-i18n="alg4_text">$T = \sum_\nu m_\nu v_\nu^2/2$ — жалпылама координаталар мен жылдамдықтар арқылы өрнектеледі.</p>
         </div>
       </div>
       <div class="step green">
         <div class="step-num">5</div>
         <div class="step-body">
-          <strong>Потенциалдық энергия $\Pi$ және $\mathcal{L} = T - \Pi$</strong>
-          <p>Потенциалды күштер болса $\Pi$ жазылады, Лагранж функциясы $\mathcal{L} = T - \Pi$ құрылады.</p>
+          <strong data-i18n="alg5_title">Потенциалдық энергия $\Pi$ және $\mathcal{L} = T - \Pi$</strong>
+          <p data-i18n="alg5_text">Потенциалды күштер болса $\Pi$ жазылады, Лагранж функциясы $\mathcal{L} = T - \Pi$ құрылады.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">6</div>
         <div class="step-body">
-          <strong>Туындыларды есептеу, теңдеуге қою</strong>
-          <p>Әрбір $q_i$ үшін $\frac{d}{dt}\!\left(\frac{\partial\mathcal{L}}{\partial\dot{q}_i}\right) - \frac{\partial\mathcal{L}}{\partial q_i} = 0$ теңдеуі жазылады.</p>
+          <strong data-i18n="alg6_title">Туындыларды есептеу, теңдеуге қою</strong>
+          <p data-i18n="alg6_text">Әрбір $q_i$ үшін $\frac{d}{dt}\!\left(\frac{\partial\mathcal{L}}{\partial\dot{q}_i}\right) - \frac{\partial\mathcal{L}}{\partial q_i} = 0$ теңдеуі жазылады.</p>
         </div>
       </div>
       <div class="step" style="border-left-color:var(--green);">
         <div class="step-num" style="background:linear-gradient(135deg,#10b981,#047857);color:#000;">✓</div>
         <div class="step-body">
-          <strong>Қозғалыс теңдеулері алынады</strong>
-          <p>$s$ теңдеуден тұратын дифференциалдық жүйе. Байланыс реакциялары теңдеуде жоқ — басты артықшылық!</p>
+          <strong data-i18n="alg7_title">Қозғалыс теңдеулері алынады</strong>
+          <p data-i18n="alg7_text">$s$ теңдеуден тұратын дифференциалдық жүйе. Байланыс реакциялары теңдеуде жоқ — басты артықшылық!</p>
         </div>
       </div>
     </div>
 
     <!-- PENDULUM EXAMPLE -->
-    <div class="sub-h">Мысал: математикалық маятник ($q = \varphi$)</div>
+    <div class="sub-h" data-i18n="pend_example">Мысал: математикалық маятник ($q = \varphi$)</div>
     <div class="cards-2">
       <div class="info-card">
-        <h4>Шығару жолы</h4>
-        <p><strong>Еркіндік дәрежесі:</strong> $s = 1$, жалпылама координата $q = \varphi$</p><br>
-        <p><strong>Кинетикалық энергия:</strong></p>
+        <h4 data-i18n="solution_path">Шығару жолы</h4>
+        <p data-i18n="pend_path1"><strong>Еркіндік дәрежесі:</strong> $s = 1$, жалпылама координата $q = \varphi$</p><br>
+        <p data-i18n="kinetic_energy"><strong>Кинетикалық энергия:</strong></p>
         <div style="text-align:center; margin:10px 0;">$$T = \tfrac{1}{2}ml^2\dot{\varphi}^2$$</div>
-        <p><strong>Потенциалдық энергия:</strong></p>
+        <p data-i18n="potential_energy"><strong>Потенциалдық энергия:</strong></p>
         <div style="text-align:center; margin:10px 0;">$$\Pi = mgl(1 - \cos\varphi)$$</div>
-        <p><strong>Туындылар:</strong></p>
+        <p data-i18n="derivatives"><strong>Туындылар:</strong></p>
         <div style="text-align:center; margin:10px 0;">$$\frac{\partial\mathcal{L}}{\partial\dot{\varphi}} = ml^2\dot{\varphi}, \quad \frac{\partial\mathcal{L}}{\partial\varphi} = -mgl\sin\varphi$$</div>
       </div>
       <div class="info-card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
-        <h4>Нәтиже</h4>
-        <p style="margin-bottom:12px;">Лагранж теңдеуіне қойғаннан кейін:</p>
+        <h4 data-i18n="result_plain">Нәтиже</h4>
+        <p style="margin-bottom:12px;" data-i18n="after_substitution">Лагранж теңдеуіне қойғаннан кейін:</p>
         <div style="margin:10px 0;">$$\frac{d}{dt}(ml^2\dot{\varphi}) + mgl\sin\varphi = 0$$</div>
         <div style="margin:14px 0; padding:18px; background:rgba(34,211,238,0.06); border:1px solid rgba(34,211,238,0.25); border-radius:var(--r-md); width:100%;">
           $$\ddot{\varphi} + \frac{g}{l}\sin\varphi = 0$$
         </div>
-        <p style="font-size:12px; color:var(--muted);">Маятниктің қозғалыс теңдеуі</p>
+        <p style="font-size:12px; color:var(--muted);" data-i18n="pend_motion_eq">Маятниктің қозғалыс теңдеуі</p>
       </div>
     </div>
 
@@ -724,32 +734,32 @@
     </div>
     <div class="sliders-row">
       <div class="slider-item">
-        <div class="slider-label amber">$l$ — ұзындық (м)</div>
+        <div class="slider-label amber" data-i18n="sl_l">$l$ — ұзындық (м)</div>
         <div class="slider-val" id="l-val">1.5 м</div>
         <input type="range" id="sl-l" min="0.5" max="3" step="0.1" value="1.5">
       </div>
       <div class="slider-item">
-        <div class="slider-label amber">$\varphi_0$ — бастапқы бұрыш (°)</div>
+        <div class="slider-label amber" data-i18n="sl_phi0">$\varphi_0$ — бастапқы бұрыш (°)</div>
         <div class="slider-val" id="phi-val">30°</div>
         <input type="range" id="sl-phi0" min="5" max="80" step="1" value="30">
       </div>
       <div class="slider-item">
-        <div class="slider-label amber">$g$ — ауырлық үдеуі (м/с²)</div>
+        <div class="slider-label amber" data-i18n="sl_g">$g$ — ауырлық үдеуі (м/с²)</div>
         <div class="slider-val" id="g-val">9.8</div>
         <input type="range" id="sl-g" min="1" max="20" step="0.1" value="9.8">
       </div>
     </div>
     <div class="period-row">
-      <button class="btn" onclick="pendReset()">↺ Қайта бастау</button>
+      <button class="btn" onclick="pendReset()" data-i18n="restart">↺ Қайта бастау</button>
       <div class="formula-box" style="flex:1;margin:0;">
-        <div class="f-label">Айналу кезеңі (кіші бұрыш) &nbsp; $T = 2\pi\sqrt{l/g}$</div>
+        <div class="f-label" data-i18n="period_label">Айналу кезеңі (кіші бұрыш) &nbsp; $T = 2\pi\sqrt{l/g}$</div>
         <div class="f-main" id="period-display" style="font-size:20px;">$T \approx 2.46$ с</div>
       </div>
     </div>
 
     <div class="answer-box green">
-      <h4>📝 Қысқаша емтихан жауабы</h4>
-      <p><strong>Лагранждың 2-ші текті теңдеулері</strong> идеал голономды байланыстары бар механикалық жүйелердің қозғалысын жалпылама координаталар арқылы сипаттайды. Еркіндік дәрежесі: <strong>$s = 3n - l$</strong>. Виртуаль орын ауыстыру: $\delta\vec{r}_\nu = \sum_i(\partial\vec{r}_\nu/\partial q_i)\delta q_i$. Даламбер–Лагранж принципі: $\sum_\nu(\vec{F}_\nu - m_\nu\vec{w}_\nu)\cdot\delta\vec{r}_\nu = 0$. Жалпылама күш: $Q_i = \sum_\nu\vec{F}_\nu\cdot\partial\vec{r}_\nu/\partial q_i$. Нәтиже: <strong>$\frac{d}{dt}(\partial T/\partial\dot{q}_i) - \partial T/\partial q_i = Q_i$</strong>. Потенциалды жүйеде $\mathcal{L} = T-\Pi$ кіргізіліп: <strong>$\frac{d}{dt}(\partial\mathcal{L}/\partial\dot{q}_i) - \partial\mathcal{L}/\partial q_i = 0$</strong>. Байланыс реакциялары теңдеуге кірмейді — бұл негізгі артықшылық.</p>
+      <h4 data-i18n="exam_answer_title">📝 Қысқаша емтихан жауабы</h4>
+      <p data-i18n="lag_exam_answer"><strong>Лагранждың 2-ші текті теңдеулері</strong> идеал голономды байланыстары бар механикалық жүйелердің қозғалысын жалпылама координаталар арқылы сипаттайды. Еркіндік дәрежесі: <strong>$s = 3n - l$</strong>. Виртуаль орын ауыстыру: $\delta\vec{r}_\nu = \sum_i(\partial\vec{r}_\nu/\partial q_i)\delta q_i$. Даламбер–Лагранж принципі: $\sum_\nu(\vec{F}_\nu - m_\nu\vec{w}_\nu)\cdot\delta\vec{r}_\nu = 0$. Жалпылама күш: $Q_i = \sum_\nu\vec{F}_\nu\cdot\partial\vec{r}_\nu/\partial q_i$. Нәтиже: <strong>$\frac{d}{dt}(\partial T/\partial\dot{q}_i) - \partial T/\partial q_i = Q_i$</strong>. Потенциалды жүйеде $\mathcal{L} = T-\Pi$ кіргізіліп: <strong>$\frac{d}{dt}(\partial\mathcal{L}/\partial\dot{q}_i) - \partial\mathcal{L}/\partial q_i = 0$</strong>. Байланыс реакциялары теңдеуге кірмейді — бұл негізгі артықшылық.</p>
     </div>
   </div><!-- /s-lagrange -->
 
@@ -759,56 +769,56 @@
   ══════════════════════════════════════════════ -->
   <div class="section" id="s-review">
     <div class="sec-header">
-      <h2>Жылдам қайталау</h2>
-      <p>Екі тақырыптың негізгі формулалары — ауызша қорғауға дайындық.</p>
+      <h2 data-i18n="review_h2">Жылдам қайталау</h2>
+      <p data-i18n="review_intro">Екі тақырыптың негізгі формулалары — ауызша қорғауға дайындық.</p>
     </div>
 
     <div class="review-grid">
       <div class="review-card">
-        <h4>🌀 Гироскоп — кинетикалық момент</h4>
+        <h4 data-i18n="rev_gyro_H">🌀 Гироскоп — кинетикалық момент</h4>
         <div style="text-align:center; margin:12px 0;">$$H = C\omega_1$$</div>
         <div style="text-align:center; margin:10px 0;">$$\vec{M}_r = \vec{H}\times\vec{\omega}_2$$</div>
         <div style="text-align:center; margin:10px 0;">$$M_r = C\omega_1\omega_2\sin\theta$$</div>
-        <p style="color:var(--muted); font-size:12.5px; margin-top:8px;">Ньютонның III заңы: $\vec{M}_r = -\vec{M}_O^{(e)} = \vec{H}\times\vec{\omega}_2$</p>
+        <p style="color:var(--muted); font-size:12.5px; margin-top:8px;" data-i18n="rev_newton">Ньютонның III заңы: $\vec{M}_r = -\vec{M}_O^{(e)} = \vec{H}\times\vec{\omega}_2$</p>
       </div>
       <div class="review-card">
-        <h4>🔩 Гироскоп — қос күш</h4>
+        <h4 data-i18n="rev_couple">🔩 Гироскоп — қос күш</h4>
         <div style="text-align:center; margin:12px 0;">$$Qh = M_r$$</div>
         <div style="text-align:center; margin:10px 0;">$$Q = \frac{C\omega_1\omega_2\sin\theta}{h}$$</div>
         <div style="margin-top:14px; padding:12px 14px; background:rgba(245,158,11,0.07); border-radius:var(--r-sm); border:1px solid rgba(245,158,11,0.22);">
-          <p style="color:#fde68a; font-size:13px; line-height:1.65;"><strong>Жуковский:</strong> ось ең қысқа жолмен прецессия осіне параллель орналасуға тырысады.</p>
+          <p style="color:#fde68a; font-size:13px; line-height:1.65;" data-i18n="rev_zhuk"><strong>Жуковский:</strong> ось ең қысқа жолмен прецессия осіне параллель орналасуға тырысады.</p>
         </div>
       </div>
       <div class="review-card">
-        <h4>📐 Лагранж — жалпы түрі</h4>
+        <h4 data-i18n="rev_lag_general">📐 Лагранж — жалпы түрі</h4>
         <div style="text-align:center; margin:10px 0; font-size:13px;">$$s = 3n - l$$</div>
         <div style="text-align:center; margin:10px 0; font-size:13px;">$$Q_i = \sum_\nu\vec{F}_\nu\cdot\frac{\partial\vec{r}_\nu}{\partial q_i}$$</div>
         <div style="text-align:center; margin:10px 0; font-size:13px;">$$\frac{d}{dt}\!\left(\frac{\partial T}{\partial\dot{q}_i}\right) - \frac{\partial T}{\partial q_i} = Q_i$$</div>
       </div>
       <div class="review-card">
-        <h4>📐 Лагранж — консерватив жүйе</h4>
+        <h4 data-i18n="rev_lag_cons">📐 Лагранж — консерватив жүйе</h4>
         <div style="text-align:center; margin:12px 0;">$$\mathcal{L} = T - \Pi$$</div>
         <div style="text-align:center; margin:10px 0;">$$\frac{d}{dt}\!\left(\frac{\partial\mathcal{L}}{\partial\dot{q}_i}\right) - \frac{\partial\mathcal{L}}{\partial q_i} = 0$$</div>
-        <p style="color:var(--muted); font-size:12.5px; margin-top:8px;">Маятник: $q=\varphi\;\Rightarrow\;\ddot{\varphi} + (g/l)\sin\varphi = 0$</p>
+        <p style="color:var(--muted); font-size:12.5px; margin-top:8px;" data-i18n="rev_pend">Маятник: $q=\varphi\;\Rightarrow\;\ddot{\varphi} + (g/l)\sin\varphi = 0$</p>
       </div>
       <div class="review-card" style="grid-column:1/-1;">
-        <h4>🎯 Физикалық мағына — салыстыру</h4>
+        <h4 data-i18n="compare_title">🎯 Физикалық мағына — салыстыру</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:12px;">
           <div>
-            <p style="color:var(--cyan); font-weight:700; margin-bottom:8px;">Гироскоп:</p>
-            <p>Кинетикалық момент $\vec{H}$ бағытының өзгеруі реактивті гироскоптық момент тудырады. Гироскоп өз осінің бағытын өзгертуге қарсылық көрсетеді — навигация жүйелерінің негізі. Ньютонның III заңы бойынша $\vec{M}_r = \vec{H}\times\vec{\omega}_2$.</p>
+            <p style="color:var(--cyan); font-weight:700; margin-bottom:8px;" data-i18n="gyro_label_plain">Гироскоп:</p>
+            <p data-i18n="compare_gyro">Кинетикалық момент $\vec{H}$ бағытының өзгеруі реактивті гироскоптық момент тудырады. Гироскоп өз осінің бағытын өзгертуге қарсылық көрсетеді — навигация жүйелерінің негізі. Ньютонның III заңы бойынша $\vec{M}_r = \vec{H}\times\vec{\omega}_2$.</p>
           </div>
           <div>
-            <p style="color:var(--green); font-weight:700; margin-bottom:8px;">Лагранж теңдеуі:</p>
-            <p>Күштер арқылы емес, энергиялар арқылы қозғалысты сипаттайды. Байланыс реакцияларын табудың қажеті жоқ — күрделі жүйелер үшін өте ыңғайлы. Даламбер–Лагранж принципіне негізделген.</p>
+            <p style="color:var(--green); font-weight:700; margin-bottom:8px;" data-i18n="lag_label_plain">Лагранж теңдеуі:</p>
+            <p data-i18n="compare_lag">Күштер арқылы емес, энергиялар арқылы қозғалысты сипаттайды. Байланыс реакцияларын табудың қажеті жоқ — күрделі жүйелер үшін өте ыңғайлы. Даламбер–Лагранж принципіне негізделген.</p>
           </div>
         </div>
       </div>
     </div>
 
     <div class="answer-box green" style="margin-top:22px; text-align:center;">
-      <h4>🎯 Сәттілік тілеймін қорғауда!</h4>
-      <p>Екі формуланы, шығарылу логикасын және физикалық мағынасын жақсы түсінсеңіз — қорғауға дайынсыз. <strong>Сенемін сізге!</strong></p>
+      <h4 data-i18n="good_luck_title">🎯 Сәттілік тілеймін қорғауда!</h4>
+      <p data-i18n="good_luck_text">Екі формуланы, шығарылу логикасын және физикалық мағынасын жақсы түсінсеңіз — қорғауға дайынсыз. <strong>Сенемін сізге!</strong></p>
     </div>
   </div><!-- /s-review -->
 
@@ -817,6 +827,63 @@
        JAVASCRIPT
   ══════════════════════════════════════════════ -->
   <script>
+
+  /* ─── LANGUAGE SYSTEM ─── */
+  const I18N = {
+    kz: {
+      page_title:'Қатты дене динамикасы | Qainar', back:'← Жобаларға оралу', hero_eyebrow:'Емтиханға дайындық · Теориялық механика', hero_title:'Қатты дене динамикасы', hero_sub:'Гироскоп прецессиясы · Гироскоптық момент · Лагранж теңдеуі', pill_gyro:'1 · Гироскоп & Прецессия', pill_lagrange:'2 · Лагранж теңдеуі', pill_review:'📝 Жылдам қайталау',
+      gyro_h2:'Гироскоптың еріксіз прецессиясы<br>және гироскоптық момент', gyro_intro:'Гироскоп осінің сыртқы күш немесе оны алып жүретін дененің қозғалысы нәтижесінде мәжбүрлі бұрылуы — <strong>еріксіз прецессия</strong>. Бұл бөлімде гироскоптық моменттің физикалық мәні мен формуласы шығарылады.', def_title:'Анықтама', gyro_def:'Гироскоп — симметрия осі бойымен жоғары бұрыштық жылдамдықпен айналатын қатты дене. Егер оны алып жүретін дене (кеме, ұшақ, зымыран) бұрылса, гироскоп осі де бұрылуға мәжбүр болады. Бұл қозғалыс <strong>еріксіз прецессия</strong> деп аталады.', symbols_title:'Негізгі белгілер',
+      sym_w1:'<strong>$\\omega_1$</strong> — меншікті айналу бұрыштық жылдамдығы', sym_w2:'<strong>$\\omega_2$</strong> — еріксіз прецессия бұрыштық жылдамдығы', sym_C:'<strong>$C$</strong> — симметрия осіне қатысты инерция моменті', sym_H:'<strong>$H = C\\omega_1$</strong> — кинетикалық момент', sym_theta:'<strong>$\\theta$</strong> — $\\vec{H}$ мен $\\vec{\\omega}_2$ арасындағы бұрыш', sym_Mr:'<strong>$M_r$</strong> — гироскоптық (реактивті) момент',
+      gyro_sub_kinetic:'Кинетикалық момент және оның өзгеруі', gyro_kin1:'Гироскоп өз симметрия осі бойымен $\\omega_1$ бұрыштық жылдамдықпен айналады. Инерция моменті $C$ болса, кинетикалық момент:', gyro_kin2:'Вектор $\\vec{H}$ гироскоп симметрия осімен бағыттас. $\\omega_2$ бұрыштық жылдамдықпен еріксіз прецессия жасалғанда $\\vec{H}$ бағыты өзгереді. Осы өзгерісті тудыру үшін сыртқы момент керек, ал Ньютонның III заңы бойынша гироскоп денеге кері реакция моменті береді — <strong>гироскоптық момент</strong>.',
+      derivation_logic:'Формуланың шығару логикасы', step1:'1-қадам', step2:'2-қадам', step3:'3-қадам', step4_newton:'4-қадам — Ньютонның III заңы', result:'✓ Нәтиже', gyro_flow1:'Гироскопқа О нүктесіне қатысты сыртқы күштер моменті беріледі: $M_O^{(e)}$', gyro_flow2:'Гироскоп осі $\\omega_2$ жылдамдықпен прецессия жасайды — $\\vec{H}$ бағыты өзгереді', gyro_flow3:'Сыртқы момент: $\\vec{M}_O^{(e)} = \\vec{\\omega}_2 \\times C\\vec{\\omega}_1 = \\vec{\\omega}_2 \\times \\vec{H}$', gyro_flow4:'Гироскоп денеге кері реактивті момент береді:<br>$\\vec{M}_r = -\\vec{M}_O^{(e)} = \\vec{H} \\times \\vec{\\omega}_2$', gyro_flow_result:'$\\vec{M}_r = \\vec{H} \\times \\vec{\\omega}_2 \\;\\Rightarrow\\; M_r = C\\omega_1\\omega_2\\sin\\theta$',
+      gyro_moment_label:'Гироскоптық момент — векторлық және скалярлық түрі', gyro_moment_note:'мұндағы: $H = C\\omega_1$ — кинетикалық момент; $\\;\\theta$ — $\\vec{H}$ мен $\\vec{\\omega}_2$ арасындағы бұрыш.<br>Модуль формуласы векторлық көбейтінді ережесінен шығады: $|\\vec{H}\\times\\vec{\\omega}_2| = H\\omega_2\\sin\\theta$', couple_label:'Қос күш моменті арқылы', couple_note:'мұндағы: $h$ — қос күштің иіні, $\\;Q$ — күштің шамасы. Гироскоптық момент подшипниктерге түсетін қысым немесе қос күш ретінде байқалады.', interactive_3d:'Интерактивті 3D визуализация', sl_w1:'$\\omega_1$ — меншікті айналу', sl_w2:'$\\omega_2$ — прецессия', sl_theta:'$\\theta$ — бұрыш (°)', calc_value:'Нақты есептелген мән ($C = 1$ кг·м²)', zhuk_sub:'Жуковский ережесі', zhuk_title:'⚡ Жуковский ережесі', zhuk_text:'Жылдам айналыстағы гироскоп осіне еріксіз прецессия берілсе, гироскоп осі <em>ең қысқа жолмен</em> прецессия осіне параллель орналасуға ұмтылады. Нәтижесінде $\\vec{\\omega}_1$ мен $\\vec{\\omega}_2$ векторлары туралас болуға тырысады.', badge_w1:'$\\vec{\\omega}_1$ — гироскоп осі', zhuk_side1:'Гироскоп осінің бастапқы бағыты прецессия осіне қатысты $\\theta$ бұрыш жасайды.', shortest_badge:'Ең қысқа жол', zhuk_side2:'Гироскоп осі прецессия осіне минималды бұрыш арқылы жетуге тырысады.', zhuk_meaning_side:'<strong style="color:#f59e0b;">Физикалық мағынасы:</strong> Гироскоп прецессия осімен туралануға «бағынуға» тырысады. Осылайша гироскоп навигациялық жүйелерде бағытты сақтайды.', physical_meaning_title:'Физикалық мағынасы', gyro_physical_meaning:'Гироскоп осі еріксіз бұрылғанда кинетикалық момент вектор $\\vec{H}$ бағыты өзгереді. Бұрыштық моменттің уақыт бойынша өзгеруі сыртқы моментке тең болуы тиіс (импульс моменті теоремасы). Сондықтан гироскоп симметрия осінің бағытын өзгертуге қарсы реактивті гироскоптық момент тудырады. Бұл момент подшипниктерге түсетін қысым немесе қос күш моменті түрінде байқалады. Кеме мен ұшақтардың навигациялық жүйелері осы принципке негізделген.', exam_answer_title:'📝 Қысқаша емтихан жауабы', gyro_exam_answer:'<strong>Еріксіз прецессия</strong> — гироскоп осінің сыртқы байланыс немесе дененің қозғалысынан $\\omega_2$ бұрыштық жылдамдықпен мәжбүрлі бұрылуы. Гироскоп симметрия осі бойымен $\\omega_1$ жылдамдықпен айналады, оның кинетикалық моменті $H = C\\omega_1$. Еріксіз прецессия кезінде $\\vec{H}$ бағыты өзгереді. Сыртқы момент: $\\vec{M}_O^{(e)} = \\vec{\\omega}_2 \\times \\vec{H}$. Ньютонның III заңы бойынша гироскоп денеге кері момент береді — <strong>гироскоптық момент:</strong> $\\vec{M}_r = \\vec{H} \\times \\vec{\\omega}_2$, модулі: <strong>$M_r = C\\omega_1\\omega_2\\sin\\theta$</strong>. Қос күш арқылы: $Q = M_r / h$. Жуковский ережесі: гироскоп осі ең қысқа жолмен прецессия осіне параллель орналасуға тырысады.',
+      lag_h2:'Лагранждың екінші текті теңдеулері', lag_intro:'Идеал, голономды байланыстары бар механикалық жүйенің қозғалысы жалпылама координаталар арқылы сипатталады. Байланыс реакцияларын тікелей есептемей-ақ қозғалыс теңдеулерін алуға болады.', lag_def:'Лагранждың 2-ші текті теңдеулері <strong>идеал, голономды байланыстары бар</strong> жүйелердің қозғалысын сипаттайды. Жалпылама координаталар саны $s$ — жүйенің еркіндік дәрежесіне тең. Байланыс реакцияларын табудың қажеті жоқ.', lag_sym_s:'<strong>$s = 3n - l$</strong> — еркіндік дәрежелер саны', lag_sym_q:'<strong>$q_i$</strong> — жалпылама координата', lag_sym_qdot:'<strong>$\\dot{q}_i$</strong> — жалпылама жылдамдық', lag_sym_T:'<strong>$T$</strong> — кинетикалық энергия', lag_sym_Pi:'<strong>$\\Pi$</strong> — потенциалдық энергия', lag_sym_L:'<strong>$\\mathcal{L} = T - \\Pi$</strong> — Лагранж функциясы', lag_sym_Q:'<strong>$Q_i$</strong> — жалпылама күш', lag_sub_basics:'Негіздері: виртуаль орын ауыстыру мен жалпылама күш', lag_basic1:'$n$ нүктеден, $l$ голономды байланыстан тұратын жүйенің <strong>еркіндік дәрежесі:</strong> $s = 3n - l$. Жүйе орны $s$ тәуелсіз жалпылама координатамен анықталады: $q_1, q_2, \\ldots, q_s$.', lag_basic2:'Нүктелердің радиус-векторлары жалпылама координаталар арқылы жазылады: $\\;\\vec{r}_\\nu = \\vec{r}_\\nu(q_1,\\ldots,q_s,t)$. Виртуаль орын ауыстыру ($dt=0$ кезінде): $$\\delta\\vec{r}_\\nu = \\sum_{i=1}^{s}\\frac{\\partial\\vec{r}_\\nu}{\\partial q_i}\\,\\delta q_i$$', lag_basic3:'<strong>Жалпылама күш</strong> актив күштердің виртуаль жұмысынан анықталады: $$Q_i = \\sum_\\nu \\vec{F}_\\nu \\cdot \\frac{\\partial\\vec{r}_\\nu}{\\partial q_i}$$', dl_principle:'Даламбер–Лагранж принципі', dl_text1:'Идеал байланыстары бар жүйе үшін: $$\\sum_{\\nu=1}^{n}\\left(\\vec{F}_\\nu - m_\\nu\\vec{w}_\\nu\\right)\\cdot\\delta\\vec{r}_\\nu = 0$$', dl_text2:'Идеал байланыстар үшін байланыс реакцияларының виртуаль жұмысы нөлге тең. Сондықтан реакциялар теңдеуге кірмейді — бұл осы әдістің <strong>басты артықшылығы.</strong>', lag_general_label:'Лагранждың 2-ші текті теңдеуі — жалпы түрі', lag_general_note:'$T$ — кинетикалық энергия, $\\;q_i$ — жалпылама координата, $\\;\\dot{q}_i$ — жалпылама жылдамдық, $\\;Q_i$ — жалпылама күш, $\\;s$ — еркіндік дәрежелер саны.', lag_cons_label:'Консерватив жүйе үшін — Лагранж функциясы арқылы', lag_cons_note:'Актив күштер потенциалды болса: $Q_i = -\\partial\\Pi/\\partial q_i$. Консерватив емес күштер болса: оң жақта $Q_i^*$ жазылады.', algorithm:'Қолдану алгоритмі', alg1_title:'Еркіндік дәрежесін анықтау', alg1_text:'$n$ нүкте, $l$ байланыс болса: <strong>$s = 3n - l$</strong>. $s$ теңдеу жазылады.', alg2_title:'Жалпылама координаталарды таңдау', alg2_text:'$s$ тәуелсіз параметр: $q_1, q_2, \\ldots, q_s$ — бұрыш, ұзындық немесе кез келген шама.', alg3_title:'Радиус-векторлар мен жылдамдықтар', alg3_text:'$\\vec{r}_\\nu = \\vec{r}_\\nu(q_1,\\ldots,q_s,t)$, &ensp; жылдамдық: $\\vec{v}_\\nu = \\sum_i \\frac{\\partial\\vec{r}_\\nu}{\\partial q_i}\\dot{q}_i + \\frac{\\partial\\vec{r}_\\nu}{\\partial t}$', alg4_title:'Кинетикалық энергия $T$', alg4_text:'$T = \\sum_\\nu m_\\nu v_\\nu^2/2$ — жалпылама координаталар мен жылдамдықтар арқылы өрнектеледі.', alg5_title:'Потенциалдық энергия $\\Pi$ және $\\mathcal{L} = T - \\Pi$', alg5_text:'Потенциалды күштер болса $\\Pi$ жазылады, Лагранж функциясы $\\mathcal{L} = T - \\Pi$ құрылады.', alg6_title:'Туындыларды есептеу, теңдеуге қою', alg6_text:'Әрбір $q_i$ үшін $\\frac{d}{dt}\\!\\left(\\frac{\\partial\\mathcal{L}}{\\partial\\dot{q}_i}\\right) - \\frac{\\partial\\mathcal{L}}{\\partial q_i} = 0$ теңдеуі жазылады.', alg7_title:'Қозғалыс теңдеулері алынады', alg7_text:'$s$ теңдеуден тұратын дифференциалдық жүйе. Байланыс реакциялары теңдеуде жоқ — басты артықшылық!', pend_example:'Мысал: математикалық маятник ($q = \\varphi$)', solution_path:'Шығару жолы', pend_path1:'<strong>Еркіндік дәрежесі:</strong> $s = 1$, жалпылама координата $q = \\varphi$', kinetic_energy:'<strong>Кинетикалық энергия:</strong>', potential_energy:'<strong>Потенциалдық энергия:</strong>', derivatives:'<strong>Туындылар:</strong>', result_plain:'Нәтиже', after_substitution:'Лагранж теңдеуіне қойғаннан кейін:', pend_motion_eq:'Маятниктің қозғалыс теңдеуі', sl_l:'$l$ — ұзындық (м)', sl_phi0:'$\\varphi_0$ — бастапқы бұрыш (°)', sl_g:'$g$ — ауырлық үдеуі (м/с²)', restart:'↺ Қайта бастау', period_label:'Айналу кезеңі (кіші бұрыш) &nbsp; $T = 2\\pi\\sqrt{l/g}$', lag_exam_answer:'<strong>Лагранждың 2-ші текті теңдеулері</strong> идеал голономды байланыстары бар механикалық жүйелердің қозғалысын жалпылама координаталар арқылы сипаттайды. Еркіндік дәрежесі: <strong>$s = 3n - l$</strong>. Виртуаль орын ауыстыру: $\\delta\\vec{r}_\\nu = \\sum_i(\\partial\\vec{r}_\\nu/\\partial q_i)\\delta q_i$. Даламбер–Лагранж принципі: $\\sum_\\nu(\\vec{F}_\\nu - m_\\nu\\vec{w}_\\nu)\\cdot\\delta\\vec{r}_\\nu = 0$. Жалпылама күш: $Q_i = \\sum_\\nu\\vec{F}_\\nu\\cdot\\partial\\vec{r}_\\nu/\\partial q_i$. Нәтиже: <strong>$\\frac{d}{dt}(\\partial T/\\partial\\dot{q}_i) - \\partial T/\\partial q_i = Q_i$</strong>. Потенциалды жүйеде $\\mathcal{L} = T-\\Pi$ кіргізіліп: <strong>$\\frac{d}{dt}(\\partial\\mathcal{L}/\\partial\\dot{q}_i) - \\partial\\mathcal{L}/\\partial q_i = 0$</strong>. Байланыс реакциялары теңдеуге кірмейді — бұл негізгі артықшылық.', review_h2:'Жылдам қайталау', review_intro:'Екі тақырыптың негізгі формулалары — ауызша қорғауға дайындық.', rev_gyro_H:'🌀 Гироскоп — кинетикалық момент', rev_newton:'Ньютонның III заңы: $\\vec{M}_r = -\\vec{M}_O^{(e)} = \\vec{H}\\times\\vec{\\omega}_2$', rev_couple:'🔩 Гироскоп — қос күш', rev_zhuk:'<strong>Жуковский:</strong> ось ең қысқа жолмен прецессия осіне параллель орналасуға тырысады.', rev_lag_general:'📐 Лагранж — жалпы түрі', rev_lag_cons:'📐 Лагранж — консерватив жүйе', rev_pend:'Маятник: $q=\\varphi\\;\\Rightarrow\\;\\ddot{\\varphi} + (g/l)\\sin\\varphi = 0$', compare_title:'🎯 Физикалық мағына — салыстыру', gyro_label_plain:'Гироскоп:', compare_gyro:'Кинетикалық момент $\\vec{H}$ бағытының өзгеруі реактивті гироскоптық момент тудырады. Гироскоп өз осінің бағытын өзгертуге қарсылық көрсетеді — навигация жүйелерінің негізі. Ньютонның III заңы бойынша $\\vec{M}_r = \\vec{H}\\times\\vec{\\omega}_2$.', lag_label_plain:'Лагранж теңдеуі:', compare_lag:'Күштер арқылы емес, энергиялар арқылы қозғалысты сипаттайды. Байланыс реакцияларын табудың қажеті жоқ — күрделі жүйелер үшін өте ыңғайлы. Даламбер–Лагранж принципіне негізделген.', good_luck_title:'🎯 Сәттілік тілеймін қорғауда!', good_luck_text:'Екі формуланы, шығарылу логикасын және физикалық мағынасын жақсы түсінсеңіз — қорғауға дайынсыз. <strong>Сенемін сізге!</strong>',
+      axis:'прецессия осі', initial:'ω₁ (бастапқы)', final:'соңғы жағдай', shortest:'ең қысқа жол', generalized:'Жалпылама координата: q = φ', meter:'м', second:'с'
+    },
+    en: {
+      page_title:'Rigid Body Dynamics | Qainar', back:'← Back to Projects', hero_eyebrow:'Exam preparation · Theoretical Mechanics', hero_title:'Rigid Body Dynamics', hero_sub:'Gyroscope precession · Gyroscopic moment · Lagrange equation', pill_gyro:'1 · Gyroscope & Precession', pill_lagrange:'2 · Lagrange Equation', pill_review:'📝 Quick Review',
+      gyro_h2:'Forced precession of a gyroscope<br>and gyroscopic moment', gyro_intro:'The forced turning of a gyroscope axis caused by an external force or the motion of the carrying body is called <strong>forced precession</strong>. This section explains the physical meaning of gyroscopic moment and derives its formula.', def_title:'Definition', gyro_def:'A gyroscope is a rigid body rotating at high angular speed around its symmetry axis. If the supporting body, such as a ship, aircraft, or rocket, turns, the gyroscope axis is forced to turn as well. This motion is called <strong>forced precession</strong>.', symbols_title:'Main symbols',
+      sym_w1:'<strong>$\\omega_1$</strong> — spin angular velocity', sym_w2:'<strong>$\\omega_2$</strong> — forced precession angular velocity', sym_C:'<strong>$C$</strong> — moment of inertia about the symmetry axis', sym_H:'<strong>$H = C\\omega_1$</strong> — angular momentum', sym_theta:'<strong>$\\theta$</strong> — angle between $\\vec{H}$ and $\\vec{\\omega}_2$', sym_Mr:'<strong>$M_r$</strong> — gyroscopic / reactive moment',
+      gyro_sub_kinetic:'Angular momentum and its change', gyro_kin1:'The gyroscope rotates around its symmetry axis with angular velocity $\\omega_1$. If its moment of inertia is $C$, then the angular momentum is:', gyro_kin2:'The vector $\\vec{H}$ is directed along the symmetry axis of the gyroscope. During forced precession with angular velocity $\\omega_2$, the direction of $\\vec{H}$ changes. An external moment is required for this change, and by Newton’s third law the gyroscope gives the body an opposite reaction moment — the <strong>gyroscopic moment</strong>.',
+      derivation_logic:'Derivation logic', step1:'Step 1', step2:'Step 2', step3:'Step 3', step4_newton:'Step 4 — Newton’s third law', result:'✓ Result', gyro_flow1:'An external moment about point O acts on the gyroscope: $M_O^{(e)}$', gyro_flow2:'The gyroscope axis precesses with angular velocity $\\omega_2$, so the direction of $\\vec{H}$ changes', gyro_flow3:'External moment: $\\vec{M}_O^{(e)} = \\vec{\\omega}_2 \\times C\\vec{\\omega}_1 = \\vec{\\omega}_2 \\times \\vec{H}$', gyro_flow4:'The gyroscope gives the body an opposite reactive moment:<br>$\\vec{M}_r = -\\vec{M}_O^{(e)} = \\vec{H} \\times \\vec{\\omega}_2$', gyro_flow_result:'$\\vec{M}_r = \\vec{H} \\times \\vec{\\omega}_2 \\;\\Rightarrow\\; M_r = C\\omega_1\\omega_2\\sin\\theta$',
+      gyro_moment_label:'Gyroscopic moment — vector and scalar forms', gyro_moment_note:'where $H = C\\omega_1$ is angular momentum, and $\\theta$ is the angle between $\\vec{H}$ and $\\vec{\\omega}_2$.<br>The magnitude follows from the vector product rule: $|\\vec{H}\\times\\vec{\\omega}_2| = H\\omega_2\\sin\\theta$', couple_label:'Through a couple moment', couple_note:'where $h$ is the arm of the couple and $Q$ is the force magnitude. The gyroscopic moment appears as pressure on bearings or as a couple moment.', interactive_3d:'Interactive 3D visualization', sl_w1:'$\\omega_1$ — spin', sl_w2:'$\\omega_2$ — precession', sl_theta:'$\\theta$ — angle (°)', calc_value:'Calculated value ($C = 1$ kg·m²)', zhuk_sub:'Zhukovsky rule', zhuk_title:'⚡ Zhukovsky rule', zhuk_text:'If forced precession is given to the axis of a rapidly rotating gyroscope, the gyroscope axis tends to align parallel to the precession axis by the <em>shortest path</em>. As a result, the vectors $\\vec{\\omega}_1$ and $\\vec{\\omega}_2$ tend to become aligned.', badge_w1:'$\\vec{\\omega}_1$ — gyroscope axis', zhuk_side1:'The initial direction of the gyroscope axis forms an angle $\\theta$ with the precession axis.', shortest_badge:'Shortest path', zhuk_side2:'The gyroscope axis tends to reach the precession axis through the minimum angle.', zhuk_meaning_side:'<strong style="color:#f59e0b;">Physical meaning:</strong> The gyroscope tends to “obey” and align with the precession axis. This is why gyroscopes can preserve direction in navigation systems.', physical_meaning_title:'Physical meaning', gyro_physical_meaning:'When the gyroscope axis is forcibly turned, the direction of angular momentum $\\vec{H}$ changes. The rate of change of angular momentum must equal the external moment. Therefore, the gyroscope produces a reactive gyroscopic moment opposing the change of its symmetry-axis direction. This moment appears as pressure on bearings or as a couple. Navigation systems in ships and aircraft are based on this principle.', exam_answer_title:'📝 Short exam answer', gyro_exam_answer:'<strong>Forced precession</strong> is the forced turning of the gyroscope axis with angular velocity $\\omega_2$ due to an external constraint or the motion of the body. The gyroscope rotates around its symmetry axis with angular velocity $\\omega_1$, and its angular momentum is $H = C\\omega_1$. During forced precession, the direction of $\\vec{H}$ changes. The external moment is $\\vec{M}_O^{(e)} = \\vec{\\omega}_2 \\times \\vec{H}$. By Newton’s third law, the gyroscope gives the body an opposite moment — the <strong>gyroscopic moment:</strong> $\\vec{M}_r = \\vec{H} \\times \\vec{\\omega}_2$, with magnitude <strong>$M_r = C\\omega_1\\omega_2\\sin\\theta$</strong>. Through a couple: $Q = M_r / h$. Zhukovsky’s rule: the gyroscope axis tends to become parallel to the precession axis by the shortest path.',
+      lag_h2:'Lagrange equations of the second kind', lag_intro:'The motion of a mechanical system with ideal holonomic constraints can be described using generalized coordinates. The equations of motion can be obtained without directly calculating constraint reactions.', lag_def:'Lagrange equations of the second kind describe the motion of systems with <strong>ideal holonomic constraints</strong>. The number of generalized coordinates $s$ equals the number of degrees of freedom. Constraint reactions do not need to be found.', lag_sym_s:'<strong>$s = 3n - l$</strong> — number of degrees of freedom', lag_sym_q:'<strong>$q_i$</strong> — generalized coordinate', lag_sym_qdot:'<strong>$\\dot{q}_i$</strong> — generalized velocity', lag_sym_T:'<strong>$T$</strong> — kinetic energy', lag_sym_Pi:'<strong>$\\Pi$</strong> — potential energy', lag_sym_L:'<strong>$\\mathcal{L} = T - \\Pi$</strong> — Lagrangian', lag_sym_Q:'<strong>$Q_i$</strong> — generalized force', lag_sub_basics:'Basics: virtual displacement and generalized force', lag_basic1:'For a system of $n$ points with $l$ holonomic constraints, the <strong>number of degrees of freedom</strong> is $s = 3n - l$. The position of the system is determined by $s$ independent generalized coordinates: $q_1, q_2, \\ldots, q_s$.', lag_basic2:'The radius vectors of the points are written through generalized coordinates: $\\;\\vec{r}_\\nu = \\vec{r}_\\nu(q_1,\\ldots,q_s,t)$. The virtual displacement when $dt=0$ is: $$\\delta\\vec{r}_\\nu = \\sum_{i=1}^{s}\\frac{\\partial\\vec{r}_\\nu}{\\partial q_i}\\,\\delta q_i$$', lag_basic3:'<strong>The generalized force</strong> is determined from the virtual work of active forces: $$Q_i = \\sum_\\nu \\vec{F}_\\nu \\cdot \\frac{\\partial\\vec{r}_\\nu}{\\partial q_i}$$', dl_principle:'D’Alembert–Lagrange principle', dl_text1:'For a system with ideal constraints: $$\\sum_{\\nu=1}^{n}\\left(\\vec{F}_\\nu - m_\\nu\\vec{w}_\\nu\\right)\\cdot\\delta\\vec{r}_\\nu = 0$$', dl_text2:'For ideal constraints, the virtual work of constraint reactions is zero. Therefore, reactions do not enter the equation — this is the <strong>main advantage</strong> of the method.', lag_general_label:'Lagrange equation of the second kind — general form', lag_general_note:'$T$ is kinetic energy, $q_i$ is a generalized coordinate, $\\dot{q}_i$ is a generalized velocity, $Q_i$ is a generalized force, and $s$ is the number of degrees of freedom.', lag_cons_label:'For a conservative system — using the Lagrangian', lag_cons_note:'If active forces are potential: $Q_i = -\\partial\\Pi/\\partial q_i$. If non-conservative forces exist, they are written on the right-hand side as $Q_i^*$.', algorithm:'Application algorithm', alg1_title:'Determine the degrees of freedom', alg1_text:'If there are $n$ points and $l$ constraints, then <strong>$s = 3n - l$</strong>. Write $s$ equations.', alg2_title:'Choose generalized coordinates', alg2_text:'Choose $s$ independent parameters: $q_1, q_2, \\ldots, q_s$ — angles, lengths, or any convenient quantities.', alg3_title:'Write radius vectors and velocities', alg3_text:'$\\vec{r}_\\nu = \\vec{r}_\\nu(q_1,\\ldots,q_s,t)$, &ensp; velocity: $\\vec{v}_\\nu = \\sum_i \\frac{\\partial\\vec{r}_\\nu}{\\partial q_i}\\dot{q}_i + \\frac{\\partial\\vec{r}_\\nu}{\\partial t}$', alg4_title:'Kinetic energy $T$', alg4_text:'$T = \\sum_\\nu m_\\nu v_\\nu^2/2$ is expressed through generalized coordinates and velocities.', alg5_title:'Potential energy $\\Pi$ and $\\mathcal{L} = T - \\Pi$', alg5_text:'If the forces are potential, write $\\Pi$ and form the Lagrangian $\\mathcal{L} = T - \\Pi$.', alg6_title:'Calculate derivatives and substitute', alg6_text:'For each $q_i$, write $\\frac{d}{dt}\\!\\left(\\frac{\\partial\\mathcal{L}}{\\partial\\dot{q}_i}\\right) - \\frac{\\partial\\mathcal{L}}{\\partial q_i} = 0$.', alg7_title:'Obtain the equations of motion', alg7_text:'The result is a differential system of $s$ equations. Constraint reactions do not appear — the main advantage!', pend_example:'Example: mathematical pendulum ($q = \\varphi$)', solution_path:'Solution path', pend_path1:'<strong>Degree of freedom:</strong> $s = 1$, generalized coordinate $q = \\varphi$', kinetic_energy:'<strong>Kinetic energy:</strong>', potential_energy:'<strong>Potential energy:</strong>', derivatives:'<strong>Derivatives:</strong>', result_plain:'Result', after_substitution:'After substituting into Lagrange’s equation:', pend_motion_eq:'Equation of motion of the pendulum', sl_l:'$l$ — length (m)', sl_phi0:'$\\varphi_0$ — initial angle (°)', sl_g:'$g$ — gravitational acceleration (m/s²)', restart:'↺ Restart', period_label:'Period for small angles &nbsp; $T = 2\\pi\\sqrt{l/g}$', lag_exam_answer:'<strong>Lagrange equations of the second kind</strong> describe the motion of mechanical systems with ideal holonomic constraints using generalized coordinates. The degrees of freedom are <strong>$s = 3n - l$</strong>. Virtual displacement: $\\delta\\vec{r}_\\nu = \\sum_i(\\partial\\vec{r}_\\nu/\\partial q_i)\\delta q_i$. D’Alembert–Lagrange principle: $\\sum_\\nu(\\vec{F}_\\nu - m_\\nu\\vec{w}_\\nu)\\cdot\\delta\\vec{r}_\\nu = 0$. Generalized force: $Q_i = \\sum_\\nu\\vec{F}_\\nu\\cdot\\partial\\vec{r}_\\nu/\\partial q_i$. Result: <strong>$\\frac{d}{dt}(\\partial T/\\partial\\dot{q}_i) - \\partial T/\\partial q_i = Q_i$</strong>. For a potential system, introduce $\\mathcal{L} = T-\\Pi$: <strong>$\\frac{d}{dt}(\\partial\\mathcal{L}/\\partial\\dot{q}_i) - \\partial\\mathcal{L}/\\partial q_i = 0$</strong>. Constraint reactions do not appear — this is the main advantage.', review_h2:'Quick review', review_intro:'Key formulas from both topics — preparation for oral defense.', rev_gyro_H:'🌀 Gyroscope — angular momentum', rev_newton:'Newton’s third law: $\\vec{M}_r = -\\vec{M}_O^{(e)} = \\vec{H}\\times\\vec{\\omega}_2$', rev_couple:'🔩 Gyroscope — couple', rev_zhuk:'<strong>Zhukovsky:</strong> the axis tends to become parallel to the precession axis by the shortest path.', rev_lag_general:'📐 Lagrange — general form', rev_lag_cons:'📐 Lagrange — conservative system', rev_pend:'Pendulum: $q=\\varphi\\;\\Rightarrow\\;\\ddot{\\varphi} + (g/l)\\sin\\varphi = 0$', compare_title:'🎯 Physical meaning — comparison', gyro_label_plain:'Gyroscope:', compare_gyro:'A change in the direction of angular momentum $\\vec{H}$ creates a reactive gyroscopic moment. The gyroscope resists changes in the direction of its axis — the basis of navigation systems. By Newton’s third law, $\\vec{M}_r = \\vec{H}\\times\\vec{\\omega}_2$.', lag_label_plain:'Lagrange equation:', compare_lag:'Motion is described through energies instead of forces. There is no need to find constraint reactions, which makes it very convenient for complex systems. It is based on the D’Alembert–Lagrange principle.', good_luck_title:'🎯 Good luck with your defense!', good_luck_text:'If you understand the two formulas, their derivation logic, and their physical meaning, you are ready for the defense. <strong>I believe in you!</strong>',
+      axis:'precession axis', initial:'ω₁ (initial)', final:'final position', shortest:'shortest path', generalized:'Generalized coordinate: q = φ', meter:'m', second:'s'
+    },
+    zh: {
+      page_title:'刚体动力学 | Qainar', back:'← 返回项目', hero_eyebrow:'考试复习 · 理论力学', hero_title:'刚体动力学', hero_sub:'陀螺进动 · 陀螺力矩 · 拉格朗日方程', pill_gyro:'1 · 陀螺 & 进动', pill_lagrange:'2 · 拉格朗日方程', pill_review:'📝 快速复习',
+      gyro_h2:'陀螺的受迫进动<br>与陀螺力矩', gyro_intro:'陀螺轴由于外力或载体运动而被迫转动，这种现象叫做<strong>受迫进动</strong>。本节解释陀螺力矩的物理意义，并推导其公式。', def_title:'定义', gyro_def:'陀螺是绕对称轴高速旋转的刚体。如果承载它的物体（船、飞机、火箭等）发生转动，陀螺轴也会被迫转动。这种运动称为<strong>受迫进动</strong>。', symbols_title:'主要符号',
+      sym_w1:'<strong>$\\omega_1$</strong> — 自转角速度', sym_w2:'<strong>$\\omega_2$</strong> — 受迫进动角速度', sym_C:'<strong>$C$</strong> — 关于对称轴的转动惯量', sym_H:'<strong>$H = C\\omega_1$</strong> — 角动量/动量矩', sym_theta:'<strong>$\\theta$</strong> — $\\vec{H}$ 与 $\\vec{\\omega}_2$ 之间的夹角', sym_Mr:'<strong>$M_r$</strong> — 陀螺力矩/反作用力矩',
+      gyro_sub_kinetic:'角动量及其变化', gyro_kin1:'陀螺以角速度 $\\omega_1$ 绕对称轴旋转。若转动惯量为 $C$，则角动量为：', gyro_kin2:'向量 $\\vec{H}$ 沿陀螺的对称轴方向。当陀螺以 $\\omega_2$ 做受迫进动时，$\\vec{H}$ 的方向发生变化。产生这种变化需要外力矩；根据牛顿第三定律，陀螺会给物体一个相反的反作用力矩，即<strong>陀螺力矩</strong>。',
+      derivation_logic:'公式推导逻辑', step1:'第 1 步', step2:'第 2 步', step3:'第 3 步', step4_newton:'第 4 步 — 牛顿第三定律', result:'✓ 结果', gyro_flow1:'陀螺受到关于 O 点的外力矩：$M_O^{(e)}$', gyro_flow2:'陀螺轴以角速度 $\\omega_2$ 进动，因此 $\\vec{H}$ 的方向改变', gyro_flow3:'外力矩：$\\vec{M}_O^{(e)} = \\vec{\\omega}_2 \\times C\\vec{\\omega}_1 = \\vec{\\omega}_2 \\times \\vec{H}$', gyro_flow4:'陀螺给物体一个相反的反作用力矩：<br>$\\vec{M}_r = -\\vec{M}_O^{(e)} = \\vec{H} \\times \\vec{\\omega}_2$', gyro_flow_result:'$\\vec{M}_r = \\vec{H} \\times \\vec{\\omega}_2 \\;\\Rightarrow\\; M_r = C\\omega_1\\omega_2\\sin\\theta$',
+      gyro_moment_label:'陀螺力矩 — 矢量式与标量式', gyro_moment_note:'其中 $H = C\\omega_1$ 为角动量；$\\theta$ 是 $\\vec{H}$ 与 $\\vec{\\omega}_2$ 之间的夹角。<br>模长公式来自向量积规则：$|\\vec{H}\\times\\vec{\\omega}_2| = H\\omega_2\\sin\\theta$', couple_label:'通过力偶矩表示', couple_note:'其中 $h$ 是力偶臂，$Q$ 是力的大小。陀螺力矩可表现为轴承压力或力偶矩。', interactive_3d:'交互式 3D 可视化', sl_w1:'$\\omega_1$ — 自转', sl_w2:'$\\omega_2$ — 进动', sl_theta:'$\\theta$ — 夹角 (°)', calc_value:'计算值 ($C = 1$ kg·m²)', zhuk_sub:'茹科夫斯基规则', zhuk_title:'⚡ 茹科夫斯基规则', zhuk_text:'当高速旋转的陀螺轴受到受迫进动时，陀螺轴会沿着<em>最短路径</em>趋向于与进动轴平行。因此，$\\vec{\\omega}_1$ 和 $\\vec{\\omega}_2$ 两个向量趋向于同向。', badge_w1:'$\\vec{\\omega}_1$ — 陀螺轴', zhuk_side1:'陀螺轴的初始方向与进动轴形成夹角 $\\theta$。', shortest_badge:'最短路径', zhuk_side2:'陀螺轴会通过最小角度趋向进动轴。', zhuk_meaning_side:'<strong style="color:#f59e0b;">物理意义：</strong> 陀螺会趋向于“服从”进动轴并与其对齐，因此陀螺可以在导航系统中保持方向。', physical_meaning_title:'物理意义', gyro_physical_meaning:'当陀螺轴被迫转动时，角动量 $\\vec{H}$ 的方向发生变化。角动量随时间的变化必须等于外力矩。因此，陀螺会产生一个反抗对称轴方向改变的反作用陀螺力矩。这个力矩表现为轴承压力或力偶。船舶和飞机的导航系统就是基于这个原理。', exam_answer_title:'📝 简短考试答案', gyro_exam_answer:'<strong>受迫进动</strong>是指陀螺轴由于外部约束或物体运动，以角速度 $\\omega_2$ 被迫转动。陀螺绕对称轴以角速度 $\\omega_1$ 旋转，其角动量为 $H = C\\omega_1$。受迫进动时，$\\vec{H}$ 的方向改变。外力矩为 $\\vec{M}_O^{(e)} = \\vec{\\omega}_2 \\times \\vec{H}$。根据牛顿第三定律，陀螺给物体一个相反的力矩，即<strong>陀螺力矩：</strong>$\\vec{M}_r = \\vec{H} \\times \\vec{\\omega}_2$，其模为 <strong>$M_r = C\\omega_1\\omega_2\\sin\\theta$</strong>。用力偶表示：$Q = M_r / h$。茹科夫斯基规则：陀螺轴沿最短路径趋向与进动轴平行。',
+      lag_h2:'第二类拉格朗日方程', lag_intro:'具有理想完整约束的机械系统，可以用广义坐标描述其运动。不必直接求约束反力，也可以得到运动方程。', lag_def:'第二类拉格朗日方程描述具有<strong>理想完整约束</strong>的系统运动。广义坐标个数 $s$ 等于系统自由度。不需要求约束反力。', lag_sym_s:'<strong>$s = 3n - l$</strong> — 自由度个数', lag_sym_q:'<strong>$q_i$</strong> — 广义坐标', lag_sym_qdot:'<strong>$\\dot{q}_i$</strong> — 广义速度', lag_sym_T:'<strong>$T$</strong> — 动能', lag_sym_Pi:'<strong>$\\Pi$</strong> — 势能', lag_sym_L:'<strong>$\\mathcal{L} = T - \\Pi$</strong> — 拉格朗日函数', lag_sym_Q:'<strong>$Q_i$</strong> — 广义力', lag_sub_basics:'基础：虚位移与广义力', lag_basic1:'由 $n$ 个点、$l$ 个完整约束组成的系统，其<strong>自由度</strong>为 $s = 3n - l$。系统位置由 $s$ 个独立广义坐标决定：$q_1, q_2, \\ldots, q_s$。', lag_basic2:'各点的矢径可用广义坐标表示：$\\;\\vec{r}_\\nu = \\vec{r}_\\nu(q_1,\\ldots,q_s,t)$。当 $dt=0$ 时，虚位移为：$$\\delta\\vec{r}_\\nu = \\sum_{i=1}^{s}\\frac{\\partial\\vec{r}_\\nu}{\\partial q_i}\\,\\delta q_i$$', lag_basic3:'<strong>广义力</strong>由主动力的虚功确定：$$Q_i = \\sum_\\nu \\vec{F}_\\nu \\cdot \\frac{\\partial\\vec{r}_\\nu}{\\partial q_i}$$', dl_principle:'达朗贝尔–拉格朗日原理', dl_text1:'对于具有理想约束的系统：$$\\sum_{\\nu=1}^{n}\\left(\\vec{F}_\\nu - m_\\nu\\vec{w}_\\nu\\right)\\cdot\\delta\\vec{r}_\\nu = 0$$', dl_text2:'对于理想约束，约束反力的虚功为零。因此反力不进入方程——这是该方法的<strong>主要优点</strong>。', lag_general_label:'第二类拉格朗日方程 — 一般形式', lag_general_note:'$T$ 为动能，$q_i$ 为广义坐标，$\\dot{q}_i$ 为广义速度，$Q_i$ 为广义力，$s$ 为自由度个数。', lag_cons_label:'保守系统 — 通过拉格朗日函数', lag_cons_note:'若主动力有势：$Q_i = -\\partial\\Pi/\\partial q_i$。若有非保守力，则写在右边为 $Q_i^*$。', algorithm:'使用步骤', alg1_title:'确定自由度', alg1_text:'若有 $n$ 个点、$l$ 个约束：<strong>$s = 3n - l$</strong>。需要写出 $s$ 个方程。', alg2_title:'选择广义坐标', alg2_text:'选择 $s$ 个独立参数：$q_1, q_2, \\ldots, q_s$，可以是角度、长度或其他方便的量。', alg3_title:'写出矢径和速度', alg3_text:'$\\vec{r}_\\nu = \\vec{r}_\\nu(q_1,\\ldots,q_s,t)$，速度：$\\vec{v}_\\nu = \\sum_i \\frac{\\partial\\vec{r}_\\nu}{\\partial q_i}\\dot{q}_i + \\frac{\\partial\\vec{r}_\\nu}{\\partial t}$', alg4_title:'动能 $T$', alg4_text:'$T = \\sum_\\nu m_\\nu v_\\nu^2/2$，用广义坐标和广义速度表示。', alg5_title:'势能 $\\Pi$ 与 $\\mathcal{L} = T - \\Pi$', alg5_text:'若力为有势力，写出 $\\Pi$，并建立拉格朗日函数 $\\mathcal{L} = T - \\Pi$。', alg6_title:'求导并代入方程', alg6_text:'对每个 $q_i$ 写出：$\\frac{d}{dt}\\!\\left(\\frac{\\partial\\mathcal{L}}{\\partial\\dot{q}_i}\\right) - \\frac{\\partial\\mathcal{L}}{\\partial q_i} = 0$。', alg7_title:'得到运动方程', alg7_text:'得到由 $s$ 个方程组成的微分方程组。约束反力不会出现在方程中——这是最大优点。', pend_example:'例子：数学摆 ($q = \\varphi$)', solution_path:'推导过程', pend_path1:'<strong>自由度：</strong>$s = 1$，广义坐标 $q = \\varphi$', kinetic_energy:'<strong>动能：</strong>', potential_energy:'<strong>势能：</strong>', derivatives:'<strong>导数：</strong>', result_plain:'结果', after_substitution:'代入拉格朗日方程后：', pend_motion_eq:'摆的运动方程', sl_l:'$l$ — 长度 (m)', sl_phi0:'$\\varphi_0$ — 初始角 (°)', sl_g:'$g$ — 重力加速度 (m/s²)', restart:'↺ 重新开始', period_label:'小角度周期 &nbsp; $T = 2\\pi\\sqrt{l/g}$', lag_exam_answer:'<strong>第二类拉格朗日方程</strong>用广义坐标描述具有理想完整约束的机械系统运动。自由度：<strong>$s = 3n - l$</strong>。虚位移：$\\delta\\vec{r}_\\nu = \\sum_i(\\partial\\vec{r}_\\nu/\\partial q_i)\\delta q_i$。达朗贝尔–拉格朗日原理：$\\sum_\\nu(\\vec{F}_\\nu - m_\\nu\\vec{w}_\\nu)\\cdot\\delta\\vec{r}_\\nu = 0$。广义力：$Q_i = \\sum_\\nu\\vec{F}_\\nu\\cdot\\partial\\vec{r}_\\nu/\\partial q_i$。结果：<strong>$\\frac{d}{dt}(\\partial T/\\partial\\dot{q}_i) - \\partial T/\\partial q_i = Q_i$</strong>。对于有势系统，引入 $\\mathcal{L} = T-\\Pi$：<strong>$\\frac{d}{dt}(\\partial\\mathcal{L}/\\partial\\dot{q}_i) - \\partial\\mathcal{L}/\\partial q_i = 0$</strong>。约束反力不进入方程——这是主要优点。', review_h2:'快速复习', review_intro:'两个主题的核心公式——用于口试/答辩准备。', rev_gyro_H:'🌀 陀螺 — 角动量', rev_newton:'牛顿第三定律：$\\vec{M}_r = -\\vec{M}_O^{(e)} = \\vec{H}\\times\\vec{\\omega}_2$', rev_couple:'🔩 陀螺 — 力偶', rev_zhuk:'<strong>茹科夫斯基：</strong>轴沿最短路径趋向于与进动轴平行。', rev_lag_general:'📐 拉格朗日 — 一般形式', rev_lag_cons:'📐 拉格朗日 — 保守系统', rev_pend:'摆：$q=\\varphi\\;\\Rightarrow\\;\\ddot{\\varphi} + (g/l)\\sin\\varphi = 0$', compare_title:'🎯 物理意义 — 对比', gyro_label_plain:'陀螺：', compare_gyro:'角动量 $\\vec{H}$ 方向的变化会产生反作用陀螺力矩。陀螺会抵抗自身轴方向的改变，这是导航系统的基础。根据牛顿第三定律：$\\vec{M}_r = \\vec{H}\\times\\vec{\\omega}_2$。', lag_label_plain:'拉格朗日方程：', compare_lag:'它不是直接用力，而是通过能量描述运动。不需要求约束反力，因此非常适合复杂系统。其基础是达朗贝尔–拉格朗日原理。', good_luck_title:'🎯 答辩加油！', good_luck_text:'如果你理解这两个公式、推导逻辑和物理意义，就已经准备好了。<strong>我相信你！</strong>',
+      axis:'进动轴', initial:'ω₁（初始）', final:'最终位置', shortest:'最短路径', generalized:'广义坐标：q = φ', meter:'m', second:'s'
+    }
+  };
+  let currentLang = localStorage.getItem('qainar_mech_lang') || 'kz';
+  function L(key){ return (I18N[currentLang] && I18N[currentLang][key]) || I18N.kz[key] || key; }
+  function setLang(lang){
+    currentLang = lang; localStorage.setItem('qainar_mech_lang', lang);
+    document.documentElement.lang = lang;
+    document.title = L('page_title');
+    document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+    document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.getAttribute('data-i18n'); if(I18N[lang][k]) el.innerHTML = I18N[lang][k]; });
+    updateDynamicUnits();
+    mjTypeset(document.body);
+    drawZhukovsky();
+  }
+  function updateDynamicUnits(){
+    const w1=document.getElementById('sl-w1'), w2=document.getElementById('sl-w2'), th=document.getElementById('sl-theta');
+    if(w1) document.getElementById('w1-val').textContent=parseFloat(w1.value).toFixed(1);
+    if(w2) document.getElementById('w2-val').textContent=parseFloat(w2.value).toFixed(1);
+    if(th) document.getElementById('theta-val').textContent=th.value+'°';
+    const sl=document.getElementById('sl-l'), sp=document.getElementById('sl-phi0'), sg=document.getElementById('sl-g');
+    if(sl) document.getElementById('l-val').textContent=parseFloat(sl.value).toFixed(1)+' '+L('meter');
+    if(sp) document.getElementById('phi-val').textContent=sp.value+'°';
+    if(sg) document.getElementById('g-val').textContent=parseFloat(sg.value).toFixed(1);
+  }
+
   /* ─── MathJax helper ─── */
   function mjTypeset(el) {
     if (window.MathJax && MathJax.typesetPromise) {
@@ -1144,7 +1211,7 @@
       /* Axis label */
       ctx.fillStyle='rgba(148,163,184,0.70)';
       ctx.font='11px IBM Plex Sans'; ctx.textAlign='center';
-      ctx.fillText('прецессия осі',axTopX,axTopY-14);
+      ctx.fillText(L('axis'),axTopX,axTopY-14);
 
       /* Update formula display */
       const Mr=(w1*w2*Math.sin(theta)).toFixed(3);
@@ -1187,7 +1254,7 @@
     ctx.setLineDash([]);
     drawArrow(ctx,cx,22,cx,18,'rgba(148,163,184,0.60)',0,9);
     ctx.fillStyle='rgba(148,163,184,0.70)'; ctx.font='11px IBM Plex Sans';
-    ctx.textAlign='center'; ctx.fillText('прецессия осі',cx,12);
+    ctx.textAlign='center'; ctx.fillText(L('axis'),cx,12);
     ctx.restore();
 
     const axLen=88;
@@ -1203,7 +1270,7 @@
     drawArrow(ctx,g2x-4,g2y-4,g2x,g2y,'#22d3ee',0,10);
     ctx.restore();
     ctx.fillStyle='#67e8f9'; ctx.font='bold 12px IBM Plex Sans';
-    ctx.textAlign='left'; ctx.fillText('ω₁ (бастапқы)',g2x+8,g2y+4);
+    ctx.textAlign='left'; ctx.fillText(L('initial'),g2x+8,g2y+4);
 
     /* Target (vertical dashed) */
     ctx.save(); ctx.setLineDash([4,4]);
@@ -1211,7 +1278,7 @@
     ctx.beginPath(); ctx.moveTo(cx+42,cy-76); ctx.lineTo(cx+42,cy+76); ctx.stroke();
     ctx.setLineDash([]);
     ctx.fillStyle='rgba(34,211,238,0.40)'; ctx.font='10px IBM Plex Sans';
-    ctx.textAlign='center'; ctx.fillText('соңғы жағдай',cx+42,cy-80);
+    ctx.textAlign='center'; ctx.fillText(L('final'),cx+42,cy-80);
     ctx.restore();
 
     /* Shortest path arc */
@@ -1224,7 +1291,7 @@
     drawArrow(ctx,arcTX+2,arcTY+2,arcTX,arcTY,'#f59e0b',0,10);
     ctx.restore();
     ctx.fillStyle='#f59e0b'; ctx.font='bold 11px IBM Plex Sans';
-    ctx.textAlign='right'; ctx.fillText('ең қысқа жол',arcTX-10,arcTY-12);
+    ctx.textAlign='right'; ctx.fillText(L('shortest'),arcTX-10,arcTY-12);
 
     /* θ arc */
     ctx.strokeStyle='rgba(110,231,183,0.7)'; ctx.lineWidth=1.5;
@@ -1330,7 +1397,7 @@
 
       /* l label */
       ctx.fillStyle='rgba(148,163,184,0.55)'; ctx.font='13px IBM Plex Sans'; ctx.textAlign='left';
-      ctx.fillText(`l = ${lVal.toFixed(1)} м`,pivX+8,pivY+pxLen*0.50);
+      ctx.fillText(`l = ${lVal.toFixed(1)} ${L('meter')}`,pivX+8,pivY+pxLen*0.50);
 
       /* Pivot */
       ctx.beginPath(); ctx.arc(pivX,pivY,7,0,Math.PI*2);
@@ -1367,11 +1434,11 @@
 
       /* q = φ label */
       ctx.fillStyle='rgba(100,116,139,0.65)'; ctx.font='12.5px IBM Plex Sans'; ctx.textAlign='left';
-      ctx.fillText('Жалпылама координата: q = φ',12,H-10);
+      ctx.fillText(L('generalized'),12,H-10);
 
       /* Period */
       const T=2*Math.PI*Math.sqrt(lVal/gVal);
-      document.getElementById('period-display').textContent=`T ≈ ${T.toFixed(2)} с`;
+      document.getElementById('period-display').textContent=`T ≈ ${T.toFixed(2)} ${L('second')}`;
 
       pendAnimId=requestAnimationFrame(draw);
     }
@@ -1380,7 +1447,7 @@
 
   /* Pendulum slider listeners */
   document.getElementById('sl-l').addEventListener('input',function(){
-    document.getElementById('l-val').textContent=parseFloat(this.value).toFixed(1)+' м';
+    document.getElementById('l-val').textContent=parseFloat(this.value).toFixed(1)+' '+L('meter');
     pendReset();
   });
   document.getElementById('sl-phi0').addEventListener('input',function(){
@@ -1394,6 +1461,7 @@
 
   /* ─── INIT ─── */
   window.addEventListener('load', () => {
+    setLang(currentLang);
     /* Wait for MathJax */
     const tryMJ = () => {
       if (window.MathJax && MathJax.typesetPromise) {
@@ -1412,7 +1480,5 @@
     drawZhukovsky();
   });
   </script>
-</body>
-</html>
 </body>
 </html>

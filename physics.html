@@ -20,7 +20,6 @@
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async id="MathJax-script"></script>
 
   <style>
-    /* ─── DESIGN TOKENS ─── */
     :root {
       --bg:        #03080f;
       --bg2:       #060d1a;
@@ -28,7 +27,6 @@
       --surface2:  rgba(255,255,255,0.065);
       --border:    rgba(255,255,255,0.09);
       --border2:   rgba(255,255,255,0.16);
-
       --cyan:   #22d3ee;
       --blue:   #3b82f6;
       --indigo: #6366f1;
@@ -36,24 +34,18 @@
       --green:  #10b981;
       --rose:   #f43f5e;
       --slate:  #94a3b8;
-
       --text:   #e2e8f0;
       --muted:  #64748b;
-
       --r-sm:  10px;
       --r-md:  16px;
       --r-lg:  22px;
       --r-xl:  30px;
-
       --font-display: 'Orbitron', sans-serif;
       --font-body:    'IBM Plex Sans', sans-serif;
       --font-mono:    'IBM Plex Mono', monospace;
     }
-
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       min-height: 100vh;
       font-family: var(--font-body);
@@ -61,8 +53,6 @@
       color: var(--text);
       overflow-x: hidden;
     }
-
-    /* ─── ANIMATED BG GRID ─── */
     body::before {
       content: '';
       position: fixed; inset: 0; z-index: 0;
@@ -98,6 +88,7 @@
       background: linear-gradient(90deg, #fff 0%, var(--cyan) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
+    .header-right { display: flex; align-items: center; gap: 12px; }
     .back-btn {
       display: inline-flex; align-items: center; gap: 7px;
       font-family: var(--font-body); font-size: 13px; font-weight: 600;
@@ -108,6 +99,16 @@
       transition: all 0.2s;
     }
     .back-btn:hover { color: var(--cyan); border-color: rgba(34,211,238,0.35); background: rgba(34,211,238,0.06); }
+    .pro-badge {
+      display: none; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 999px;
+      background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(251,191,36,0.08));
+      border: 1px solid rgba(245,158,11,0.35);
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      color: #f59e0b;
+    }
+    .pro-badge.show { display: flex; }
+    .pro-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 8px #f59e0b; animation: pulse 2s infinite; }
 
     /* ─── HERO ─── */
     .hero {
@@ -134,6 +135,29 @@
     }
     .hero-sub { font-size: 15px; color: var(--slate); letter-spacing: 0.5px; }
 
+    /* ─── FREE PREVIEW BANNER ─── */
+    .free-banner {
+      position: relative; z-index: 1;
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 8% 20px;
+    }
+    .free-banner-inner {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 20px; border-radius: var(--r-md);
+      background: rgba(34,211,238,0.05);
+      border: 1px solid rgba(34,211,238,0.18);
+    }
+    .free-banner-inner span { font-size: 13px; color: var(--slate); }
+    .free-banner-inner strong { color: var(--cyan); }
+    .free-banner-inner .pill-free {
+      display: inline-block; padding: 3px 10px; border-radius: 999px;
+      background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
+      color: #34d399; font-size: 10px; font-weight: 700; letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+    #free-banner { transition: opacity 0.4s; }
+    #free-banner.hidden { display: none; }
+
     /* ─── NAV PILLS ─── */
     .nav-pills {
       position: relative; z-index: 1;
@@ -148,6 +172,7 @@
       color: var(--slate);
       transition: all 0.25s;
       user-select: none; white-space: nowrap;
+      position: relative;
     }
     .pill:hover { color: var(--cyan); border-color: rgba(34,211,238,0.4); background: rgba(34,211,238,0.07); }
     .pill.active {
@@ -155,6 +180,11 @@
       border-color: rgba(34,211,238,0.50);
       color: #fff;
       box-shadow: 0 0 20px rgba(34,211,238,0.12), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+    .pill .lock-icon {
+      display: inline-block;
+      margin-right: 4px;
+      opacity: 0.6;
     }
 
     /* ─── SECTIONS ─── */
@@ -176,28 +206,172 @@
     }
     .sec-header p { font-size: 14.5px; color: var(--slate); line-height: 1.75; max-width: 740px; }
 
-    /* ─── CARDS GRID ─── */
-    .cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+    /* ─── PAYWALL OVERLAY ─── */
+    .paywall-wrapper {
+      position: relative;
+    }
+    .paywall-fade {
+      position: relative;
+      max-height: 420px;
+      overflow: hidden;
+    }
+    .paywall-fade::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 220px;
+      background: linear-gradient(to bottom, transparent, var(--bg) 85%);
+      pointer-events: none;
+    }
+    .paywall-card {
+      margin-top: 0;
+      padding: 48px 40px;
+      border-radius: var(--r-xl);
+      background: linear-gradient(135deg, rgba(245,158,11,0.06) 0%, rgba(34,211,238,0.04) 50%, rgba(59,130,246,0.06) 100%);
+      border: 1px solid rgba(245,158,11,0.22);
+      backdrop-filter: blur(20px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .paywall-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: 50%; transform: translateX(-50%);
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .paywall-lock {
+      font-size: 52px;
+      margin-bottom: 18px;
+      display: block;
+      filter: drop-shadow(0 0 20px rgba(245,158,11,0.4));
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .paywall-card h3 {
+      font-family: var(--font-display);
+      font-size: 22px; font-weight: 900;
+      background: linear-gradient(135deg, #fff 30%, #f59e0b 70%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+    .paywall-card p {
+      color: #94a3b8; font-size: 15px; line-height: 1.7;
+      max-width: 460px; margin: 0 auto 28px;
+    }
+    .paywall-features {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 32px;
+    }
+    .paywall-feature {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 16px; border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+      font-size: 13px; color: #cbd5e1;
+    }
+    .paywall-feature .check { color: #34d399; font-size: 14px; }
+    .paywall-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 36px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000; border-radius: var(--r-md);
+      font-family: var(--font-body); font-size: 15px; font-weight: 800;
+      text-decoration: none; border: none; cursor: pointer;
+      box-shadow: 0 8px 32px rgba(245,158,11,0.35);
+      transition: all 0.25s;
+      margin-bottom: 16px;
+    }
+    .paywall-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(245,158,11,0.50);
+    }
+    .paywall-price {
+      font-size: 13px; color: var(--muted);
+    }
+    .paywall-price strong { color: #f59e0b; }
 
-    /* ─── INFO CARD ─── */
+    /* ─── PRO CONTENT (hidden by default) ─── */
+    .pro-only { display: none; }
+    .pro-only.unlocked { display: block; animation: fadeUp 0.5s ease both; }
+
+    /* ─── LOGIN SECTION IN PAYWALL ─── */
+    .paywall-login {
+      margin-top: 18px; padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      font-size: 13px; color: var(--muted);
+    }
+    .paywall-login button {
+      background: none; border: none; cursor: pointer;
+      color: var(--cyan); font-weight: 700; font-size: 13px;
+      text-decoration: underline; padding: 0;
+    }
+    .paywall-login button:hover { color: #fff; }
+
+    /* ─── ADMIN PANEL ─── */
+    .admin-panel {
+      display: none;
+      position: fixed; bottom: 20px; right: 20px;
+      z-index: 9999;
+      background: rgba(5,12,30,0.97);
+      border: 1px solid rgba(34,211,238,0.25);
+      border-radius: var(--r-lg);
+      padding: 20px 24px;
+      min-width: 280px;
+      backdrop-filter: blur(24px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .admin-panel.show { display: block; }
+    .admin-panel h4 {
+      font-family: var(--font-display); font-size: 11px;
+      color: var(--cyan); margin-bottom: 14px;
+      text-transform: uppercase; letter-spacing: 2px;
+    }
+    .admin-input {
+      width: 100%; padding: 10px 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border2);
+      border-radius: var(--r-sm);
+      color: var(--text); font-family: var(--font-body); font-size: 13px;
+      margin-bottom: 10px; outline: none;
+    }
+    .admin-input:focus { border-color: rgba(34,211,238,0.4); }
+    .admin-btn {
+      width: 100%; padding: 10px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      border: none; border-radius: var(--r-sm);
+      color: #000; font-weight: 700; font-size: 13px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .admin-btn:hover { transform: translateY(-2px); }
+    .admin-status { font-size: 12px; color: var(--green); margin-top: 8px; text-align: center; min-height: 18px; }
+    .admin-toggle {
+      position: fixed; bottom: 20px; left: 20px; z-index: 9999;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(5,12,30,0.9);
+      border: 1px solid var(--border2);
+      color: var(--muted); font-size: 18px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(12px);
+      transition: all 0.2s;
+    }
+    .admin-toggle:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* ─── EXISTING STYLES ─── */
+    .cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
     .info-card {
       padding: 22px 24px; border-radius: var(--r-md);
       background: var(--surface); border: 1px solid var(--border);
       transition: border-color 0.2s;
     }
     .info-card:hover { border-color: var(--border2); }
-    .info-card h4 {
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 2.5px; color: var(--cyan); margin-bottom: 12px;
-    }
-    .info-card p, .info-card li {
-      color: #b0bec5; font-size: 14px; line-height: 1.8;
-    }
+    .info-card h4 { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--cyan); margin-bottom: 12px; }
+    .info-card p, .info-card li { color: #b0bec5; font-size: 14px; line-height: 1.8; }
     .info-card ul { margin-left: 14px; }
     .info-card li { margin-bottom: 4px; }
     .info-card strong { color: var(--text); }
-
-    /* ─── FORMULA BOX ─── */
     .formula-box {
       margin: 20px 0; padding: 22px 26px; border-radius: var(--r-md);
       background: rgba(34,211,238,0.05);
@@ -213,19 +387,11 @@
     .formula-box.amber::before { background: linear-gradient(180deg, var(--amber), #d97706); }
     .formula-box.green { background: rgba(16,185,129,0.05); border-color: rgba(16,185,129,0.22); }
     .formula-box.green::before { background: linear-gradient(180deg, var(--green), #047857); }
-
-    .formula-box .f-label {
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 2.5px; color: var(--cyan); margin-bottom: 14px;
-    }
+    .formula-box .f-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2.5px; color: var(--cyan); margin-bottom: 14px; }
     .formula-box.amber .f-label { color: var(--amber); }
     .formula-box.green .f-label { color: var(--green); }
-    .formula-box .f-main {
-      font-size: 20px; color: #e2e8f0; line-height: 1.9; margin-bottom: 6px;
-    }
+    .formula-box .f-main { font-size: 20px; color: #e2e8f0; line-height: 1.9; margin-bottom: 6px; }
     .formula-box .f-note { font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.65; }
-
-    /* ─── THEORY TEXT ─── */
     .theory-text {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--r-md); padding: 22px 26px; margin-bottom: 22px;
@@ -233,8 +399,6 @@
     .theory-text p { color: #b0bec5; font-size: 14.5px; line-height: 1.85; margin-bottom: 12px; }
     .theory-text p:last-child { margin-bottom: 0; }
     .theory-text strong { color: var(--text); }
-
-    /* ─── SUB-HEADER ─── */
     .sub-h {
       color: var(--cyan); font-family: var(--font-display);
       font-size: 10.5px; font-weight: 700; text-transform: uppercase;
@@ -244,8 +408,6 @@
     .sub-h::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     .sub-h.amber { color: var(--amber); }
     .sub-h.green { color: var(--green); }
-
-    /* ─── FLOW CHART ─── */
     .flow { display: flex; flex-direction: column; align-items: center; margin: 22px 0; }
     .flow-step {
       width: 100%; max-width: 580px; padding: 14px 22px; border-radius: var(--r-md);
@@ -253,148 +415,57 @@
       text-align: center; transition: border-color 0.2s;
     }
     .flow-step:hover { border-color: rgba(34,211,238,0.3); }
-    .flow-step .fs-num {
-      font-size: 9.5px; color: var(--cyan); font-weight: 700;
-      margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1.5px;
-    }
+    .flow-step .fs-num { font-size: 9.5px; color: var(--cyan); font-weight: 700; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1.5px; }
     .flow-step .fs-text { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.5; }
-    .flow-step.highlight {
-      background: rgba(34,211,238,0.07);
-      border-color: rgba(34,211,238,0.35);
-      box-shadow: 0 0 20px rgba(34,211,238,0.07);
-    }
-    .flow-step.result {
-      background: linear-gradient(135deg, rgba(16,185,129,0.10), rgba(34,211,238,0.05));
-      border-color: rgba(16,185,129,0.40);
-    }
+    .flow-step.highlight { background: rgba(34,211,238,0.07); border-color: rgba(34,211,238,0.35); box-shadow: 0 0 20px rgba(34,211,238,0.07); }
+    .flow-step.result { background: linear-gradient(135deg, rgba(16,185,129,0.10), rgba(34,211,238,0.05)); border-color: rgba(16,185,129,0.40); }
     .flow-step.result .fs-text { color: #6ee7b7; }
     .flow-arrow { color: var(--muted); font-size: 18px; padding: 5px 0; line-height: 1; }
-
-    /* ─── STEPS ─── */
     .steps { margin: 20px 0; display: flex; flex-direction: column; gap: 10px; }
-    .step {
-      display: flex; gap: 14px; align-items: flex-start;
-      padding: 15px 18px; border-radius: var(--r-md);
-      background: var(--surface); border-left: 2px solid var(--cyan);
-    }
+    .step { display: flex; gap: 14px; align-items: flex-start; padding: 15px 18px; border-radius: var(--r-md); background: var(--surface); border-left: 2px solid var(--cyan); }
     .step.green { border-left-color: var(--green); }
-    .step-num {
-      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 11px; color: #000;
-    }
+    .step-num { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--cyan), var(--blue)); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; color: #000; }
     .step.green .step-num { background: linear-gradient(135deg, var(--green), #047857); color: #000; }
     .step-body strong { color: var(--text); font-size: 14.5px; display: block; margin-bottom: 4px; }
     .step-body p { color: #94a3b8; font-size: 13.5px; line-height: 1.65; }
-
-    /* ─── ANSWER BOX ─── */
-    .answer-box {
-      padding: 22px 26px; border-radius: var(--r-md); margin-top: 22px;
-      background: rgba(59,130,246,0.07);
-      border: 1px solid rgba(59,130,246,0.28);
-    }
-    .answer-box.green {
-      background: rgba(16,185,129,0.06);
-      border-color: rgba(16,185,129,0.30);
-    }
-    .answer-box h4 {
-      font-family: var(--font-display); font-size: 9.5px; text-transform: uppercase;
-      letter-spacing: 2px; color: var(--cyan); margin-bottom: 12px;
-    }
+    .answer-box { padding: 22px 26px; border-radius: var(--r-md); margin-top: 22px; background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.28); }
+    .answer-box.green { background: rgba(16,185,129,0.06); border-color: rgba(16,185,129,0.30); }
+    .answer-box h4 { font-family: var(--font-display); font-size: 9.5px; text-transform: uppercase; letter-spacing: 2px; color: var(--cyan); margin-bottom: 12px; }
     .answer-box.green h4 { color: var(--green); }
     .answer-box p { color: #c5d4e0; font-size: 14px; line-height: 1.85; }
     .answer-box strong { color: var(--text); }
-
-    /* ─── ZHUKOVSKY BOX ─── */
-    .zhuk-rule-box {
-      margin: 22px 0; padding: 22px 26px; border-radius: var(--r-md);
-      background: rgba(245,158,11,0.06);
-      border: 1px solid rgba(245,158,11,0.28);
-    }
-    .zhuk-rule-box h5 {
-      font-family: var(--font-display); font-size: 10px;
-      color: var(--amber); margin-bottom: 12px;
-      text-transform: uppercase; letter-spacing: 1.5px;
-    }
+    .zhuk-rule-box { margin: 22px 0; padding: 22px 26px; border-radius: var(--r-md); background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.28); }
+    .zhuk-rule-box h5 { font-family: var(--font-display); font-size: 10px; color: var(--amber); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1.5px; }
     .zhuk-rule-box p { color: #fde68a; font-size: 14.5px; line-height: 1.8; }
     .zhuk-rule-box em { color: var(--amber); font-style: normal; font-weight: 700; }
-
     .zhuk-wrap { display: flex; gap: 18px; align-items: stretch; flex-wrap: wrap; margin-top: 16px; }
     .zhuk-canvas-box { flex: 1.5; min-width: 260px; }
-    .zhuk-text {
-      flex: 1; min-width: 200px; padding: 20px 22px; border-radius: var(--r-md);
-      background: var(--surface); border: 1px solid var(--border);
-      display: flex; flex-direction: column; gap: 14px;
-    }
-    .badge {
-      display: inline-block; padding: 3px 10px; border-radius: 6px;
-      font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-    }
+    .zhuk-text { flex: 1; min-width: 200px; padding: 20px 22px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 14px; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 10.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
     .badge-blue { background: rgba(34,211,238,0.12); color: var(--cyan); border: 1px solid rgba(34,211,238,0.25); }
     .badge-amber { background: rgba(245,158,11,0.12); color: var(--amber); border: 1px solid rgba(245,158,11,0.25); }
     .zhuk-text p { color: #7a8ea4; font-size: 13px; line-height: 1.7; margin-top: 7px; }
-
-    /* ─── CANVAS ─── */
-    .canvas-wrap {
-      border-radius: var(--r-lg); overflow: hidden;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,0.55);
-      margin-bottom: 18px; position: relative;
-    }
+    .canvas-wrap { border-radius: var(--r-lg); overflow: hidden; border: 1px solid var(--border); background: rgba(0,0,0,0.55); margin-bottom: 18px; position: relative; }
     .canvas-wrap canvas { display: block; width: 100%; }
-
-    /* ─── SLIDERS ─── */
     .sliders-row { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 20px; }
     .slider-item { flex: 1; min-width: 140px; display: flex; flex-direction: column; gap: 6px; }
     .slider-label { font-size: 12px; font-weight: 600; color: var(--cyan); letter-spacing: 0.3px; }
     .slider-label.amber { color: var(--amber); }
-    .slider-val {
-      font-family: var(--font-display); font-size: 24px; font-weight: 700; color: white;
-    }
-    input[type=range] {
-      width: 100%; height: 4px; border-radius: 999px;
-      appearance: none; background: rgba(255,255,255,0.1); cursor: pointer;
-      outline: none;
-    }
-    input[type=range]::-webkit-slider-thumb {
-      appearance: none; width: 18px; height: 18px;
-      border-radius: 50%; background: var(--cyan);
-      box-shadow: 0 0 10px rgba(34,211,238,0.5);
-      cursor: pointer;
-    }
-
-    /* ─── REVIEW GRID ─── */
+    .slider-val { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: white; }
+    input[type=range] { width: 100%; height: 4px; border-radius: 999px; appearance: none; background: rgba(255,255,255,0.1); cursor: pointer; outline: none; }
+    input[type=range]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px rgba(34,211,238,0.5); cursor: pointer; }
     .review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .review-card {
-      padding: 20px 22px; border-radius: var(--r-md);
-      background: var(--surface); border: 1px solid var(--border);
-      transition: border-color 0.2s, transform 0.2s;
-    }
+    .review-card { padding: 20px 22px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--border); transition: border-color 0.2s, transform 0.2s; }
     .review-card:hover { border-color: rgba(34,211,238,0.3); transform: translateY(-2px); }
-    .review-card h4 {
-      font-family: var(--font-display); font-size: 9.5px; color: var(--cyan);
-      margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1.5px;
-    }
+    .review-card h4 { font-family: var(--font-display); font-size: 9.5px; color: var(--cyan); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 1.5px; }
     .review-card p { color: #8899a8; font-size: 13.5px; line-height: 1.75; }
     .review-card strong { color: var(--text); }
-
-    /* ─── PERIOD ROW ─── */
     .period-row { display: flex; gap: 14px; margin-bottom: 22px; align-items: stretch; flex-wrap: wrap; }
     .period-row .formula-box { flex: 1; margin: 0; }
-
-    /* ─── BTN ─── */
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 11px 22px;
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      color: #000; border-radius: var(--r-sm); cursor: pointer; border: none;
-      font-family: var(--font-body); font-size: 13.5px; font-weight: 700;
-      transition: all 0.25s; box-shadow: 0 4px 20px rgba(34,211,238,0.25);
-    }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #000; border-radius: var(--r-sm); cursor: pointer; border: none; font-family: var(--font-body); font-size: 13.5px; font-weight: 700; transition: all 0.25s; box-shadow: 0 4px 20px rgba(34,211,238,0.25); }
     .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(34,211,238,0.35); }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
 
-    /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
       header { padding: 0 18px; }
       .hero { padding: 88px 5% 36px; }
@@ -402,6 +473,8 @@
       .cards-2, .review-grid { grid-template-columns: 1fr; }
       .zhuk-wrap { flex-direction: column; }
       .sliders-row { gap: 16px; }
+      .paywall-card { padding: 32px 20px; }
+      .admin-panel { bottom: 70px; right: 12px; left: 12px; min-width: unset; }
     }
   </style>
 </head>
@@ -409,10 +482,16 @@
 
   <header>
     <div class="logo">QAINAR</div>
-    <a href="projects.html" class="back-btn">← Жобаларға оралу</a>
+    <div class="header-right">
+      <div class="pro-badge" id="pro-badge">
+        <span class="pro-dot"></span>
+        Physics Pro
+      </div>
+      <a href="projects.html" class="back-btn">← Жобаларға оралу</a>
+    </div>
   </header>
 
-  <!-- ── HERO ── -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-eyebrow">
       <span>🎓</span> Емтиханға дайындық · Теориялық механика
@@ -421,24 +500,28 @@
     <p class="hero-sub">Гироскоп прецессиясы · Гироскоптық момент · Лагранж теңдеуі</p>
   </section>
 
-  <!-- ── NAV ── -->
-  <div class="nav-pills">
-    <div class="pill active" onclick="showSection('gyro',this)">1 · Гироскоп &amp; Прецессия</div>
-    <div class="pill" onclick="showSection('lagrange',this)">2 · Лагранж теңдеуі</div>
-    <div class="pill" onclick="showSection('review',this)">📝 Жылдам қайталау</div>
+  <!-- FREE PREVIEW BANNER -->
+  <div class="free-banner" id="free-banner">
+    <div class="free-banner-inner">
+      <span class="pill-free">FREE</span>
+      <span>Сіз <strong>1-бөлімді тегін</strong> қарай аласыз. Барлық бөлімдерге қол жеткізу үшін Physics Access керек.</span>
+    </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════
-       SECTION 1 — GYROSCOPE
-  ══════════════════════════════════════════════ -->
-  <div class="section active" id="s-gyro">
+  <!-- NAV PILLS -->
+  <div class="nav-pills">
+    <div class="pill active" id="pill-gyro" onclick="showSection('gyro',this)">1 · Гироскоп &amp; Прецессия</div>
+    <div class="pill" id="pill-lagrange" onclick="handlePillClick('lagrange',this)"><span class="lock-icon" id="lock-lagrange">🔒</span>2 · Лагранж теңдеуі</div>
+    <div class="pill" id="pill-review" onclick="handlePillClick('review',this)"><span class="lock-icon" id="lock-review">🔒</span>📝 Жылдам қайталау</div>
+  </div>
 
+  <!-- ══ SECTION 1 — GYROSCOPE (FREE) ══ -->
+  <div class="section active" id="s-gyro">
     <div class="sec-header">
       <h2>Гироскоптың еріксіз прецессиясы<br>және гироскоптық момент</h2>
       <p>Гироскоп осінің сыртқы күш немесе оны алып жүретін дененің қозғалысы нәтижесінде мәжбүрлі бұрылуы — <strong>еріксіз прецессия</strong>. Бұл бөлімде гироскоптық моменттің физикалық мәні мен формуласы шығарылады.</p>
     </div>
 
-    <!-- DEFINITION CARDS -->
     <div class="cards-2">
       <div class="info-card">
         <h4>Анықтама</h4>
@@ -457,7 +540,6 @@
       </div>
     </div>
 
-    <!-- THEORY -->
     <div class="sub-h">Кинетикалық момент және оның өзгеруі</div>
     <div class="theory-text">
       <p>Гироскоп өз симметрия осі бойымен $\omega_1$ бұрыштық жылдамдықпен айналады. Инерция моменті $C$ болса, кинетикалық момент:</p>
@@ -465,55 +547,37 @@
       <p>Вектор $\vec{H}$ гироскоп симметрия осімен бағыттас. $\omega_2$ бұрыштық жылдамдықпен еріксіз прецессия жасалғанда $\vec{H}$ бағыты өзгереді. Осы өзгерісті тудыру үшін сыртқы момент керек, ал Ньютонның III заңы бойынша гироскоп денеге кері реакция моменті береді — <strong>гироскоптық момент</strong>.</p>
     </div>
 
-    <!-- DERIVATION FLOW -->
     <div class="sub-h">Формуланың шығару логикасы</div>
     <div class="flow">
-      <div class="flow-step">
-        <div class="fs-num">1-қадам</div>
-        <div class="fs-text">Гироскопқа О нүктесіне қатысты сыртқы күштер моменті беріледі: $M_O^{(e)}$</div>
-      </div>
+      <div class="flow-step"><div class="fs-num">1-қадам</div><div class="fs-text">Гироскопқа О нүктесіне қатысты сыртқы күштер моменті беріледі: $M_O^{(e)}$</div></div>
       <div class="flow-arrow">↓</div>
-      <div class="flow-step">
-        <div class="fs-num">2-қадам</div>
-        <div class="fs-text">Гироскоп осі $\omega_2$ жылдамдықпен прецессия жасайды — $\vec{H}$ бағыты өзгереді</div>
-      </div>
+      <div class="flow-step"><div class="fs-num">2-қадам</div><div class="fs-text">Гироскоп осі $\omega_2$ жылдамдықпен прецессия жасайды — $\vec{H}$ бағыты өзгереді</div></div>
       <div class="flow-arrow">↓</div>
-      <div class="flow-step">
-        <div class="fs-num">3-қадам</div>
-        <div class="fs-text">Сыртқы момент: $\vec{M}_O^{(e)} = \vec{\omega}_2 \times C\vec{\omega}_1 = \vec{\omega}_2 \times \vec{H}$</div>
-      </div>
+      <div class="flow-step"><div class="fs-num">3-қадам</div><div class="fs-text">Сыртқы момент: $\vec{M}_O^{(e)} = \vec{\omega}_2 \times C\vec{\omega}_1 = \vec{\omega}_2 \times \vec{H}$</div></div>
       <div class="flow-arrow">↓</div>
-      <div class="flow-step highlight">
-        <div class="fs-num">4-қадам — Ньютонның III заңы</div>
-        <div class="fs-text">Гироскоп денеге кері реактивті момент береді:<br>$\vec{M}_r = -\vec{M}_O^{(e)} = \vec{H} \times \vec{\omega}_2$</div>
-      </div>
+      <div class="flow-step highlight"><div class="fs-num">4-қадам — Ньютонның III заңы</div><div class="fs-text">Гироскоп денеге кері реактивті момент береді:<br>$\vec{M}_r = -\vec{M}_O^{(e)} = \vec{H} \times \vec{\omega}_2$</div></div>
       <div class="flow-arrow">↓</div>
-      <div class="flow-step result">
-        <div class="fs-num">✓ Нәтиже</div>
-        <div class="fs-text">$\vec{M}_r = \vec{H} \times \vec{\omega}_2 \;\Rightarrow\; M_r = C\omega_1\omega_2\sin\theta$</div>
-      </div>
+      <div class="flow-step result"><div class="fs-num">✓ Нәтиже</div><div class="fs-text">$\vec{M}_r = \vec{H} \times \vec{\omega}_2 \;\Rightarrow\; M_r = C\omega_1\omega_2\sin\theta$</div></div>
     </div>
 
-    <!-- FORMULA BOXES -->
     <div class="formula-box">
       <div class="f-label">Гироскоптық момент — векторлық және скалярлық түрі</div>
       <div class="f-main">$$\vec{M}_r = \vec{H} \times \vec{\omega}_2$$</div>
       <div class="f-main">$$M_r = H\,\omega_2\sin\theta = C\,\omega_1\,\omega_2\sin\theta$$</div>
-      <div class="f-note">мұндағы: $H = C\omega_1$ — кинетикалық момент; $\;\theta$ — $\vec{H}$ мен $\vec{\omega}_2$ арасындағы бұрыш.<br>Модуль формуласы векторлық көбейтінді ережесінен шығады: $|\vec{H}\times\vec{\omega}_2| = H\omega_2\sin\theta$</div>
+      <div class="f-note">мұндағы: $H = C\omega_1$ — кинетикалық момент; $\;\theta$ — $\vec{H}$ мен $\vec{\omega}_2$ арасындағы бұрыш.</div>
     </div>
 
     <div class="formula-box amber">
       <div class="f-label">Қос күш моменті арқылы</div>
       <div class="f-main">$$Q\cdot h = M_r = C\,\omega_1\,\omega_2\sin\theta \;\;\Rightarrow\;\; Q = \frac{C\,\omega_1\,\omega_2\sin\theta}{h}$$</div>
-      <div class="f-note">мұндағы: $h$ — қос күштің иіні, $\;Q$ — күштің шамасы. Гироскоптық момент подшипниктерге түсетін қысым немесе қос күш ретінде байқалады.</div>
+      <div class="f-note">мұндағы: $h$ — қос күштің иіні, $\;Q$ — күштің шамасы.</div>
     </div>
 
-    <!-- 3D VISUALIZATION -->
+    <!-- 3D VISUALIZATION - FREE -->
     <div class="sub-h">Интерактивті 3D визуализация</div>
     <div class="canvas-wrap">
       <canvas id="gyro-canvas" height="460"></canvas>
     </div>
-
     <div class="sliders-row">
       <div class="slider-item">
         <div class="slider-label">$\omega_1$ — меншікті айналу</div>
@@ -531,7 +595,6 @@
         <input type="range" id="sl-theta" min="15" max="165" step="1" value="60">
       </div>
     </div>
-
     <div class="formula-box" style="margin-top:0">
       <div class="f-label">Нақты есептелген мән ($C = 1$ кг·м²)</div>
       <div class="f-main" id="mr-display">$M_r = 3.897$ Н·м</div>
@@ -542,9 +605,8 @@
     <div class="sub-h amber">Жуковский ережесі</div>
     <div class="zhuk-rule-box">
       <h5>⚡ Жуковский ережесі</h5>
-      <p>Жылдам айналыстағы гироскоп осіне еріксіз прецессия берілсе, гироскоп осі <em>ең қысқа жолмен</em> прецессия осіне параллель орналасуға ұмтылады. Нәтижесінде $\vec{\omega}_1$ мен $\vec{\omega}_2$ векторлары туралас болуға тырысады.</p>
+      <p>Жылдам айналыстағы гироскоп осіне еріксіз прецессия берілсе, гироскоп осі <em>ең қысқа жолмен</em> прецессия осіне параллель орналасуға ұмтылады.</p>
     </div>
-
     <div class="zhuk-wrap">
       <div class="zhuk-canvas-box">
         <div class="canvas-wrap" style="margin-bottom:0">
@@ -552,279 +614,367 @@
         </div>
       </div>
       <div class="zhuk-text">
-        <div>
-          <span class="badge badge-blue">$\vec{\omega}_1$ — гироскоп осі</span>
-          <p>Гироскоп осінің бастапқы бағыты прецессия осіне қатысты $\theta$ бұрыш жасайды.</p>
-        </div>
-        <div>
-          <span class="badge badge-amber">Ең қысқа жол</span>
-          <p>Гироскоп осі прецессия осіне минималды бұрыш арқылы жетуге тырысады.</p>
-        </div>
+        <div><span class="badge badge-blue">$\vec{\omega}_1$ — гироскоп осі</span><p>Гироскоп осінің бастапқы бағыты прецессия осіне қатысты $\theta$ бұрыш жасайды.</p></div>
+        <div><span class="badge badge-amber">Ең қысқа жол</span><p>Гироскоп осі прецессия осіне минималды бұрыш арқылы жетуге тырысады.</p></div>
         <div style="padding:14px 16px; background:rgba(245,158,11,0.08); border-radius:var(--r-sm); border:1px solid rgba(245,158,11,0.22);">
-          <p style="color:#fde68a; margin-top:0; font-size:13px; line-height:1.65;"><strong style="color:#f59e0b;">Физикалық мағынасы:</strong> Гироскоп прецессия осімен туралануға «бағынуға» тырысады. Осылайша гироскоп навигациялық жүйелерде бағытты сақтайды.</p>
+          <p style="color:#fde68a; margin-top:0; font-size:13px; line-height:1.65;"><strong style="color:#f59e0b;">Физикалық мағынасы:</strong> Гироскоп прецессия осімен туралануға «бағынуға» тырысады.</p>
         </div>
       </div>
     </div>
 
-    <!-- PHYSICAL MEANING -->
     <div class="answer-box" style="margin-top:22px;">
       <h4>Физикалық мағынасы</h4>
-      <p>Гироскоп осі еріксіз бұрылғанда кинетикалық момент вектор $\vec{H}$ бағыты өзгереді. Бұрыштық моменттің уақыт бойынша өзгеруі сыртқы моментке тең болуы тиіс (импульс моменті теоремасы). Сондықтан гироскоп симметрия осінің бағытын өзгертуге қарсы реактивті гироскоптық момент тудырады. Бұл момент подшипниктерге түсетін қысым немесе қос күш моменті түрінде байқалады. Кеме мен ұшақтардың навигациялық жүйелері осы принципке негізделген.</p>
+      <p>Гироскоп осі еріксіз бұрылғанда кинетикалық момент вектор $\vec{H}$ бағыты өзгереді. Сондықтан гироскоп симметрия осінің бағытын өзгертуге қарсы реактивті гироскоптық момент тудырады. Кеме мен ұшақтардың навигациялық жүйелері осы принципке негізделген.</p>
     </div>
 
-    <!-- EXAM ANSWER -->
     <div class="answer-box green">
       <h4>📝 Қысқаша емтихан жауабы</h4>
-      <p><strong>Еріксіз прецессия</strong> — гироскоп осінің сыртқы байланыс немесе дененің қозғалысынан $\omega_2$ бұрыштық жылдамдықпен мәжбүрлі бұрылуы. Гироскоп симметрия осі бойымен $\omega_1$ жылдамдықпен айналады, оның кинетикалық моменті $H = C\omega_1$. Еріксіз прецессия кезінде $\vec{H}$ бағыты өзгереді. Сыртқы момент: $\vec{M}_O^{(e)} = \vec{\omega}_2 \times \vec{H}$. Ньютонның III заңы бойынша гироскоп денеге кері момент береді — <strong>гироскоптық момент:</strong> $\vec{M}_r = \vec{H} \times \vec{\omega}_2$, модулі: <strong>$M_r = C\omega_1\omega_2\sin\theta$</strong>. Қос күш арқылы: $Q = M_r / h$. Жуковский ережесі: гироскоп осі ең қысқа жолмен прецессия осіне параллель орналасуға тырысады.</p>
+      <p><strong>Еріксіз прецессия</strong> — гироскоп осінің сыртқы байланыс немесе дененің қозғалысынан $\omega_2$ бұрыштық жылдамдықпен мәжбүрлі бұрылуы. Гироскоп симметрия осі бойымен $\omega_1$ жылдамдықпен айналады, оның кинетикалық моменті $H = C\omega_1$. Еріксіз прецессия кезінде $\vec{H}$ бағыты өзгереді. Гироскоптық момент: $\vec{M}_r = \vec{H} \times \vec{\omega}_2$, модулі: <strong>$M_r = C\omega_1\omega_2\sin\theta$</strong>.</p>
     </div>
   </div><!-- /s-gyro -->
 
 
-  <!-- ══════════════════════════════════════════════
-       SECTION 2 — LAGRANGE
-  ══════════════════════════════════════════════ -->
+  <!-- ══ SECTION 2 — LAGRANGE (PRO) ══ -->
   <div class="section" id="s-lagrange">
-
-    <div class="sec-header">
-      <h2>Лагранждың екінші текті теңдеулері</h2>
-      <p>Идеал, голономды байланыстары бар механикалық жүйенің қозғалысы жалпылама координаталар арқылы сипатталады. Байланыс реакцияларын тікелей есептемей-ақ қозғалыс теңдеулерін алуға болады.</p>
-    </div>
-
-    <div class="cards-2">
-      <div class="info-card">
-        <h4>Анықтама</h4>
-        <p>Лагранждың 2-ші текті теңдеулері <strong>идеал, голономды байланыстары бар</strong> жүйелердің қозғалысын сипаттайды. Жалпылама координаталар саны $s$ — жүйенің еркіндік дәрежесіне тең. Байланыс реакцияларын табудың қажеті жоқ.</p>
-      </div>
-      <div class="info-card">
-        <h4>Негізгі белгілер</h4>
-        <ul>
-          <li><strong>$s = 3n - l$</strong> — еркіндік дәрежелер саны</li>
-          <li><strong>$q_i$</strong> — жалпылама координата</li>
-          <li><strong>$\dot{q}_i$</strong> — жалпылама жылдамдық</li>
-          <li><strong>$T$</strong> — кинетикалық энергия</li>
-          <li><strong>$\Pi$</strong> — потенциалдық энергия</li>
-          <li><strong>$\mathcal{L} = T - \Pi$</strong> — Лагранж функциясы</li>
-          <li><strong>$Q_i$</strong> — жалпылама күш</li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Steps 1–3 -->
-    <div class="sub-h">Негіздері: виртуаль орын ауыстыру мен жалпылама күш</div>
-    <div class="theory-text">
-      <p>$n$ нүктеден, $l$ голономды байланыстан тұратын жүйенің <strong>еркіндік дәрежесі:</strong> $s = 3n - l$. Жүйе орны $s$ тәуелсіз жалпылама координатамен анықталады: $q_1, q_2, \ldots, q_s$.</p>
-      <p>Нүктелердің радиус-векторлары жалпылама координаталар арқылы жазылады: $\;\vec{r}_\nu = \vec{r}_\nu(q_1,\ldots,q_s,t)$. Виртуаль орын ауыстыру ($dt=0$ кезінде):
-      $$\delta\vec{r}_\nu = \sum_{i=1}^{s}\frac{\partial\vec{r}_\nu}{\partial q_i}\,\delta q_i$$</p>
-      <p><strong>Жалпылама күш</strong> актив күштердің виртуаль жұмысынан анықталады:
-      $$Q_i = \sum_\nu \vec{F}_\nu \cdot \frac{\partial\vec{r}_\nu}{\partial q_i}$$</p>
-    </div>
-
-    <!-- Dalamber-Lagrange -->
-    <div class="sub-h">Даламбер–Лагранж принципі</div>
-    <div class="theory-text">
-      <p>Идеал байланыстары бар жүйе үшін:
-      $$\sum_{\nu=1}^{n}\left(\vec{F}_\nu - m_\nu\vec{w}_\nu\right)\cdot\delta\vec{r}_\nu = 0$$</p>
-      <p>Идеал байланыстар үшін байланыс реакцияларының виртуаль жұмысы нөлге тең. Сондықтан реакциялар теңдеуге кірмейді — бұл осы әдістің <strong>басты артықшылығы.</strong></p>
-    </div>
-
-    <!-- MAIN EQUATIONS -->
-    <div class="formula-box">
-      <div class="f-label">Лагранждың 2-ші текті теңдеуі — жалпы түрі</div>
-      <div class="f-main">$$\frac{d}{dt}\!\left(\frac{\partial T}{\partial \dot{q}_i}\right) - \frac{\partial T}{\partial q_i} = Q_i, \qquad i = 1,2,\ldots,s$$</div>
-      <div class="f-note">$T$ — кинетикалық энергия, $\;q_i$ — жалпылама координата, $\;\dot{q}_i$ — жалпылама жылдамдық, $\;Q_i$ — жалпылама күш, $\;s$ — еркіндік дәрежелер саны.</div>
-    </div>
-
-    <div class="formula-box green">
-      <div class="f-label">Консерватив жүйе үшін — Лагранж функциясы арқылы</div>
-      <div class="f-main">$$\mathcal{L} = T - \Pi \quad\Rightarrow\quad \frac{d}{dt}\!\left(\frac{\partial \mathcal{L}}{\partial \dot{q}_i}\right) - \frac{\partial \mathcal{L}}{\partial q_i} = 0$$</div>
-      <div class="f-note">Актив күштер потенциалды болса: $Q_i = -\partial\Pi/\partial q_i$. Консерватив емес күштер болса: оң жақта $Q_i^*$ жазылады.</div>
-    </div>
-
-    <!-- ALGORITHM -->
-    <div class="sub-h green">Қолдану алгоритмі</div>
-    <div class="steps">
-      <div class="step green">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <strong>Еркіндік дәрежесін анықтау</strong>
-          <p>$n$ нүкте, $l$ байланыс болса: <strong>$s = 3n - l$</strong>. $s$ теңдеу жазылады.</p>
+    <!-- FREE PREVIEW (first card only) -->
+    <div class="paywall-wrapper" id="lagrange-paywall-wrapper">
+      <div class="paywall-fade" id="lagrange-preview">
+        <div class="sec-header">
+          <h2>Лагранждың екінші текті теңдеулері</h2>
+          <p>Идеал, голономды байланыстары бар механикалық жүйенің қозғалысы жалпылама координаталар арқылы сипатталады. Байланыс реакцияларын тікелей есептемей-ақ қозғалыс теңдеулерін алуға болады.</p>
+        </div>
+        <div class="cards-2">
+          <div class="info-card">
+            <h4>Анықтама</h4>
+            <p>Лагранждың 2-ші текті теңдеулері <strong>идеал, голономды байланыстары бар</strong> жүйелердің қозғалысын сипаттайды. Жалпылама координаталар саны $s$ — жүйенің еркіндік дәрежесіне тең. Байланыс реакцияларын табудың қажеті жоқ.</p>
+          </div>
+          <div class="info-card">
+            <h4>Негізгі белгілер</h4>
+            <ul>
+              <li><strong>$s = 3n - l$</strong> — еркіндік дәрежелер саны</li>
+              <li><strong>$q_i$</strong> — жалпылама координата</li>
+              <li><strong>$T$</strong> — кинетикалық энергия</li>
+              <li><strong>$\mathcal{L} = T - \Pi$</strong> — Лагранж функциясы</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="step green">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <strong>Жалпылама координаталарды таңдау</strong>
-          <p>$s$ тәуелсіз параметр: $q_1, q_2, \ldots, q_s$ — бұрыш, ұзындық немесе кез келген шама.</p>
+
+      <!-- PAYWALL CARD -->
+      <div class="paywall-card" id="lagrange-paywall">
+        <span class="paywall-lock">🔒</span>
+        <h3>Physics Access керек</h3>
+        <p>Лагранж теңдеулерінің толық шығарылуы, интерактивті маятник анимациясы және емтихан жауаптары — Physics Access арқылы қол жетімді.</p>
+        <div class="paywall-features">
+          <div class="paywall-feature"><span class="check">✓</span> Лагранж теңдеуі — толық шығару</div>
+          <div class="paywall-feature"><span class="check">✓</span> Интерактивті маятник</div>
+          <div class="paywall-feature"><span class="check">✓</span> Емтихан жауаптары</div>
+          <div class="paywall-feature"><span class="check">✓</span> Жылдам қайталау бөлімі</div>
         </div>
-      </div>
-      <div class="step green">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <strong>Радиус-векторлар мен жылдамдықтар</strong>
-          <p>$\vec{r}_\nu = \vec{r}_\nu(q_1,\ldots,q_s,t)$, &ensp; жылдамдық: $\vec{v}_\nu = \sum_i \frac{\partial\vec{r}_\nu}{\partial q_i}\dot{q}_i + \frac{\partial\vec{r}_\nu}{\partial t}$</p>
-        </div>
-      </div>
-      <div class="step green">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <strong>Кинетикалық энергия $T$</strong>
-          <p>$T = \sum_\nu m_\nu v_\nu^2/2$ — жалпылама координаталар мен жылдамдықтар арқылы өрнектеледі.</p>
-        </div>
-      </div>
-      <div class="step green">
-        <div class="step-num">5</div>
-        <div class="step-body">
-          <strong>Потенциалдық энергия $\Pi$ және $\mathcal{L} = T - \Pi$</strong>
-          <p>Потенциалды күштер болса $\Pi$ жазылады, Лагранж функциясы $\mathcal{L} = T - \Pi$ құрылады.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">6</div>
-        <div class="step-body">
-          <strong>Туындыларды есептеу, теңдеуге қою</strong>
-          <p>Әрбір $q_i$ үшін $\frac{d}{dt}\!\left(\frac{\partial\mathcal{L}}{\partial\dot{q}_i}\right) - \frac{\partial\mathcal{L}}{\partial q_i} = 0$ теңдеуі жазылады.</p>
-        </div>
-      </div>
-      <div class="step" style="border-left-color:var(--green);">
-        <div class="step-num" style="background:linear-gradient(135deg,#10b981,#047857);color:#000;">✓</div>
-        <div class="step-body">
-          <strong>Қозғалыс теңдеулері алынады</strong>
-          <p>$s$ теңдеуден тұратын дифференциалдық жүйе. Байланыс реакциялары теңдеуде жоқ — басты артықшылық!</p>
+        <a href="https://boosty.to/kainar.space" target="_blank" class="paywall-btn">
+          🚀 Physics Access алу
+        </a>
+        <div class="paywall-price">Бағасы: <strong>10 ₽/ай</strong> · Boosty арқылы</div>
+        <div class="paywall-login">
+          Қазірдің өзінде жазылдыңыз ба?
+          <button onclick="loginWithGoogle()">Google арқылы кіру</button>
         </div>
       </div>
     </div>
 
-    <!-- PENDULUM EXAMPLE -->
-    <div class="sub-h">Мысал: математикалық маятник ($q = \varphi$)</div>
-    <div class="cards-2">
-      <div class="info-card">
-        <h4>Шығару жолы</h4>
-        <p><strong>Еркіндік дәрежесі:</strong> $s = 1$, жалпылама координата $q = \varphi$</p><br>
-        <p><strong>Кинетикалық энергия:</strong></p>
-        <div style="text-align:center; margin:10px 0;">$$T = \tfrac{1}{2}ml^2\dot{\varphi}^2$$</div>
-        <p><strong>Потенциалдық энергия:</strong></p>
-        <div style="text-align:center; margin:10px 0;">$$\Pi = mgl(1 - \cos\varphi)$$</div>
-        <p><strong>Туындылар:</strong></p>
-        <div style="text-align:center; margin:10px 0;">$$\frac{\partial\mathcal{L}}{\partial\dot{\varphi}} = ml^2\dot{\varphi}, \quad \frac{\partial\mathcal{L}}{\partial\varphi} = -mgl\sin\varphi$$</div>
+    <!-- PRO CONTENT (hidden until unlocked) -->
+    <div class="pro-only" id="lagrange-pro">
+      <div class="sec-header">
+        <h2>Лагранждың екінші текті теңдеулері</h2>
+        <p>Идеал, голономды байланыстары бар механикалық жүйенің қозғалысы жалпылама координаталар арқылы сипатталады.</p>
       </div>
-      <div class="info-card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
-        <h4>Нәтиже</h4>
-        <p style="margin-bottom:12px;">Лагранж теңдеуіне қойғаннан кейін:</p>
-        <div style="margin:10px 0;">$$\frac{d}{dt}(ml^2\dot{\varphi}) + mgl\sin\varphi = 0$$</div>
-        <div style="margin:14px 0; padding:18px; background:rgba(34,211,238,0.06); border:1px solid rgba(34,211,238,0.25); border-radius:var(--r-md); width:100%;">
-          $$\ddot{\varphi} + \frac{g}{l}\sin\varphi = 0$$
+      <div class="cards-2">
+        <div class="info-card">
+          <h4>Анықтама</h4>
+          <p>Лагранждың 2-ші текті теңдеулері <strong>идеал, голономды байланыстары бар</strong> жүйелердің қозғалысын сипаттайды. Жалпылама координаталар саны $s$ — жүйенің еркіндік дәрежесіне тең.</p>
         </div>
-        <p style="font-size:12px; color:var(--muted);">Маятниктің қозғалыс теңдеуі</p>
+        <div class="info-card">
+          <h4>Негізгі белгілер</h4>
+          <ul>
+            <li><strong>$s = 3n - l$</strong> — еркіндік дәрежелер саны</li>
+            <li><strong>$q_i$</strong> — жалпылама координата</li>
+            <li><strong>$\dot{q}_i$</strong> — жалпылама жылдамдық</li>
+            <li><strong>$T$</strong> — кинетикалық энергия</li>
+            <li><strong>$\Pi$</strong> — потенциалдық энергия</li>
+            <li><strong>$\mathcal{L} = T - \Pi$</strong> — Лагранж функциясы</li>
+            <li><strong>$Q_i$</strong> — жалпылама күш</li>
+          </ul>
+        </div>
       </div>
-    </div>
-
-    <!-- PENDULUM ANIMATION -->
-    <div class="canvas-wrap">
-      <canvas id="pend-canvas" height="340"></canvas>
-    </div>
-    <div class="sliders-row">
-      <div class="slider-item">
-        <div class="slider-label amber">$l$ — ұзындық (м)</div>
-        <div class="slider-val" id="l-val">1.5 м</div>
-        <input type="range" id="sl-l" min="0.5" max="3" step="0.1" value="1.5">
+      <div class="sub-h">Негіздері: виртуаль орын ауыстыру мен жалпылама күш</div>
+      <div class="theory-text">
+        <p>$n$ нүктеден, $l$ голономды байланыстан тұратын жүйенің <strong>еркіндік дәрежесі:</strong> $s = 3n - l$. Жүйе орны $s$ тәуелсіз жалпылама координатамен анықталады: $q_1, q_2, \ldots, q_s$.</p>
+        <p>Виртуаль орын ауыстыру ($dt=0$ кезінде):
+        $$\delta\vec{r}_\nu = \sum_{i=1}^{s}\frac{\partial\vec{r}_\nu}{\partial q_i}\,\delta q_i$$</p>
+        <p><strong>Жалпылама күш:</strong>
+        $$Q_i = \sum_\nu \vec{F}_\nu \cdot \frac{\partial\vec{r}_\nu}{\partial q_i}$$</p>
       </div>
-      <div class="slider-item">
-        <div class="slider-label amber">$\varphi_0$ — бастапқы бұрыш (°)</div>
-        <div class="slider-val" id="phi-val">30°</div>
-        <input type="range" id="sl-phi0" min="5" max="80" step="1" value="30">
+      <div class="sub-h">Даламбер–Лагранж принципі</div>
+      <div class="theory-text">
+        <p>Идеал байланыстары бар жүйе үшін:
+        $$\sum_{\nu=1}^{n}\left(\vec{F}_\nu - m_\nu\vec{w}_\nu\right)\cdot\delta\vec{r}_\nu = 0$$</p>
+        <p>Идеал байланыстар үшін байланыс реакцияларының виртуаль жұмысы нөлге тең. Сондықтан реакциялар теңдеуге кірмейді — бұл осы әдістің <strong>басты артықшылығы.</strong></p>
       </div>
-      <div class="slider-item">
-        <div class="slider-label amber">$g$ — ауырлық үдеуі (м/с²)</div>
-        <div class="slider-val" id="g-val">9.8</div>
-        <input type="range" id="sl-g" min="1" max="20" step="0.1" value="9.8">
+      <div class="formula-box">
+        <div class="f-label">Лагранждың 2-ші текті теңдеуі — жалпы түрі</div>
+        <div class="f-main">$$\frac{d}{dt}\!\left(\frac{\partial T}{\partial \dot{q}_i}\right) - \frac{\partial T}{\partial q_i} = Q_i, \qquad i = 1,2,\ldots,s$$</div>
+        <div class="f-note">$T$ — кинетикалық энергия, $\;q_i$ — жалпылама координата, $\;Q_i$ — жалпылама күш.</div>
       </div>
-    </div>
-    <div class="period-row">
-      <button class="btn" onclick="pendReset()">↺ Қайта бастау</button>
-      <div class="formula-box" style="flex:1;margin:0;">
-        <div class="f-label">Айналу кезеңі (кіші бұрыш) &nbsp; $T = 2\pi\sqrt{l/g}$</div>
-        <div class="f-main" id="period-display" style="font-size:20px;">$T \approx 2.46$ с</div>
+      <div class="formula-box green">
+        <div class="f-label">Консерватив жүйе үшін — Лагранж функциясы арқылы</div>
+        <div class="f-main">$$\mathcal{L} = T - \Pi \quad\Rightarrow\quad \frac{d}{dt}\!\left(\frac{\partial \mathcal{L}}{\partial \dot{q}_i}\right) - \frac{\partial \mathcal{L}}{\partial q_i} = 0$$</div>
+        <div class="f-note">Актив күштер потенциалды болса: $Q_i = -\partial\Pi/\partial q_i$.</div>
       </div>
-    </div>
-
-    <div class="answer-box green">
-      <h4>📝 Қысқаша емтихан жауабы</h4>
-      <p><strong>Лагранждың 2-ші текті теңдеулері</strong> идеал голономды байланыстары бар механикалық жүйелердің қозғалысын жалпылама координаталар арқылы сипаттайды. Еркіндік дәрежесі: <strong>$s = 3n - l$</strong>. Виртуаль орын ауыстыру: $\delta\vec{r}_\nu = \sum_i(\partial\vec{r}_\nu/\partial q_i)\delta q_i$. Даламбер–Лагранж принципі: $\sum_\nu(\vec{F}_\nu - m_\nu\vec{w}_\nu)\cdot\delta\vec{r}_\nu = 0$. Жалпылама күш: $Q_i = \sum_\nu\vec{F}_\nu\cdot\partial\vec{r}_\nu/\partial q_i$. Нәтиже: <strong>$\frac{d}{dt}(\partial T/\partial\dot{q}_i) - \partial T/\partial q_i = Q_i$</strong>. Потенциалды жүйеде $\mathcal{L} = T-\Pi$ кіргізіліп: <strong>$\frac{d}{dt}(\partial\mathcal{L}/\partial\dot{q}_i) - \partial\mathcal{L}/\partial q_i = 0$</strong>. Байланыс реакциялары теңдеуге кірмейді — бұл негізгі артықшылық.</p>
+      <div class="sub-h green">Қолдану алгоритмі</div>
+      <div class="steps">
+        <div class="step green"><div class="step-num">1</div><div class="step-body"><strong>Еркіндік дәрежесін анықтау</strong><p>$n$ нүкте, $l$ байланыс болса: <strong>$s = 3n - l$</strong>.</p></div></div>
+        <div class="step green"><div class="step-num">2</div><div class="step-body"><strong>Жалпылама координаталарды таңдау</strong><p>$s$ тәуелсіз параметр: $q_1, q_2, \ldots, q_s$.</p></div></div>
+        <div class="step green"><div class="step-num">3</div><div class="step-body"><strong>Кинетикалық энергия $T$</strong><p>$T = \sum_\nu m_\nu v_\nu^2/2$ — жалпылама координаталар арқылы өрнектеледі.</p></div></div>
+        <div class="step green"><div class="step-num">4</div><div class="step-body"><strong>$\mathcal{L} = T - \Pi$</strong><p>Потенциалды күштер болса $\Pi$ жазылады.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Туындыларды есептеу, теңдеуге қою</strong><p>Әрбір $q_i$ үшін теңдеу жазылады.</p></div></div>
+        <div class="step" style="border-left-color:var(--green);"><div class="step-num" style="background:linear-gradient(135deg,#10b981,#047857);color:#000;">✓</div><div class="step-body"><strong>Қозғалыс теңдеулері алынады</strong><p>Байланыс реакциялары теңдеуде жоқ — басты артықшылық!</p></div></div>
+      </div>
+      <div class="sub-h">Мысал: математикалық маятник ($q = \varphi$)</div>
+      <div class="cards-2">
+        <div class="info-card">
+          <h4>Шығару жолы</h4>
+          <p><strong>Еркіндік дәрежесі:</strong> $s = 1$, жалпылама координата $q = \varphi$</p><br>
+          <p><strong>Кинетикалық энергия:</strong></p>
+          <div style="text-align:center; margin:10px 0;">$$T = \tfrac{1}{2}ml^2\dot{\varphi}^2$$</div>
+          <p><strong>Потенциалдық энергия:</strong></p>
+          <div style="text-align:center; margin:10px 0;">$$\Pi = mgl(1 - \cos\varphi)$$</div>
+        </div>
+        <div class="info-card" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;">
+          <h4>Нәтиже</h4>
+          <div style="margin:14px 0; padding:18px; background:rgba(34,211,238,0.06); border:1px solid rgba(34,211,238,0.25); border-radius:var(--r-md); width:100%;">
+            $$\ddot{\varphi} + \frac{g}{l}\sin\varphi = 0$$
+          </div>
+          <p style="font-size:12px; color:var(--muted);">Маятниктің қозғалыс теңдеуі</p>
+        </div>
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="pend-canvas" height="340"></canvas>
+      </div>
+      <div class="sliders-row">
+        <div class="slider-item"><div class="slider-label amber">$l$ — ұзындық (м)</div><div class="slider-val" id="l-val">1.5 м</div><input type="range" id="sl-l" min="0.5" max="3" step="0.1" value="1.5"></div>
+        <div class="slider-item"><div class="slider-label amber">$\varphi_0$ — бастапқы бұрыш (°)</div><div class="slider-val" id="phi-val">30°</div><input type="range" id="sl-phi0" min="5" max="80" step="1" value="30"></div>
+        <div class="slider-item"><div class="slider-label amber">$g$ — ауырлық үдеуі</div><div class="slider-val" id="g-val">9.8</div><input type="range" id="sl-g" min="1" max="20" step="0.1" value="9.8"></div>
+      </div>
+      <div class="period-row">
+        <button class="btn" onclick="pendReset()">↺ Қайта бастау</button>
+        <div class="formula-box" style="flex:1;margin:0;">
+          <div class="f-label">Айналу кезеңі $T = 2\pi\sqrt{l/g}$</div>
+          <div class="f-main" id="period-display" style="font-size:20px;">$T \approx 2.46$ с</div>
+        </div>
+      </div>
+      <div class="answer-box green">
+        <h4>📝 Қысқаша емтихан жауабы</h4>
+        <p><strong>Лагранждың 2-ші текті теңдеулері</strong> идеал голономды байланыстары бар механикалық жүйелердің қозғалысын жалпылама координаталар арқылы сипаттайды. Еркіндік дәрежесі: <strong>$s = 3n - l$</strong>. Нәтиже: <strong>$\frac{d}{dt}(\partial T/\partial\dot{q}_i) - \partial T/\partial q_i = Q_i$</strong>. Потенциалды жүйеде: <strong>$\frac{d}{dt}(\partial\mathcal{L}/\partial\dot{q}_i) - \partial\mathcal{L}/\partial q_i = 0$</strong>. Байланыс реакциялары теңдеуге кірмейді.</p>
+      </div>
     </div>
   </div><!-- /s-lagrange -->
 
 
-  <!-- ══════════════════════════════════════════════
-       SECTION 3 — QUICK REVIEW
-  ══════════════════════════════════════════════ -->
+  <!-- ══ SECTION 3 — REVIEW (PRO) ══ -->
   <div class="section" id="s-review">
-    <div class="sec-header">
-      <h2>Жылдам қайталау</h2>
-      <p>Екі тақырыптың негізгі формулалары — ауызша қорғауға дайындық.</p>
-    </div>
-
-    <div class="review-grid">
-      <div class="review-card">
-        <h4>🌀 Гироскоп — кинетикалық момент</h4>
-        <div style="text-align:center; margin:12px 0;">$$H = C\omega_1$$</div>
-        <div style="text-align:center; margin:10px 0;">$$\vec{M}_r = \vec{H}\times\vec{\omega}_2$$</div>
-        <div style="text-align:center; margin:10px 0;">$$M_r = C\omega_1\omega_2\sin\theta$$</div>
-        <p style="color:var(--muted); font-size:12.5px; margin-top:8px;">Ньютонның III заңы: $\vec{M}_r = -\vec{M}_O^{(e)} = \vec{H}\times\vec{\omega}_2$</p>
-      </div>
-      <div class="review-card">
-        <h4>🔩 Гироскоп — қос күш</h4>
-        <div style="text-align:center; margin:12px 0;">$$Qh = M_r$$</div>
-        <div style="text-align:center; margin:10px 0;">$$Q = \frac{C\omega_1\omega_2\sin\theta}{h}$$</div>
-        <div style="margin-top:14px; padding:12px 14px; background:rgba(245,158,11,0.07); border-radius:var(--r-sm); border:1px solid rgba(245,158,11,0.22);">
-          <p style="color:#fde68a; font-size:13px; line-height:1.65;"><strong>Жуковский:</strong> ось ең қысқа жолмен прецессия осіне параллель орналасуға тырысады.</p>
+    <div class="paywall-wrapper" id="review-paywall-wrapper">
+      <div class="paywall-fade" id="review-preview">
+        <div class="sec-header">
+          <h2>Жылдам қайталау</h2>
+          <p>Екі тақырыптың негізгі формулалары — ауызша қорғауға дайындық.</p>
+        </div>
+        <div class="review-grid">
+          <div class="review-card">
+            <h4>🌀 Гироскоп — кинетикалық момент</h4>
+            <div style="text-align:center; margin:12px 0;">$$H = C\omega_1$$</div>
+            <div style="text-align:center; margin:10px 0;">$$\vec{M}_r = \vec{H}\times\vec{\omega}_2$$</div>
+          </div>
+          <div class="review-card" style="filter:blur(4px); pointer-events:none; user-select:none;">
+            <h4>🔩 Гироскоп — қос күш</h4>
+            <div style="text-align:center; margin:12px 0;">$$Qh = M_r$$</div>
+          </div>
         </div>
       </div>
-      <div class="review-card">
-        <h4>📐 Лагранж — жалпы түрі</h4>
-        <div style="text-align:center; margin:10px 0; font-size:13px;">$$s = 3n - l$$</div>
-        <div style="text-align:center; margin:10px 0; font-size:13px;">$$Q_i = \sum_\nu\vec{F}_\nu\cdot\frac{\partial\vec{r}_\nu}{\partial q_i}$$</div>
-        <div style="text-align:center; margin:10px 0; font-size:13px;">$$\frac{d}{dt}\!\left(\frac{\partial T}{\partial\dot{q}_i}\right) - \frac{\partial T}{\partial q_i} = Q_i$$</div>
-      </div>
-      <div class="review-card">
-        <h4>📐 Лагранж — консерватив жүйе</h4>
-        <div style="text-align:center; margin:12px 0;">$$\mathcal{L} = T - \Pi$$</div>
-        <div style="text-align:center; margin:10px 0;">$$\frac{d}{dt}\!\left(\frac{\partial\mathcal{L}}{\partial\dot{q}_i}\right) - \frac{\partial\mathcal{L}}{\partial q_i} = 0$$</div>
-        <p style="color:var(--muted); font-size:12.5px; margin-top:8px;">Маятник: $q=\varphi\;\Rightarrow\;\ddot{\varphi} + (g/l)\sin\varphi = 0$</p>
-      </div>
-      <div class="review-card" style="grid-column:1/-1;">
-        <h4>🎯 Физикалық мағына — салыстыру</h4>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:12px;">
-          <div>
-            <p style="color:var(--cyan); font-weight:700; margin-bottom:8px;">Гироскоп:</p>
-            <p>Кинетикалық момент $\vec{H}$ бағытының өзгеруі реактивті гироскоптық момент тудырады. Гироскоп өз осінің бағытын өзгертуге қарсылық көрсетеді — навигация жүйелерінің негізі. Ньютонның III заңы бойынша $\vec{M}_r = \vec{H}\times\vec{\omega}_2$.</p>
-          </div>
-          <div>
-            <p style="color:var(--green); font-weight:700; margin-bottom:8px;">Лагранж теңдеуі:</p>
-            <p>Күштер арқылы емес, энергиялар арқылы қозғалысты сипаттайды. Байланыс реакцияларын табудың қажеті жоқ — күрделі жүйелер үшін өте ыңғайлы. Даламбер–Лагранж принципіне негізделген.</p>
-          </div>
+      <div class="paywall-card" id="review-paywall">
+        <span class="paywall-lock">🔒</span>
+        <h3>Жылдам қайталау — Pro</h3>
+        <p>Барлық формулалар, физикалық мағыналарды салыстыру және емтиханға арналған кеңестер Physics Access арқылы қол жетімді.</p>
+        <div class="paywall-features">
+          <div class="paywall-feature"><span class="check">✓</span> Барлық формулалар</div>
+          <div class="paywall-feature"><span class="check">✓</span> Гироскоп vs Лагранж</div>
+          <div class="paywall-feature"><span class="check">✓</span> Емтихан кеңестері</div>
+        </div>
+        <a href="https://boosty.to/kainar.space" target="_blank" class="paywall-btn">
+          🚀 Physics Access алу
+        </a>
+        <div class="paywall-price">Бағасы: <strong>10 ₽/ай</strong> · Boosty арқылы</div>
+        <div class="paywall-login">
+          Қазірдің өзінде жазылдыңыз ба?
+          <button onclick="loginWithGoogle()">Google арқылы кіру</button>
         </div>
       </div>
     </div>
 
-    <div class="answer-box green" style="margin-top:22px; text-align:center;">
-      <h4>🎯 Сәттілік тілеймін қорғауда!</h4>
-      <p>Екі формуланы, шығарылу логикасын және физикалық мағынасын жақсы түсінсеңіз — қорғауға дайынсыз. <strong>Сенемін сізге!</strong></p>
+    <!-- PRO REVIEW CONTENT -->
+    <div class="pro-only" id="review-pro">
+      <div class="sec-header">
+        <h2>Жылдам қайталау</h2>
+        <p>Екі тақырыптың негізгі формулалары — ауызша қорғауға дайындық.</p>
+      </div>
+      <div class="review-grid">
+        <div class="review-card"><h4>🌀 Гироскоп — кинетикалық момент</h4><div style="text-align:center; margin:12px 0;">$$H = C\omega_1$$</div><div style="text-align:center; margin:10px 0;">$$\vec{M}_r = \vec{H}\times\vec{\omega}_2$$</div><div style="text-align:center; margin:10px 0;">$$M_r = C\omega_1\omega_2\sin\theta$$</div></div>
+        <div class="review-card"><h4>🔩 Гироскоп — қос күш</h4><div style="text-align:center; margin:12px 0;">$$Qh = M_r$$</div><div style="text-align:center; margin:10px 0;">$$Q = \frac{C\omega_1\omega_2\sin\theta}{h}$$</div><div style="margin-top:14px; padding:12px 14px; background:rgba(245,158,11,0.07); border-radius:var(--r-sm); border:1px solid rgba(245,158,11,0.22);"><p style="color:#fde68a; font-size:13px; line-height:1.65;"><strong>Жуковский:</strong> ось ең қысқа жолмен прецессия осіне параллель орналасуға тырысады.</p></div></div>
+        <div class="review-card"><h4>📐 Лагранж — жалпы түрі</h4><div style="text-align:center; margin:10px 0; font-size:13px;">$$s = 3n - l$$</div><div style="text-align:center; margin:10px 0; font-size:13px;">$$Q_i = \sum_\nu\vec{F}_\nu\cdot\frac{\partial\vec{r}_\nu}{\partial q_i}$$</div><div style="text-align:center; margin:10px 0; font-size:13px;">$$\frac{d}{dt}\!\left(\frac{\partial T}{\partial\dot{q}_i}\right) - \frac{\partial T}{\partial q_i} = Q_i$$</div></div>
+        <div class="review-card"><h4>📐 Лагранж — консерватив жүйе</h4><div style="text-align:center; margin:12px 0;">$$\mathcal{L} = T - \Pi$$</div><div style="text-align:center; margin:10px 0;">$$\frac{d}{dt}\!\left(\frac{\partial\mathcal{L}}{\partial\dot{q}_i}\right) - \frac{\partial\mathcal{L}}{\partial q_i} = 0$$</div><p style="color:var(--muted); font-size:12.5px; margin-top:8px;">Маятник: $q=\varphi\;\Rightarrow\;\ddot{\varphi} + (g/l)\sin\varphi = 0$</p></div>
+        <div class="review-card" style="grid-column:1/-1;"><h4>🎯 Физикалық мағына — салыстыру</h4><div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:12px;"><div><p style="color:var(--cyan); font-weight:700; margin-bottom:8px;">Гироскоп:</p><p>Кинетикалық момент $\vec{H}$ бағытының өзгеруі реактивті гироскоптық момент тудырады. Навигация жүйелерінің негізі.</p></div><div><p style="color:var(--green); font-weight:700; margin-bottom:8px;">Лагранж теңдеуі:</p><p>Күштер арқылы емес, энергиялар арқылы қозғалысты сипаттайды. Байланыс реакцияларын табудың қажеті жоқ.</p></div></div></div>
+      </div>
+      <div class="answer-box green" style="margin-top:22px; text-align:center;">
+        <h4>🎯 Сәттілік тілеймін қорғауда!</h4>
+        <p>Екі формуланы, шығарылу логикасын және физикалық мағынасын жақсы түсінсеңіз — қорғауға дайынсыз. <strong>Сенемін сізге!</strong></p>
+      </div>
     </div>
   </div><!-- /s-review -->
 
 
-  <!-- ══════════════════════════════════════════════
-       JAVASCRIPT
-  ══════════════════════════════════════════════ -->
+  <!-- ADMIN PANEL (only for you) -->
+  <button class="admin-toggle" id="admin-toggle-btn" title="Admin">⚙</button>
+  <div class="admin-panel" id="admin-panel">
+    <h4>🔐 Admin — Pro беру</h4>
+    <input class="admin-input" id="admin-uid-input" placeholder="Пайдаланушы UID енгізіңіз..." />
+    <button class="admin-btn" onclick="grantPro()">Pro беру ✓</button>
+    <div class="admin-status" id="admin-status"></div>
+    <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border);">
+      <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Сіздің UID:</div>
+      <div id="my-uid" style="font-size:11px; color:var(--cyan); word-break:break-all; font-family:var(--font-mono);">Кіруіңізді күтеміз...</div>
+    </div>
+  </div>
+
+
+  <!-- ══ FIREBASE + AUTH + PAYWALL LOGIC ══ -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
+
+    const cfg = {
+      apiKey: "AIzaSyAhn0e4HtF_jnSu4I4JlLgpB8rz_Qnrmpo",
+      authDomain: "qainar-website.firebaseapp.com",
+      projectId: "qainar-website",
+      storageBucket: "qainar-website.firebasestorage.app",
+      messagingSenderId: "728286957196",
+      appId: "1:728286957196:web:c8d7e04c690cd76f2535a9"
+    };
+
+    const app = initializeApp(cfg);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const prov = new GoogleAuthProvider();
+
+    // ADMIN UID — тек сіздің UID-іңіз
+    // Кіргеннен кейін төмендегі admin панелде өз UID-іңізді көресіз
+    const ADMIN_UID = ""; // Бірінші рет кіргеннен кейін мұнда өз UID-іңізді жазыңыз
+
+    async function checkProStatus(uid) {
+      try {
+        const snap = await getDoc(doc(db, "physics_pro", uid));
+        return snap.exists() && snap.data().isPro === true;
+      } catch(e) { return false; }
+    }
+
+    function unlockContent() {
+      // Hide paywalls
+      document.getElementById('lagrange-paywall-wrapper').innerHTML = '';
+      document.getElementById('review-paywall-wrapper').innerHTML = '';
+
+      // Show pro content
+      document.querySelectorAll('.pro-only').forEach(el => el.classList.add('unlocked'));
+
+      // Remove lock icons from pills
+      document.getElementById('lock-lagrange').style.display = 'none';
+      document.getElementById('lock-review').style.display = 'none';
+
+      // Show pro badge
+      document.getElementById('pro-badge').classList.add('show');
+
+      // Hide free banner
+      document.getElementById('free-banner').classList.add('hidden');
+
+      // Re-enable pill clicks
+      document.getElementById('pill-lagrange').onclick = function() { showSection('lagrange', this); };
+      document.getElementById('pill-review').onclick = function() { showSection('review', this); };
+
+      // Start pendulum if lagrange is active
+      if (document.getElementById('s-lagrange').classList.contains('active')) {
+        pendReset(); startPendAnim();
+      }
+
+      // Retypeset math
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise().catch(()=>{});
+      }
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        document.getElementById('my-uid').textContent = user.uid;
+        const isPro = await checkProStatus(user.uid);
+        if (isPro) unlockContent();
+      } else {
+        document.getElementById('my-uid').textContent = 'Кірілмеген';
+      }
+    });
+
+    // Global login function
+    window.loginWithGoogle = async function() {
+      try { await signInWithPopup(auth, prov); }
+      catch(e) { alert('Кіру сәтсіз болды. Қайталап көріңіз.'); }
+    };
+
+    // Admin: grant pro
+    window.grantPro = async function() {
+      const uid = document.getElementById('admin-uid-input').value.trim();
+      const status = document.getElementById('admin-status');
+      if (!uid) { status.textContent = '⚠ UID енгізіңіз'; return; }
+      try {
+        await setDoc(doc(db, "physics_pro", uid), { isPro: true, grantedAt: new Date().toISOString() });
+        status.textContent = '✓ Pro берілді!';
+        setTimeout(() => status.textContent = '', 3000);
+      } catch(e) {
+        status.textContent = '✗ Қате: ' + e.message;
+      }
+    };
+
+    // Admin toggle
+    document.getElementById('admin-toggle-btn').addEventListener('click', () => {
+      document.getElementById('admin-panel').classList.toggle('show');
+    });
+
+    // Slider listeners for pendulum
+    ['sl-l','sl-phi0','sl-g'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => {
+        if (id === 'sl-l') document.getElementById('l-val').textContent = parseFloat(el.value).toFixed(1) + ' м';
+        if (id === 'sl-phi0') document.getElementById('phi-val').textContent = el.value + '°';
+        if (id === 'sl-g') document.getElementById('g-val').textContent = parseFloat(el.value).toFixed(1);
+        pendReset();
+      });
+    });
+  </script>
+
+
+  <!-- ══ ALL ANIMATIONS JS ══ -->
   <script>
-  /* ─── MathJax helper ─── */
   function mjTypeset(el) {
     if (window.MathJax && MathJax.typesetPromise) {
       MathJax.typesetPromise(el ? [el] : undefined).catch(e => {});
     }
   }
 
-  /* ─── SECTION SWITCH ─── */
   function showSection(id, el) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
@@ -836,40 +986,41 @@
     if (id === 'lagrange') { pendReset(); startPendAnim(); }
   }
 
-  /* ═══════════════════════════════════════════════════
-     3D GYROSCOPE ANIMATION
-  ═══════════════════════════════════════════════════ */
-  let gyroAnimId = null, gyroAngle = 0, gyroPrecess = 0;
+  function handlePillClick(id, el) {
+    // Check if content is unlocked (pro-only visible)
+    const proContent = document.getElementById(id + '-pro');
+    if (!proContent) {
+      // Paywall still active — just show the section with paywall
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      document.getElementById('s-' + id).classList.add('active');
+      el.classList.add('active');
+      return;
+    }
+    showSection(id, el);
+  }
 
-  const CAZ = Math.PI / 5.5;
-  const CEL = 0.36;
+  /* ─ GYROSCOPE ANIMATION ─ */
+  let gyroAnimId = null, gyroAngle = 0, gyroPrecess = 0;
+  const CAZ = Math.PI / 5.5, CEL = 0.36;
 
   function proj3(wx, wy, wz, cx, cy, sc) {
     const rx = wx * Math.cos(CAZ) - wy * Math.sin(CAZ);
     const ry = wx * Math.sin(CAZ) + wy * Math.cos(CAZ);
     return [ cx + rx * sc, cy - wz * sc + ry * sc * Math.sin(CEL) * 0.65 ];
   }
-
-  function norm3(v) {
-    const l = Math.sqrt(v[0]**2 + v[1]**2 + v[2]**2);
-    return l < 1e-9 ? [0,0,1] : v.map(x => x/l);
-  }
-  function cross3(a, b) {
-    return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];
-  }
-
+  function norm3(v) { const l = Math.sqrt(v[0]**2+v[1]**2+v[2]**2); return l<1e-9?[0,0,1]:v.map(x=>x/l); }
+  function cross3(a, b) { return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
   function drawArrow(ctx, x1,y1,x2,y2, color, lw, hs) {
     const dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy);
     if (len<2) return;
-    const ang = Math.atan2(dy,dx);
-    hs = hs||10;
-    ctx.strokeStyle = color; ctx.lineWidth = lw||2;
+    const ang = Math.atan2(dy,dx); hs=hs||10;
+    ctx.strokeStyle=color; ctx.lineWidth=lw||2;
     ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
-    ctx.fillStyle = color;
-    ctx.beginPath();
+    ctx.fillStyle=color; ctx.beginPath();
     ctx.moveTo(x2,y2);
-    ctx.lineTo(x2-hs*Math.cos(ang-0.38), y2-hs*Math.sin(ang-0.38));
-    ctx.lineTo(x2-hs*Math.cos(ang+0.38), y2-hs*Math.sin(ang+0.38));
+    ctx.lineTo(x2-hs*Math.cos(ang-0.38),y2-hs*Math.sin(ang-0.38));
+    ctx.lineTo(x2-hs*Math.cos(ang+0.38),y2-hs*Math.sin(ang+0.38));
     ctx.closePath(); ctx.fill();
   }
 
@@ -877,276 +1028,73 @@
     const canvas = document.getElementById('gyro-canvas');
     if (!canvas) return;
     if (gyroAnimId) cancelAnimationFrame(gyroAnimId);
-
     function draw() {
       canvas.width = canvas.offsetWidth;
-      const W = canvas.width, H = 460; canvas.height = H;
-      const ctx = canvas.getContext('2d');
+      const W=canvas.width, H=460; canvas.height=H;
+      const ctx=canvas.getContext('2d');
       ctx.clearRect(0,0,W,H);
+      const w1=parseFloat(document.getElementById('sl-w1').value);
+      const w2=parseFloat(document.getElementById('sl-w2').value);
+      const thetaDeg=parseFloat(document.getElementById('sl-theta').value);
+      const theta=thetaDeg*Math.PI/180;
+      gyroAngle+=w1*0.022; gyroPrecess+=w2*0.009;
+      const cx=W*0.43, cy=H*0.50, SC=Math.min(W,H)*0.200;
+      const R=0.90, AXLEN=1.40;
+      const phi=gyroPrecess;
+      const SX=Math.sin(theta)*Math.cos(phi), SY=Math.sin(theta)*Math.sin(phi), SZ=Math.cos(theta);
+      const horiz=Math.sqrt(SX*SX+SY*SY);
+      const u=horiz<0.001?[1,0,0]:norm3([-SY,SX,0]);
+      const v=norm3(cross3([SX,SY,SZ],u));
 
-      const w1 = parseFloat(document.getElementById('sl-w1').value);
-      const w2 = parseFloat(document.getElementById('sl-w2').value);
-      const thetaDeg = parseFloat(document.getElementById('sl-theta').value);
-      const theta = thetaDeg * Math.PI/180;
-
-      gyroAngle   += w1 * 0.022;
-      gyroPrecess += w2 * 0.009;
-
-      const cx = W * 0.43, cy = H * 0.50;
-      const SC = Math.min(W,H) * 0.200;
-      const R = 0.90, AXLEN = 1.40;
-
-      /* Spin direction */
-      const phi = gyroPrecess;
-      const SX = Math.sin(theta)*Math.cos(phi);
-      const SY = Math.sin(theta)*Math.sin(phi);
-      const SZ = Math.cos(theta);
-
-      /* Disk basis */
-      const horiz = Math.sqrt(SX*SX+SY*SY);
-      const u = horiz < 0.001 ? [1,0,0] : norm3([-SY,SX,0]);
-      const v = norm3(cross3([SX,SY,SZ], u));
-
-      /* BG rings */
-      ctx.save();
-      ctx.strokeStyle = 'rgba(34,211,238,0.04)';
-      ctx.lineWidth = 1;
-      for (let r=60; r < Math.max(W,H)*0.65; r+=60) {
-        ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
-      }
+      ctx.save(); ctx.strokeStyle='rgba(34,211,238,0.04)'; ctx.lineWidth=1;
+      for(let r=60;r<Math.max(W,H)*0.65;r+=60){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();}
       ctx.restore();
 
-      /* Base shadow */
-      {
-        const pts = [];
-        for (let i=0;i<=36;i++) {
-          const a=(i/36)*Math.PI*2;
-          pts.push(proj3(Math.cos(a)*0.30,Math.sin(a)*0.30,-1.05,cx,cy,SC));
-        }
-        ctx.save();
-        ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
-        pts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
-        ctx.fillStyle='rgba(0,0,0,0.4)'; ctx.fill(); ctx.restore();
-      }
-
-      /* Base platform */
-      {
-        const pts=[];
-        for(let i=0;i<=48;i++){const a=(i/48)*Math.PI*2; pts.push(proj3(Math.cos(a)*0.28,Math.sin(a)*0.28,-1.0,cx,cy,SC));}
-        ctx.save(); ctx.beginPath(); ctx.moveTo(pts[0][0],pts[0][1]);
-        pts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
-        ctx.fillStyle='rgba(34,211,238,0.08)';
-        ctx.strokeStyle='rgba(34,211,238,0.40)'; ctx.lineWidth=1.5;
-        ctx.fill(); ctx.stroke(); ctx.restore();
-      }
-
-      /* Precession axis (vertical, dashed) */
-      const [axTopX,axTopY]=proj3(0,0,1.65,cx,cy,SC);
-      const [axBotX,axBotY]=proj3(0,0,-1.0,cx,cy,SC);
-      ctx.save();
-      ctx.setLineDash([9,6]); ctx.strokeStyle='rgba(148,163,184,0.45)'; ctx.lineWidth=1.5;
+      const [axTopX,axTopY]=proj3(0,0,1.65,cx,cy,SC), [axBotX,axBotY]=proj3(0,0,-1.0,cx,cy,SC);
+      ctx.save(); ctx.setLineDash([9,6]); ctx.strokeStyle='rgba(148,163,184,0.45)'; ctx.lineWidth=1.5;
       ctx.beginPath(); ctx.moveTo(axBotX,axBotY); ctx.lineTo(axTopX,axTopY); ctx.stroke();
       ctx.setLineDash([]);
       drawArrow(ctx,axTopX+1,axTopY+1,axTopX,axTopY,'rgba(148,163,184,0.6)',0,9);
       ctx.restore();
 
-      /* Precession cone */
-      {
-        const cZ=SZ*AXLEN*0.75, cR=Math.sin(theta)*AXLEN*0.75;
-        ctx.save(); ctx.setLineDash([5,5]); ctx.strokeStyle='rgba(34,211,238,0.14)'; ctx.lineWidth=1;
-        const cPts=[];
-        for(let i=0;i<=60;i++){const a=(i/60)*Math.PI*2; cPts.push(proj3(Math.cos(a)*cR,Math.sin(a)*cR,cZ,cx,cy,SC));}
-        ctx.beginPath(); ctx.moveTo(cPts[0][0],cPts[0][1]);
-        cPts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath(); ctx.stroke();
-        ctx.setLineDash([]); ctx.restore();
-      }
+      const [px0,py0]=proj3(0,0,0,cx,cy,SC), [px1,py1]=proj3(0,0,-1.0,cx,cy,SC);
+      ctx.strokeStyle='rgba(148,163,184,0.30)'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.moveTo(px0,py0); ctx.lineTo(px1,py1); ctx.stroke();
 
-      /* ω₂ precession arc */
-      {
-        const arcR=0.52, arcZ=-0.52, arcSpan=1.25;
-        ctx.save(); ctx.strokeStyle='#f472b6'; ctx.lineWidth=2.5;
-        const aPts=[];
-        for(let i=0;i<=32;i++){
-          const a=phi-arcSpan/2+(i/32)*arcSpan;
-          aPts.push(proj3(Math.cos(a)*arcR,Math.sin(a)*arcR,arcZ,cx,cy,SC));
-        }
-        ctx.beginPath(); ctx.moveTo(aPts[0][0],aPts[0][1]);
-        aPts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.stroke();
-        const lp=aPts[aPts.length-1], pp=aPts[aPts.length-2];
-        const aAng=Math.atan2(lp[1]-pp[1],lp[0]-pp[0]);
-        drawArrow(ctx,lp[0]-1,lp[1]-1,lp[0],lp[1],'#f472b6',0,10);
-        ctx.fillStyle='#f472b6'; ctx.font='bold 13px IBM Plex Sans'; ctx.textAlign='left';
-        ctx.fillText('ω₂',lp[0]+7,lp[1]+3);
-        ctx.restore();
-      }
+      const N=72; const rimPts=[];
+      for(let i=0;i<=N;i++){const a=(i/N)*Math.PI*2; const wx=R*Math.cos(a)*u[0]+R*Math.sin(a)*v[0]; const wy=R*Math.cos(a)*u[1]+R*Math.sin(a)*v[1]; const wz=R*Math.cos(a)*u[2]+R*Math.sin(a)*v[2]; rimPts.push(proj3(wx,wy,wz,cx,cy,SC));}
+      const [dCX,dCY]=proj3(0,0,0,cx,cy,SC);
+      ctx.save(); ctx.beginPath(); ctx.moveTo(rimPts[0][0],rimPts[0][1]); rimPts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+      const fg=ctx.createRadialGradient(dCX,dCY,0,dCX,dCY,R*SC);
+      fg.addColorStop(0,'rgba(34,211,238,0.25)'); fg.addColorStop(0.6,'rgba(59,130,246,0.14)'); fg.addColorStop(1,'rgba(59,130,246,0.04)');
+      ctx.fillStyle=fg; ctx.fill();
+      ctx.beginPath(); ctx.moveTo(rimPts[0][0],rimPts[0][1]); rimPts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
+      ctx.strokeStyle='#22d3ee'; ctx.lineWidth=2.5; ctx.stroke();
+      for(let i=0;i<10;i++){const a=gyroAngle+(i/10)*Math.PI*2; const r2=R*0.88; const wx=r2*Math.cos(a)*u[0]+r2*Math.sin(a)*v[0]; const wy=r2*Math.cos(a)*u[1]+r2*Math.sin(a)*v[1]; const wz=r2*Math.cos(a)*u[2]+r2*Math.sin(a)*v[2]; const [spx,spy]=proj3(wx,wy,wz,cx,cy,SC); const alpha=0.07+0.28*Math.abs(Math.cos(a)); ctx.strokeStyle=`rgba(147,197,253,${alpha})`; ctx.lineWidth=1.5; ctx.beginPath(); ctx.moveTo(dCX,dCY); ctx.lineTo(spx,spy); ctx.stroke();}
+      ctx.restore();
 
-      /* Stand */
-      {
-        const [px0,py0]=proj3(0,0,0,cx,cy,SC);
-        const [px1,py1]=proj3(0,0,-1.0,cx,cy,SC);
-        ctx.strokeStyle='rgba(148,163,184,0.30)'; ctx.lineWidth=3;
-        ctx.beginPath(); ctx.moveTo(px0,py0); ctx.lineTo(px1,py1); ctx.stroke();
-        ctx.lineWidth=1.5;
-        for(let i=0;i<3;i++){
-          const a=(i/3)*Math.PI*2;
-          const [lx,ly]=proj3(Math.cos(a)*0.25,Math.sin(a)*0.25,-1.0,cx,cy,SC);
-          ctx.strokeStyle='rgba(148,163,184,0.18)';
-          ctx.beginPath(); ctx.moveTo(px1,py1); ctx.lineTo(lx,ly); ctx.stroke();
-        }
-      }
+      const [hx,hy]=proj3(0,0,0,cx,cy,SC);
+      ctx.beginPath(); ctx.arc(hx,hy,7,0,Math.PI*2);
+      const hg=ctx.createRadialGradient(hx-2,hy-2,1,hx,hy,7); hg.addColorStop(0,'#67e8f9'); hg.addColorStop(1,'#0891b2');
+      ctx.fillStyle=hg; ctx.fill(); ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.lineWidth=1.5; ctx.stroke();
 
-      /* Axle (dashed) */
-      {
-        const [a1x,a1y]=proj3(-SX*AXLEN*0.65,-SY*AXLEN*0.65,-SZ*AXLEN*0.65,cx,cy,SC);
-        const [a2x,a2y]=proj3(SX*AXLEN,SY*AXLEN,SZ*AXLEN,cx,cy,SC);
-        ctx.save(); ctx.setLineDash([5,4]); ctx.strokeStyle='rgba(96,165,250,0.28)'; ctx.lineWidth=1.5;
-        ctx.beginPath(); ctx.moveTo(a1x,a1y); ctx.lineTo(a2x,a2y); ctx.stroke();
-        ctx.setLineDash([]); ctx.restore();
-      }
+      const Hm=1.28; const [hTX,hTY]=proj3(SX*Hm,SY*Hm,SZ*Hm,cx,cy,SC); const [hOX,hOY]=proj3(0,0,0,cx,cy,SC);
+      ctx.save(); ctx.shadowColor='#22d3ee'; ctx.shadowBlur=12; drawArrow(ctx,hOX,hOY,hTX,hTY,'#22d3ee',3.0,13); ctx.restore();
+      ctx.fillStyle='#67e8f9'; ctx.font='bold 14px IBM Plex Sans'; ctx.textAlign='center';
+      const hAng=Math.atan2(hTY-hOY,hTX-hOX);
+      ctx.fillText('H',hTX+Math.cos(hAng-Math.PI/2)*20,hTY+Math.sin(hAng-Math.PI/2)*20);
 
-      /* === DISK === */
-      {
-        const N=72;
-        const rimPts=[];
-        for(let i=0;i<=N;i++){
-          const a=(i/N)*Math.PI*2;
-          const wx=R*Math.cos(a)*u[0]+R*Math.sin(a)*v[0];
-          const wy=R*Math.cos(a)*u[1]+R*Math.sin(a)*v[1];
-          const wz=R*Math.cos(a)*u[2]+R*Math.sin(a)*v[2];
-          rimPts.push(proj3(wx,wy,wz,cx,cy,SC));
-        }
-        const [dCX,dCY]=proj3(0,0,0,cx,cy,SC);
+      const mrDir=norm3([SY,-SX,0]);
+      const [mrTX,mrTY]=proj3(mrDir[0]*1.05,mrDir[1]*1.05,mrDir[2]*1.05,cx,cy,SC), [mrOX,mrOY]=proj3(0,0,0,cx,cy,SC);
+      ctx.save(); ctx.shadowColor='#f59e0b'; ctx.shadowBlur=10; drawArrow(ctx,mrOX,mrOY,mrTX,mrTY,'#f59e0b',3.0,13); ctx.restore();
+      ctx.fillStyle='#f59e0b'; ctx.font='bold 14px IBM Plex Sans'; ctx.textAlign='center';
+      const mAng=Math.atan2(mrTY-mrOY,mrTX-mrOX);
+      ctx.fillText('Mr',mrTX+Math.cos(mAng-Math.PI/2)*22,mrTY+Math.sin(mAng-Math.PI/2)*22);
 
-        /* Fill */
-        ctx.save();
-        ctx.beginPath(); ctx.moveTo(rimPts[0][0],rimPts[0][1]);
-        rimPts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
-        const fg=ctx.createRadialGradient(dCX,dCY,0,dCX,dCY,R*SC);
-        fg.addColorStop(0,'rgba(34,211,238,0.25)');
-        fg.addColorStop(0.6,'rgba(59,130,246,0.14)');
-        fg.addColorStop(1,'rgba(59,130,246,0.04)');
-        ctx.fillStyle=fg; ctx.fill();
-
-        /* Rim */
-        ctx.beginPath(); ctx.moveTo(rimPts[0][0],rimPts[0][1]);
-        rimPts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
-        ctx.strokeStyle='#22d3ee'; ctx.lineWidth=2.5; ctx.stroke();
-
-        /* Inner ring */
-        const inPts=[];
-        for(let i=0;i<=N;i++){
-          const a=(i/N)*Math.PI*2; const r2=R*0.55;
-          const wx=r2*Math.cos(a)*u[0]+r2*Math.sin(a)*v[0];
-          const wy=r2*Math.cos(a)*u[1]+r2*Math.sin(a)*v[1];
-          const wz=r2*Math.cos(a)*u[2]+r2*Math.sin(a)*v[2];
-          inPts.push(proj3(wx,wy,wz,cx,cy,SC));
-        }
-        ctx.beginPath(); ctx.moveTo(inPts[0][0],inPts[0][1]);
-        inPts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.closePath();
-        ctx.strokeStyle='rgba(34,211,238,0.30)'; ctx.lineWidth=1; ctx.stroke();
-
-        /* Spokes */
-        for(let i=0;i<10;i++){
-          const a=gyroAngle+(i/10)*Math.PI*2; const r2=R*0.88;
-          const wx=r2*Math.cos(a)*u[0]+r2*Math.sin(a)*v[0];
-          const wy=r2*Math.cos(a)*u[1]+r2*Math.sin(a)*v[1];
-          const wz=r2*Math.cos(a)*u[2]+r2*Math.sin(a)*v[2];
-          const [spx,spy]=proj3(wx,wy,wz,cx,cy,SC);
-          const alpha=0.07+0.28*Math.abs(Math.cos(a));
-          ctx.strokeStyle=`rgba(147,197,253,${alpha})`; ctx.lineWidth=1.5;
-          ctx.beginPath(); ctx.moveTo(dCX,dCY); ctx.lineTo(spx,spy); ctx.stroke();
-        }
-        ctx.restore();
-      }
-
-      /* Hub */
-      {
-        const [hx,hy]=proj3(0,0,0,cx,cy,SC);
-        ctx.beginPath(); ctx.arc(hx,hy,7,0,Math.PI*2);
-        const hg=ctx.createRadialGradient(hx-2,hy-2,1,hx,hy,7);
-        hg.addColorStop(0,'#67e8f9'); hg.addColorStop(1,'#0891b2');
-        ctx.fillStyle=hg; ctx.fill();
-        ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.lineWidth=1.5; ctx.stroke();
-      }
-
-      /* H vector */
-      {
-        const Hm=1.28;
-        const [hTX,hTY]=proj3(SX*Hm,SY*Hm,SZ*Hm,cx,cy,SC);
-        const [hOX,hOY]=proj3(0,0,0,cx,cy,SC);
-        /* Glow */
-        ctx.save();
-        ctx.shadowColor='#22d3ee'; ctx.shadowBlur=12;
-        drawArrow(ctx,hOX,hOY,hTX,hTY,'#22d3ee',3.0,13);
-        ctx.restore();
-        ctx.fillStyle='#67e8f9'; ctx.font='bold 14px IBM Plex Sans'; ctx.textAlign='center';
-        const hAng=Math.atan2(hTY-hOY,hTX-hOX);
-        ctx.fillText('H',hTX+Math.cos(hAng-Math.PI/2)*20,hTY+Math.sin(hAng-Math.PI/2)*20);
-      }
-
-      /* ω₁ label */
-      {
-        const [tipX,tipY]=proj3(SX*AXLEN,SY*AXLEN,SZ*AXLEN,cx,cy,SC);
-        ctx.fillStyle='#93c5fd'; ctx.font='bold 13px IBM Plex Sans'; ctx.textAlign='left';
-        ctx.fillText('ω₁',tipX+10,tipY-5);
-      }
-
-      /* Mr vector (H × ω₂ → perpendicular in horiz plane) */
-      {
-        const mrDir=norm3([SY,-SX,0]);
-        const [mrTX,mrTY]=proj3(mrDir[0]*1.05,mrDir[1]*1.05,mrDir[2]*1.05,cx,cy,SC);
-        const [mrOX,mrOY]=proj3(0,0,0,cx,cy,SC);
-        ctx.save();
-        ctx.shadowColor='#f59e0b'; ctx.shadowBlur=10;
-        drawArrow(ctx,mrOX,mrOY,mrTX,mrTY,'#f59e0b',3.0,13);
-        ctx.restore();
-        ctx.fillStyle='#f59e0b'; ctx.font='bold 14px IBM Plex Sans'; ctx.textAlign='center';
-        const mAng=Math.atan2(mrTY-mrOY,mrTX-mrOX);
-        ctx.fillText('Mr',mrTX+Math.cos(mAng-Math.PI/2)*22,mrTY+Math.sin(mAng-Math.PI/2)*22);
-      }
-
-      /* θ arc */
-      if(theta>0.15 && theta<Math.PI-0.15){
-        const tArcR=0.40, steps=22;
-        const aPts=[];
-        for(let i=0;i<=steps;i++){
-          const t2=i/steps;
-          const ax=t2*SX, ay=t2*SY, az=t2*SZ+(1-t2)*1.0;
-          const len=Math.sqrt(ax*ax+ay*ay+az*az);
-          aPts.push(proj3(ax/len*tArcR,ay/len*tArcR,az/len*tArcR,cx,cy,SC));
-        }
-        ctx.save(); ctx.strokeStyle='rgba(110,231,183,0.85)'; ctx.lineWidth=2;
-        ctx.beginPath(); ctx.moveTo(aPts[0][0],aPts[0][1]);
-        aPts.forEach(p=>ctx.lineTo(p[0],p[1])); ctx.stroke();
-        const mid=aPts[Math.floor(steps/2)];
-        ctx.fillStyle='#6ee7b7'; ctx.font='bold 14px IBM Plex Sans'; ctx.textAlign='center';
-        ctx.fillText('θ',mid[0]+12,mid[1]-8);
-        ctx.restore();
-      }
-
-      /* LEGEND */
-      const legends=[
-        {c:'#22d3ee', t:'H — кинетикалық момент (H = Cω₁)'},
-        {c:'#f472b6', t:'ω₂ — прецессия осі'},
-        {c:'#f59e0b', t:'Mr = H × ω₂ — гироскоптық момент'},
-        {c:'#6ee7b7', t:'θ — H мен ω₂ арасындағы бұрыш'},
-        {c:'rgba(148,163,184,0.7)', t:'прецессия тік осі'},
-      ];
+      const legends=[{c:'#22d3ee',t:'H — кинетикалық момент'},{c:'#f472b6',t:'ω₂ — прецессия осі'},{c:'#f59e0b',t:'Mr = H × ω₂ — гироскоптық момент'},{c:'#6ee7b7',t:'θ — H мен ω₂ арасындағы бұрыш'}];
       ctx.font='12px IBM Plex Sans'; ctx.textAlign='left';
-      legends.forEach((leg,i)=>{
-        const ly=H-18-i*22;
-        ctx.fillStyle=leg.c;
-        ctx.fillRect(18,ly-9,16,2.5);
-        ctx.fillStyle='rgba(203,213,225,0.80)';
-        ctx.fillText(leg.t,42,ly);
-      });
+      legends.forEach((leg,i)=>{const ly=H-18-i*22; ctx.fillStyle=leg.c; ctx.fillRect(18,ly-9,16,2.5); ctx.fillStyle='rgba(203,213,225,0.80)'; ctx.fillText(leg.t,42,ly);});
 
-      /* Axis label */
-      ctx.fillStyle='rgba(148,163,184,0.70)';
-      ctx.font='11px IBM Plex Sans'; ctx.textAlign='center';
-      ctx.fillText('прецессия осі',axTopX,axTopY-14);
-
-      /* Update formula display */
       const Mr=(w1*w2*Math.sin(theta)).toFixed(3);
       document.getElementById('mr-display').textContent=`Mr = ${Mr} Н·м`;
       document.getElementById('mr-note').textContent=`Mr = 1 × ${w1.toFixed(1)} × ${w2.toFixed(1)} × sin(${thetaDeg}°) = ${Mr} Н·м`;
@@ -1156,263 +1104,84 @@
     draw();
   }
 
-  /* Slider listeners */
-  document.getElementById('sl-w1').addEventListener('input', function(){
-    document.getElementById('w1-val').textContent=parseFloat(this.value).toFixed(1);
-  });
-  document.getElementById('sl-w2').addEventListener('input', function(){
-    document.getElementById('w2-val').textContent=parseFloat(this.value).toFixed(1);
-  });
-  document.getElementById('sl-theta').addEventListener('input', function(){
-    document.getElementById('theta-val').textContent=this.value+'°';
-  });
+  document.getElementById('sl-w1').addEventListener('input',function(){document.getElementById('w1-val').textContent=parseFloat(this.value).toFixed(1);});
+  document.getElementById('sl-w2').addEventListener('input',function(){document.getElementById('w2-val').textContent=parseFloat(this.value).toFixed(1);});
+  document.getElementById('sl-theta').addEventListener('input',function(){document.getElementById('theta-val').textContent=this.value+'°';});
 
-
-  /* ═══════════════════════════════════════════════════
-     ZHUKOVSKY CANVAS
-  ═══════════════════════════════════════════════════ */
   function drawZhukovsky() {
-    const canvas=document.getElementById('zhuk-canvas');
-    if(!canvas) return;
+    const canvas=document.getElementById('zhuk-canvas'); if(!canvas) return;
     canvas.width=canvas.offsetWidth; canvas.height=260;
-    const ctx=canvas.getContext('2d');
-    const W=canvas.width, H=260;
-    ctx.clearRect(0,0,W,H);
-    const cx=W/2, cy=H/2+8;
-
-    /* Precession axis (vertical) */
-    ctx.save(); ctx.setLineDash([8,5]);
-    ctx.strokeStyle='rgba(148,163,184,0.45)'; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.moveTo(cx,18); ctx.lineTo(cx,H-18); ctx.stroke();
-    ctx.setLineDash([]);
+    const ctx=canvas.getContext('2d'); const W=canvas.width, H=260;
+    ctx.clearRect(0,0,W,H); const cx=W/2, cy=H/2+8;
+    ctx.save(); ctx.setLineDash([8,5]); ctx.strokeStyle='rgba(148,163,184,0.45)'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(cx,18); ctx.lineTo(cx,H-18); ctx.stroke(); ctx.setLineDash([]);
     drawArrow(ctx,cx,22,cx,18,'rgba(148,163,184,0.60)',0,9);
-    ctx.fillStyle='rgba(148,163,184,0.70)'; ctx.font='11px IBM Plex Sans';
-    ctx.textAlign='center'; ctx.fillText('прецессия осі',cx,12);
-    ctx.restore();
-
-    const axLen=88;
-
-    /* Initial gyro axis */
-    const startA=-Math.PI/3.0;
+    ctx.fillStyle='rgba(148,163,184,0.70)'; ctx.font='11px IBM Plex Sans'; ctx.textAlign='center'; ctx.fillText('прецессия осі',cx,12); ctx.restore();
+    const axLen=88, startA=-Math.PI/3.0;
     const g2x=cx+Math.cos(startA)*axLen, g2y=cy+Math.sin(startA)*axLen;
     const g1x=cx+Math.cos(startA+Math.PI)*axLen*0.42, g1y=cy+Math.sin(startA+Math.PI)*axLen*0.42;
-    ctx.save();
-    ctx.shadowColor='#22d3ee'; ctx.shadowBlur=8;
-    ctx.strokeStyle='#22d3ee'; ctx.lineWidth=2.5;
+    ctx.save(); ctx.shadowColor='#22d3ee'; ctx.shadowBlur=8; ctx.strokeStyle='#22d3ee'; ctx.lineWidth=2.5;
     ctx.beginPath(); ctx.moveTo(g1x,g1y); ctx.lineTo(g2x,g2y); ctx.stroke();
-    drawArrow(ctx,g2x-4,g2y-4,g2x,g2y,'#22d3ee',0,10);
-    ctx.restore();
-    ctx.fillStyle='#67e8f9'; ctx.font='bold 12px IBM Plex Sans';
-    ctx.textAlign='left'; ctx.fillText('ω₁ (бастапқы)',g2x+8,g2y+4);
-
-    /* Target (vertical dashed) */
-    ctx.save(); ctx.setLineDash([4,4]);
-    ctx.strokeStyle='rgba(34,211,238,0.22)'; ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.moveTo(cx+42,cy-76); ctx.lineTo(cx+42,cy+76); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle='rgba(34,211,238,0.40)'; ctx.font='10px IBM Plex Sans';
-    ctx.textAlign='center'; ctx.fillText('соңғы жағдай',cx+42,cy-80);
-    ctx.restore();
-
-    /* Shortest path arc */
+    drawArrow(ctx,g2x-4,g2y-4,g2x,g2y,'#22d3ee',0,10); ctx.restore();
+    ctx.fillStyle='#67e8f9'; ctx.font='bold 12px IBM Plex Sans'; ctx.textAlign='left'; ctx.fillText('ω₁ (бастапқы)',g2x+8,g2y+4);
     const endA=-Math.PI/2;
-    ctx.save();
-    ctx.shadowColor='#f59e0b'; ctx.shadowBlur=6;
-    ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2.5;
+    ctx.save(); ctx.shadowColor='#f59e0b'; ctx.shadowBlur=6; ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2.5;
     ctx.beginPath(); ctx.arc(cx,cy,axLen,startA,endA,true); ctx.stroke();
     const arcTX=cx+Math.cos(endA)*axLen, arcTY=cy+Math.sin(endA)*axLen;
-    drawArrow(ctx,arcTX+2,arcTY+2,arcTX,arcTY,'#f59e0b',0,10);
-    ctx.restore();
-    ctx.fillStyle='#f59e0b'; ctx.font='bold 11px IBM Plex Sans';
-    ctx.textAlign='right'; ctx.fillText('ең қысқа жол',arcTX-10,arcTY-12);
-
-    /* θ arc */
-    ctx.strokeStyle='rgba(110,231,183,0.7)'; ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.arc(cx,cy,44,-Math.PI/2,startA,false); ctx.stroke();
-    ctx.fillStyle='#6ee7b7'; ctx.font='bold 13px IBM Plex Sans';
-    ctx.textAlign='center'; ctx.fillText('θ',cx+22,-cy+H/2-38+cy*0);
-
-    /* Dot */
-    ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2);
-    ctx.fillStyle='#22d3ee'; ctx.fill();
-
-    /* recalc θ label */
-    const midA = (startA + endA) / 2;
+    drawArrow(ctx,arcTX+2,arcTY+2,arcTX,arcTY,'#f59e0b',0,10); ctx.restore();
+    ctx.fillStyle='#f59e0b'; ctx.font='bold 11px IBM Plex Sans'; ctx.textAlign='right'; ctx.fillText('ең қысқа жол',arcTX-10,arcTY-12);
+    ctx.beginPath(); ctx.arc(cx,cy,5,0,Math.PI*2); ctx.fillStyle='#22d3ee'; ctx.fill();
+    const midA=(startA+endA)/2;
     ctx.fillStyle='#6ee7b7'; ctx.font='bold 13px IBM Plex Sans'; ctx.textAlign='center';
-    ctx.fillText('θ', cx+Math.cos(midA+0.2)*56, cy+Math.sin(midA+0.2)*56);
+    ctx.fillText('θ',cx+Math.cos(midA+0.2)*56,cy+Math.sin(midA+0.2)*56);
   }
 
-
-  /* ═══════════════════════════════════════════════════
-     PENDULUM ANIMATION
-  ═══════════════════════════════════════════════════ */
+  /* ─ PENDULUM ─ */
   let pendAnimId=null, pendPhi=null, pendPhiDot=0;
   const pendTrail=[];
-
-  function pendReset() {
-    pendPhi=null; pendPhiDot=0; pendTrail.length=0;
-  }
-
-  function startPendAnim() {
-    const canvas=document.getElementById('pend-canvas');
-    if(!canvas) return;
+  function pendReset(){pendPhi=null;pendPhiDot=0;pendTrail.length=0;}
+  function startPendAnim(){
+    const canvas=document.getElementById('pend-canvas'); if(!canvas) return;
     if(pendAnimId) cancelAnimationFrame(pendAnimId);
     let lastTime=null;
-
-    function draw(ts) {
-      canvas.width=canvas.offsetWidth;
-      const W=canvas.width, H=340; canvas.height=H;
-      const ctx=canvas.getContext('2d');
-      ctx.clearRect(0,0,W,H);
-
-      const lVal=parseFloat(document.getElementById('sl-l').value);
-      const phi0=parseFloat(document.getElementById('sl-phi0').value)*Math.PI/180;
-      const gVal=parseFloat(document.getElementById('sl-g').value);
-
-      if(pendPhi===null){ pendPhi=phi0; pendPhiDot=0; }
-
-      if(lastTime!==null){
-        const dt=Math.min((ts-lastTime)/1000,0.033);
-        const phiDD=-(gVal/lVal)*Math.sin(pendPhi);
-        pendPhiDot+=phiDD*dt;
-        pendPhi+=pendPhiDot*dt;
-      }
+    function draw(ts){
+      canvas.width=canvas.offsetWidth; const W=canvas.width, H=340; canvas.height=H;
+      const ctx=canvas.getContext('2d'); ctx.clearRect(0,0,W,H);
+      const lEl=document.getElementById('sl-l'); const phi0El=document.getElementById('sl-phi0'); const gEl=document.getElementById('sl-g');
+      if(!lEl||!phi0El||!gEl){pendAnimId=requestAnimationFrame(draw);return;}
+      const lVal=parseFloat(lEl.value), phi0=parseFloat(phi0El.value)*Math.PI/180, gVal=parseFloat(gEl.value);
+      if(pendPhi===null){pendPhi=phi0;pendPhiDot=0;}
+      if(lastTime!==null){const dt=Math.min((ts-lastTime)/1000,0.033); const phiDD=-(gVal/lVal)*Math.sin(pendPhi); pendPhiDot+=phiDD*dt; pendPhi+=pendPhiDot*dt;}
       lastTime=ts;
-
-      const pivX=W/2, pivY=52;
-      const scale=Math.min((H-100)/(lVal+0.3),105);
-      const pxLen=lVal*scale;
-      const bobX=pivX+Math.sin(pendPhi)*pxLen;
-      const bobY=pivY+Math.cos(pendPhi)*pxLen;
-      const bobR=18;
-
-      /* Trail */
-      pendTrail.push({x:bobX,y:bobY});
-      if(pendTrail.length>55) pendTrail.shift();
-      if(pendTrail.length>2){
-        ctx.save();
-        ctx.beginPath(); ctx.moveTo(pendTrail[0].x,pendTrail[0].y);
-        pendTrail.forEach(p=>ctx.lineTo(p.x,p.y));
-        ctx.strokeStyle='rgba(34,211,238,0.18)'; ctx.lineWidth=2.5; ctx.stroke();
-        ctx.restore();
-      }
-
-      /* Ceiling */
-      const cg=ctx.createLinearGradient(pivX-55,0,pivX+55,0);
-      cg.addColorStop(0,'rgba(34,211,238,0)');
-      cg.addColorStop(0.5,'rgba(34,211,238,0.35)');
-      cg.addColorStop(1,'rgba(34,211,238,0)');
+      const pivX=W/2,pivY=52,scale=Math.min((H-100)/(lVal+0.3),105),pxLen=lVal*scale;
+      const bobX=pivX+Math.sin(pendPhi)*pxLen,bobY=pivY+Math.cos(pendPhi)*pxLen,bobR=18;
+      pendTrail.push({x:bobX,y:bobY}); if(pendTrail.length>55) pendTrail.shift();
+      if(pendTrail.length>2){ctx.save();ctx.beginPath();ctx.moveTo(pendTrail[0].x,pendTrail[0].y);pendTrail.forEach(p=>ctx.lineTo(p.x,p.y));ctx.strokeStyle='rgba(34,211,238,0.18)';ctx.lineWidth=2.5;ctx.stroke();ctx.restore();}
+      const cg=ctx.createLinearGradient(pivX-55,0,pivX+55,0); cg.addColorStop(0,'rgba(34,211,238,0)'); cg.addColorStop(0.5,'rgba(34,211,238,0.35)'); cg.addColorStop(1,'rgba(34,211,238,0)');
       ctx.fillStyle=cg; ctx.fillRect(pivX-55,0,110,14);
-
-      /* Vertical ref line */
-      ctx.save(); ctx.setLineDash([5,4]);
-      ctx.strokeStyle='rgba(148,163,184,0.18)'; ctx.lineWidth=1.5;
-      ctx.beginPath(); ctx.moveTo(pivX,pivY); ctx.lineTo(pivX,pivY+pxLen+12); ctx.stroke();
-      ctx.setLineDash([]); ctx.restore();
-
-      /* φ arc */
-      if(Math.abs(pendPhi)>0.015){
-        ctx.save();
-        ctx.shadowColor='#22d3ee'; ctx.shadowBlur=6;
-        ctx.strokeStyle='rgba(34,211,238,0.6)'; ctx.lineWidth=2;
-        ctx.beginPath();
-        ctx.arc(pivX,pivY,pxLen*0.28,Math.PI/2,Math.PI/2+pendPhi,pendPhi<0);
-        ctx.stroke();
-        ctx.restore();
-        const midA=Math.PI/2+pendPhi/2;
-        ctx.fillStyle='#22d3ee'; ctx.font='bold 14px IBM Plex Sans'; ctx.textAlign='center';
-        ctx.fillText('φ',pivX+Math.cos(midA)*pxLen*0.37,pivY+Math.sin(midA)*pxLen*0.37);
-      }
-
-      /* Rod */
-      ctx.strokeStyle='rgba(148,163,184,0.55)'; ctx.lineWidth=2.5;
-      ctx.beginPath(); ctx.moveTo(pivX,pivY); ctx.lineTo(bobX,bobY); ctx.stroke();
-
-      /* l label */
-      ctx.fillStyle='rgba(148,163,184,0.55)'; ctx.font='13px IBM Plex Sans'; ctx.textAlign='left';
-      ctx.fillText(`l = ${lVal.toFixed(1)} м`,pivX+8,pivY+pxLen*0.50);
-
-      /* Pivot */
-      ctx.beginPath(); ctx.arc(pivX,pivY,7,0,Math.PI*2);
-      const pg=ctx.createRadialGradient(pivX-2,pivY-2,1,pivX,pivY,7);
-      pg.addColorStop(0,'#67e8f9'); pg.addColorStop(1,'#0e7490');
-      ctx.fillStyle=pg; ctx.fill();
-
-      /* Bob shadow */
-      ctx.beginPath(); ctx.ellipse(bobX,bobY+16,bobR,5,0,0,Math.PI*2);
-      ctx.fillStyle='rgba(0,0,0,0.25)'; ctx.fill();
-
-      /* Bob */
-      const bg=ctx.createRadialGradient(bobX-4,bobY-5,2,bobX,bobY,bobR);
-      bg.addColorStop(0,'#93c5fd'); bg.addColorStop(1,'#1e40af');
-      ctx.save();
-      ctx.shadowColor='#3b82f6'; ctx.shadowBlur=14;
-      ctx.beginPath(); ctx.arc(bobX,bobY,bobR,0,Math.PI*2);
-      ctx.fillStyle=bg; ctx.fill();
-      ctx.strokeStyle='rgba(34,211,238,0.55)'; ctx.lineWidth=1.5; ctx.stroke();
-      ctx.restore();
-      ctx.fillStyle='rgba(255,255,255,0.85)'; ctx.font='bold 11px IBM Plex Sans'; ctx.textAlign='center';
-      ctx.fillText('m',bobX,bobY+4);
-
-      /* g arrow */
-      const gaX=W-38, gaY1=bobY-6, gaY2=bobY+34;
-      if(gaY2<H-12){
-        ctx.save();
-        ctx.shadowColor='#f97316'; ctx.shadowBlur=6;
-        drawArrow(ctx,gaX,gaY1,gaX,gaY2,'rgba(251,146,60,0.85)',2.5,9);
-        ctx.restore();
-        ctx.fillStyle='rgba(251,146,60,0.85)'; ctx.font='bold 13px IBM Plex Sans';
-        ctx.textAlign='center'; ctx.fillText('g',gaX,gaY1-6);
-      }
-
-      /* q = φ label */
-      ctx.fillStyle='rgba(100,116,139,0.65)'; ctx.font='12.5px IBM Plex Sans'; ctx.textAlign='left';
-      ctx.fillText('Жалпылама координата: q = φ',12,H-10);
-
-      /* Period */
+      ctx.save();ctx.setLineDash([5,4]);ctx.strokeStyle='rgba(148,163,184,0.18)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(pivX,pivY);ctx.lineTo(pivX,pivY+pxLen+12);ctx.stroke();ctx.setLineDash([]);ctx.restore();
+      ctx.strokeStyle='rgba(148,163,184,0.55)';ctx.lineWidth=2.5;ctx.beginPath();ctx.moveTo(pivX,pivY);ctx.lineTo(bobX,bobY);ctx.stroke();
+      ctx.beginPath();ctx.arc(pivX,pivY,7,0,Math.PI*2);
+      const pg=ctx.createRadialGradient(pivX-2,pivY-2,1,pivX,pivY,7);pg.addColorStop(0,'#67e8f9');pg.addColorStop(1,'#0e7490');ctx.fillStyle=pg;ctx.fill();
+      const bg=ctx.createRadialGradient(bobX-4,bobY-5,2,bobX,bobY,bobR);bg.addColorStop(0,'#93c5fd');bg.addColorStop(1,'#1e40af');
+      ctx.save();ctx.shadowColor='#3b82f6';ctx.shadowBlur=14;ctx.beginPath();ctx.arc(bobX,bobY,bobR,0,Math.PI*2);ctx.fillStyle=bg;ctx.fill();ctx.strokeStyle='rgba(34,211,238,0.55)';ctx.lineWidth=1.5;ctx.stroke();ctx.restore();
+      ctx.fillStyle='rgba(255,255,255,0.85)';ctx.font='bold 11px IBM Plex Sans';ctx.textAlign='center';ctx.fillText('m',bobX,bobY+4);
       const T=2*Math.PI*Math.sqrt(lVal/gVal);
-      document.getElementById('period-display').textContent=`T ≈ ${T.toFixed(2)} с`;
-
+      const pd=document.getElementById('period-display');if(pd) pd.textContent=`T ≈ ${T.toFixed(2)} с`;
       pendAnimId=requestAnimationFrame(draw);
     }
     pendAnimId=requestAnimationFrame(draw);
   }
 
-  /* Pendulum slider listeners */
-  document.getElementById('sl-l').addEventListener('input',function(){
-    document.getElementById('l-val').textContent=parseFloat(this.value).toFixed(1)+' м';
-    pendReset();
-  });
-  document.getElementById('sl-phi0').addEventListener('input',function(){
-    document.getElementById('phi-val').textContent=this.value+'°';
-    pendReset();
-  });
-  document.getElementById('sl-g').addEventListener('input',function(){
-    document.getElementById('g-val').textContent=parseFloat(this.value).toFixed(1);
-    pendReset();
-  });
-
-  /* ─── INIT ─── */
   window.addEventListener('load', () => {
-    /* Wait for MathJax */
     const tryMJ = () => {
       if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise().then(() => {
-          startGyroAnim();
-          drawZhukovsky();
-        });
-      } else {
-        setTimeout(tryMJ, 200);
-      }
+        MathJax.typesetPromise().then(() => { startGyroAnim(); drawZhukovsky(); });
+      } else { setTimeout(tryMJ, 200); }
     };
     tryMJ();
   });
-
-  window.addEventListener('resize', () => {
-    drawZhukovsky();
-  });
+  window.addEventListener('resize', () => { drawZhukovsky(); });
   </script>
-</body>
-</html>
 </body>
 </html>

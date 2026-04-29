@@ -202,6 +202,28 @@
     .touch-btn{width:64px;height:64px;border-radius:50%;border:2px solid rgba(56,189,248,0.4);background:rgba(56,189,248,0.1);color:white;font-size:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-user-select:none;transition:.15s;}
     .touch-btn:active{background:rgba(56,189,248,0.3);border-color:rgba(56,189,248,0.8);}
 
+
+
+    /* ══ ORBITAL DOCKING GAME ══ */
+    .dock-section{max-width:1080px;margin:0 auto;padding:0 25px 80px;position:relative;z-index:1;}
+    .dock-card{border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(2,8,23,0.96),rgba(14,22,54,0.92));border:1px solid rgba(125,211,252,0.25);box-shadow:0 30px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(125,211,252,0.1);}
+    .dock-header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:12px;}
+    .dock-title-wrap{display:flex;align-items:center;gap:12px;}
+    .dock-title{font-family:'Orbitron',sans-serif;font-size:18px;color:white;}
+    .dock-badge{padding:4px 12px;border-radius:999px;background:rgba(125,211,252,0.13);border:1px solid rgba(125,211,252,0.3);color:#bae6fd;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+    .dock-stats{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+    .dock-stat{display:flex;flex-direction:column;align-items:center;}
+    .dock-label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+    .dock-value{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--accent);font-weight:900;}
+    .dock-value.safe{color:#22c55e;}.dock-value.warn{color:#f59e0b;}.dock-value.danger{color:#ef4444;}
+    #dock-canvas{display:block;width:100%;height:auto;background:#020817;cursor:none;}
+    .dock-controls{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-top:1px solid rgba(255,255,255,0.08);gap:12px;flex-wrap:wrap;}
+    .dock-touch{display:none;gap:12px;align-items:center;justify-content:center;padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;}
+    .dock-touch-btn{width:58px;height:58px;border-radius:18px;border:2px solid rgba(56,189,248,0.38);background:rgba(56,189,248,0.1);color:white;font-size:20px;font-family:'Orbitron',sans-serif;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-user-select:none;transition:.15s;}
+    .dock-touch-btn:active{background:rgba(56,189,248,0.3);border-color:rgba(56,189,248,0.85);transform:scale(.96);}
+    .dock-tip{color:var(--muted);font-size:13px;line-height:1.6;}
+    @media(max-width:960px){.dock-touch{display:flex}.dock-controls .ctrl-hint{display:none}.dock-stats{gap:12px}.dock-value{font-size:16px}}
+
     /* ══ AI CHAT ══ */
     .ai-section{max-width:1080px;margin:0 auto;padding:0 25px 80px;position:relative;z-index:1;}
     .ai-card{border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(2,8,23,0.97),rgba(8,16,42,0.95));border:1px solid rgba(56,189,248,0.22);box-shadow:0 30px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(56,189,248,0.08);position:relative;}
@@ -460,6 +482,48 @@
         <button class="game-btn secondary-btn" onclick="togglePause()" data-i18n="btn_pause">⏸ Пауза</button>
         <button class="game-btn" onclick="restartGame()" data-i18n="btn_restart">🔄 Қайта бастау</button>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ORBITAL DOCKING GAME -->
+<div class="dock-section reveal">
+  <div class="section-header" style="margin-bottom:28px;">
+    <div class="section-tag">Simulation Game</div>
+    <h2 class="section-title">🛰️ Orbital Docking</h2>
+    <p class="section-sub">Control a spacecraft with inertia. Dock slowly with the space station — too fast means crash.</p>
+  </div>
+  <div class="dock-card">
+    <div class="dock-header">
+      <div class="dock-title-wrap">
+        <span style="font-size:22px;">🛰️</span>
+        <span class="dock-title">QAINAR DOCKING SIM</span>
+        <span class="dock-badge">ORBITAL PHYSICS</span>
+      </div>
+      <div class="dock-stats">
+        <div class="dock-stat"><div class="dock-label">Time</div><div class="dock-value" id="dock-time">0.0s</div></div>
+        <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
+        <div class="dock-stat"><div class="dock-label">Speed</div><div class="dock-value safe" id="dock-speed">0.00</div></div>
+        <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
+        <div class="dock-stat"><div class="dock-label">Best</div><div class="dock-value" id="dock-best" style="color:#fbbf24;">—</div></div>
+      </div>
+    </div>
+    <canvas id="dock-canvas" height="420"></canvas>
+    <div class="dock-touch">
+      <div class="dock-touch-btn" id="dock-left">↺</div>
+      <div class="dock-touch-btn" id="dock-thrust">▲</div>
+      <div class="dock-touch-btn" id="dock-brake">▼</div>
+      <div class="dock-touch-btn" id="dock-right">↻</div>
+    </div>
+    <div class="dock-controls">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <div class="ctrl-hint"><span class="key-badge">W / ↑</span><span>thrust</span></div>
+        <div class="ctrl-hint"><span class="key-badge">S / ↓</span><span>brake</span></div>
+        <div class="ctrl-hint"><span class="key-badge">A D</span><span>rotate</span></div>
+      </div>
+      <div class="dock-tip">Docking rule: speed under <b style="color:#22c55e;">0.70</b> near the port = success.</div>
+      <button class="game-btn" onclick="restartDocking()">🔄 Restart Docking</button>
     </div>
   </div>
 </div>
@@ -875,6 +939,136 @@ applyLang(lang);
   window.restartGame=function(){state='idle';initObjects();state='playing';lastTime=performance.now();};
   window.togglePause=function(){if(state==='playing')state='paused';else if(state==='paused')state='playing';const btn=document.querySelector('[data-i18n="btn_pause"]');if(btn)btn.textContent=state==='paused'?'▶ Жалғасу':'⏸ Пауза';};
   initObjects();lastTime=performance.now();animId=requestAnimationFrame(loop);
+})();
+</script>
+
+
+
+<!-- ══════════ ORBITAL DOCKING GAME ══════════ -->
+<script>
+(function(){
+  const canvas=document.getElementById('dock-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const timeEl=document.getElementById('dock-time');
+  const speedEl=document.getElementById('dock-speed');
+  const bestEl=document.getElementById('dock-best');
+  let W=0,H=420,last=0,gameState='idle',timer=0;
+  let best=parseFloat(localStorage.getItem('dock_best_time')||'0');
+  let ship,stars=[],particles=[];
+  const keys={};
+  const touch={left:false,right:false,thrust:false,brake:false};
+  const port={x:0,y:0,w:78,h:38};
+
+  function setTouch(id,key){
+    const el=document.getElementById(id);if(!el)return;
+    el.addEventListener('touchstart',e=>{e.preventDefault();touch[key]=true;if(gameState!=='playing')resetDocking(true);},{passive:false});
+    el.addEventListener('touchend',e=>{e.preventDefault();touch[key]=false;},{passive:false});
+    el.addEventListener('mousedown',()=>{touch[key]=true;if(gameState!=='playing')resetDocking(true);});
+    el.addEventListener('mouseup',()=>touch[key]=false);
+    el.addEventListener('mouseleave',()=>touch[key]=false);
+  }
+  setTouch('dock-left','left');setTouch('dock-right','right');setTouch('dock-thrust','thrust');setTouch('dock-brake','brake');
+
+  document.addEventListener('keydown',e=>{
+    keys[e.key.toLowerCase()]=true;
+    if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(e.key.toLowerCase())){
+      if(gameState!=='playing')resetDocking(true);
+    }
+  });
+  document.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+  canvas.addEventListener('click',()=>{if(gameState!=='playing')resetDocking(true);});
+
+  function resize(){
+    W=canvas.offsetWidth||900;
+    H=Math.min(420,W*0.55);
+    canvas.width=W;canvas.height=H;
+    port.x=W-78;port.y=H/2-19;
+  }
+  function resetDocking(start=false){
+    resize();timer=0;particles=[];gameState=start?'playing':'idle';
+    ship={x:80,y:H/2,angle:0,vx:0,vy:0,r:16,fuel:100};
+    stars=[];
+    for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.3,a:Math.random()*0.8+0.2});
+    updateStats();
+  }
+  window.restartDocking=function(){resetDocking(true);};
+  function updateStats(){
+    const sp=Math.hypot(ship.vx,ship.vy);
+    timeEl.textContent=timer.toFixed(1)+'s';
+    speedEl.textContent=sp.toFixed(2);
+    speedEl.className='dock-value '+(sp<0.7?'safe':sp<1.25?'warn':'danger');
+    bestEl.textContent=best?best.toFixed(1)+'s':'—';
+  }
+  function addParticles(x,y,n,color){
+    for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,sp=Math.random()*120+30;particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:0.8,color});}
+  }
+  function drawStation(){
+    ctx.save();ctx.translate(W-110,H/2);
+    ctx.shadowColor='rgba(56,189,248,0.45)';ctx.shadowBlur=18;
+    ctx.strokeStyle='rgba(56,189,248,0.85)';ctx.lineWidth=2;
+    ctx.fillStyle='rgba(56,189,248,0.08)';
+    ctx.fillRect(-18,-60,36,120);ctx.strokeRect(-18,-60,36,120);
+    ctx.fillStyle='rgba(148,163,184,0.2)';ctx.strokeStyle='rgba(226,232,240,0.6)';
+    ctx.fillRect(-96,-12,78,24);ctx.strokeRect(-96,-12,78,24);
+    ctx.fillRect(18,-12,78,24);ctx.strokeRect(18,-12,78,24);
+    ctx.fillStyle='rgba(34,197,94,0.18)';ctx.strokeStyle='rgba(34,197,94,0.9)';ctx.lineWidth=3;
+    ctx.strokeRect(-8,-22,52,44);
+    ctx.fillStyle='rgba(34,197,94,0.9)';ctx.font='11px Orbitron,sans-serif';ctx.textAlign='center';ctx.fillText('DOCK',18,-30);
+    ctx.restore();
+  }
+  function drawShip(thrust){
+    ctx.save();ctx.translate(ship.x,ship.y);ctx.rotate(ship.angle);
+    if(thrust){
+      const flame=20+Math.random()*12;
+      const g=ctx.createLinearGradient(-18,0,-18-flame,0);g.addColorStop(0,'rgba(251,191,36,0.95)');g.addColorStop(1,'rgba(239,68,68,0)');
+      ctx.beginPath();ctx.moveTo(-18,-6);ctx.lineTo(-18-flame,0);ctx.lineTo(-18,6);ctx.fillStyle=g;ctx.fill();
+    }
+    ctx.beginPath();ctx.moveTo(22,0);ctx.lineTo(-14,-12);ctx.lineTo(-8,0);ctx.lineTo(-14,12);ctx.closePath();
+    const bg=ctx.createLinearGradient(-16,-12,22,12);bg.addColorStop(0,'#94a3b8');bg.addColorStop(1,'#e2e8f0');ctx.fillStyle=bg;ctx.fill();ctx.strokeStyle='rgba(125,211,252,0.9)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.arc(4,0,5,0,Math.PI*2);ctx.fillStyle='rgba(56,189,248,0.7)';ctx.fill();
+    ctx.restore();
+  }
+  function drawMessage(title,sub,color){
+    ctx.fillStyle='rgba(2,8,23,0.76)';ctx.fillRect(0,0,W,H);
+    ctx.textAlign='center';ctx.fillStyle=color;ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.fillText(title,W/2,H/2-28);
+    ctx.fillStyle='rgba(203,213,225,0.9)';ctx.font=`${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText(sub,W/2,H/2+12);
+    ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(12,W*0.026)}px Orbitron,sans-serif`;ctx.fillText('[ Click or press W/A/S/D to restart ]',W/2,H/2+45);
+  }
+  function drawIdle(){drawMessage('🛰️ ORBITAL DOCKING','Use inertia carefully. Dock slowly with the green port.','#7dd3fc');}
+  function loop(t){
+    requestAnimationFrame(loop);const dt=Math.min((t-last)/1000,0.05);last=t;if(canvas.offsetWidth!==W)resize();
+    ctx.fillStyle='#020817';ctx.fillRect(0,0,W,H);
+    stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,210,255,${s.a})`;ctx.fill();});
+    drawStation();
+    ctx.strokeStyle='rgba(34,197,94,0.25)';ctx.setLineDash([6,8]);ctx.strokeRect(W-118,H/2-34,78,68);ctx.setLineDash([]);
+    if(gameState==='idle'){drawShip(false);drawIdle();return;}
+    if(gameState==='playing'){
+      timer+=dt;
+      const left=keys['a']||keys['arrowleft']||touch.left;
+      const right=keys['d']||keys['arrowright']||touch.right;
+      const thrust=keys['w']||keys['arrowup']||touch.thrust;
+      const brake=keys['s']||keys['arrowdown']||touch.brake;
+      if(left)ship.angle-=2.9*dt;if(right)ship.angle+=2.9*dt;
+      if(thrust){ship.vx+=Math.cos(ship.angle)*95*dt;ship.vy+=Math.sin(ship.angle)*95*dt;}
+      if(brake){ship.vx*=Math.pow(0.08,dt);ship.vy*=Math.pow(0.08,dt);}
+      ship.vx*=Math.pow(0.985,dt);ship.vy*=Math.pow(0.985,dt);
+      ship.x+=ship.vx*dt;ship.y+=ship.vy*dt;
+      if(ship.y<18){ship.y=18;ship.vy=Math.abs(ship.vy)*0.45;}if(ship.y>H-18){ship.y=H-18;ship.vy=-Math.abs(ship.vy)*0.45;}
+      if(ship.x<18){ship.x=18;ship.vx=Math.abs(ship.vx)*0.45;}if(ship.x>W-18){ship.x=W-18;ship.vx=-Math.abs(ship.vx)*0.45;}
+      const sp=Math.hypot(ship.vx,ship.vy);
+      const inDockZone=ship.x>W-118&&ship.x<W-40&&ship.y>H/2-34&&ship.y<H/2+34;
+      if(inDockZone){
+        if(sp<0.7&&Math.abs(Math.sin(ship.angle))<0.35){gameState='success';addParticles(ship.x,ship.y,40,'#22c55e');if(!best||timer<best){best=timer;localStorage.setItem('dock_best_time',String(best));}}
+        else if(sp>1.25){gameState='crash';addParticles(ship.x,ship.y,50,'#ef4444');}
+      }
+      updateStats();drawShip(thrust);
+    } else {drawShip(false);}
+    particles=particles.filter(p=>{p.life-=dt;if(p.life<=0)return false;p.x+=p.vx*dt;p.y+=p.vy*dt;ctx.beginPath();ctx.arc(p.x,p.y,3*p.life,0,Math.PI*2);ctx.fillStyle=p.color;ctx.globalAlpha=Math.max(0,p.life);ctx.fill();ctx.globalAlpha=1;return true;});
+    if(gameState==='success')drawMessage('✅ DOCKING SUCCESS',`Mission time: ${timer.toFixed(1)}s`,'#22c55e');
+    if(gameState==='crash')drawMessage('💥 CRASH','Approach slower and brake before the docking port.','#ef4444');
+  }
+  resetDocking(false);requestAnimationFrame(loop);
 })();
 </script>
 

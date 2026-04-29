@@ -63,11 +63,8 @@
 
     .hero{position:relative;z-index:1;min-height:100vh;padding:140px 80px 80px;display:flex;align-items:center;justify-content:space-between;gap:60px;}
     .hero-content{max-width:640px;}
-
-    /* Currently Learning badge */
     .learning-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;margin-bottom:14px;border-radius:999px;background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.3);color:#6ee7b7;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;opacity:0;animation:fadeUp .7s 0s ease forwards;}
     .learning-dot{width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399;animation:pulse 1.5s infinite;flex-shrink:0;}
-
     .tag{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;margin-bottom:26px;border-radius:999px;background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.35);color:#7dd3fc;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;opacity:0;animation:fadeUp .7s .1s ease forwards;}
     .tag-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s infinite;}
     .hero h1{font-family:'Orbitron',sans-serif;font-size:66px;line-height:1.07;margin-bottom:24px;opacity:0;animation:fadeUp .8s .25s ease forwards;}
@@ -93,8 +90,6 @@
     .copy-email:hover{background:rgba(56,189,248,0.18);border-color:rgba(56,189,248,0.5);transform:translateY(-4px);}
     .copy-tooltip{position:absolute;bottom:52px;left:50%;transform:translateX(-50%);background:rgba(56,189,248,0.9);color:#020817;font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;}
     .copy-email.copied .copy-tooltip{opacity:1;}
-
-    /* Scroll indicator */
     .scroll-indicator{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp .8s 1.3s ease forwards;cursor:pointer;transition:opacity .4s;}
     .scroll-indicator span{font-size:10px;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;font-weight:800;}
     .scroll-arrow{width:24px;height:24px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg);animation:bounce 1.5s infinite;}
@@ -183,6 +178,76 @@
     .card h3{color:var(--accent);margin-bottom:12px;font-family:'Orbitron',sans-serif;font-size:16px;}
     .card p{color:#dbeafe;line-height:1.7;font-size:14px;}
 
+    /* ══════════════════════════════════
+       ROCKET GAME STYLES
+    ══════════════════════════════════ */
+    .game-section{
+      max-width:1080px;margin:0 auto;padding:0 25px 80px;position:relative;z-index:1;
+    }
+    .game-card{
+      border-radius:28px;overflow:hidden;
+      background:linear-gradient(135deg,rgba(2,8,23,0.95),rgba(10,20,50,0.9));
+      border:1px solid rgba(56,189,248,0.25);
+      box-shadow:0 30px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(56,189,248,0.1);
+    }
+    .game-header{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 28px;border-bottom:1px solid rgba(255,255,255,0.08);
+      flex-wrap:wrap;gap:12px;
+    }
+    .game-title-wrap{display:flex;align-items:center;gap:12px;}
+    .game-title{font-family:'Orbitron',sans-serif;font-size:18px;color:white;}
+    .game-badge{padding:4px 12px;border-radius:999px;background:rgba(56,189,248,0.15);border:1px solid rgba(56,189,248,0.3);color:#7dd3fc;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+    .game-stats-bar{display:flex;gap:20px;align-items:center;}
+    .gs-item{display:flex;flex-direction:column;align-items:center;}
+    .gs-label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+    .gs-val{font-family:'Orbitron',sans-serif;font-size:20px;color:var(--accent);font-weight:900;}
+    .gs-item.lives .gs-val{color:#f87171;}
+    .gs-item.level .gs-val{color:#f59e0b;}
+
+    #game-canvas{
+      display:block;width:100%;
+      image-rendering:pixelated;
+      cursor:none;
+    }
+    .game-controls{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:16px 28px;border-top:1px solid rgba(255,255,255,0.08);
+      flex-wrap:wrap;gap:10px;
+    }
+    .ctrl-hint{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;}
+    .key-badge{
+      display:inline-block;padding:3px 8px;border-radius:6px;
+      background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+      font-size:12px;font-weight:700;color:white;font-family:monospace;
+    }
+    .game-btn{
+      padding:10px 22px;border-radius:12px;border:none;cursor:pointer;
+      font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:white;transition:.25s;
+      box-shadow:0 6px 20px rgba(37,99,235,0.4);
+    }
+    .game-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,99,235,0.55);}
+    .game-btn.secondary-btn{
+      background:var(--glass);border:1px solid var(--glass-b);
+      box-shadow:none;
+    }
+    /* Mobile touch buttons */
+    .touch-controls{
+      display:none;
+      justify-content:space-between;align-items:center;
+      padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);
+    }
+    .touch-btn{
+      width:64px;height:64px;border-radius:50%;border:2px solid rgba(56,189,248,0.4);
+      background:rgba(56,189,248,0.1);color:white;font-size:24px;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;user-select:none;-webkit-user-select:none;
+      transition:.15s;active:background:rgba(56,189,248,0.3);
+    }
+    .touch-btn:active{background:rgba(56,189,248,0.3);border-color:rgba(56,189,248,0.8);}
+
     /* CTA */
     .cta-section{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:20px 25px 80px;}
     .cta-card{padding:56px 48px;border-radius:32px;background:linear-gradient(135deg,rgba(56,189,248,0.08),rgba(37,99,235,0.05));border:1px solid rgba(56,189,248,0.2);backdrop-filter:blur(20px);text-align:center;position:relative;overflow:hidden;}
@@ -244,6 +309,8 @@
       .cta-card{padding:40px 24px;}
       .cta-card h2{font-size:24px;}
       .scroll-indicator{display:none;}
+      .touch-controls{display:flex;}
+      .game-controls .ctrl-hint{display:none;}
     }
     @media(max-width:500px){.project-cards{grid-template-columns:1fr;}}
   </style>
@@ -291,11 +358,12 @@
   </button>
 </header>
 
+<!-- HERO -->
 <section class="hero" id="hero-section">
   <div class="hero-content">
     <div class="learning-badge">
       <span class="learning-dot"></span>
-      <span data-i18n="learning_label">Currently learning:</span>&nbsp;<span style="color:white;font-weight:900;" data-i18n="learning_topic">Қатты дене механика</span>
+      <span data-i18n="learning_label">Currently learning:</span>&nbsp;<span style="color:white;font-weight:900;" data-i18n="learning_topic">Қатты дене механикасы</span>
     </div>
     <div class="tag"><span class="tag-dot"></span><span data-i18n="hero_tag">Space Engineering Portfolio</span></div>
     <h1><span data-i18n="hero_greeting">Hi, I'm </span><span class="name" id="typewriter-name">Qainar</span><span class="cursor-blink"></span> 🚀</h1>
@@ -331,6 +399,7 @@
   </div>
 </section>
 
+<!-- BAIKONUR -->
 <div class="section" style="padding-bottom:0;">
   <div class="baikonur-card reveal">
     <div class="bk-icon">🛸</div>
@@ -343,6 +412,7 @@
   </div>
 </div>
 
+<!-- VISITOR -->
 <div class="section" style="padding-bottom:0;">
   <div class="visitor-bar reveal">
     <div class="visitor-dot"></div>
@@ -351,6 +421,65 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════
+     ROCKET GAME SECTION
+═══════════════════════════════════════════ -->
+<div class="game-section reveal">
+  <div class="section-header" style="margin-bottom:28px;">
+    <div class="section-tag" data-i18n="game_tag">Mini Game</div>
+    <h2 class="section-title" data-i18n="game_title">🚀 Байқоңыр миссиясы</h2>
+    <p class="section-sub" data-i18n="game_sub">Зымыранды астероидтардан аулақтат — Байқоңырға жет!</p>
+  </div>
+  <div class="game-card">
+    <div class="game-header">
+      <div class="game-title-wrap">
+        <span style="font-size:22px;">🚀</span>
+        <span class="game-title" data-i18n="game_name">BAIKONUR RUN</span>
+        <span class="game-badge" data-i18n="game_badge">ҒАРЫШ ОЙЫНЫ</span>
+      </div>
+      <div class="game-stats-bar">
+        <div class="gs-item">
+          <div class="gs-label" data-i18n="gs_score">Ұпай</div>
+          <div class="gs-val" id="score-display">0</div>
+        </div>
+        <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
+        <div class="gs-item level">
+          <div class="gs-label" data-i18n="gs_level">Деңгей</div>
+          <div class="gs-val" id="level-display">1</div>
+        </div>
+        <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
+        <div class="gs-item lives">
+          <div class="gs-label" data-i18n="gs_lives">Өмір</div>
+          <div class="gs-val" id="lives-display">❤️❤️❤️</div>
+        </div>
+        <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
+        <div class="gs-item">
+          <div class="gs-label" data-i18n="gs_best">Рекорд</div>
+          <div class="gs-val" id="best-display" style="color:#f59e0b;">0</div>
+        </div>
+      </div>
+    </div>
+    <canvas id="game-canvas" height="420"></canvas>
+    <div class="touch-controls">
+      <div class="touch-btn" id="touch-left">◀</div>
+      <div style="text-align:center;color:var(--muted);font-size:12px;" data-i18n="touch_hint">Бағыттау үшін басыңыз</div>
+      <div class="touch-btn" id="touch-right">▶</div>
+    </div>
+    <div class="game-controls">
+      <div style="display:flex;gap:16px;flex-wrap:wrap;">
+        <div class="ctrl-hint"><span class="key-badge">←</span><span class="key-badge">→</span><span data-i18n="ctrl_move">жылжыту</span></div>
+        <div class="ctrl-hint"><span class="key-badge">SPACE</span><span data-i18n="ctrl_shoot">атқылау</span></div>
+        <div class="ctrl-hint"><span class="key-badge">P</span><span data-i18n="ctrl_pause">пауза</span></div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="game-btn secondary-btn" onclick="togglePause()" data-i18n="btn_pause">⏸ Пауза</button>
+        <button class="game-btn" onclick="restartGame()" data-i18n="btn_restart">🔄 Қайта бастау</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
 <section class="section">
   <div class="section-header reveal">
     <div class="section-tag" data-i18n="about_tag">About Me</div>
@@ -360,7 +489,7 @@
   <div class="about-grid">
     <div class="about-card reveal reveal-delay-1">
       <h3 data-i18n="about_card1_title">My Story</h3>
-      <p data-i18n="about_card1_desc">I'm Qainar, a 2nd-year student of Space Engineering &amp; Technology at Kazakh National University, Almaty, Kazakhstan. Passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.</p>
+      <p data-i18n="about_card1_desc">I'm Qainar, a 2nd-year student of Space Engineering & Technology at Kazakh National University, Almaty, Kazakhstan. Passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.</p>
       <div class="timeline">
         <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong data-i18n="tl1_title">CanSat Project</strong><span data-i18n="tl1_desc">Built and launched a small satellite simulation</span></div></div>
         <div class="tl-item"><div class="tl-dot"></div><div class="tl-text"><strong data-i18n="tl2_title">Web Development</strong><span data-i18n="tl2_desc">Created this portfolio with Firebase & JavaScript</span></div></div>
@@ -380,6 +509,7 @@
   </div>
 </section>
 
+<!-- TECH -->
 <section class="section" style="padding-top:0;">
   <div class="section-header reveal">
     <div class="section-tag" data-i18n="tech_tag">Tech Stack</div>
@@ -399,6 +529,7 @@
   </div>
 </section>
 
+<!-- PROJECTS -->
 <section class="section" style="padding-top:0;">
   <div class="section-header reveal">
     <div class="section-tag" data-i18n="proj_tag">My Work</div>
@@ -413,6 +544,7 @@
   </div>
 </section>
 
+<!-- FOCUS -->
 <section class="section" style="padding-top:0">
   <div class="section-header reveal">
     <div class="section-tag" data-i18n="focus_tag">Focus Areas</div>
@@ -450,14 +582,633 @@
 <button id="back-top" title="Back to top">↑</button>
 <footer>© 2026 Qainar's Website · Space Engineering · Kazakhstan 🇰🇿</footer>
 
+<!-- ══════════════════════════════════════════════════
+     TRANSLATIONS
+══════════════════════════════════════════════════ -->
 <script>
-const T={en:{nav_home:"Home",nav_projects:"Projects",nav_contact:"Contact",btn_login:"Login",btn_logout:"Logout",learning_label:"Currently learning:",learning_topic:"Қатты дене механика",hero_tag:"Space Engineering Portfolio",hero_greeting:"Hi, I'm ",hero_desc:"Space engineering student from Kazakhstan. Building real skills in physics, mathematics, and web development — with one goal: make Kazakhstan a space nation by 2050.",btn_projects:"Explore Projects",btn_spacelog:"🌌 Space Log",btn_google_login:"Login with Google",stat1:"Projects",stat2:"Languages",stat3:"CanSat Mission",scroll_hint:"SCROLL",bk_title:"Baikonur 2050 — My Mission",bk_desc:"Kazakhstan's lease of Baikonur Cosmodrome expires in 2050. I want to be one of the scientists ready to build an independent Kazakh space program when that day comes.",bk_link:"Read the full story →",visitor_text:"Total visitors:",about_tag:"About Me",about_title:"Who I Am",about_sub:"A student on a mission to reach the stars — one skill at a time.",about_card1_title:"My Story",about_card1_desc:"I'm Qainar, a 2nd-year student of Space Engineering & Technology at Kazakh National University, Almaty, Kazakhstan. Passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.",tl1_title:"CanSat Project",tl1_desc:"Built and launched a small satellite simulation",tl2_title:"Web Development",tl2_desc:"Created this portfolio with Firebase & JavaScript",tl3_title:"The 2050 Mission",tl3_desc:"Baikonur lease ends — Kazakhstan must be ready",about_card2_title:"Skills",about_card2_desc:"Currently growing in these areas:",skill1:"Theoretical Mechanics",skill2:"Strength of Materials",skill3:"Space Engineering",skill4:"Kazakh · English · Chinese · Russian",tech_tag:"Tech Stack",tech_title:"Tools I Use",tech_sub:"The technologies powering my projects.",proj_tag:"My Work",proj_title:"Featured Projects",proj_sub:"A glimpse of what I've built so far.",proj1_tag:"Space",proj1_title:"CanSat Mission",proj1_desc:"Miniature satellite simulation measuring atmospheric data during descent.",proj2_tag:"Physics",proj2_title:"Physics Notes",proj2_desc:"Mechanics, electromagnetism and key formulas with step-by-step methods.",proj3_tag:"Web",proj3_title:"This Portfolio",proj3_desc:"Full-stack portfolio with Firebase auth, real-time comments and 3 languages.",proj4_tag:"Mission",proj4_title:"Space Log",proj4_desc:"Kazakhstan, Baikonur 2050, and my personal mission to the stars.",focus_tag:"Focus Areas",section_title:"What I Build",section_sub:"The main fields I am currently building step by step.",card1_title:"Space Systems",card1_desc:"Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.",card2_title:"Physics",card2_desc:"Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.",card3_title:"Web Development",card3_desc:"HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.",cta_tag:"Get In Touch",cta_title:"Let's Connect 🚀",cta_desc:"Have a question, want to collaborate on a project, or just want to say hi? I'd love to hear from you.",cta_btn1:"Leave a Comment",cta_btn2:"Send Email",cta_email_hint:'Or reach me directly at <a href="mailto:kkay05925@gmail.com">kkay05925@gmail.com</a>',chat_title:"Latest Comments",chat_loading:"Loading…",chat_write:"Write a Comment"},zh:{nav_home:"首页",nav_projects:"项目",nav_contact:"联系",btn_login:"登录",btn_logout:"退出",learning_label:"正在学习：",learning_topic:"Қатты дене механика",hero_tag:"航天工程作品集",hero_greeting:"你好，我是 ",hero_desc:"来自哈萨克斯坦的航天工程专业学生。在物理、数学和网页开发领域积累真实技能——目标只有一个：2050年前让哈萨克斯坦成为航天大国。",btn_projects:"探索项目",btn_spacelog:"🌌 太空日志",btn_google_login:"使用 Google 登录",stat1:"项目",stat2:"语言",stat3:"CanSat 任务",scroll_hint:"下滑",bk_title:"拜科努尔2050——我的使命",bk_desc:"哈萨克斯坦与俄罗斯的拜科努尔租约将于2050年到期。我希望成为那一天能够建立独立哈萨克航天计划的科学家之一。",bk_link:"阅读完整故事 →",visitor_text:"总访客数：",about_tag:"关于我",about_title:"我是谁",about_sub:"一个以触碰星空为目标、一步一步积累技能的学生。",about_card1_title:"我的故事",about_card1_desc:"我是 Qainar，哈萨克国立大学航天专业与技术大二学生，来自哈萨克斯坦阿拉木图。热爱航天、物理和技术。这个网站记录我的学习旅程。",tl1_title:"CanSat 项目",tl1_desc:"构建并发射了小卫星模拟装置",tl2_title:"网页开发",tl2_desc:"用 Firebase 和 JavaScript 搭建了这个作品集",tl3_title:"2050年使命",tl3_desc:"拜科努尔租约到期——哈萨克斯坦必须做好准备",about_card2_title:"技能",about_card2_desc:"目前正在提升的方向：",skill1:"理论力学",skill2:"材料力学",skill3:"航天工程",skill4:"哈萨克语 · 英语 · 汉语 · 俄语",tech_tag:"技术栈",tech_title:"我使用的工具",tech_sub:"驱动我项目的技术。",proj_tag:"我的作品",proj_title:"精选项目",proj_sub:"迄今为止我构建的内容一瞥。",proj1_tag:"航天",proj1_title:"CanSat 任务",proj1_desc:"在下降过程中测量大气数据的小型卫星模拟器。",proj2_tag:"物理",proj2_title:"物理笔记",proj2_desc:"力学、电磁学和关键公式，附逐步解题方法。",proj3_tag:"网页",proj3_title:"这个作品集",proj3_desc:"具有 Firebase 认证、实时评论和三语言支持的全栈作品集。",proj4_tag:"使命",proj4_title:"太空日志",proj4_desc:"哈萨克斯坦、拜科努尔2050和我的个人航天使命。",focus_tag:"专注领域",section_title:"我在做什么",section_sub:"目前正在一步步构建的主要方向。",card1_title:"航天系统",card1_desc:"航空航天基础、CanSat 实践、卫星概念及工程项目思维。",card2_title:"物理学",card2_desc:"力学、动力学、电磁学、数学建模与解题实践。",card3_title:"网页开发",card3_desc:"HTML、CSS、JavaScript、Firebase，构建交互式网站与实际数据库应用。",cta_tag:"联系我",cta_title:"我们来聊聊 🚀",cta_desc:"有问题、想合作项目，或者只是想打个招呼？我很乐意听到你的消息。",cta_btn1:"留言评论",cta_btn2:"发送邮件",cta_email_hint:'或直接联系我：<a href="mailto:kkay05925@gmail.com">kkay05925@gmail.com</a>',chat_title:"最新留言",chat_loading:"加载中…",chat_write:"写留言"},kz:{nav_home:"Басты бет",nav_projects:"Жобалар",nav_contact:"Байланыс",btn_login:"Кіру",btn_logout:"Шығу",learning_label:"Қазір үйренуде:",learning_topic:"Қатты дене механика",hero_tag:"Ғарыш инженериясы портфолиосы",hero_greeting:"Сәлем, мен ",hero_desc:"Қазақстаннан келген ғарыш инженериясы студентімін. Физика, математика және веб-әзірлеуде нақты дағдылар жинап жатырмын — бір мақсатпен: 2050 жылға дейін Қазақстанды ғарыш державасына айналдыру.",btn_projects:"Жобаларды қарау",btn_spacelog:"🌌 Ғарыш журналы",btn_google_login:"Google арқылы кіру",stat1:"Жобалар",stat2:"Тілдер",stat3:"CanSat миссиясы",scroll_hint:"АЙНАЛДЫРУ",bk_title:"Байқоңыр 2050 — Менің миссиям",bk_desc:"Қазақстанның Байқоңыр ғарыш айлағын жалдау шарты 2050 жылы аяқталады. Мен сол күні тәуелсіз қазақ ғарыш бағдарламасын құруға дайын ғалымдардың бірі болғым келеді.",bk_link:"Толық оқу →",visitor_text:"Барлық келушілер:",about_tag:"Мен туралы",about_title:"Мен кіммін",about_sub:"Жұлдыздарға жету мақсатымен, қадамма-қадам дағды жинайтын студент.",about_card1_title:"Менің тарихым",about_card1_desc:"Мен Қайнармын, Қазақ ұлттық университетінің ғарыш инженериясы мен технологиясы мамандалығының 2-курс студентімін, Алматыдан. Аэроғарыш, физика және технологияға құмармын. Бұл сайтты оқу жолымды бекіту үшін жасадым.",tl1_title:"CanSat жобасы",tl1_desc:"Шағын жерсерік симуляциясын жасадым",tl2_title:"Веб-әзірлеу",tl2_desc:"Firebase және JavaScript-пен портфолио жасадым",tl3_title:"2050 жылғы миссия",tl3_desc:"Байқоңыр жалдауы аяқталады — Қазақстан дайын болуы тиіс",about_card2_title:"Дағдылар",about_card2_desc:"Қазір дамытып жатқан салалар:",skill1:"Теориялық механика",skill2:"Материалдар механикасы",skill3:"Ғарыш инженериясы",skill4:"Қазақша · Ағылшынша · Қытайша · Орысша",tech_tag:"Технологиялар",tech_title:"Мен қолданатын құралдар",tech_sub:"Жобаларымды қуаттандыратын технологиялар.",proj_tag:"Менің жұмыстарым",proj_title:"Таңдаулы жобалар",proj_sub:"Мен жасаған нәрселерге бір шолу.",proj1_tag:"Ғарыш",proj1_title:"CanSat миссиясы",proj1_desc:"Түсу кезінде атмосфералық деректерді өлшейтін шағын жерсерік симуляциясы.",proj2_tag:"Физика",proj2_title:"Физика жазбалары",proj2_desc:"Механика, электромагнетизм және негізгі формулалар.",proj3_tag:"Веб",proj3_title:"Бұл портфолио",proj3_desc:"Firebase аутентификациясы, нақты уақыттағы пікірлер және 3 тілді қолдайтын портфолио.",proj4_tag:"Миссия",proj4_title:"Ғарыш журналы",proj4_desc:"Қазақстан, Байқоңыр 2050 және жұлдыздарға жетудің жеке миссиям.",focus_tag:"Негізгі бағыттар",section_title:"Мен не жасаймын",section_sub:"Қазір қадамма-қадам дамытып жатқан салаларым.",card1_title:"Ғарыш жүйелері",card1_desc:"Аэроғарыш негіздері, CanSat тәжірибесі, жерсерік тұжырымдамалары және инженерлік жоба ойлауы.",card2_title:"Физика",card2_desc:"Механика, динамика, электромагнетизм, математикалық модельдеу және есеп шешу практикасы.",card3_title:"Веб-әзірлеу",card3_desc:"HTML, CSS, JavaScript, Firebase, интерактивті сайттар және дерекқормен байланысқан қосымшалар.",cta_tag:"Байланыс",cta_title:"Хабарласайық 🚀",cta_desc:"Сұрақ бар ма, бірлесіп жоба жасағыңыз келе ме, немесе жай сәлем айтқыңыз келе ме? Хабарыңызды күтемін.",cta_btn1:"Пікір қалдыру",cta_btn2:"Email жіберу",cta_email_hint:'Немесе тікелей хабарласыңыз: <a href="mailto:kkay05925@gmail.com">kkay05925@gmail.com</a>',chat_title:"Соңғы пікірлер",chat_loading:"Жүктелуде…",chat_write:"Пікір жазу"}};
+const T={
+  en:{
+    nav_home:"Home",nav_projects:"Projects",nav_contact:"Contact",
+    btn_login:"Login",btn_logout:"Logout",
+    learning_label:"Currently learning:",learning_topic:"Rigid Body Mechanics",
+    hero_tag:"Space Engineering Portfolio",hero_greeting:"Hi, I'm ",
+    hero_desc:"Space engineering student from Kazakhstan. Building real skills in physics, mathematics, and web development — with one goal: make Kazakhstan a space nation by 2050.",
+    btn_projects:"Explore Projects",btn_spacelog:"🌌 Space Log",btn_google_login:"Login with Google",
+    stat1:"Projects",stat2:"Languages",stat3:"CanSat Mission",scroll_hint:"SCROLL",
+    bk_title:"Baikonur 2050 — My Mission",
+    bk_desc:"Kazakhstan's lease of Baikonur Cosmodrome expires in 2050. I want to be one of the scientists ready to build an independent Kazakh space program when that day comes.",
+    bk_link:"Read the full story →",visitor_text:"Total visitors:",
+    game_tag:"Mini Game",game_title:"🚀 Baikonur Mission",
+    game_sub:"Dodge asteroids with your rocket — reach Baikonur!",
+    game_name:"BAIKONUR RUN",game_badge:"SPACE GAME",
+    gs_score:"Score",gs_level:"Level",gs_lives:"Lives",gs_best:"Best",
+    ctrl_move:"move",ctrl_shoot:"shoot",ctrl_pause:"pause",
+    btn_pause:"⏸ Pause",btn_restart:"🔄 Restart",
+    touch_hint:"Tap to steer",
+    about_tag:"About Me",about_title:"Who I Am",
+    about_sub:"A student on a mission to reach the stars — one skill at a time.",
+    about_card1_title:"My Story",
+    about_card1_desc:"I'm Qainar, a 2nd-year student of Space Engineering & Technology at Kazakh National University, Almaty, Kazakhstan. Passionate about aerospace, physics, and technology. I built this website to document my learning journey and share my projects with the world.",
+    tl1_title:"CanSat Project",tl1_desc:"Built and launched a small satellite simulation",
+    tl2_title:"Web Development",tl2_desc:"Created this portfolio with Firebase & JavaScript",
+    tl3_title:"The 2050 Mission",tl3_desc:"Baikonur lease ends — Kazakhstan must be ready",
+    about_card2_title:"Skills",about_card2_desc:"Currently growing in these areas:",
+    skill1:"Theoretical Mechanics",skill2:"Strength of Materials",skill3:"Space Engineering",
+    skill4:"Kazakh · English · Chinese · Russian",
+    tech_tag:"Tech Stack",tech_title:"Tools I Use",tech_sub:"The technologies powering my projects.",
+    proj_tag:"My Work",proj_title:"Featured Projects",proj_sub:"A glimpse of what I've built so far.",
+    proj1_tag:"Space",proj1_title:"CanSat Mission",proj1_desc:"Miniature satellite simulation measuring atmospheric data during descent.",
+    proj2_tag:"Physics",proj2_title:"Physics Notes",proj2_desc:"Mechanics, electromagnetism and key formulas with step-by-step methods.",
+    proj3_tag:"Web",proj3_title:"This Portfolio",proj3_desc:"Full-stack portfolio with Firebase auth, real-time comments and 3 languages.",
+    proj4_tag:"Mission",proj4_title:"Space Log",proj4_desc:"Kazakhstan, Baikonur 2050, and my personal mission to the stars.",
+    focus_tag:"Focus Areas",section_title:"What I Build",section_sub:"The main fields I am currently building step by step.",
+    card1_title:"Space Systems",card1_desc:"Aerospace fundamentals, CanSat experience, satellite concepts, and engineering project thinking.",
+    card2_title:"Physics",card2_desc:"Mechanics, dynamics, electromagnetism, mathematical modeling, and problem-solving practice.",
+    card3_title:"Web Development",card3_desc:"HTML, CSS, JavaScript, Firebase, interactive websites, and real database-connected applications.",
+    cta_tag:"Get In Touch",cta_title:"Let's Connect 🚀",
+    cta_desc:"Have a question, want to collaborate on a project, or just want to say hi? I'd love to hear from you.",
+    cta_btn1:"Leave a Comment",cta_btn2:"Send Email",
+    cta_email_hint:'Or reach me directly at <a href="mailto:kkay05925@gmail.com">kkay05925@gmail.com</a>',
+    chat_title:"Latest Comments",chat_loading:"Loading…",chat_write:"Write a Comment"
+  },
+  zh:{
+    nav_home:"首页",nav_projects:"项目",nav_contact:"联系",
+    btn_login:"登录",btn_logout:"退出",
+    learning_label:"正在学习：",learning_topic:"刚体力学",
+    hero_tag:"航天工程作品集",hero_greeting:"你好，我是 ",
+    hero_desc:"来自哈萨克斯坦的航天工程专业学生。在物理、数学和网页开发领域积累真实技能——目标只有一个：2050年前让哈萨克斯坦成为航天大国。",
+    btn_projects:"探索项目",btn_spacelog:"🌌 太空日志",btn_google_login:"使用 Google 登录",
+    stat1:"项目",stat2:"语言",stat3:"CanSat 任务",scroll_hint:"下滑",
+    bk_title:"拜科努尔2050——我的使命",
+    bk_desc:"哈萨克斯坦与俄罗斯的拜科努尔租约将于2050年到期。我希望成为那一天能够建立独立哈萨克航天计划的科学家之一。",
+    bk_link:"阅读完整故事 →",visitor_text:"总访客数：",
+    game_tag:"小游戏",game_title:"🚀 拜科努尔任务",
+    game_sub:"驾驶火箭躲避小行星——飞向拜科努尔！",
+    game_name:"拜科努尔飞行",game_badge:"太空游戏",
+    gs_score:"分数",gs_level:"等级",gs_lives:"生命",gs_best:"最高分",
+    ctrl_move:"移动",ctrl_shoot:"射击",ctrl_pause:"暂停",
+    btn_pause:"⏸ 暂停",btn_restart:"🔄 重新开始",
+    touch_hint:"点击操控",
+    about_tag:"关于我",about_title:"我是谁",
+    about_sub:"一个以触碰星空为目标、一步一步积累技能的学生。",
+    about_card1_title:"我的故事",
+    about_card1_desc:"我是 Qainar，哈萨克国立大学航天专业与技术大二学生，来自哈萨克斯坦阿拉木图。热爱航天、物理和技术。这个网站记录我的学习旅程。",
+    tl1_title:"CanSat 项目",tl1_desc:"构建并发射了小卫星模拟装置",
+    tl2_title:"网页开发",tl2_desc:"用 Firebase 和 JavaScript 搭建了这个作品集",
+    tl3_title:"2050年使命",tl3_desc:"拜科努尔租约到期——哈萨克斯坦必须做好准备",
+    about_card2_title:"技能",about_card2_desc:"目前正在提升的方向：",
+    skill1:"理论力学",skill2:"材料力学",skill3:"航天工程",
+    skill4:"哈萨克语 · 英语 · 汉语 · 俄语",
+    tech_tag:"技术栈",tech_title:"我使用的工具",tech_sub:"驱动我项目的技术。",
+    proj_tag:"我的作品",proj_title:"精选项目",proj_sub:"迄今为止我构建的内容一瞥。",
+    proj1_tag:"航天",proj1_title:"CanSat 任务",proj1_desc:"在下降过程中测量大气数据的小型卫星模拟器。",
+    proj2_tag:"物理",proj2_title:"物理笔记",proj2_desc:"力学、电磁学和关键公式，附逐步解题方法。",
+    proj3_tag:"网页",proj3_title:"这个作品集",proj3_desc:"具有 Firebase 认证、实时评论和三语言支持的全栈作品集。",
+    proj4_tag:"使命",proj4_title:"太空日志",proj4_desc:"哈萨克斯坦、拜科努尔2050和我的个人航天使命。",
+    focus_tag:"专注领域",section_title:"我在做什么",section_sub:"目前正在一步步构建的主要方向。",
+    card1_title:"航天系统",card1_desc:"航空航天基础、CanSat 实践、卫星概念及工程项目思维。",
+    card2_title:"物理学",card2_desc:"力学、动力学、电磁学、数学建模与解题实践。",
+    card3_title:"网页开发",card3_desc:"HTML、CSS、JavaScript、Firebase，构建交互式网站与实际数据库应用。",
+    cta_tag:"联系我",cta_title:"我们来聊聊 🚀",
+    cta_desc:"有问题、想合作项目，或者只是想打个招呼？我很乐意听到你的消息。",
+    cta_btn1:"留言评论",cta_btn2:"发送邮件",
+    cta_email_hint:'或直接联系我：<a href="mailto:kkay05925@gmail.com">kkay05925@gmail.com</a>',
+    chat_title:"最新留言",chat_loading:"加载中…",chat_write:"写留言"
+  },
+  kz:{
+    nav_home:"Басты бет",nav_projects:"Жобалар",nav_contact:"Байланыс",
+    btn_login:"Кіру",btn_logout:"Шығу",
+    learning_label:"Қазір үйренуде:",learning_topic:"Қатты дене механикасы",
+    hero_tag:"Ғарыш инженериясы портфолиосы",hero_greeting:"Сәлем, мен ",
+    hero_desc:"Қазақстаннан келген ғарыш инженериясы студентімін. Физика, математика және веб-әзірлеуде нақты дағдылар жинап жатырмын — бір мақсатпен: 2050 жылға дейін Қазақстанды ғарыш державасына айналдыру.",
+    btn_projects:"Жобаларды қарау",btn_spacelog:"🌌 Ғарыш журналы",btn_google_login:"Google арқылы кіру",
+    stat1:"Жобалар",stat2:"Тілдер",stat3:"CanSat миссиясы",scroll_hint:"АЙНАЛДЫРУ",
+    bk_title:"Байқоңыр 2050 — Менің миссиям",
+    bk_desc:"Қазақстанның Байқоңыр ғарыш айлағын жалдау шарты 2050 жылы аяқталады. Мен сол күні тәуелсіз қазақ ғарыш бағдарламасын құруға дайын ғалымдардың бірі болғым келеді.",
+    bk_link:"Толық оқу →",visitor_text:"Барлық келушілер:",
+    game_tag:"Мини ойын",game_title:"🚀 Байқоңыр миссиясы",
+    game_sub:"Зымыранды астероидтардан аулақтат — Байқоңырға жет!",
+    game_name:"БАЙҚОҢЫР ЖАРЫСЫ",game_badge:"ҒАРЫШ ОЙЫНЫ",
+    gs_score:"Ұпай",gs_level:"Деңгей",gs_lives:"Өмір",gs_best:"Рекорд",
+    ctrl_move:"жылжыту",ctrl_shoot:"атқылау",ctrl_pause:"пауза",
+    btn_pause:"⏸ Пауза",btn_restart:"🔄 Қайта бастау",
+    touch_hint:"Бағыттау үшін басыңыз",
+    about_tag:"Мен туралы",about_title:"Мен кіммін",
+    about_sub:"Жұлдыздарға жету мақсатымен, қадамма-қадам дағды жинайтын студент.",
+    about_card1_title:"Менің тарихым",
+    about_card1_desc:"Мен Қайнармын, Қазақ ұлттық университетінің ғарыш инженериясы мен технологиясы мамандығының 2-курс студентімін, Алматы қаласынан. Аэроғарыш, физика және технологияға құмармын. Бұл сайтты оқу жолымды бекіту үшін жасадым.",
+    tl1_title:"CanSat жобасы",tl1_desc:"Шағын жерсерік симуляциясын жасадым және ұшырдым",
+    tl2_title:"Веб-әзірлеу",tl2_desc:"Firebase және JavaScript арқылы портфолио жасадым",
+    tl3_title:"2050 жылғы миссия",tl3_desc:"Байқоңыр жалдауы аяқталады — Қазақстан дайын болуы тиіс",
+    about_card2_title:"Дағдылар",about_card2_desc:"Қазір дамытып жатқан салалар:",
+    skill1:"Теориялық механика",skill2:"Материалдар кедергісі",skill3:"Ғарыш инженериясы",
+    skill4:"Қазақша · Ағылшынша · Қытайша · Орысша",
+    tech_tag:"Технологиялар",tech_title:"Мен қолданатын құралдар",tech_sub:"Жобаларымды қуаттандыратын технологиялар.",
+    proj_tag:"Менің жұмыстарым",proj_title:"Таңдаулы жобалар",proj_sub:"Мен жасаған нәрселерге бір шолу.",
+    proj1_tag:"Ғарыш",proj1_title:"CanSat миссиясы",proj1_desc:"Түсу кезінде атмосфералық деректерді өлшейтін шағын жерсерік симуляциясы.",
+    proj2_tag:"Физика",proj2_title:"Физика жазбалары",proj2_desc:"Механика, электромагнетизм және негізгі формулалар, қадамдық шешу әдістері.",
+    proj3_tag:"Веб",proj3_title:"Бұл портфолио",proj3_desc:"Firebase аутентификациясы, нақты уақыттағы пікірлер және 3 тілді қолдайтын портфолио.",
+    proj4_tag:"Миссия",proj4_title:"Ғарыш журналы",proj4_desc:"Қазақстан, Байқоңыр 2050 және жұлдыздарға жетудің жеке миссиям.",
+    focus_tag:"Негізгі бағыттар",section_title:"Мен не жасаймын",section_sub:"Қазір қадамма-қадам дамытып жатқан салаларым.",
+    card1_title:"Ғарыш жүйелері",card1_desc:"Аэроғарыш негіздері, CanSat тәжірибесі, жерсерік тұжырымдамалары және инженерлік жоба ойлауы.",
+    card2_title:"Физика",card2_desc:"Механика, динамика, электромагнетизм, математикалық модельдеу және есеп шешу практикасы.",
+    card3_title:"Веб-әзірлеу",card3_desc:"HTML, CSS, JavaScript, Firebase, интерактивті сайттар және дерекқормен байланысқан қосымшалар.",
+    cta_tag:"Байланыс",cta_title:"Хабарласайық 🚀",
+    cta_desc:"Сұрақ бар ма, бірлесіп жоба жасағыңыз келе ме, немесе жай сәлем айтқыңыз келе ме? Хабарыңызды күтемін.",
+    cta_btn1:"Пікір қалдыру",cta_btn2:"Email жіберу",
+    cta_email_hint:'Немесе тікелей хабарласыңыз: <a href="mailto:kkay05925@gmail.com">kkay05925@gmail.com</a>',
+    chat_title:"Соңғы пікірлер",chat_loading:"Жүктелуде…",chat_write:"Пікір жазу"
+  }
+};
 let lang=localStorage.getItem("lang")||"en";
-function applyLang(l){lang=l;localStorage.setItem("lang",l);const t=T[l];document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.getAttribute("data-i18n");if(t[k]!==undefined)el.innerHTML=t[k];});document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));document.documentElement.lang=l==="kz"?"kk":l;}
+function applyLang(l){
+  lang=l;localStorage.setItem("lang",l);
+  const t=T[l];
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+    const k=el.getAttribute("data-i18n");
+    if(t[k]!==undefined)el.innerHTML=t[k];
+  });
+  document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
+  document.documentElement.lang=l==="kz"?"kk":l;
+}
 document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>applyLang(b.dataset.lang)));
 applyLang(lang);
 </script>
 
+<!-- ══════════════════════════════════════════════════
+     ROCKET GAME ENGINE
+══════════════════════════════════════════════════ -->
+<script>
+(function(){
+  const canvas = document.getElementById('game-canvas');
+  const ctx = canvas.getContext('2d');
+  const scoreEl  = document.getElementById('score-display');
+  const livesEl  = document.getElementById('lives-display');
+  const levelEl  = document.getElementById('level-display');
+  const bestEl   = document.getElementById('best-display');
+
+  let W, H;
+  let state = 'idle'; // idle | playing | paused | gameover
+  let score=0, lives=3, level=1, bestScore=parseInt(localStorage.getItem('bk_best')||0);
+  let animId=null;
+  let lastTime=0;
+  let elapsed=0; // seconds played
+  let frameCount=0;
+
+  /* INPUT */
+  const keys={};
+  document.addEventListener('keydown', e=>{
+    keys[e.key]=true;
+    if(e.key===' '){ e.preventDefault(); shoot(); }
+    if(e.key==='p'||e.key==='P') togglePause();
+    if(state==='gameover'||state==='idle') startGame();
+  });
+  document.addEventListener('keyup', e=>{ keys[e.key]=false; });
+
+  /* Touch controls */
+  let touchLeft=false, touchRight=false;
+  document.getElementById('touch-left').addEventListener('touchstart',e=>{e.preventDefault();touchLeft=true;},{passive:false});
+  document.getElementById('touch-left').addEventListener('touchend',()=>touchLeft=false);
+  document.getElementById('touch-right').addEventListener('touchstart',e=>{e.preventDefault();touchRight=true;},{passive:false});
+  document.getElementById('touch-right').addEventListener('touchend',()=>touchRight=false);
+
+  /* Touch tap on canvas to start */
+  canvas.addEventListener('click', ()=>{ if(state==='idle'||state==='gameover') startGame(); });
+
+  /* GAME OBJECTS */
+  let rocket, bullets, asteroids, stars, particles, powerups;
+
+  function initObjects(){
+    W = canvas.offsetWidth;
+    H = canvas.height = Math.min(420, W * 0.55);
+    canvas.width = W;
+
+    rocket = {
+      x: W/2, y: H - 80,
+      w: 28, h: 48,
+      vx: 0, speed: 260,
+      invincible: 0,
+      thrust: 0
+    };
+    bullets=[];
+    asteroids=[];
+    stars=[];
+    particles=[];
+    powerups=[];
+    score=0; lives=3; level=1; elapsed=0; frameCount=0;
+
+    /* Static background stars */
+    for(let i=0;i<90;i++){
+      stars.push({
+        x:Math.random()*W, y:Math.random()*H,
+        r:Math.random()*1.6+0.2,
+        sp:Math.random()*18+4,
+        a:Math.random()
+      });
+    }
+    updateUI();
+  }
+
+  /* DRAWING HELPERS */
+  function drawRocket(x,y,thrust,invincible){
+    ctx.save();
+    ctx.translate(x,y);
+    if(invincible > 0 && Math.floor(invincible*10)%2===0){
+      ctx.globalAlpha=0.4;
+    }
+
+    /* Engine flame */
+    if(thrust>0){
+      const flameH = 18+Math.random()*12;
+      const grad = ctx.createLinearGradient(0,10,0,10+flameH);
+      grad.addColorStop(0,'rgba(251,146,60,0.9)');
+      grad.addColorStop(0.5,'rgba(239,68,68,0.7)');
+      grad.addColorStop(1,'rgba(239,68,68,0)');
+      ctx.beginPath();
+      ctx.moveTo(-6,10);
+      ctx.lineTo(0,10+flameH);
+      ctx.lineTo(6,10);
+      ctx.fillStyle=grad;
+      ctx.fill();
+    }
+
+    /* Body */
+    ctx.beginPath();
+    ctx.moveTo(0,-24); ctx.lineTo(12,12); ctx.lineTo(8,18);
+    ctx.lineTo(-8,18); ctx.lineTo(-12,12);
+    ctx.closePath();
+    const bodyGrad=ctx.createLinearGradient(-12,-24,12,18);
+    bodyGrad.addColorStop(0,'#e2e8f0');
+    bodyGrad.addColorStop(1,'#94a3b8');
+    ctx.fillStyle=bodyGrad;
+    ctx.fill();
+    ctx.strokeStyle='rgba(56,189,248,0.6)';
+    ctx.lineWidth=1;
+    ctx.stroke();
+
+    /* Nose cone */
+    ctx.beginPath();
+    ctx.moveTo(0,-24);ctx.lineTo(8,-8);ctx.lineTo(-8,-8);
+    ctx.closePath();
+    ctx.fillStyle='#38bdf8';
+    ctx.fill();
+
+    /* Fins */
+    ctx.beginPath();
+    ctx.moveTo(-12,12);ctx.lineTo(-22,22);ctx.lineTo(-10,18);
+    ctx.closePath();
+    ctx.fillStyle='#2563eb';ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(12,12);ctx.lineTo(22,22);ctx.lineTo(10,18);
+    ctx.closePath();
+    ctx.fillStyle='#2563eb';ctx.fill();
+
+    /* Window */
+    ctx.beginPath();
+    ctx.arc(0,-6,5,0,Math.PI*2);
+    ctx.fillStyle='rgba(125,211,252,0.7)';ctx.fill();
+    ctx.strokeStyle='rgba(56,189,248,0.9)';ctx.lineWidth=1;ctx.stroke();
+
+    ctx.globalAlpha=1;
+    ctx.restore();
+  }
+
+  function drawAsteroid(a){
+    ctx.save();
+    ctx.translate(a.x,a.y);
+    ctx.rotate(a.rot);
+    ctx.beginPath();
+    for(let i=0;i<a.pts.length;i++){
+      const p=a.pts[i];
+      if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
+    }
+    ctx.closePath();
+    const aGrad=ctx.createRadialGradient(0,0,0,0,0,a.r);
+    aGrad.addColorStop(0,'#64748b');
+    aGrad.addColorStop(1,'#334155');
+    ctx.fillStyle=aGrad;
+    ctx.fill();
+    ctx.strokeStyle='rgba(148,163,184,0.5)';
+    ctx.lineWidth=1;ctx.stroke();
+    ctx.restore();
+  }
+
+  function makeAsteroid(){
+    const r = 14 + Math.random()*18 + level*2;
+    const x = Math.random()*(W-r*2)+r;
+    const y = -r-10;
+    const vx= (Math.random()-0.5)*(40+level*8);
+    const vy= 60+Math.random()*40+level*10;
+    const rot=0;
+    const rotSpeed=(Math.random()-0.5)*2.5;
+    /* Random polygon */
+    const nPts=7+Math.floor(Math.random()*4);
+    const pts=[];
+    for(let i=0;i<nPts;i++){
+      const ang=(i/nPts)*Math.PI*2;
+      const rr=r*(0.7+Math.random()*0.35);
+      pts.push([Math.cos(ang)*rr, Math.sin(ang)*rr]);
+    }
+    return {x,y,vx,vy,r,rot,rotSpeed,pts,hp:1+(level>4?1:0)};
+  }
+
+  function makePowerup(){
+    const types=['shield','fuel'];
+    return{
+      x:Math.random()*(W-40)+20, y:-20,
+      vy:50, type:types[Math.floor(Math.random()*types.length)],
+      r:12, angle:0
+    };
+  }
+
+  function shoot(){
+    if(state!=='playing') return;
+    bullets.push({x:rocket.x,y:rocket.y-24,vy:-480,r:3});
+    /* small exhaust particle */
+    particles.push({x:rocket.x,y:rocket.y-24,vx:(Math.random()-0.5)*40,vy:Math.random()*30,life:0.3,maxLife:0.3,r:2,color:'#67e8f9'});
+  }
+
+  function spawnParticles(x,y,n,color){
+    for(let i=0;i<n;i++){
+      const ang=Math.random()*Math.PI*2;
+      const spd=40+Math.random()*80;
+      particles.push({
+        x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,
+        life:0.6+Math.random()*0.4,maxLife:1,
+        r:2+Math.random()*4,color
+      });
+    }
+  }
+
+  function circle(ax,ay,ar,bx,by,br){ return Math.hypot(ax-bx,ay-by)<ar+br; }
+
+  function updateUI(){
+    scoreEl.textContent = score;
+    levelEl.textContent = level;
+    const hearts=['❤️','❤️','❤️'];
+    livesEl.textContent = hearts.slice(0,Math.max(0,lives)).join('')||'💀';
+    if(score>bestScore){ bestScore=score; localStorage.setItem('bk_best',bestScore); }
+    bestEl.textContent = bestScore;
+  }
+
+  /* SCREEN OVERLAYS */
+  function drawIdle(){
+    ctx.fillStyle='rgba(2,8,23,0.72)';
+    ctx.fillRect(0,0,W,H);
+    /* Stars bg still shows */
+    ctx.fillStyle='rgba(56,189,248,0.92)';
+    ctx.font=`bold ${Math.min(26,W*0.055)}px Orbitron,sans-serif`;
+    ctx.textAlign='center';
+    ctx.fillText('🚀  BAIKONUR RUN',W/2,H/2-40);
+    ctx.fillStyle='rgba(203,213,225,0.85)';
+    ctx.font=`${Math.min(14,W*0.032)}px DM Sans,sans-serif`;
+    ctx.fillText('← → жылжыту  |  SPACE атқылау',W/2,H/2+4);
+    ctx.fillStyle='rgba(56,189,248,0.75)';
+    ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;
+    ctx.fillText('[ Бастау үшін кез келген түймені басыңыз ]',W/2,H/2+36);
+  }
+
+  function drawPaused(){
+    ctx.fillStyle='rgba(2,8,23,0.6)';
+    ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='white';
+    ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;
+    ctx.textAlign='center';
+    ctx.fillText('⏸  ПАУЗА',W/2,H/2);
+    ctx.font=`${Math.min(13,W*0.03)}px DM Sans,sans-serif`;
+    ctx.fillStyle='rgba(148,163,184,0.9)';
+    ctx.fillText('Жалғастыру үшін P немесе «Пауза» батырмасын басыңыз',W/2,H/2+30);
+  }
+
+  function drawGameOver(){
+    ctx.fillStyle='rgba(2,8,23,0.8)';
+    ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#f87171';
+    ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;
+    ctx.textAlign='center';
+    ctx.fillText('🛸  МИССИЯ АЯҚТАЛДЫ',W/2,H/2-50);
+    ctx.fillStyle='white';
+    ctx.font=`bold ${Math.min(20,W*0.045)}px Orbitron,sans-serif`;
+    ctx.fillText(`Ұпай: ${score}`,W/2,H/2);
+    if(score>=bestScore&&score>0){
+      ctx.fillStyle='#fbbf24';
+      ctx.font=`bold ${Math.min(14,W*0.032)}px DM Sans,sans-serif`;
+      ctx.fillText('🏆 Жаңа рекорд!',W/2,H/2+32);
+    }
+    ctx.fillStyle='rgba(56,189,248,0.8)';
+    ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;
+    ctx.fillText('[ Қайта бастау үшін басыңыз ]',W/2,H/2+62);
+  }
+
+  /* MAIN LOOP */
+  function loop(ts){
+    animId=requestAnimationFrame(loop);
+    const dt=Math.min((ts-lastTime)/1000, 0.05);
+    lastTime=ts;
+    frameCount++;
+
+    /* Resize */
+    if(canvas.offsetWidth!==W){
+      W=canvas.width=canvas.offsetWidth;
+      H=canvas.height=Math.min(420,W*0.55);
+    }
+
+    /* ── DRAW BACKGROUND ── */
+    ctx.fillStyle='#020817';
+    ctx.fillRect(0,0,W,H);
+
+    /* Scrolling stars */
+    stars.forEach(s=>{
+      s.y+=s.sp*dt;
+      if(s.y>H+4) s.y=-4;
+      const glow=0.3+0.7*Math.abs(Math.sin(ts*0.001*s.a+s.a*5));
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(180,210,255,${glow*0.8})`;
+      ctx.fill();
+    });
+
+    if(state==='idle'){ drawIdle(); return; }
+    if(state==='gameover'){ drawGameOver(); return; }
+
+    if(state==='playing'){
+      elapsed+=dt;
+      level=1+Math.floor(elapsed/15);
+      if(level>10) level=10;
+
+      /* Spawn asteroids */
+      const spawnRate=Math.max(0.4, 2.5-level*0.18);
+      if(frameCount % Math.round(60*spawnRate)===0){
+        asteroids.push(makeAsteroid());
+      }
+      /* Spawn powerup */
+      if(Math.random()<0.001+level*0.0003){
+        powerups.push(makePowerup());
+      }
+
+      /* Rocket movement */
+      rocket.thrust=0;
+      const moveLeft  = keys['ArrowLeft'] ||keys['a']||keys['A']||touchLeft;
+      const moveRight = keys['ArrowRight']||keys['d']||keys['D']||touchRight;
+      if(moveLeft)  { rocket.vx-=rocket.speed*3*dt; rocket.thrust=1; }
+      if(moveRight) { rocket.vx+=rocket.speed*3*dt; rocket.thrust=1; }
+      rocket.vx*=Math.pow(0.08,dt); /* friction */
+      rocket.x+=rocket.vx*dt;
+      rocket.x=Math.max(rocket.w/2, Math.min(W-rocket.w/2, rocket.x));
+      if(rocket.invincible>0) rocket.invincible-=dt;
+
+      /* Auto-shoot every 0.45s */
+      if(frameCount % Math.round(60*0.45)===0) shoot();
+
+      /* Bullets */
+      bullets=bullets.filter(b=>{
+        b.y+=b.vy*dt;
+        if(b.y<-20) return false;
+        /* Draw */
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+        const bGrad=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*3);
+        bGrad.addColorStop(0,'rgba(125,211,252,1)');
+        bGrad.addColorStop(1,'rgba(56,189,248,0)');
+        ctx.fillStyle=bGrad;
+        ctx.fill();
+        ctx.restore();
+        return true;
+      });
+
+      /* Asteroids */
+      asteroids=asteroids.filter(a=>{
+        a.y+=a.vy*dt; a.x+=a.vx*dt; a.rot+=a.rotSpeed*dt;
+        if(a.y>H+a.r+10) return false;
+
+        /* Bullet hit */
+        let hit=false;
+        bullets=bullets.filter(b=>{
+          if(!hit&&circle(b.x,b.y,b.r,a.x,a.y,a.r)){
+            hit=true;
+            a.hp--;
+            spawnParticles(a.x,a.y,5,'#94a3b8');
+            return false;
+          }
+          return true;
+        });
+        if(a.hp<=0){
+          score+=10+level*3;
+          spawnParticles(a.x,a.y,14,'#f59e0b');
+          updateUI();
+          return false;
+        }
+
+        /* Player hit */
+        if(rocket.invincible<=0 && circle(rocket.x,rocket.y,18,a.x,a.y,a.r-4)){
+          lives--;
+          rocket.invincible=2.0;
+          spawnParticles(rocket.x,rocket.y,20,'#f87171');
+          updateUI();
+          if(lives<=0){ state='gameover'; return false; }
+        }
+
+        drawAsteroid(a);
+        return true;
+      });
+
+      /* Power-ups */
+      powerups=powerups.filter(p=>{
+        p.y+=p.vy*dt; p.angle+=2*dt;
+        if(p.y>H+30) return false;
+        /* Hit player */
+        if(circle(p.x,p.y,p.r,rocket.x,rocket.y,20)){
+          if(p.type==='shield'){ rocket.invincible=4; }
+          if(p.type==='fuel')  { score+=50; }
+          spawnParticles(p.x,p.y,10,p.type==='shield'?'#67e8f9':'#fbbf24');
+          updateUI();
+          return false;
+        }
+        /* Draw */
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        ctx.rotate(p.angle);
+        const pColor=p.type==='shield'?'rgba(56,189,248,0.9)':'rgba(251,191,36,0.9)';
+        ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);
+        ctx.fillStyle=pColor.replace('0.9','0.2');ctx.fill();
+        ctx.strokeStyle=pColor;ctx.lineWidth=2;ctx.stroke();
+        ctx.fillStyle='white';ctx.font=`${p.r}px sans-serif`;ctx.textAlign='center';
+        ctx.fillText(p.type==='shield'?'🛡':'⭐',0,p.r*0.35);
+        ctx.restore();
+        return true;
+      });
+
+      /* Particles */
+      particles=particles.filter(p=>{
+        p.life-=dt; if(p.life<=0) return false;
+        p.x+=p.vx*dt; p.y+=p.vy*dt;
+        const alpha=p.life/p.maxLife;
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r*alpha,0,Math.PI*2);
+        ctx.fillStyle=p.color.replace(')',`,${alpha})`).replace('rgb','rgba');
+        ctx.fill();
+        return true;
+      });
+
+      /* Draw rocket */
+      drawRocket(rocket.x,rocket.y,rocket.thrust,rocket.invincible);
+
+      /* HUD — score strip at top */
+      ctx.fillStyle='rgba(2,8,23,0.4)';
+      ctx.fillRect(0,0,W,32);
+      ctx.fillStyle='rgba(56,189,248,0.8)';
+      ctx.font=`bold ${Math.min(11,W*0.022)}px Orbitron,sans-serif`;
+      ctx.textAlign='left';
+      ctx.fillText(`LVL ${level}`,10,20);
+      ctx.textAlign='right';
+      ctx.fillStyle='#fbbf24';
+      ctx.fillText(`BEST ${bestScore}`,W-10,20);
+      /* Progress bar */
+      const prog=(elapsed%15)/15;
+      ctx.fillStyle='rgba(255,255,255,0.08)';
+      ctx.fillRect(W*0.25,12,W*0.5,6);
+      ctx.fillStyle='rgba(56,189,248,0.7)';
+      ctx.fillRect(W*0.25,12,W*0.5*prog,6);
+      ctx.fillStyle='rgba(148,163,184,0.6)';
+      ctx.font=`${Math.min(9,W*0.019)}px DM Sans,sans-serif`;
+      ctx.textAlign='center';
+      ctx.fillText(`NEXT LVL`,W/2,11);
+    }
+
+    if(state==='paused') drawPaused();
+  }
+
+  /* PUBLIC */
+  window.startGame=function(){
+    if(state==='playing') return;
+    initObjects();
+    state='playing';
+    lastTime=performance.now();
+    if(!animId) animId=requestAnimationFrame(loop);
+  };
+  window.restartGame=function(){
+    state='idle';
+    initObjects();
+    state='playing';
+    lastTime=performance.now();
+  };
+  window.togglePause=function(){
+    if(state==='playing') state='paused';
+    else if(state==='paused') state='playing';
+    const btn=document.querySelector('[data-i18n="btn_pause"]');
+    if(btn) btn.textContent=state==='paused'?'▶ Жалғасу':'⏸ Пауза';
+  };
+
+  /* Init canvas */
+  initObjects();
+  lastTime=performance.now();
+  animId=requestAnimationFrame(loop);
+})();
+</script>
+
+<!-- ══════════════════════════════════
+     SITE SCRIPTS
+══════════════════════════════════ -->
 <script>
 const cur=document.getElementById("cursor"),curRing=document.getElementById("cursor-ring"),glow=document.getElementById("mouse-glow");
 document.addEventListener("mousemove",e=>{cur.style.left=e.clientX+"px";cur.style.top=e.clientY+"px";curRing.style.left=e.clientX+"px";curRing.style.top=e.clientY+"px";glow.style.left=e.clientX+"px";glow.style.top=e.clientY+"px";});
@@ -470,19 +1221,13 @@ const scrollInd=document.getElementById("scroll-indicator");if(scrollInd){window
 const bt=document.getElementById("back-top");window.addEventListener("scroll",()=>bt.classList.toggle("show",window.scrollY>400));bt.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
 const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible");});},{threshold:0.12});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 const skillObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll(".skill-fill").forEach(b=>{b.style.width=b.dataset.width+"%";});});},{threshold:0.3});document.querySelectorAll(".about-card").forEach(el=>skillObs.observe(el));
-
-/* Counter fix — poll on scroll + delayed init */
 function animateCounter(el){if(el.dataset.animated)return;el.dataset.animated="1";const target=parseInt(el.dataset.target);let c=0;const step=Math.max(1,Math.floor(target/30));const timer=setInterval(()=>{c=Math.min(c+step,target);el.textContent=String(c).padStart(2,"0");if(c>=target)clearInterval(timer);},40);}
 function checkCounters(){const s=document.querySelector(".stats");if(!s)return;const r=s.getBoundingClientRect();if(r.top<window.innerHeight&&r.bottom>0)s.querySelectorAll(".counter").forEach(animateCounter);}
-window.addEventListener("scroll",checkCounters);
-setTimeout(checkCounters,950);
-
+window.addEventListener("scroll",checkCounters);setTimeout(checkCounters,950);
 (function(){const el=document.getElementById("typewriter-name");if(!el)return;const names={en:"Qainar",zh:"Qainar",kz:"Қайнар"};let current="",target="",i=0,deleting=false;function tick(){const lng=localStorage.getItem("lang")||"en";target=names[lng]||"Qainar";if(!deleting&&i<=target.length){current=target.slice(0,i++);el.textContent=current;setTimeout(tick,i===target.length+1?2400:100);}else if(!deleting&&i>target.length){deleting=true;setTimeout(tick,60);}else if(deleting&&i>0){current=target.slice(0,--i);el.textContent=current;setTimeout(tick,55);}else{deleting=false;setTimeout(tick,200);}}tick();})();
-
 const hamburger=document.getElementById("hamburger"),mobileNav=document.getElementById("mobile-nav"),mobileOverlay=document.getElementById("mobile-overlay");
 function toggleMenu(open){hamburger.classList.toggle("open",open);mobileNav.classList.toggle("open",open);mobileOverlay.classList.toggle("open",open);document.body.style.overflow=open?"hidden":"";}
 hamburger.addEventListener("click",()=>toggleMenu(!mobileNav.classList.contains("open")));mobileOverlay.addEventListener("click",()=>toggleMenu(false));document.querySelectorAll(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>toggleMenu(false)));
-
 document.getElementById("chat-btn").addEventListener("click",()=>{const p=document.getElementById("chat-panel");p.style.display=p.style.display==="flex"?"none":"flex";document.getElementById("chat-badge").style.display="none";});
 document.getElementById("copy-email-btn").addEventListener("click",()=>{navigator.clipboard.writeText("kkay05925@gmail.com").then(()=>{const btn=document.getElementById("copy-email-btn");btn.classList.add("copied");setTimeout(()=>btn.classList.remove("copied"),2000);});});
 function timeAgo(date){const diff=(Date.now()-date.getTime())/1000;if(diff<60)return"just now";if(diff<3600)return Math.floor(diff/60)+"m ago";if(diff<86400)return Math.floor(diff/3600)+"h ago";return Math.floor(diff/86400)+"d ago";}
@@ -495,16 +1240,12 @@ import{getFirestore,collection,doc,setDoc,getDoc,onSnapshot}from"https://www.gst
 import{getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 const cfg={apiKey:"AIzaSyAhn0e4HtF_jnSu4I4JlLgpB8rz_Qnrmpo",authDomain:"qainar-website.firebaseapp.com",projectId:"qainar-website",storageBucket:"qainar-website.firebasestorage.app",messagingSenderId:"728286957196",appId:"1:728286957196:web:c8d7e04c690cd76f2535a9",measurementId:"G-X73HSPDGYB"};
 const app=initializeApp(cfg),db=getFirestore(app),auth=getAuth(app),prov=new GoogleAuthProvider();
-
-/* Visitor — session-based, count once per visit */
 async function trackVisitor(){try{if(sessionStorage.getItem("visited")){const snap=await getDoc(doc(db,"meta","visitors"));const el=document.getElementById("visitor-count");if(el&&snap.exists())el.textContent=(snap.data().count||0).toLocaleString();return;}sessionStorage.setItem("visited","1");const ref=doc(db,"meta","visitors");const snap=await getDoc(ref);const n=(snap.exists()?snap.data().count:0)+1;await setDoc(ref,{count:n},{merge:true});const el=document.getElementById("visitor-count");if(el)el.textContent=n.toLocaleString();}catch(e){const el=document.getElementById("visitor-count");if(el)el.textContent="—";}}
 trackVisitor();
-
 const loginBtn=document.getElementById("login-btn"),heroLoginBtn=document.getElementById("hero-login-btn"),logoutBtn=document.getElementById("logout-btn"),userProfile=document.getElementById("user-profile"),userPhoto=document.getElementById("user-photo"),userName=document.getElementById("user-name");
 async function loginWithGoogle(){try{await signInWithPopup(auth,prov);}catch(e){alert("Login failed.");}}
 loginBtn.addEventListener("click",loginWithGoogle);heroLoginBtn.addEventListener("click",loginWithGoogle);logoutBtn.addEventListener("click",async()=>{try{await signOut(auth);}catch(e){}});
 onAuthStateChanged(auth,user=>{if(user){loginBtn.style.display=heroLoginBtn.style.display="none";userProfile.style.display="flex";userPhoto.src=user.photoURL||"";userName.textContent=user.displayName||"User";}else{loginBtn.style.display=heroLoginBtn.style.display="inline-block";userProfile.style.display="none";}});
-
 let firstLoad=true,commentCount=0;
 const box=document.getElementById("chat-comments"),badge=document.getElementById("chat-badge");
 onSnapshot(collection(db,"comments"),snap=>{const items=[];snap.forEach(d=>items.push({id:d.id,...d.data()}));items.sort((a,b)=>(b.time?.seconds||0)-(a.time?.seconds||0));const panel=document.getElementById("chat-panel");if(!firstLoad&&items.length>commentCount&&panel.style.display!=="flex"){badge.style.display="flex";badge.textContent=items.length-commentCount;}commentCount=items.length;box.innerHTML="";if(items.length===0){box.innerHTML='<p class="chat-empty">No comments yet.</p>';}else{items.slice(0,5).forEach(d=>{const ago=d.time?window._timeAgo(new Date(d.time.seconds*1000)):"";const div=document.createElement("div");div.className="chat-item";div.innerHTML=`<div class="chat-name">${d.name||"Anonymous"}</div><div class="chat-text">${d.message||""}</div>${ago?`<div class="chat-time">${ago}</div>`:""}`;box.appendChild(div);});}firstLoad=false;});

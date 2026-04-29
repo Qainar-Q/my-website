@@ -673,10 +673,16 @@ onSnapshot(q, snap => {
     commentsBox.appendChild(div);
   });
 
-  /* like */
+ /* like */
   commentsBox.querySelectorAll(".like-btn").forEach(btn => {
+    const id = btn.dataset.id;
+    const liked = localStorage.getItem("liked_"+id);
+    if(liked){ btn.style.opacity="0.4"; btn.style.cursor="not-allowed"; }
     btn.addEventListener("click", async () => {
-      await updateDoc(doc(db,"comments",btn.dataset.id), { likes: increment(1) });
+      if(localStorage.getItem("liked_"+id)) return;
+      localStorage.setItem("liked_"+id, "1");
+      btn.style.opacity="0.4"; btn.style.cursor="not-allowed";
+      await updateDoc(doc(db,"comments",id), { likes: increment(1) });
     });
   });
 

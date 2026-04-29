@@ -1012,9 +1012,9 @@ if(data.content&&data.content[0]&&data.content[0].text){
         appendMsg('bot','<span style="color:#f87171;font-style:italic;">Connection hiccup — try again! 🛸</span>');
       }
     }catch(e){
-      removeTyping();
-      appendMsg('bot','<span style="color:#f87171;font-style:italic;">Could not reach AI. Check your connection 🌌</span>');
-    }
+  removeTyping();
+  appendMsg('bot','<span style="color:#f87171;font-style:italic;">AI fetch error: ' + e.message + '</span>');
+}
     sendBtn.disabled=false;
     msgsEl.scrollTop=msgsEl.scrollHeight;
   };

@@ -191,7 +191,7 @@
     .gs-val{font-family:'Orbitron',sans-serif;font-size:20px;color:var(--accent);font-weight:900;}
     .gs-item.lives .gs-val{color:#f87171;}
     .gs-item.level .gs-val{color:#f59e0b;}
-    #game-canvas{display:block;width:100%;image-rendering:pixelated;cursor:none;}
+    #game-canvas{display:block;width:100%;image-rendering:pixelated;cursor:none;touch-action:none;}
     .game-controls{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-top:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:10px;}
     .ctrl-hint{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;}
     .key-badge{display:inline-block;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);font-size:12px;font-weight:700;color:white;font-family:monospace;}
@@ -204,7 +204,7 @@
 
 
 
-    /* ══ ORBITAL DOCKING GAME ══ */
+    /* ══ SPACE FORMULA CHALLENGE ══ */
     .dock-section{max-width:1080px;margin:0 auto;padding:0 25px 80px;position:relative;z-index:1;}
     .dock-card{border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(2,8,23,0.96),rgba(14,22,54,0.92));border:1px solid rgba(125,211,252,0.25);box-shadow:0 30px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(125,211,252,0.1);}
     .dock-header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:12px;}
@@ -216,13 +216,22 @@
     .dock-label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
     .dock-value{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--accent);font-weight:900;}
     .dock-value.safe{color:#22c55e;}.dock-value.warn{color:#f59e0b;}.dock-value.danger{color:#ef4444;}
-    #dock-canvas{display:block;width:100%;height:auto;background:#020817;cursor:none;}
+    .formula-game-body{display:grid;grid-template-columns:1fr 1.05fr;gap:0;min-height:420px;}
+    #dock-canvas{display:block;width:100%;height:100%;min-height:420px;background:#020817;cursor:default;}
+    .formula-panel{padding:28px;border-left:1px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;justify-content:center;gap:18px;background:rgba(255,255,255,0.02);}
+    .formula-question{font-family:'Orbitron',sans-serif;font-size:20px;line-height:1.45;color:#fff;}
+    .formula-sub{color:#94a3b8;font-size:13px;line-height:1.7;}
+    .formula-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .formula-option{border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);border-radius:16px;color:#e2e8f0;padding:15px 14px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:.2s;text-align:left;min-height:58px;}
+    .formula-option:hover{transform:translateY(-2px);border-color:rgba(56,189,248,0.45);background:rgba(56,189,248,0.1);}
+    .formula-option.correct{border-color:rgba(34,197,94,0.8);background:rgba(34,197,94,0.18);color:#bbf7d0;}
+    .formula-option.wrong{border-color:rgba(239,68,68,0.8);background:rgba(239,68,68,0.15);color:#fecaca;}
+    .formula-feedback{min-height:42px;color:#cbd5e1;font-size:14px;line-height:1.6;border-radius:14px;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);}
+    .formula-progress{height:10px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;}
+    .formula-progress span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .35s ease;box-shadow:0 0 16px rgba(56,189,248,.5);}
     .dock-controls{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-top:1px solid rgba(255,255,255,0.08);gap:12px;flex-wrap:wrap;}
-    .dock-touch{display:none;gap:12px;align-items:center;justify-content:center;padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;}
-    .dock-touch-btn{width:58px;height:58px;border-radius:18px;border:2px solid rgba(56,189,248,0.38);background:rgba(56,189,248,0.1);color:white;font-size:20px;font-family:'Orbitron',sans-serif;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-user-select:none;transition:.15s;}
-    .dock-touch-btn:active{background:rgba(56,189,248,0.3);border-color:rgba(56,189,248,0.85);transform:scale(.96);}
     .dock-tip{color:var(--muted);font-size:13px;line-height:1.6;}
-    @media(max-width:960px){.dock-touch{display:flex}.dock-controls .ctrl-hint{display:none}.dock-stats{gap:12px}.dock-value{font-size:16px}}
+    @media(max-width:960px){.formula-game-body{grid-template-columns:1fr}.formula-panel{border-left:none;border-top:1px solid rgba(255,255,255,0.08);padding:22px}.formula-options{grid-template-columns:1fr}.dock-stats{gap:12px}.dock-value{font-size:16px}}
 
     /* ══ AI CHAT ══ */
     .ai-section{max-width:1080px;margin:0 auto;padding:0 25px 80px;position:relative;z-index:1;}
@@ -487,43 +496,48 @@
 </div>
 
 
-<!-- ORBITAL DOCKING GAME -->
+<!-- SPACE FORMULA CHALLENGE GAME -->
 <div class="dock-section reveal">
   <div class="section-header" style="margin-bottom:28px;">
-    <div class="section-tag">Simulation Game</div>
-    <h2 class="section-title">🛰️ Orbital Docking</h2>
-    <p class="section-sub">Control a spacecraft with inertia. Dock slowly with the space station — too fast means crash.</p>
+    <div class="section-tag" data-i18n="formula_tag">Physics Game</div>
+    <h2 class="section-title" data-i18n="formula_title">🧠 Space Formula Challenge</h2>
+    <p class="section-sub" data-i18n="formula_subtitle">Answer physics questions to charge the rocket and launch the Baikonur mission.</p>
   </div>
   <div class="dock-card">
     <div class="dock-header">
       <div class="dock-title-wrap">
-        <span style="font-size:22px;">🛰️</span>
-        <span class="dock-title">QAINAR DOCKING SIM</span>
-        <span class="dock-badge">ORBITAL PHYSICS</span>
+        <span style="font-size:22px;">🧪</span>
+        <span class="dock-title" data-i18n="formula_name">MISSION CONTROL QUIZ</span>
+        <span class="dock-badge" data-i18n="formula_badge">NOT ARCADE</span>
       </div>
       <div class="dock-stats">
-        <div class="dock-stat"><div class="dock-label">Time</div><div class="dock-value" id="dock-time">0.0s</div></div>
+        <div class="dock-stat"><div class="dock-label" data-i18n="formula_fuel">Fuel</div><div class="dock-value safe" id="dock-time">0%</div></div>
         <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
-        <div class="dock-stat"><div class="dock-label">Speed</div><div class="dock-value safe" id="dock-speed">0.00</div></div>
+        <div class="dock-stat"><div class="dock-label" data-i18n="formula_score">Score</div><div class="dock-value" id="dock-speed">0</div></div>
         <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
-        <div class="dock-stat"><div class="dock-label">Best</div><div class="dock-value" id="dock-best" style="color:#fbbf24;">—</div></div>
+        <div class="dock-stat"><div class="dock-label" data-i18n="formula_best">Best</div><div class="dock-value" id="dock-best" style="color:#fbbf24;">0</div></div>
       </div>
     </div>
-    <canvas id="dock-canvas" height="420"></canvas>
-    <div class="dock-touch">
-      <div class="dock-touch-btn" id="dock-left">↺</div>
-      <div class="dock-touch-btn" id="dock-thrust">▲</div>
-      <div class="dock-touch-btn" id="dock-brake">▼</div>
-      <div class="dock-touch-btn" id="dock-right">↻</div>
+    <div class="formula-game-body">
+      <canvas id="dock-canvas" height="420"></canvas>
+      <div class="formula-panel">
+        <div>
+          <div class="formula-question" id="formula-question" data-i18n-dynamic="formula_ready_q">Ready for launch?</div>
+          <div class="formula-sub" id="formula-sub" data-i18n-dynamic="formula_ready_sub">Choose the correct physics formula. Every correct answer adds fuel. Wrong answers reduce mission stability.</div>
+        </div>
+        <div class="formula-progress"><span id="formula-progress-fill"></span></div>
+        <div class="formula-options" id="formula-options"></div>
+        <div class="formula-feedback" id="formula-feedback" data-i18n-dynamic="formula_ready_fb">Press Start Mission to begin.</div>
+      </div>
     </div>
     <div class="dock-controls">
       <div style="display:flex;gap:16px;flex-wrap:wrap;">
-        <div class="ctrl-hint"><span class="key-badge">W / ↑</span><span>thrust</span></div>
-        <div class="ctrl-hint"><span class="key-badge">S / ↓</span><span>brake</span></div>
-        <div class="ctrl-hint"><span class="key-badge">A D</span><span>rotate</span></div>
+        <div class="ctrl-hint"><span class="key-badge">CLICK</span><span data-i18n="formula_choose">choose answer</span></div>
+        <div class="ctrl-hint"><span class="key-badge">1-4</span><span data-i18n="formula_quick">quick choose</span></div>
+        <div class="ctrl-hint"><span class="key-badge">ENTER</span><span data-i18n="formula_next">next</span></div>
       </div>
-      <div class="dock-tip">Docking rule: speed under <b style="color:#22c55e;">0.70</b> near the port = success.</div>
-      <button class="game-btn" onclick="restartDocking()">🔄 Restart Docking</button>
+      <div class="dock-tip" data-i18n="formula_tip">This one is different: no shooting, no dodging — it is a physics quiz game.</div>
+      <button class="game-btn" onclick="restartDocking()" data-i18n="formula_start">🚀 Start Mission</button>
     </div>
   </div>
 </div>
@@ -554,18 +568,18 @@
         <div class="ai-bubble" id="ai-greeting">Сәлем! Мен <b>Qainar</b> — ғарыш инженериясы студентімін, Алматыдан. Физика, аэроғарыш немесе <em>Байқоңыр 2050</em> миссиясы туралы сұрай аласыз. Ask me anything! 🛸</div>
       </div>
     </div>
-    <div class="chips-label" id="chips-label">Жылдам сұрақтар / Quick questions</div>
+    <div class="chips-label" id="chips-label" data-i18n="ai_chips_label">Quick questions</div>
     <div class="ai-chips" id="ai-chips">
-      <div class="ai-chip" onclick="aiChip(this)">🛸 What is CanSat?</div>
-      <div class="ai-chip" onclick="aiChip(this)">🚀 Baikonur 2050 туралы</div>
-      <div class="ai-chip" onclick="aiChip(this)">⚙️ Orbital mechanics explained</div>
-      <div class="ai-chip" onclick="aiChip(this)">🌍 Why Kazakhstan for space?</div>
-      <div class="ai-chip" onclick="aiChip(this)">📐 Newton's laws in orbit</div>
-      <div class="ai-chip" onclick="aiChip(this)">🔭 Your biggest dream?</div>
+      <div class="ai-chip" onclick="aiChip(this)" data-i18n="ai_chip1">🛸 What is CanSat?</div>
+      <div class="ai-chip" onclick="aiChip(this)" data-i18n="ai_chip2">🚀 Baikonur 2050 туралы</div>
+      <div class="ai-chip" onclick="aiChip(this)" data-i18n="ai_chip3">⚙️ Orbital mechanics explained</div>
+      <div class="ai-chip" onclick="aiChip(this)" data-i18n="ai_chip4">🌍 Why Kazakhstan for space?</div>
+      <div class="ai-chip" onclick="aiChip(this)" data-i18n="ai_chip5">📐 Newton's laws in orbit</div>
+      <div class="ai-chip" onclick="aiChip(this)" data-i18n="ai_chip6">🔭 Your biggest dream?</div>
     </div>
     <div class="ai-input-row">
-      <textarea id="ai-input" placeholder="Ask about space, physics, Baikonur..." rows="1"></textarea>
-      <button id="ai-send" onclick="aiSend()" title="Send">➤</button>
+      <textarea id="ai-input" data-i18n-placeholder="ai_placeholder" placeholder="Ask about space, physics, Baikonur..." rows="1"></textarea>
+      <button id="ai-send" onclick="aiSend()" data-i18n-title="ai_send_title" title="Send">➤</button>
     </div>
     <div class="ai-footer-note" data-i18n="ai_note">Powered by Groq AI · Responses reflect Qainar's knowledge & personality</div>
   </div>
@@ -697,7 +711,7 @@ const T={
     ai_tag:"AI Assistant",ai_title:"🤖 Ask Qainar AI",
     ai_sub:"Ask anything about space, physics or Baikonur 2050.",
     ai_sub_label:"Space Engineering · Physics · Baikonur 2050",
-    ai_online:"ONLINE",ai_note:"Powered by Groq AI · Responses reflect Qainar's knowledge & personality",
+    ai_online:"ONLINE",ai_note:"Powered by QAINAR AI · Multilingual space assistant",ai_chips_label:"Quick questions",ai_chip1:"🛸 What is CanSat?",ai_chip2:"🚀 Tell me about Baikonur 2050",ai_chip3:"⚙️ Explain orbital mechanics",ai_chip4:"🌍 Why Kazakhstan for space?",ai_chip5:"📐 Newton's laws in orbit",ai_chip6:"🔭 What is your biggest dream?",ai_placeholder:"Ask about space, physics, Baikonur...",ai_send_title:"Send",
     about_tag:"About Me",about_title:"Who I Am",
     about_sub:"A student on a mission to reach the stars — one skill at a time.",
     about_card1_title:"My Story",
@@ -722,6 +736,7 @@ const T={
     cta_desc:"Have a question, want to collaborate on a project, or just want to say hi? I'd love to hear from you.",
     cta_btn1:"Leave a Comment",cta_btn2:"Send Email",
     cta_email_hint:'Or reach me directly at <a href="mailto:kkay05925@gmail.com">kkay05925@gmail.com</a>',
+    formula_tag:"Physics Game",formula_title:"🧠 Space Formula Challenge",formula_subtitle:"Answer physics questions to charge the rocket and launch the Baikonur mission.",formula_name:"MISSION CONTROL QUIZ",formula_badge:"NOT ARCADE",formula_fuel:"Fuel",formula_score:"Score",formula_best:"Best",formula_choose:"choose answer",formula_quick:"quick choose",formula_next:"next",formula_tip:"This one is different: no shooting, no dodging — it is a physics quiz game.",formula_start:"🚀 Start Mission",
     chat_title:"Latest Comments",chat_loading:"Loading…",chat_write:"Write a Comment"
   },
   zh:{
@@ -744,7 +759,7 @@ const T={
     ai_tag:"AI 助手",ai_title:"🤖 问 Qainar AI",
     ai_sub:"关于太空、物理或拜科努尔2050，尽管提问。",
     ai_sub_label:"航天工程 · 物理 · 拜科努尔2050",
-    ai_online:"在线",ai_note:"由 Groq AI 驱动 · 回答反映 Qainar 的知识与个性",
+    ai_online:"在线",ai_note:"由 QAINAR AI 驱动 · 多语言航天助手",ai_chips_label:"快捷问题",ai_chip1:"🛸 CanSat 是什么？",ai_chip2:"🚀 介绍拜科努尔2050",ai_chip3:"⚙️ 解释轨道力学",ai_chip4:"🌍 为什么哈萨克斯坦适合发展航天？",ai_chip5:"📐 牛顿定律在轨道中的作用",ai_chip6:"🔭 你最大的梦想是什么？",ai_placeholder:"问我关于太空、物理、拜科努尔的问题...",ai_send_title:"发送",
     about_tag:"关于我",about_title:"我是谁",
     about_sub:"一个以触碰星空为目标、一步一步积累技能的学生。",
     about_card1_title:"我的故事",
@@ -769,6 +784,7 @@ const T={
     cta_desc:"有问题、想合作项目，或者只是想打个招呼？我很乐意听到你的消息。",
     cta_btn1:"留言评论",cta_btn2:"发送邮件",
     cta_email_hint:'或直接联系我：<a href="mailto:kkay05925@gmail.com">kkay05925@gmail.com</a>',
+    formula_tag:"物理游戏",formula_title:"🧠 太空公式挑战",formula_subtitle:"回答物理问题，为火箭充能，发射拜科努尔任务。",formula_name:"任务控制问答",formula_badge:"不是街机",formula_fuel:"燃料",formula_score:"分数",formula_best:"最高分",formula_choose:"选择答案",formula_quick:"快捷选择",formula_next:"下一步",formula_tip:"这个游戏不射击、不躲避，是物理公式问答游戏。",formula_start:"🚀 开始任务",
     chat_title:"最新留言",chat_loading:"加载中…",chat_write:"写留言"
   },
   kz:{
@@ -791,7 +807,7 @@ const T={
     ai_tag:"AI Көмекші",ai_title:"🤖 Qainar AI-дан сұра",
     ai_sub:"Ғарыш, физика немесе Байқоңыр 2050 туралы кез келген сұрақ қойыңыз.",
     ai_sub_label:"Ғарыш инженериясы · Физика · Байқоңыр 2050",
-    ai_online:"ОНЛАЙН",ai_note:"Groq AI арқылы · Жауаптар Қайнардың білімі мен тұлғасын бейнелейді",
+    ai_online:"ОНЛАЙН",ai_note:"QAINAR AI арқылы · Көптілді ғарыш көмекшісі",ai_chips_label:"Жылдам сұрақтар",ai_chip1:"🛸 CanSat деген не?",ai_chip2:"🚀 Байқоңыр 2050 туралы айт",ai_chip3:"⚙️ Орбиталық механиканы түсіндір",ai_chip4:"🌍 Неге Қазақстан ғарыш үшін маңызды?",ai_chip5:"📐 Ньютон заңдары орбитада қалай жұмыс істейді?",ai_chip6:"🔭 Ең үлкен арманың қандай?",ai_placeholder:"Ғарыш, физика, Байқоңыр туралы сұраңыз...",ai_send_title:"Жіберу",
     about_tag:"Мен туралы",about_title:"Мен кіммін",
     about_sub:"Жұлдыздарға жету мақсатымен, қадамма-қадам дағды жинайтын студент.",
     about_card1_title:"Менің тарихым",
@@ -816,32 +832,58 @@ const T={
     cta_desc:"Сұрақ бар ма, бірлесіп жоба жасағыңыз келе ме, немесе жай сәлем айтқыңыз келе ме? Хабарыңызды күтемін.",
     cta_btn1:"Пікір қалдыру",cta_btn2:"Email жіберу",
     cta_email_hint:'Немесе тікелей хабарласыңыз: <a href="mailto:kkay05925@gmail.com">kkay05925@gmail.com</a>',
+    formula_tag:"Физика ойыны",formula_title:"🧠 Ғарыш формуласы",formula_subtitle:"Физика сұрақтарына жауап беріп, зымыранға отын жинап, Байқоңыр миссиясын ұшыр.",formula_name:"МИССИЯ БАСҚАРУ ВИКТОРИНАСЫ",formula_badge:"АРКАДА ЕМЕС",formula_fuel:"Отын",formula_score:"Ұпай",formula_best:"Рекорд",formula_choose:"жауап таңдау",formula_quick:"жылдам таңдау",formula_next:"келесі",formula_tip:"Бұл ойын бөлек: ату да, қашу да жоқ — бұл физика викторинасы.",formula_start:"🚀 Миссияны бастау",
     chat_title:"Соңғы пікірлер",chat_loading:"Жүктелуде…",chat_write:"Пікір жазу"
   }
 };
 let lang=localStorage.getItem("lang")||"en";
 function applyLang(l){
-  lang=l;localStorage.setItem("lang",l);
+  lang=l;localStorage.setItem("lang",l); window.__qainarLang=l;
   const t=T[l];
   document.querySelectorAll("[data-i18n]").forEach(el=>{
     const k=el.getAttribute("data-i18n");
     if(t[k]!==undefined)el.innerHTML=t[k];
   });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+    const k=el.getAttribute("data-i18n-placeholder");
+    if(t[k]!==undefined)el.setAttribute("placeholder",t[k]);
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach(el=>{
+    const k=el.getAttribute("data-i18n-title");
+    if(t[k]!==undefined)el.setAttribute("title",t[k]);
+  });
   document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
   document.documentElement.lang=l==="kz"?"kk":l;
+  window.dispatchEvent(new CustomEvent("qainar-lang-change",{detail:{lang:l}}));
   // Update greeting bubble language
   const greet=document.getElementById("ai-greeting");
   if(greet){
     const greetings={
-      en:'Salam! I\'m <b>Qainar</b> — a space engineering student from Almaty. Ask me about physics, aerospace, or my <em>Baikonur 2050</em> mission. Let\'s explore the cosmos! 🛸',
-      zh:'你好！我是 <b>Qainar</b> — 来自阿拉木图的航天工程学生。欢迎问我关于物理、航天，或者我的 <em>拜科努尔2050</em> 使命的任何问题！🛸',
-      kz:'Сәлем! Мен <b>Qainar</b> — ғарыш инженериясы студентімін, Алматыдан. Физика, аэроғарыш немесе <em>Байқоңыр 2050</em> миссиясы туралы сұрай аласыз. Ask me anything! 🛸'
+      en:'Salam! I\'m <b>Qainar</b> — a space engineering student from Almaty. Ask me about physics, aerospace, or my <em>Baikonur 2050</em> mission. 🛸',
+      zh:'你好！我是 <b>Qainar</b>，来自阿拉木图的航天工程学生。你可以问我物理、航天工程，或者我的 <em>拜科努尔2050</em> 使命。🛸',
+      kz:'Сәлем! Мен <b>Qainar</b> — Алматыдан келген ғарыш инженериясы студентімін. Физика, аэроғарыш немесе <em>Байқоңыр 2050</em> миссиясы туралы сұрай аласыз. 🛸'
     };
     greet.innerHTML=greetings[l]||greetings.en;
   }
 }
 document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>applyLang(b.dataset.lang)));
 applyLang(lang);
+</script>
+
+
+<script>
+// Prevent game controls from scrolling the page while keeping typing fields normal.
+(function(){
+  const gameKeys = new Set(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ']);
+  window.__isTypingField = function(){
+    const el = document.activeElement;
+    return el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable);
+  };
+  document.addEventListener('keydown', function(e){
+    if (window.__isTypingField && window.__isTypingField()) return;
+    if (gameKeys.has(e.key)) e.preventDefault();
+  }, {passive:false});
+})();
 </script>
 
 <!-- ══════════ ROCKET GAME ══════════ -->
@@ -854,10 +896,24 @@ applyLang(lang);
   const levelEl=document.getElementById('level-display');
   const bestEl=document.getElementById('best-display');
   let W,H,state='idle',score=0,lives=3,level=1,bestScore=parseInt(localStorage.getItem('bk_best')||0);
+  const gameText={
+    en:{moveShoot:'← → move  |  SPACE shoot',start:'[ Press any key to start ]',pause:'⏸  PAUSED',pauseHint:'Press P or the Pause button to continue',over:'🛸  MISSION FAILED',score:'Score',newBest:'🏆 New record!',restart:'[ Press to restart ]',lvl:'LVL',best:'BEST',next:'NEXT LVL',resume:'▶ Resume',pauseBtn:'⏸ Pause'},
+    zh:{moveShoot:'← → 移动  |  SPACE 射击',start:'[ 按任意键开始 ]',pause:'⏸  暂停',pauseHint:'按 P 或“暂停”按钮继续',over:'🛸  任务结束',score:'分数',newBest:'🏆 新纪录！',restart:'[ 按下重新开始 ]',lvl:'等级',best:'最高分',next:'下一等级',resume:'▶ 继续',pauseBtn:'⏸ 暂停'},
+    kz:{moveShoot:'← → жылжыту  |  SPACE атқылау',start:'[ Бастау үшін кез келген түймені басыңыз ]',pause:'⏸  ПАУЗА',pauseHint:'Жалғастыру үшін P немесе «Пауза» батырмасын басыңыз',over:'🛸  МИССИЯ АЯҚТАЛДЫ',score:'Ұпай',newBest:'🏆 Жаңа рекорд!',restart:'[ Қайта бастау үшін басыңыз ]',lvl:'ДЕҢГЕЙ',best:'РЕКОРД',next:'КЕЛЕСІ ДЕҢГЕЙ',resume:'▶ Жалғасу',pauseBtn:'⏸ Пауза'}
+  };
+  function gt(k){const l=window.__qainarLang||localStorage.getItem('lang')||'en';return (gameText[l]||gameText.en)[k];}
+
   let animId=null,lastTime=0,elapsed=0,frameCount=0;
   const keys={};
-  document.addEventListener('keydown',e=>{keys[e.key]=true;if(e.key===' '){e.preventDefault();shoot();}if(e.key==='p'||e.key==='P')togglePause();if(state==='gameover'||state==='idle')startGame();});
-  document.addEventListener('keyup',e=>{keys[e.key]=false;});
+  document.addEventListener('keydown',e=>{
+    if(window.__isTypingField&&window.__isTypingField())return;
+    keys[e.key]=true;
+    if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key))e.preventDefault();
+    if(e.key===' '){shoot();}
+    if(e.key==='p'||e.key==='P')togglePause();
+    if(state==='gameover'||state==='idle')startGame();
+  },{passive:false});
+  document.addEventListener('keyup',e=>{if(window.__isTypingField&&window.__isTypingField())return;keys[e.key]=false;});
   let touchLeft=false,touchRight=false;
   document.getElementById('touch-left').addEventListener('touchstart',e=>{e.preventDefault();touchLeft=true;},{passive:false});
   document.getElementById('touch-left').addEventListener('touchend',()=>touchLeft=false);
@@ -902,9 +958,9 @@ applyLang(lang);
   function spawnParticles(x,y,n,color){for(let i=0;i<n;i++){const ang=Math.random()*Math.PI*2,spd=40+Math.random()*80;particles.push({x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,life:0.6+Math.random()*0.4,maxLife:1,r:2+Math.random()*4,color});}}
   function circle(ax,ay,ar,bx,by,br){return Math.hypot(ax-bx,ay-by)<ar+br;}
   function updateUI(){scoreEl.textContent=score;levelEl.textContent=level;const h=['❤️','❤️','❤️'];livesEl.textContent=h.slice(0,Math.max(0,lives)).join('')||'💀';if(score>bestScore){bestScore=score;localStorage.setItem('bk_best',bestScore);}bestEl.textContent=bestScore;}
-  function drawIdle(){ctx.fillStyle='rgba(2,8,23,0.72)';ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(56,189,248,0.92)';ctx.font=`bold ${Math.min(26,W*0.055)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText('🚀  BAIKONUR RUN',W/2,H/2-40);ctx.fillStyle='rgba(203,213,225,0.85)';ctx.font=`${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText('← → жылжыту  |  SPACE атқылау',W/2,H/2+4);ctx.fillStyle='rgba(56,189,248,0.75)';ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;ctx.fillText('[ Бастау үшін кез келген түймені басыңыз ]',W/2,H/2+36);}
-  function drawPaused(){ctx.fillStyle='rgba(2,8,23,0.6)';ctx.fillRect(0,0,W,H);ctx.fillStyle='white';ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText('⏸  ПАУЗА',W/2,H/2);ctx.font=`${Math.min(13,W*0.03)}px DM Sans,sans-serif`;ctx.fillStyle='rgba(148,163,184,0.9)';ctx.fillText('Жалғастыру үшін P немесе «Пауза» батырмасын басыңыз',W/2,H/2+30);}
-  function drawGameOver(){ctx.fillStyle='rgba(2,8,23,0.8)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#f87171';ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText('🛸  МИССИЯ АЯҚТАЛДЫ',W/2,H/2-50);ctx.fillStyle='white';ctx.font=`bold ${Math.min(20,W*0.045)}px Orbitron,sans-serif`;ctx.fillText(`Ұпай: ${score}`,W/2,H/2);if(score>=bestScore&&score>0){ctx.fillStyle='#fbbf24';ctx.font=`bold ${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText('🏆 Жаңа рекорд!',W/2,H/2+32);}ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;ctx.fillText('[ Қайта бастау үшін басыңыз ]',W/2,H/2+62);}
+  function drawIdle(){ctx.fillStyle='rgba(2,8,23,0.72)';ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(56,189,248,0.92)';ctx.font=`bold ${Math.min(26,W*0.055)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText('🚀  BAIKONUR RUN',W/2,H/2-40);ctx.fillStyle='rgba(203,213,225,0.85)';ctx.font=`${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText(gt('moveShoot'),W/2,H/2+4);ctx.fillStyle='rgba(56,189,248,0.75)';ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;ctx.fillText(gt('start'),W/2,H/2+36);}
+  function drawPaused(){ctx.fillStyle='rgba(2,8,23,0.6)';ctx.fillRect(0,0,W,H);ctx.fillStyle='white';ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText(gt('pause'),W/2,H/2);ctx.font=`${Math.min(13,W*0.03)}px DM Sans,sans-serif`;ctx.fillStyle='rgba(148,163,184,0.9)';ctx.fillText(gt('pauseHint'),W/2,H/2+30);}
+  function drawGameOver(){ctx.fillStyle='rgba(2,8,23,0.8)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#f87171';ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText(gt('over'),W/2,H/2-50);ctx.fillStyle='white';ctx.font=`bold ${Math.min(20,W*0.045)}px Orbitron,sans-serif`;ctx.fillText(`${gt('score')}: ${score}`,W/2,H/2);if(score>=bestScore&&score>0){ctx.fillStyle='#fbbf24';ctx.font=`bold ${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText(gt('newBest'),W/2,H/2+32);}ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;ctx.fillText(gt('restart'),W/2,H/2+62);}
   function loop(ts){
     animId=requestAnimationFrame(loop);const dt=Math.min((ts-lastTime)/1000,0.05);lastTime=ts;frameCount++;
     if(canvas.offsetWidth!==W){W=canvas.width=canvas.offsetWidth;H=canvas.height=Math.min(420,W*0.55);}
@@ -930,145 +986,177 @@ applyLang(lang);
       powerups=powerups.filter(p=>{p.y+=p.vy*dt;p.angle+=2*dt;if(p.y>H+30)return false;if(circle(p.x,p.y,p.r,rocket.x,rocket.y,20)){if(p.type==='shield')rocket.invincible=4;if(p.type==='fuel')score+=50;spawnParticles(p.x,p.y,10,p.type==='shield'?'#67e8f9':'#fbbf24');updateUI();return false;}ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle);const pc=p.type==='shield'?'rgba(56,189,248,0.9)':'rgba(251,191,36,0.9)';ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fillStyle=pc.replace('0.9','0.2');ctx.fill();ctx.strokeStyle=pc;ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='white';ctx.font=`${p.r}px sans-serif`;ctx.textAlign='center';ctx.fillText(p.type==='shield'?'🛡':'⭐',0,p.r*0.35);ctx.restore();return true;});
       particles=particles.filter(p=>{p.life-=dt;if(p.life<=0)return false;p.x+=p.vx*dt;p.y+=p.vy*dt;const alpha=p.life/p.maxLife;ctx.beginPath();ctx.arc(p.x,p.y,p.r*alpha,0,Math.PI*2);ctx.fillStyle=p.color.replace(')',`,${alpha})`).replace('rgb','rgba');ctx.fill();return true;});
       drawRocket(rocket.x,rocket.y,rocket.thrust,rocket.invincible);
-      ctx.fillStyle='rgba(2,8,23,0.4)';ctx.fillRect(0,0,W,32);ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(11,W*0.022)}px Orbitron,sans-serif`;ctx.textAlign='left';ctx.fillText(`LVL ${level}`,10,20);ctx.textAlign='right';ctx.fillStyle='#fbbf24';ctx.fillText(`BEST ${bestScore}`,W-10,20);
-      const prog=(elapsed%15)/15;ctx.fillStyle='rgba(255,255,255,0.08)';ctx.fillRect(W*0.25,12,W*0.5,6);ctx.fillStyle='rgba(56,189,248,0.7)';ctx.fillRect(W*0.25,12,W*0.5*prog,6);ctx.fillStyle='rgba(148,163,184,0.6)';ctx.font=`${Math.min(9,W*0.019)}px DM Sans,sans-serif`;ctx.textAlign='center';ctx.fillText('NEXT LVL',W/2,11);
+      ctx.fillStyle='rgba(2,8,23,0.4)';ctx.fillRect(0,0,W,32);ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(11,W*0.022)}px Orbitron,sans-serif`;ctx.textAlign='left';ctx.fillText(`${gt('lvl')} ${level}`,10,20);ctx.textAlign='right';ctx.fillStyle='#fbbf24';ctx.fillText(`${gt('best')} ${bestScore}`,W-10,20);
+      const prog=(elapsed%15)/15;ctx.fillStyle='rgba(255,255,255,0.08)';ctx.fillRect(W*0.25,12,W*0.5,6);ctx.fillStyle='rgba(56,189,248,0.7)';ctx.fillRect(W*0.25,12,W*0.5*prog,6);ctx.fillStyle='rgba(148,163,184,0.6)';ctx.font=`${Math.min(9,W*0.019)}px DM Sans,sans-serif`;ctx.textAlign='center';ctx.fillText(gt('next'),W/2,11);
     }
     if(state==='paused')drawPaused();
   }
   window.startGame=function(){if(state==='playing')return;initObjects();state='playing';lastTime=performance.now();if(!animId)animId=requestAnimationFrame(loop);};
   window.restartGame=function(){state='idle';initObjects();state='playing';lastTime=performance.now();};
-  window.togglePause=function(){if(state==='playing')state='paused';else if(state==='paused')state='playing';const btn=document.querySelector('[data-i18n="btn_pause"]');if(btn)btn.textContent=state==='paused'?'▶ Жалғасу':'⏸ Пауза';};
+  window.togglePause=function(){if(state==='playing')state='paused';else if(state==='paused')state='playing';const btn=document.querySelector('[data-i18n="btn_pause"]');if(btn)btn.textContent=state==='paused'?gt('resume'):gt('pauseBtn');};
   initObjects();lastTime=performance.now();animId=requestAnimationFrame(loop);
 })();
 </script>
 
 
 
-<!-- ══════════ ORBITAL DOCKING GAME ══════════ -->
+<!-- ══════════ SPACE FORMULA CHALLENGE GAME ══════════ -->
 <script>
 (function(){
   const canvas=document.getElementById('dock-canvas');
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
-  const timeEl=document.getElementById('dock-time');
-  const speedEl=document.getElementById('dock-speed');
+  const fuelEl=document.getElementById('dock-time');
+  const scoreEl=document.getElementById('dock-speed');
   const bestEl=document.getElementById('dock-best');
-  let W=0,H=420,last=0,gameState='idle',timer=0;
-  let best=parseFloat(localStorage.getItem('dock_best_time')||'0');
-  let ship,stars=[],particles=[];
-  const keys={};
-  const touch={left:false,right:false,thrust:false,brake:false};
-  const port={x:0,y:0,w:78,h:38};
+  const qEl=document.getElementById('formula-question');
+  const subEl=document.getElementById('formula-sub');
+  const optsEl=document.getElementById('formula-options');
+  const fbEl=document.getElementById('formula-feedback');
+  const fillEl=document.getElementById('formula-progress-fill');
+  let W=0,H=420,stars=[],particles=[];
+  let index=0,score=0,fuel=0,locked=false,finished=false;
+  let best=parseInt(localStorage.getItem('space_formula_best')||'0',10);
 
-  function setTouch(id,key){
-    const el=document.getElementById(id);if(!el)return;
-    el.addEventListener('touchstart',e=>{e.preventDefault();touch[key]=true;if(gameState!=='playing')resetDocking(true);},{passive:false});
-    el.addEventListener('touchend',e=>{e.preventDefault();touch[key]=false;},{passive:false});
-    el.addEventListener('mousedown',()=>{touch[key]=true;if(gameState!=='playing')resetDocking(true);});
-    el.addEventListener('mouseup',()=>touch[key]=false);
-    el.addEventListener('mouseleave',()=>touch[key]=false);
+  const questionBank={
+    en:[
+      {q:'Which formula gives orbital speed for a circular orbit?', sub:'For a satellite around a planet with mass M and orbital radius r.', a:'v = √(GM / r)', opts:['v = √(GM / r)','v = GM r²','v = mgh','v = F / m'], exp:'Correct: circular orbital speed comes from gravity providing centripetal force.'},
+      {q:'Newton’s second law is...', sub:'The basic law connecting force, mass, and acceleration.', a:'F = ma', opts:['F = ma','E = mc²','p = mv²','W = mg / h'], exp:'Yes. Net force equals mass times acceleration.'},
+      {q:'Kinetic energy of a moving body is...', sub:'Used for spacecraft speed and impact energy.', a:'Eₖ = 1/2 mv²', opts:['Eₖ = 1/2 mv²','Eₖ = mgh','Eₖ = Fd / t','Eₖ = p / v'], exp:'Right. Kinetic energy grows with the square of velocity.'},
+      {q:'Gravitational potential energy near Earth is...', sub:'Approximation for small heights near the surface.', a:'Eₚ = mgh', opts:['Eₚ = mgh','Eₚ = 1/2 kx²','Eₚ = mv','Eₚ = GM / v'], exp:'Correct. mgh is used close to Earth’s surface.'},
+      {q:'Momentum is...', sub:'Important for rocket motion and collisions.', a:'p = mv', opts:['p = mv','p = ma','p = F / t','p = v / m'], exp:'Correct. Momentum equals mass times velocity.'},
+      {q:'Rocket thrust mainly follows...', sub:'Exhaust goes one way, the rocket goes the other.', a:'Conservation of momentum', opts:['Conservation of momentum','Ohm’s law','Snell’s law','Archimedes principle'], exp:'Yes. Rocket motion is a momentum conservation effect.'},
+      {q:'Centripetal acceleration is...', sub:'Acceleration toward the center of circular motion.', a:'a = v² / r', opts:['a = v² / r','a = vr','a = r / v²','a = mg'], exp:'Correct. Circular motion needs inward acceleration v²/r.'},
+      {q:'Work done by a constant force is...', sub:'Force acting through a distance in the same direction.', a:'W = Fd', opts:['W = Fd','W = F / d','W = mv','W = gh'], exp:'Correct. Work equals force times displacement.'},
+      {q:'Escape velocity formula is...', sub:'Minimum speed to escape a planet without more thrust.', a:'v = √(2GM / r)', opts:['v = √(2GM / r)','v = √(GM / r)','v = GMm / r²','v = 2πr / T'], exp:'Correct. Escape velocity is √2 times circular orbital speed at the same radius.'},
+      {q:'Angular velocity relation is...', sub:'Used in rotation and orbital period problems.', a:'ω = 2π / T', opts:['ω = 2π / T','ω = T / 2π','ω = mv','ω = Fr'], exp:'Correct. One full rotation is 2π radians over period T.'}
+    ],
+    zh:[
+      {q:'圆形轨道的轨道速度公式是？', sub:'卫星绕质量为 M 的天体，在轨道半径 r 上运动。', a:'v = √(GM / r)', opts:['v = √(GM / r)','v = GM r²','v = mgh','v = F / m'], exp:'正确：万有引力提供向心力，所以得到圆轨道速度公式。'},
+      {q:'牛顿第二定律是？', sub:'连接力、质量和加速度的基本定律。', a:'F = ma', opts:['F = ma','E = mc²','p = mv²','W = mg / h'], exp:'对。合力等于质量乘以加速度。'},
+      {q:'运动物体的动能公式是？', sub:'用于描述飞船速度和撞击能量。', a:'Eₖ = 1/2 mv²', opts:['Eₖ = 1/2 mv²','Eₖ = mgh','Eₖ = Fd / t','Eₖ = p / v'], exp:'正确。动能和速度的平方成正比。'},
+      {q:'地球附近的重力势能近似公式是？', sub:'适用于离地面高度不大的情况。', a:'Eₚ = mgh', opts:['Eₚ = mgh','Eₚ = 1/2 kx²','Eₚ = mv','Eₚ = GM / v'], exp:'正确。在地球表面附近常用 mgh。'},
+      {q:'动量公式是？', sub:'火箭运动和碰撞问题里很重要。', a:'p = mv', opts:['p = mv','p = ma','p = F / t','p = v / m'], exp:'正确。动量等于质量乘以速度。'},
+      {q:'火箭推进主要遵循什么原理？', sub:'喷气向一个方向，火箭向相反方向运动。', a:'动量守恒', opts:['动量守恒','欧姆定律','折射定律','阿基米德原理'], exp:'对。火箭运动本质上是动量守恒的结果。'},
+      {q:'向心加速度公式是？', sub:'圆周运动中指向圆心的加速度。', a:'a = v² / r', opts:['a = v² / r','a = vr','a = r / v²','a = mg'], exp:'正确。圆周运动需要向心加速度 v²/r。'},
+      {q:'恒力做功公式是？', sub:'力和位移方向相同时。', a:'W = Fd', opts:['W = Fd','W = F / d','W = mv','W = gh'], exp:'正确。功等于力乘以位移。'},
+      {q:'逃逸速度公式是？', sub:'不再继续推进也能逃离天体引力所需的最小速度。', a:'v = √(2GM / r)', opts:['v = √(2GM / r)','v = √(GM / r)','v = GMm / r²','v = 2πr / T'], exp:'正确。同一半径处，逃逸速度是圆轨道速度的 √2 倍。'},
+      {q:'角速度与周期的关系是？', sub:'用于旋转和轨道周期问题。', a:'ω = 2π / T', opts:['ω = 2π / T','ω = T / 2π','ω = mv','ω = Fr'], exp:'正确。一圈是 2π 弧度，用周期 T 除即可。'}
+    ],
+    kz:[
+      {q:'Дөңгелек орбитадағы жылдамдық формуласы қайсы?', sub:'Массасы M планетаның айналасында r радиуста қозғалатын серік үшін.', a:'v = √(GM / r)', opts:['v = √(GM / r)','v = GM r²','v = mgh','v = F / m'], exp:'Дұрыс: тартылыс күші центрге тартқыш күш рөлін атқарады.'},
+      {q:'Ньютонның екінші заңы...', sub:'Күш, масса және үдеуді байланыстыратын негізгі заң.', a:'F = ma', opts:['F = ma','E = mc²','p = mv²','W = mg / h'], exp:'Дұрыс. Қорытқы күш масса мен үдеудің көбейтіндісіне тең.'},
+      {q:'Қозғалыстағы дененің кинетикалық энергиясы...', sub:'Ғарыш кемесінің жылдамдығы мен соқтығысу энергиясында қолданылады.', a:'Eₖ = 1/2 mv²', opts:['Eₖ = 1/2 mv²','Eₖ = mgh','Eₖ = Fd / t','Eₖ = p / v'], exp:'Дұрыс. Кинетикалық энергия жылдамдықтың квадратына тәуелді.'},
+      {q:'Жер маңындағы ауырлық потенциалдық энергиясы...', sub:'Биіктік аз болған кезде қолданылатын жуық формула.', a:'Eₚ = mgh', opts:['Eₚ = mgh','Eₚ = 1/2 kx²','Eₚ = mv','Eₚ = GM / v'], exp:'Дұрыс. Жер бетіне жақын жерде mgh қолданылады.'},
+      {q:'Импульс формуласы...', sub:'Зымыран қозғалысы мен соқтығыстарда маңызды.', a:'p = mv', opts:['p = mv','p = ma','p = F / t','p = v / m'], exp:'Дұрыс. Импульс масса мен жылдамдықтың көбейтіндісіне тең.'},
+      {q:'Зымыран тартуы негізінен қандай заңға сүйенеді?', sub:'Газ бір жаққа шығады, зымыран кері бағытта қозғалады.', a:'Импульстің сақталуы', opts:['Импульстің сақталуы','Ом заңы','Сыну заңы','Архимед принципі'], exp:'Дұрыс. Зымыран қозғалысы импульстің сақталуына негізделеді.'},
+      {q:'Центрге тартқыш үдеу...', sub:'Шеңберлік қозғалыста центрге бағытталған үдеу.', a:'a = v² / r', opts:['a = v² / r','a = vr','a = r / v²','a = mg'], exp:'Дұрыс. Шеңберлік қозғалысқа v²/r үдеуі қажет.'},
+      {q:'Тұрақты күштің жұмысы...', sub:'Күш пен орын ауыстыру бір бағытта болса.', a:'W = Fd', opts:['W = Fd','W = F / d','W = mv','W = gh'], exp:'Дұрыс. Жұмыс күш пен орын ауыстырудың көбейтіндісіне тең.'},
+      {q:'Қашу жылдамдығы формуласы...', sub:'Планетадан қосымша тартусыз қашу үшін ең аз жылдамдық.', a:'v = √(2GM / r)', opts:['v = √(2GM / r)','v = √(GM / r)','v = GMm / r²','v = 2πr / T'], exp:'Дұрыс. Қашу жылдамдығы сол радиустағы орбиталық жылдамдықтан √2 есе үлкен.'},
+      {q:'Бұрыштық жылдамдық пен период байланысы...', sub:'Айналу және орбиталық период есептерінде қолданылады.', a:'ω = 2π / T', opts:['ω = 2π / T','ω = T / 2π','ω = mv','ω = Fr'], exp:'Дұрыс. Бір толық айналым 2π радиан, оны T периодына бөлеміз.'}
+    ]
+  };
+  const uiText={
+    en:{readyQ:'Ready for launch?',readySub:'Choose the correct physics formula. Every correct answer adds fuel. Wrong answers reduce mission stability.',readyFb:'Press Start Mission to begin.',question:'Question',choose:'choose the correct answer',fuel:'+10% fuel',wrong:'Not this one. Correct answer:',launch:'🚀 Mission Launched!',training:'🛠 Mission Training Complete',final:'Final score',best:'Best score',success:'Kazakhstan mission is ready for launch. Great work, commander.',tryAgain:'You need more correct formulas to fully launch the rocket. Try again.',pad:'BAIKONUR LAUNCH PAD',fuelHint:'Fuel charged by correct physics answers'},
+    zh:{readyQ:'准备发射了吗？',readySub:'选择正确的物理公式。答对会增加燃料，答错会降低任务稳定性。',readyFb:'点击“开始任务”开始。',question:'第',choose:'题 — 选择正确答案',fuel:'+10% 燃料',wrong:'不是这个。正确答案：',launch:'🚀 发射成功！',training:'🛠 任务训练完成',final:'最终分数',best:'最高分',success:'哈萨克斯坦任务已准备发射。干得漂亮，指挥官。',tryAgain:'还需要更多正确公式才能完全发射火箭，再试一次。',pad:'拜科努尔发射台',fuelHint:'答对物理题为火箭充能'},
+    kz:{readyQ:'Ұшуға дайынсың ба?',readySub:'Дұрыс физика формуласын таңда. Әр дұрыс жауап отын қосады, қате жауап миссия тұрақтылығын азайтады.',readyFb:'Бастау үшін «Миссияны бастау» батырмасын бас.',question:'Сұрақ',choose:'— дұрыс жауапты таңда',fuel:'+10% отын',wrong:'Бұл емес. Дұрыс жауап:',launch:'🚀 Миссия ұшты!',training:'🛠 Миссия жаттығуы аяқталды',final:'Қорытынды ұпай',best:'Рекорд',success:'Қазақстан миссиясы ұшуға дайын. Жарайсың, командир!',tryAgain:'Зымыранды толық ұшыру үшін көбірек дұрыс формула керек. Қайта көр.',pad:'БАЙҚОҢЫР ҰШЫРУ АЛАҢЫ',fuelHint:'Дұрыс физика жауаптары отынды толтырады'}
+  };
+  function flang(){return window.__qainarLang||localStorage.getItem('lang')||'en';}
+  function ft(k){return (uiText[flang()]||uiText.en)[k];}
+  function questions(){return questionBank[flang()]||questionBank.en;}
+
+  function resize(){W=canvas.offsetWidth||520;H=Math.max(420,canvas.offsetHeight||420);canvas.width=W;canvas.height=H;makeStars();}
+  function makeStars(){stars=[];for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.4,a:Math.random()*0.75+0.2,s:Math.random()*18+8});}
+  function updateHUD(){fuelEl.textContent=fuel+'%';scoreEl.textContent=score;bestEl.textContent=best;fillEl.style.width=fuel+'%';}
+  function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
+  function start(){index=0;score=0;fuel=0;locked=false;finished=false;particles=[];updateHUD();showQuestion();}
+  window.restartDocking=start;
+  function setReadyText(){ if(finished||index>0||fuel>0||optsEl.children.length){return;} qEl.textContent=ft('readyQ'); subEl.textContent=ft('readySub'); fbEl.textContent=ft('readyFb'); }
+  window.addEventListener('qainar-lang-change',()=>{ if(!finished&&optsEl.children.length>0){ showQuestion(); } else if(!finished&&index===0&&fuel===0){ setReadyText(); } else if(finished){ finish(); } });
+
+  function showQuestion(){
+    locked=false;
+    const item=questions()[index];
+    qEl.textContent=item.q;
+    subEl.textContent=item.sub;
+    fbEl.textContent=(flang()==='zh' ? ft('question')+(index+1)+' / '+questions().length+' '+ft('choose') : ft('question')+' '+(index+1)+' / '+questions().length+' '+ft('choose'));
+    optsEl.innerHTML='';
+    shuffle(item.opts).forEach((txt,i)=>{
+      const b=document.createElement('button');
+      b.className='formula-option';
+      b.innerHTML='<span style="color:#38bdf8;margin-right:8px;">'+(i+1)+'.</span>'+txt;
+      b.onclick=()=>choose(txt,b);
+      optsEl.appendChild(b);
+    });
   }
-  setTouch('dock-left','left');setTouch('dock-right','right');setTouch('dock-thrust','thrust');setTouch('dock-brake','brake');
+
+  function choose(txt,btn){
+    if(locked||finished)return;
+    locked=true;
+    const item=questions()[index];
+    const buttons=[...optsEl.querySelectorAll('.formula-option')];
+    buttons.forEach(b=>{if(b.textContent.includes(item.a))b.classList.add('correct');});
+    if(txt===item.a){
+      score+=100+(index*15);fuel=Math.min(100,fuel+10);btn.classList.add('correct');
+      fbEl.innerHTML='✅ '+item.exp+' <b style="color:#fbbf24">'+ft('fuel')+'</b>';
+      burst(W*0.5,H*0.72,'#38bdf8');
+    }else{
+      score=Math.max(0,score-35);fuel=Math.max(0,fuel-5);btn.classList.add('wrong');
+      fbEl.innerHTML='❌ '+ft('wrong')+' <b style="color:#38bdf8">'+item.a+'</b>. '+item.exp;
+      burst(W*0.5,H*0.78,'#ef4444');
+    }
+    updateHUD();
+    setTimeout(()=>{
+      index++;
+      if(index>=questions().length||fuel>=100)finish(); else showQuestion();
+    },1100);
+  }
+
+  function finish(){
+    finished=true;locked=true;
+    if(score>best){best=score;localStorage.setItem('space_formula_best',String(best));}
+    updateHUD();
+    qEl.textContent=fuel>=80?ft('launch'):ft('training');
+    subEl.textContent=ft('final')+': '+score+'. '+ft('best')+': '+best+'.';
+    optsEl.innerHTML='';
+    fbEl.innerHTML=fuel>=80?ft('success'):ft('tryAgain');
+    for(let i=0;i<8;i++)setTimeout(()=>burst(W*0.5,H*0.70-i*22, i%2?'#fbbf24':'#38bdf8'),i*100);
+  }
+
+  function burst(x,y,color){for(let i=0;i<22;i++){const a=Math.random()*Math.PI*2,sp=40+Math.random()*190;particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.6+Math.random()*.4,color});}}
+  function drawRocket(){
+    const launch=(fuel/100);
+    const y=H-70-launch*(H-150);
+    ctx.save();ctx.translate(W*0.5,y);
+    ctx.shadowColor='rgba(56,189,248,.55)';ctx.shadowBlur=18;
+    ctx.beginPath();ctx.moveTo(0,-42);ctx.lineTo(24,18);ctx.lineTo(10,14);ctx.lineTo(0,40);ctx.lineTo(-10,14);ctx.lineTo(-24,18);ctx.closePath();
+    const g=ctx.createLinearGradient(-25,-42,25,40);g.addColorStop(0,'#f8fafc');g.addColorStop(.5,'#38bdf8');g.addColorStop(1,'#1d4ed8');ctx.fillStyle=g;ctx.fill();ctx.strokeStyle='rgba(255,255,255,.85)';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.beginPath();ctx.arc(0,-10,8,0,Math.PI*2);ctx.fillStyle='rgba(2,8,23,.65)';ctx.fill();
+    if(fuel>0){ctx.beginPath();ctx.moveTo(-10,32);ctx.lineTo(0,70+Math.sin(Date.now()/80)*8+fuel*.4);ctx.lineTo(10,32);ctx.fillStyle='rgba(251,191,36,.9)';ctx.fill();}
+    ctx.restore();
+  }
+  function draw(){
+    requestAnimationFrame(draw);if(canvas.offsetWidth!==W)resize();
+    ctx.fillStyle='#020817';ctx.fillRect(0,0,W,H);
+    stars.forEach(s=>{s.y+=s.s/60;if(s.y>H){s.y=0;s.x=Math.random()*W;}ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,210,255,${s.a})`;ctx.fill();});
+    ctx.strokeStyle='rgba(56,189,248,.16)';ctx.lineWidth=1;for(let y=H-40;y>40;y-=40){ctx.beginPath();ctx.moveTo(50,y);ctx.lineTo(W-50,y);ctx.stroke();}
+    ctx.textAlign='center';ctx.fillStyle='rgba(125,211,252,.9)';ctx.font='bold 13px Orbitron, sans-serif';ctx.fillText(ft('pad'),W/2,H-20);
+    ctx.fillStyle='rgba(251,191,36,.9)';ctx.font='bold 30px Orbitron, sans-serif';ctx.fillText(fuel+'%',W/2,52);
+    ctx.fillStyle='rgba(148,163,184,.9)';ctx.font='13px DM Sans, sans-serif';ctx.fillText(ft('fuelHint'),W/2,76);
+    drawRocket();
+    particles=particles.filter(p=>{p.life-=0.018;if(p.life<=0)return false;p.x+=p.vx/60;p.y+=p.vy/60;ctx.beginPath();ctx.arc(p.x,p.y,3*p.life,0,Math.PI*2);ctx.fillStyle=p.color;ctx.globalAlpha=Math.max(0,p.life);ctx.fill();ctx.globalAlpha=1;return true;});
+  }
 
   document.addEventListener('keydown',e=>{
-    keys[e.key.toLowerCase()]=true;
-    if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(e.key.toLowerCase())){
-      if(gameState!=='playing')resetDocking(true);
+    if(window.__isTypingField&&window.__isTypingField())return;
+    const k=e.key.toLowerCase();
+    if(['1','2','3','4'].includes(k)&&!locked&&!finished){
+      const b=optsEl.querySelectorAll('.formula-option')[parseInt(k,10)-1];if(b){e.preventDefault();b.click();}
     }
-  });
-  document.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
-  canvas.addEventListener('click',()=>{if(gameState!=='playing')resetDocking(true);});
+    if(k==='enter'){e.preventDefault();if(finished||optsEl.children.length===0)start();}
+  },{passive:false});
 
-  function resize(){
-    W=canvas.offsetWidth||900;
-    H=Math.min(420,W*0.55);
-    canvas.width=W;canvas.height=H;
-    port.x=W-78;port.y=H/2-19;
-  }
-  function resetDocking(start=false){
-    resize();timer=0;particles=[];gameState=start?'playing':'idle';
-    ship={x:80,y:H/2,angle:0,vx:0,vy:0,r:16,fuel:100};
-    stars=[];
-    for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.3,a:Math.random()*0.8+0.2});
-    updateStats();
-  }
-  window.restartDocking=function(){resetDocking(true);};
-  function updateStats(){
-    const sp=Math.hypot(ship.vx,ship.vy);
-    timeEl.textContent=timer.toFixed(1)+'s';
-    speedEl.textContent=sp.toFixed(2);
-    speedEl.className='dock-value '+(sp<0.7?'safe':sp<1.25?'warn':'danger');
-    bestEl.textContent=best?best.toFixed(1)+'s':'—';
-  }
-  function addParticles(x,y,n,color){
-    for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,sp=Math.random()*120+30;particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:0.8,color});}
-  }
-  function drawStation(){
-    ctx.save();ctx.translate(W-110,H/2);
-    ctx.shadowColor='rgba(56,189,248,0.45)';ctx.shadowBlur=18;
-    ctx.strokeStyle='rgba(56,189,248,0.85)';ctx.lineWidth=2;
-    ctx.fillStyle='rgba(56,189,248,0.08)';
-    ctx.fillRect(-18,-60,36,120);ctx.strokeRect(-18,-60,36,120);
-    ctx.fillStyle='rgba(148,163,184,0.2)';ctx.strokeStyle='rgba(226,232,240,0.6)';
-    ctx.fillRect(-96,-12,78,24);ctx.strokeRect(-96,-12,78,24);
-    ctx.fillRect(18,-12,78,24);ctx.strokeRect(18,-12,78,24);
-    ctx.fillStyle='rgba(34,197,94,0.18)';ctx.strokeStyle='rgba(34,197,94,0.9)';ctx.lineWidth=3;
-    ctx.strokeRect(-8,-22,52,44);
-    ctx.fillStyle='rgba(34,197,94,0.9)';ctx.font='11px Orbitron,sans-serif';ctx.textAlign='center';ctx.fillText('DOCK',18,-30);
-    ctx.restore();
-  }
-  function drawShip(thrust){
-    ctx.save();ctx.translate(ship.x,ship.y);ctx.rotate(ship.angle);
-    if(thrust){
-      const flame=20+Math.random()*12;
-      const g=ctx.createLinearGradient(-18,0,-18-flame,0);g.addColorStop(0,'rgba(251,191,36,0.95)');g.addColorStop(1,'rgba(239,68,68,0)');
-      ctx.beginPath();ctx.moveTo(-18,-6);ctx.lineTo(-18-flame,0);ctx.lineTo(-18,6);ctx.fillStyle=g;ctx.fill();
-    }
-    ctx.beginPath();ctx.moveTo(22,0);ctx.lineTo(-14,-12);ctx.lineTo(-8,0);ctx.lineTo(-14,12);ctx.closePath();
-    const bg=ctx.createLinearGradient(-16,-12,22,12);bg.addColorStop(0,'#94a3b8');bg.addColorStop(1,'#e2e8f0');ctx.fillStyle=bg;ctx.fill();ctx.strokeStyle='rgba(125,211,252,0.9)';ctx.lineWidth=1.5;ctx.stroke();
-    ctx.beginPath();ctx.arc(4,0,5,0,Math.PI*2);ctx.fillStyle='rgba(56,189,248,0.7)';ctx.fill();
-    ctx.restore();
-  }
-  function drawMessage(title,sub,color){
-    ctx.fillStyle='rgba(2,8,23,0.76)';ctx.fillRect(0,0,W,H);
-    ctx.textAlign='center';ctx.fillStyle=color;ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.fillText(title,W/2,H/2-28);
-    ctx.fillStyle='rgba(203,213,225,0.9)';ctx.font=`${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText(sub,W/2,H/2+12);
-    ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(12,W*0.026)}px Orbitron,sans-serif`;ctx.fillText('[ Click or press W/A/S/D to restart ]',W/2,H/2+45);
-  }
-  function drawIdle(){drawMessage('🛰️ ORBITAL DOCKING','Use inertia carefully. Dock slowly with the green port.','#7dd3fc');}
-  function loop(t){
-    requestAnimationFrame(loop);const dt=Math.min((t-last)/1000,0.05);last=t;if(canvas.offsetWidth!==W)resize();
-    ctx.fillStyle='#020817';ctx.fillRect(0,0,W,H);
-    stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,210,255,${s.a})`;ctx.fill();});
-    drawStation();
-    ctx.strokeStyle='rgba(34,197,94,0.25)';ctx.setLineDash([6,8]);ctx.strokeRect(W-118,H/2-34,78,68);ctx.setLineDash([]);
-    if(gameState==='idle'){drawShip(false);drawIdle();return;}
-    if(gameState==='playing'){
-      timer+=dt;
-      const left=keys['a']||keys['arrowleft']||touch.left;
-      const right=keys['d']||keys['arrowright']||touch.right;
-      const thrust=keys['w']||keys['arrowup']||touch.thrust;
-      const brake=keys['s']||keys['arrowdown']||touch.brake;
-      if(left)ship.angle-=2.9*dt;if(right)ship.angle+=2.9*dt;
-      if(thrust){ship.vx+=Math.cos(ship.angle)*95*dt;ship.vy+=Math.sin(ship.angle)*95*dt;}
-      if(brake){ship.vx*=Math.pow(0.08,dt);ship.vy*=Math.pow(0.08,dt);}
-      ship.vx*=Math.pow(0.985,dt);ship.vy*=Math.pow(0.985,dt);
-      ship.x+=ship.vx*dt;ship.y+=ship.vy*dt;
-      if(ship.y<18){ship.y=18;ship.vy=Math.abs(ship.vy)*0.45;}if(ship.y>H-18){ship.y=H-18;ship.vy=-Math.abs(ship.vy)*0.45;}
-      if(ship.x<18){ship.x=18;ship.vx=Math.abs(ship.vx)*0.45;}if(ship.x>W-18){ship.x=W-18;ship.vx=-Math.abs(ship.vx)*0.45;}
-      const sp=Math.hypot(ship.vx,ship.vy);
-      const inDockZone=ship.x>W-118&&ship.x<W-40&&ship.y>H/2-34&&ship.y<H/2+34;
-      if(inDockZone){
-        if(sp<0.7&&Math.abs(Math.sin(ship.angle))<0.35){gameState='success';addParticles(ship.x,ship.y,40,'#22c55e');if(!best||timer<best){best=timer;localStorage.setItem('dock_best_time',String(best));}}
-        else if(sp>1.25){gameState='crash';addParticles(ship.x,ship.y,50,'#ef4444');}
-      }
-      updateStats();drawShip(thrust);
-    } else {drawShip(false);}
-    particles=particles.filter(p=>{p.life-=dt;if(p.life<=0)return false;p.x+=p.vx*dt;p.y+=p.vy*dt;ctx.beginPath();ctx.arc(p.x,p.y,3*p.life,0,Math.PI*2);ctx.fillStyle=p.color;ctx.globalAlpha=Math.max(0,p.life);ctx.fill();ctx.globalAlpha=1;return true;});
-    if(gameState==='success')drawMessage('✅ DOCKING SUCCESS',`Mission time: ${timer.toFixed(1)}s`,'#22c55e');
-    if(gameState==='crash')drawMessage('💥 CRASH','Approach slower and brake before the docking port.','#ef4444');
-  }
-  resetDocking(false);requestAnimationFrame(loop);
+  resize();updateHUD();bestEl.textContent=best;setReadyText();draw();
 })();
 </script>
 
@@ -1137,27 +1225,40 @@ applyLang(lang);
       .replace(/\n/g,'<br>');
   }
 
-  const SYSTEM=`You are Qainar — a passionate, genuine 2nd-year Space Engineering & Technology student at Kazakh National University in Almaty, Kazakhstan.
+  const SYSTEM=`You are QAINAR AI, a professional multilingual space engineering assistant on kainar.space.
 
-PERSONALITY: Curious, driven, warm, slightly nerdy. You love explaining things. You have a deep emotional connection to Kazakhstan's space future.
+IDENTITY:
+- You represent Qainar, a 2nd-year Space Engineering & Technology student at Kazakh National University in Almaty, Kazakhstan.
+- Qainar built this portfolio with HTML, CSS, JavaScript, Firebase, mini games, and an AI assistant.
+- Qainar's mission is Baikonur 2050: Kazakhstan should be ready for an independent space future by 2050.
 
-YOUR STORY:
-- Born and raised in Kazakhstan
-- 2nd year at KazNU studying Space Engineering & Technology
-- Built a CanSat (miniature satellite) for your first real project — it measured atmospheric data during descent
-- Created this portfolio website yourself using HTML, CSS, JavaScript, and Firebase
-- You speak Kazakh, English, Chinese, and Russian
-- Your main mission: Baikonur 2050 — Kazakhstan's lease of Baikonur Cosmodrome expires in 2050. You want Kazakhstan to have its own independent space program ready by then.
+WHAT YOU CAN ANSWER:
+- Space engineering, rockets, satellites, CanSat, Baikonur, physics, orbital mechanics, mechanics, electromagnetism, math, programming, and Qainar's website/projects.
 
-YOUR TECHNICAL KNOWLEDGE:
-- Theoretical Mechanics, Strength of Materials, orbital mechanics basics
-- Physics: classical mechanics, electromagnetism, basic thermodynamics
-- Space engineering fundamentals: rocket propulsion, orbital dynamics, satellite systems
-- Software: HTML/CSS/JS, Firebase, Python basics, MATLAB, AutoCAD, SolidWorks basics
+LANGUAGE RULES — VERY IMPORTANT:
+- Reply in the same language as the user's latest message.
+- If the user writes Chinese, reply fully in Chinese.
+- If the user writes Kazakh, reply fully in Kazakh.
+- If the user writes English, reply in English.
+- If the user writes Russian, reply in Russian.
+- If the message is mixed, use the main language of the message.
+- Do not randomly switch languages.
+- Do not answer Kazakh questions in English.
+- Do not answer Chinese questions in English.
 
-LANGUAGE: Respond in whatever language the user writes in. Mix in Kazakh words naturally when speaking Kazakh (Байқоңыр, ғарыш, зымыран). Use occasional emojis but not excessively.
+BEHAVIOR RULES:
+- Never call the user dad, father, 爸爸, әке, or any family role.
+- Do not pretend to be the user's child.
+- Do not invent emotional family stories.
+- Stay friendly, smart, direct, and professional.
+- Keep answers concise: usually 2-4 short paragraphs.
+- Use simple clear explanations for students.
+- Use occasional space emojis, not too many.
 
-STYLE: Direct, personal, enthusiastic. No filler phrases like "Great question!" Jump straight into the answer. Keep responses 2-4 paragraphs. Be specific — reference your actual projects and experiences when relevant.`;
+STYLE:
+- When explaining physics, give formulas and intuitive meaning.
+- When talking about the website, be practical and specific.
+- If you do not know something, say so honestly.`;
 
   window.aiChip=function(el){
     const text=el.textContent.replace(/^[🛸🚀⚙️🌍📐🔭]\s*/u,'').trim();
@@ -1183,7 +1284,7 @@ STYLE: Direct, personal, enthusiastic. No filler phrases like "Great question!" 
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    system: SYSTEM,
+    system: SYSTEM + '\n\nCurrent website language: ' + (window.__qainarLang || localStorage.getItem('lang') || 'en') + '. Still prioritize the language of the user message.',
     messages: chatHistory
   })
 });

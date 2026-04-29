@@ -503,7 +503,7 @@
       <textarea id="ai-input" placeholder="Ask about space, physics, Baikonur..." rows="1"></textarea>
       <button id="ai-send" onclick="aiSend()" title="Send">➤</button>
     </div>
-    <div class="ai-footer-note" data-i18n="ai_note">Powered by Claude AI · Responses reflect Qainar's knowledge & personality</div>
+    <div class="ai-footer-note" data-i18n="ai_note">Powered by Groq AI · Responses reflect Qainar's knowledge & personality</div>
   </div>
 </div>
 
@@ -633,7 +633,7 @@ const T={
     ai_tag:"AI Assistant",ai_title:"🤖 Ask Qainar AI",
     ai_sub:"Ask anything about space, physics or Baikonur 2050.",
     ai_sub_label:"Space Engineering · Physics · Baikonur 2050",
-    ai_online:"ONLINE",ai_note:"Powered by Claude AI · Responses reflect Qainar's knowledge & personality",
+    ai_online:"ONLINE",ai_note:"Powered by Groq AI · Responses reflect Qainar's knowledge & personality",
     about_tag:"About Me",about_title:"Who I Am",
     about_sub:"A student on a mission to reach the stars — one skill at a time.",
     about_card1_title:"My Story",
@@ -680,7 +680,7 @@ const T={
     ai_tag:"AI 助手",ai_title:"🤖 问 Qainar AI",
     ai_sub:"关于太空、物理或拜科努尔2050，尽管提问。",
     ai_sub_label:"航天工程 · 物理 · 拜科努尔2050",
-    ai_online:"在线",ai_note:"由 Claude AI 驱动 · 回答反映 Qainar 的知识与个性",
+    ai_online:"在线",ai_note:"由 Groq AI 驱动 · 回答反映 Qainar 的知识与个性",
     about_tag:"关于我",about_title:"我是谁",
     about_sub:"一个以触碰星空为目标、一步一步积累技能的学生。",
     about_card1_title:"我的故事",
@@ -727,7 +727,7 @@ const T={
     ai_tag:"AI Көмекші",ai_title:"🤖 Qainar AI-дан сұра",
     ai_sub:"Ғарыш, физика немесе Байқоңыр 2050 туралы кез келген сұрақ қойыңыз.",
     ai_sub_label:"Ғарыш инженериясы · Физика · Байқоңыр 2050",
-    ai_online:"ОНЛАЙН",ai_note:"Claude AI арқылы · Жауаптар Қайнардың білімі мен тұлғасын бейнелейді",
+    ai_online:"ОНЛАЙН",ai_note:"Groq AI арқылы · Жауаптар Қайнардың білімі мен тұлғасын бейнелейді",
     about_tag:"Мен туралы",about_title:"Мен кіммін",
     about_sub:"Жұлдыздарға жету мақсатымен, қадамма-қадам дағды жинайтын студент.",
     about_card1_title:"Менің тарихым",
@@ -985,16 +985,15 @@ STYLE: Direct, personal, enthusiastic. No filler phrases like "Great question!" 
     showTyping();
 
     try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-          model:'claude-sonnet-4-20250514',
-          max_tokens:1000,
-          system:SYSTEM,
-          messages:chatHistory
-        })
-      });
+     const res = await fetch('/api/chat', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    system: SYSTEM,
+    messages: chatHistory
+  })
+});
+
       const data=await res.json();
       removeTyping();
       if(data.content&&data.content[0]&&data.content[0].text){

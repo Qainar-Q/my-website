@@ -994,9 +994,15 @@ STYLE: Direct, personal, enthusiastic. No filler phrases like "Great question!" 
   })
 });
 
-      const data=await res.json();
-      removeTyping();
-      if(data.content&&data.content[0]&&data.content[0].text){
+      const data = await res.json();
+removeTyping();
+
+if (!res.ok) {
+  appendMsg('bot', '<span style="color:#f87171;font-style:italic;">AI error: ' + (data.error?.message || data.error || 'Request failed') + '</span>');
+  return;
+}
+
+if(data.content&&data.content[0]&&data.content[0].text){
         const reply=data.content[0].text;
         chatHistory.push({role:'assistant',content:reply});
         // Keep history manageable (last 10 turns)

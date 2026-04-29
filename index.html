@@ -178,23 +178,10 @@
     .card h3{color:var(--accent);margin-bottom:12px;font-family:'Orbitron',sans-serif;font-size:16px;}
     .card p{color:#dbeafe;line-height:1.7;font-size:14px;}
 
-    /* ══════════════════════════════════
-       ROCKET GAME STYLES
-    ══════════════════════════════════ */
-    .game-section{
-      max-width:1080px;margin:0 auto;padding:0 25px 80px;position:relative;z-index:1;
-    }
-    .game-card{
-      border-radius:28px;overflow:hidden;
-      background:linear-gradient(135deg,rgba(2,8,23,0.95),rgba(10,20,50,0.9));
-      border:1px solid rgba(56,189,248,0.25);
-      box-shadow:0 30px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(56,189,248,0.1);
-    }
-    .game-header{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:20px 28px;border-bottom:1px solid rgba(255,255,255,0.08);
-      flex-wrap:wrap;gap:12px;
-    }
+    /* ══ GAME ══ */
+    .game-section{max-width:1080px;margin:0 auto;padding:0 25px 80px;position:relative;z-index:1;}
+    .game-card{border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(2,8,23,0.95),rgba(10,20,50,0.9));border:1px solid rgba(56,189,248,0.25);box-shadow:0 30px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(56,189,248,0.1);}
+    .game-header{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:12px;}
     .game-title-wrap{display:flex;align-items:center;gap:12px;}
     .game-title{font-family:'Orbitron',sans-serif;font-size:18px;color:white;}
     .game-badge{padding:4px 12px;border-radius:999px;background:rgba(56,189,248,0.15);border:1px solid rgba(56,189,248,0.3);color:#7dd3fc;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
@@ -204,49 +191,59 @@
     .gs-val{font-family:'Orbitron',sans-serif;font-size:20px;color:var(--accent);font-weight:900;}
     .gs-item.lives .gs-val{color:#f87171;}
     .gs-item.level .gs-val{color:#f59e0b;}
-
-    #game-canvas{
-      display:block;width:100%;
-      image-rendering:pixelated;
-      cursor:none;
-    }
-    .game-controls{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:16px 28px;border-top:1px solid rgba(255,255,255,0.08);
-      flex-wrap:wrap;gap:10px;
-    }
+    #game-canvas{display:block;width:100%;image-rendering:pixelated;cursor:none;}
+    .game-controls{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-top:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:10px;}
     .ctrl-hint{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;}
-    .key-badge{
-      display:inline-block;padding:3px 8px;border-radius:6px;
-      background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
-      font-size:12px;font-weight:700;color:white;font-family:monospace;
-    }
-    .game-btn{
-      padding:10px 22px;border-radius:12px;border:none;cursor:pointer;
-      font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      color:white;transition:.25s;
-      box-shadow:0 6px 20px rgba(37,99,235,0.4);
-    }
+    .key-badge{display:inline-block;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);font-size:12px;font-weight:700;color:white;font-family:monospace;}
+    .game-btn{padding:10px 22px;border-radius:12px;border:none;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;transition:.25s;box-shadow:0 6px 20px rgba(37,99,235,0.4);}
     .game-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,99,235,0.55);}
-    .game-btn.secondary-btn{
-      background:var(--glass);border:1px solid var(--glass-b);
-      box-shadow:none;
-    }
-    /* Mobile touch buttons */
-    .touch-controls{
-      display:none;
-      justify-content:space-between;align-items:center;
-      padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);
-    }
-    .touch-btn{
-      width:64px;height:64px;border-radius:50%;border:2px solid rgba(56,189,248,0.4);
-      background:rgba(56,189,248,0.1);color:white;font-size:24px;
-      display:flex;align-items:center;justify-content:center;
-      cursor:pointer;user-select:none;-webkit-user-select:none;
-      transition:.15s;active:background:rgba(56,189,248,0.3);
-    }
+    .game-btn.secondary-btn{background:var(--glass);border:1px solid var(--glass-b);box-shadow:none;}
+    .touch-controls{display:none;justify-content:space-between;align-items:center;padding:12px 20px;border-top:1px solid rgba(255,255,255,0.06);}
+    .touch-btn{width:64px;height:64px;border-radius:50%;border:2px solid rgba(56,189,248,0.4);background:rgba(56,189,248,0.1);color:white;font-size:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;-webkit-user-select:none;transition:.15s;}
     .touch-btn:active{background:rgba(56,189,248,0.3);border-color:rgba(56,189,248,0.8);}
+
+    /* ══ AI CHAT ══ */
+    .ai-section{max-width:1080px;margin:0 auto;padding:0 25px 80px;position:relative;z-index:1;}
+    .ai-card{border-radius:28px;overflow:hidden;background:linear-gradient(135deg,rgba(2,8,23,0.97),rgba(8,16,42,0.95));border:1px solid rgba(56,189,248,0.22);box-shadow:0 30px 80px rgba(0,0,0,0.5),inset 0 1px 0 rgba(56,189,248,0.08);position:relative;}
+    .ai-stars-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+    .ai-header{display:flex;align-items:center;gap:14px;padding:20px 28px 16px;border-bottom:1px solid rgba(255,255,255,0.07);background:rgba(255,255,255,0.02);position:relative;z-index:2;}
+    .ai-avatar-wrap{position:relative;flex-shrink:0;}
+    .ai-avatar{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#67e8f9,#2563eb 50%,#040d26);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 0 24px rgba(56,189,248,0.6);}
+    .ai-online-dot{position:absolute;bottom:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#22c55e;border:2px solid #020817;box-shadow:0 0 8px #22c55e;animation:pulse 2s infinite;}
+    .ai-info h3{font-family:'Orbitron',sans-serif;font-size:15px;color:#fff;margin:0 0 3px;letter-spacing:1px;}
+    .ai-info p{font-size:12px;color:#475569;margin:0;}
+    .ai-header-badge{margin-left:auto;padding:5px 14px;border-radius:999px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.3);color:#7dd3fc;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;}
+    .ai-messages{padding:24px 24px 12px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;max-height:380px;min-height:220px;position:relative;z-index:2;scrollbar-width:thin;scrollbar-color:rgba(56,189,248,0.2) transparent;}
+    .ai-messages::-webkit-scrollbar{width:4px;}
+    .ai-messages::-webkit-scrollbar-track{background:transparent;}
+    .ai-messages::-webkit-scrollbar-thumb{background:rgba(56,189,248,0.2);border-radius:2px;}
+    .ai-msg{display:flex;gap:10px;animation:msgIn .35s ease forwards;opacity:0;transform:translateY(8px);}
+    @keyframes msgIn{to{opacity:1;transform:translateY(0);}}
+    .ai-msg.user{flex-direction:row-reverse;}
+    .ai-msg-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);}
+    .ai-msg.bot .ai-msg-av{background:radial-gradient(circle,#38bdf8,#2563eb);font-size:13px;}
+    .ai-bubble{max-width:82%;padding:13px 17px;border-radius:18px;font-size:14px;line-height:1.7;color:#cbd5e1;}
+    .ai-msg.bot .ai-bubble{background:rgba(56,189,248,0.07);border:1px solid rgba(56,189,248,0.16);border-top-left-radius:4px;}
+    .ai-msg.user .ai-bubble{background:linear-gradient(135deg,rgba(56,189,248,0.18),rgba(37,99,235,0.18));border:1px solid rgba(56,189,248,0.28);border-top-right-radius:4px;color:#e2e8f0;}
+    .ai-bubble b{color:#38bdf8;}
+    .ai-bubble em{color:#fbbf24;font-style:normal;font-weight:700;}
+    .typing-ind{display:flex;gap:5px;align-items:center;padding:13px 17px;background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.14);border-radius:18px;border-top-left-radius:4px;width:fit-content;}
+    .t-dot{width:7px;height:7px;border-radius:50%;background:#38bdf8;animation:tPulse 1.2s ease infinite;}
+    .t-dot:nth-child(2){animation-delay:.2s;}
+    .t-dot:nth-child(3){animation-delay:.4s;}
+    @keyframes tPulse{0%,100%{opacity:.3;transform:scale(.8);}50%{opacity:1;transform:scale(1.1);}}
+    .chips-label{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:2px;color:#1e293b;text-transform:uppercase;padding:0 24px 6px;position:relative;z-index:2;}
+    .ai-chips{padding:0 24px 14px;display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:2;}
+    .ai-chip{padding:6px 13px;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);color:#64748b;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap;}
+    .ai-chip:hover{background:rgba(56,189,248,0.1);border-color:rgba(56,189,248,0.3);color:#7dd3fc;transform:translateY(-2px);}
+    .ai-input-row{padding:14px 20px;border-top:1px solid rgba(255,255,255,0.07);display:flex;gap:10px;align-items:flex-end;background:rgba(255,255,255,0.02);position:relative;z-index:2;}
+    #ai-input{flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.11);border-radius:14px;padding:12px 16px;color:#e2e8f0;font-family:'DM Sans',sans-serif;font-size:14px;resize:none;outline:none;min-height:44px;max-height:120px;transition:border-color .2s;line-height:1.5;}
+    #ai-input:focus{border-color:rgba(56,189,248,0.4);}
+    #ai-input::placeholder{color:#334155;}
+    #ai-send{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#2563eb);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.2s;box-shadow:0 6px 20px rgba(37,99,235,0.4);flex-shrink:0;color:white;}
+    #ai-send:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,99,235,0.55);}
+    #ai-send:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+    .ai-footer-note{text-align:center;font-size:11px;color:#1e293b;padding:10px;position:relative;z-index:2;letter-spacing:0.3px;}
 
     /* CTA */
     .cta-section{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:20px 25px 80px;}
@@ -311,6 +308,8 @@
       .scroll-indicator{display:none;}
       .touch-controls{display:flex;}
       .game-controls .ctrl-hint{display:none;}
+      .ai-chips{gap:6px;}
+      .ai-chip{font-size:11px;padding:5px 10px;}
     }
     @media(max-width:500px){.project-cards{grid-template-columns:1fr;}}
   </style>
@@ -421,9 +420,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     ROCKET GAME SECTION
-═══════════════════════════════════════════ -->
+<!-- ROCKET GAME -->
 <div class="game-section reveal">
   <div class="section-header" style="margin-bottom:28px;">
     <div class="section-tag" data-i18n="game_tag">Mini Game</div>
@@ -438,25 +435,13 @@
         <span class="game-badge" data-i18n="game_badge">ҒАРЫШ ОЙЫНЫ</span>
       </div>
       <div class="game-stats-bar">
-        <div class="gs-item">
-          <div class="gs-label" data-i18n="gs_score">Ұпай</div>
-          <div class="gs-val" id="score-display">0</div>
-        </div>
+        <div class="gs-item"><div class="gs-label" data-i18n="gs_score">Ұпай</div><div class="gs-val" id="score-display">0</div></div>
         <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
-        <div class="gs-item level">
-          <div class="gs-label" data-i18n="gs_level">Деңгей</div>
-          <div class="gs-val" id="level-display">1</div>
-        </div>
+        <div class="gs-item level"><div class="gs-label" data-i18n="gs_level">Деңгей</div><div class="gs-val" id="level-display">1</div></div>
         <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
-        <div class="gs-item lives">
-          <div class="gs-label" data-i18n="gs_lives">Өмір</div>
-          <div class="gs-val" id="lives-display">❤️❤️❤️</div>
-        </div>
+        <div class="gs-item lives"><div class="gs-label" data-i18n="gs_lives">Өмір</div><div class="gs-val" id="lives-display">❤️❤️❤️</div></div>
         <div style="width:1px;height:36px;background:rgba(255,255,255,0.1);"></div>
-        <div class="gs-item">
-          <div class="gs-label" data-i18n="gs_best">Рекорд</div>
-          <div class="gs-val" id="best-display" style="color:#f59e0b;">0</div>
-        </div>
+        <div class="gs-item"><div class="gs-label" data-i18n="gs_best">Рекорд</div><div class="gs-val" id="best-display" style="color:#f59e0b;">0</div></div>
       </div>
     </div>
     <canvas id="game-canvas" height="420"></canvas>
@@ -476,6 +461,49 @@
         <button class="game-btn" onclick="restartGame()" data-i18n="btn_restart">🔄 Қайта бастау</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ═══ AI CHAT SECTION ═══ -->
+<div class="ai-section reveal">
+  <div class="section-header" style="margin-bottom:28px;">
+    <div class="section-tag" data-i18n="ai_tag">AI Assistant</div>
+    <h2 class="section-title" data-i18n="ai_title">🤖 Ask Qainar AI</h2>
+    <p class="section-sub" data-i18n="ai_sub">Ғарыш, физика немесе Байқоңыр 2050 туралы кез келген сұрақ қойыңыз.</p>
+  </div>
+  <div class="ai-card">
+    <div class="ai-stars-bg" id="ai-stars-bg"></div>
+    <div class="ai-header">
+      <div class="ai-avatar-wrap">
+        <div class="ai-avatar">🚀</div>
+        <div class="ai-online-dot"></div>
+      </div>
+      <div class="ai-info">
+        <h3>QAINAR AI</h3>
+        <p data-i18n="ai_sub_label">Space Engineering · Physics · Baikonur 2050</p>
+      </div>
+      <div class="ai-header-badge" data-i18n="ai_online">ONLINE</div>
+    </div>
+    <div class="ai-messages" id="ai-messages">
+      <div class="ai-msg bot">
+        <div class="ai-msg-av">🚀</div>
+        <div class="ai-bubble" id="ai-greeting">Сәлем! Мен <b>Qainar</b> — ғарыш инженериясы студентімін, Алматыдан. Физика, аэроғарыш немесе <em>Байқоңыр 2050</em> миссиясы туралы сұрай аласыз. Ask me anything! 🛸</div>
+      </div>
+    </div>
+    <div class="chips-label" id="chips-label">Жылдам сұрақтар / Quick questions</div>
+    <div class="ai-chips" id="ai-chips">
+      <div class="ai-chip" onclick="aiChip(this)">🛸 What is CanSat?</div>
+      <div class="ai-chip" onclick="aiChip(this)">🚀 Baikonur 2050 туралы</div>
+      <div class="ai-chip" onclick="aiChip(this)">⚙️ Orbital mechanics explained</div>
+      <div class="ai-chip" onclick="aiChip(this)">🌍 Why Kazakhstan for space?</div>
+      <div class="ai-chip" onclick="aiChip(this)">📐 Newton's laws in orbit</div>
+      <div class="ai-chip" onclick="aiChip(this)">🔭 Your biggest dream?</div>
+    </div>
+    <div class="ai-input-row">
+      <textarea id="ai-input" placeholder="Ask about space, physics, Baikonur..." rows="1"></textarea>
+      <button id="ai-send" onclick="aiSend()" title="Send">➤</button>
+    </div>
+    <div class="ai-footer-note" data-i18n="ai_note">Powered by Claude AI · Responses reflect Qainar's knowledge & personality</div>
   </div>
 </div>
 
@@ -582,9 +610,7 @@
 <button id="back-top" title="Back to top">↑</button>
 <footer>© 2026 Qainar's Website · Space Engineering · Kazakhstan 🇰🇿</footer>
 
-<!-- ══════════════════════════════════════════════════
-     TRANSLATIONS
-══════════════════════════════════════════════════ -->
+<!-- ══════════ TRANSLATIONS ══════════ -->
 <script>
 const T={
   en:{
@@ -603,8 +629,11 @@ const T={
     game_name:"BAIKONUR RUN",game_badge:"SPACE GAME",
     gs_score:"Score",gs_level:"Level",gs_lives:"Lives",gs_best:"Best",
     ctrl_move:"move",ctrl_shoot:"shoot",ctrl_pause:"pause",
-    btn_pause:"⏸ Pause",btn_restart:"🔄 Restart",
-    touch_hint:"Tap to steer",
+    btn_pause:"⏸ Pause",btn_restart:"🔄 Restart",touch_hint:"Tap to steer",
+    ai_tag:"AI Assistant",ai_title:"🤖 Ask Qainar AI",
+    ai_sub:"Ask anything about space, physics or Baikonur 2050.",
+    ai_sub_label:"Space Engineering · Physics · Baikonur 2050",
+    ai_online:"ONLINE",ai_note:"Powered by Claude AI · Responses reflect Qainar's knowledge & personality",
     about_tag:"About Me",about_title:"Who I Am",
     about_sub:"A student on a mission to reach the stars — one skill at a time.",
     about_card1_title:"My Story",
@@ -647,8 +676,11 @@ const T={
     game_name:"拜科努尔飞行",game_badge:"太空游戏",
     gs_score:"分数",gs_level:"等级",gs_lives:"生命",gs_best:"最高分",
     ctrl_move:"移动",ctrl_shoot:"射击",ctrl_pause:"暂停",
-    btn_pause:"⏸ 暂停",btn_restart:"🔄 重新开始",
-    touch_hint:"点击操控",
+    btn_pause:"⏸ 暂停",btn_restart:"🔄 重新开始",touch_hint:"点击操控",
+    ai_tag:"AI 助手",ai_title:"🤖 问 Qainar AI",
+    ai_sub:"关于太空、物理或拜科努尔2050，尽管提问。",
+    ai_sub_label:"航天工程 · 物理 · 拜科努尔2050",
+    ai_online:"在线",ai_note:"由 Claude AI 驱动 · 回答反映 Qainar 的知识与个性",
     about_tag:"关于我",about_title:"我是谁",
     about_sub:"一个以触碰星空为目标、一步一步积累技能的学生。",
     about_card1_title:"我的故事",
@@ -691,8 +723,11 @@ const T={
     game_name:"БАЙҚОҢЫР ЖАРЫСЫ",game_badge:"ҒАРЫШ ОЙЫНЫ",
     gs_score:"Ұпай",gs_level:"Деңгей",gs_lives:"Өмір",gs_best:"Рекорд",
     ctrl_move:"жылжыту",ctrl_shoot:"атқылау",ctrl_pause:"пауза",
-    btn_pause:"⏸ Пауза",btn_restart:"🔄 Қайта бастау",
-    touch_hint:"Бағыттау үшін басыңыз",
+    btn_pause:"⏸ Пауза",btn_restart:"🔄 Қайта бастау",touch_hint:"Бағыттау үшін басыңыз",
+    ai_tag:"AI Көмекші",ai_title:"🤖 Qainar AI-дан сұра",
+    ai_sub:"Ғарыш, физика немесе Байқоңыр 2050 туралы кез келген сұрақ қойыңыз.",
+    ai_sub_label:"Ғарыш инженериясы · Физика · Байқоңыр 2050",
+    ai_online:"ОНЛАЙН",ai_note:"Claude AI арқылы · Жауаптар Қайнардың білімі мен тұлғасын бейнелейді",
     about_tag:"Мен туралы",about_title:"Мен кіммін",
     about_sub:"Жұлдыздарға жету мақсатымен, қадамма-қадам дағды жинайтын студент.",
     about_card1_title:"Менің тарихым",
@@ -730,510 +765,298 @@ function applyLang(l){
   });
   document.querySelectorAll(".lang-btn").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
   document.documentElement.lang=l==="kz"?"kk":l;
+  // Update greeting bubble language
+  const greet=document.getElementById("ai-greeting");
+  if(greet){
+    const greetings={
+      en:'Salam! I\'m <b>Qainar</b> — a space engineering student from Almaty. Ask me about physics, aerospace, or my <em>Baikonur 2050</em> mission. Let\'s explore the cosmos! 🛸',
+      zh:'你好！我是 <b>Qainar</b> — 来自阿拉木图的航天工程学生。欢迎问我关于物理、航天，或者我的 <em>拜科努尔2050</em> 使命的任何问题！🛸',
+      kz:'Сәлем! Мен <b>Qainar</b> — ғарыш инженериясы студентімін, Алматыдан. Физика, аэроғарыш немесе <em>Байқоңыр 2050</em> миссиясы туралы сұрай аласыз. Ask me anything! 🛸'
+    };
+    greet.innerHTML=greetings[l]||greetings.en;
+  }
 }
 document.querySelectorAll(".lang-btn").forEach(b=>b.addEventListener("click",()=>applyLang(b.dataset.lang)));
 applyLang(lang);
 </script>
 
-<!-- ══════════════════════════════════════════════════
-     ROCKET GAME ENGINE
-══════════════════════════════════════════════════ -->
+<!-- ══════════ ROCKET GAME ══════════ -->
 <script>
 (function(){
-  const canvas = document.getElementById('game-canvas');
-  const ctx = canvas.getContext('2d');
-  const scoreEl  = document.getElementById('score-display');
-  const livesEl  = document.getElementById('lives-display');
-  const levelEl  = document.getElementById('level-display');
-  const bestEl   = document.getElementById('best-display');
-
-  let W, H;
-  let state = 'idle'; // idle | playing | paused | gameover
-  let score=0, lives=3, level=1, bestScore=parseInt(localStorage.getItem('bk_best')||0);
-  let animId=null;
-  let lastTime=0;
-  let elapsed=0; // seconds played
-  let frameCount=0;
-
-  /* INPUT */
+  const canvas=document.getElementById('game-canvas');
+  const ctx=canvas.getContext('2d');
+  const scoreEl=document.getElementById('score-display');
+  const livesEl=document.getElementById('lives-display');
+  const levelEl=document.getElementById('level-display');
+  const bestEl=document.getElementById('best-display');
+  let W,H,state='idle',score=0,lives=3,level=1,bestScore=parseInt(localStorage.getItem('bk_best')||0);
+  let animId=null,lastTime=0,elapsed=0,frameCount=0;
   const keys={};
-  document.addEventListener('keydown', e=>{
-    keys[e.key]=true;
-    if(e.key===' '){ e.preventDefault(); shoot(); }
-    if(e.key==='p'||e.key==='P') togglePause();
-    if(state==='gameover'||state==='idle') startGame();
-  });
-  document.addEventListener('keyup', e=>{ keys[e.key]=false; });
-
-  /* Touch controls */
-  let touchLeft=false, touchRight=false;
+  document.addEventListener('keydown',e=>{keys[e.key]=true;if(e.key===' '){e.preventDefault();shoot();}if(e.key==='p'||e.key==='P')togglePause();if(state==='gameover'||state==='idle')startGame();});
+  document.addEventListener('keyup',e=>{keys[e.key]=false;});
+  let touchLeft=false,touchRight=false;
   document.getElementById('touch-left').addEventListener('touchstart',e=>{e.preventDefault();touchLeft=true;},{passive:false});
   document.getElementById('touch-left').addEventListener('touchend',()=>touchLeft=false);
   document.getElementById('touch-right').addEventListener('touchstart',e=>{e.preventDefault();touchRight=true;},{passive:false});
   document.getElementById('touch-right').addEventListener('touchend',()=>touchRight=false);
-
-  /* Touch tap on canvas to start */
-  canvas.addEventListener('click', ()=>{ if(state==='idle'||state==='gameover') startGame(); });
-
-  /* GAME OBJECTS */
-  let rocket, bullets, asteroids, stars, particles, powerups;
-
+  canvas.addEventListener('click',()=>{if(state==='idle'||state==='gameover')startGame();});
+  let rocket,bullets,asteroids,stars,particles,powerups;
   function initObjects(){
-    W = canvas.offsetWidth;
-    H = canvas.height = Math.min(420, W * 0.55);
-    canvas.width = W;
-
-    rocket = {
-      x: W/2, y: H - 80,
-      w: 28, h: 48,
-      vx: 0, speed: 260,
-      invincible: 0,
-      thrust: 0
-    };
-    bullets=[];
-    asteroids=[];
-    stars=[];
-    particles=[];
-    powerups=[];
-    score=0; lives=3; level=1; elapsed=0; frameCount=0;
-
-    /* Static background stars */
-    for(let i=0;i<90;i++){
-      stars.push({
-        x:Math.random()*W, y:Math.random()*H,
-        r:Math.random()*1.6+0.2,
-        sp:Math.random()*18+4,
-        a:Math.random()
-      });
-    }
+    W=canvas.offsetWidth;H=canvas.height=Math.min(420,W*0.55);canvas.width=W;
+    rocket={x:W/2,y:H-80,w:28,h:48,vx:0,speed:260,invincible:0,thrust:0};
+    bullets=[];asteroids=[];stars=[];particles=[];powerups=[];
+    score=0;lives=3;level=1;elapsed=0;frameCount=0;
+    for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+0.2,sp:Math.random()*18+4,a:Math.random()});
     updateUI();
   }
-
-  /* DRAWING HELPERS */
   function drawRocket(x,y,thrust,invincible){
-    ctx.save();
-    ctx.translate(x,y);
-    if(invincible > 0 && Math.floor(invincible*10)%2===0){
-      ctx.globalAlpha=0.4;
-    }
-
-    /* Engine flame */
-    if(thrust>0){
-      const flameH = 18+Math.random()*12;
-      const grad = ctx.createLinearGradient(0,10,0,10+flameH);
-      grad.addColorStop(0,'rgba(251,146,60,0.9)');
-      grad.addColorStop(0.5,'rgba(239,68,68,0.7)');
-      grad.addColorStop(1,'rgba(239,68,68,0)');
-      ctx.beginPath();
-      ctx.moveTo(-6,10);
-      ctx.lineTo(0,10+flameH);
-      ctx.lineTo(6,10);
-      ctx.fillStyle=grad;
-      ctx.fill();
-    }
-
-    /* Body */
-    ctx.beginPath();
-    ctx.moveTo(0,-24); ctx.lineTo(12,12); ctx.lineTo(8,18);
-    ctx.lineTo(-8,18); ctx.lineTo(-12,12);
-    ctx.closePath();
-    const bodyGrad=ctx.createLinearGradient(-12,-24,12,18);
-    bodyGrad.addColorStop(0,'#e2e8f0');
-    bodyGrad.addColorStop(1,'#94a3b8');
-    ctx.fillStyle=bodyGrad;
-    ctx.fill();
-    ctx.strokeStyle='rgba(56,189,248,0.6)';
-    ctx.lineWidth=1;
-    ctx.stroke();
-
-    /* Nose cone */
-    ctx.beginPath();
-    ctx.moveTo(0,-24);ctx.lineTo(8,-8);ctx.lineTo(-8,-8);
-    ctx.closePath();
-    ctx.fillStyle='#38bdf8';
-    ctx.fill();
-
-    /* Fins */
-    ctx.beginPath();
-    ctx.moveTo(-12,12);ctx.lineTo(-22,22);ctx.lineTo(-10,18);
-    ctx.closePath();
-    ctx.fillStyle='#2563eb';ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(12,12);ctx.lineTo(22,22);ctx.lineTo(10,18);
-    ctx.closePath();
-    ctx.fillStyle='#2563eb';ctx.fill();
-
-    /* Window */
-    ctx.beginPath();
-    ctx.arc(0,-6,5,0,Math.PI*2);
-    ctx.fillStyle='rgba(125,211,252,0.7)';ctx.fill();
-    ctx.strokeStyle='rgba(56,189,248,0.9)';ctx.lineWidth=1;ctx.stroke();
-
-    ctx.globalAlpha=1;
-    ctx.restore();
+    ctx.save();ctx.translate(x,y);
+    if(invincible>0&&Math.floor(invincible*10)%2===0)ctx.globalAlpha=0.4;
+    if(thrust>0){const fH=18+Math.random()*12;const g=ctx.createLinearGradient(0,10,0,10+fH);g.addColorStop(0,'rgba(251,146,60,0.9)');g.addColorStop(0.5,'rgba(239,68,68,0.7)');g.addColorStop(1,'rgba(239,68,68,0)');ctx.beginPath();ctx.moveTo(-6,10);ctx.lineTo(0,10+fH);ctx.lineTo(6,10);ctx.fillStyle=g;ctx.fill();}
+    ctx.beginPath();ctx.moveTo(0,-24);ctx.lineTo(12,12);ctx.lineTo(8,18);ctx.lineTo(-8,18);ctx.lineTo(-12,12);ctx.closePath();
+    const bg=ctx.createLinearGradient(-12,-24,12,18);bg.addColorStop(0,'#e2e8f0');bg.addColorStop(1,'#94a3b8');ctx.fillStyle=bg;ctx.fill();ctx.strokeStyle='rgba(56,189,248,0.6)';ctx.lineWidth=1;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(0,-24);ctx.lineTo(8,-8);ctx.lineTo(-8,-8);ctx.closePath();ctx.fillStyle='#38bdf8';ctx.fill();
+    ctx.beginPath();ctx.moveTo(-12,12);ctx.lineTo(-22,22);ctx.lineTo(-10,18);ctx.closePath();ctx.fillStyle='#2563eb';ctx.fill();
+    ctx.beginPath();ctx.moveTo(12,12);ctx.lineTo(22,22);ctx.lineTo(10,18);ctx.closePath();ctx.fillStyle='#2563eb';ctx.fill();
+    ctx.beginPath();ctx.arc(0,-6,5,0,Math.PI*2);ctx.fillStyle='rgba(125,211,252,0.7)';ctx.fill();ctx.strokeStyle='rgba(56,189,248,0.9)';ctx.lineWidth=1;ctx.stroke();
+    ctx.globalAlpha=1;ctx.restore();
   }
-
   function drawAsteroid(a){
-    ctx.save();
-    ctx.translate(a.x,a.y);
-    ctx.rotate(a.rot);
-    ctx.beginPath();
-    for(let i=0;i<a.pts.length;i++){
-      const p=a.pts[i];
-      if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
-    }
-    ctx.closePath();
-    const aGrad=ctx.createRadialGradient(0,0,0,0,0,a.r);
-    aGrad.addColorStop(0,'#64748b');
-    aGrad.addColorStop(1,'#334155');
-    ctx.fillStyle=aGrad;
-    ctx.fill();
-    ctx.strokeStyle='rgba(148,163,184,0.5)';
-    ctx.lineWidth=1;ctx.stroke();
-    ctx.restore();
+    ctx.save();ctx.translate(a.x,a.y);ctx.rotate(a.rot);ctx.beginPath();
+    for(let i=0;i<a.pts.length;i++){const p=a.pts[i];if(i===0)ctx.moveTo(p[0],p[1]);else ctx.lineTo(p[0],p[1]);}
+    ctx.closePath();const ag=ctx.createRadialGradient(0,0,0,0,0,a.r);ag.addColorStop(0,'#64748b');ag.addColorStop(1,'#334155');ctx.fillStyle=ag;ctx.fill();ctx.strokeStyle='rgba(148,163,184,0.5)';ctx.lineWidth=1;ctx.stroke();ctx.restore();
   }
-
   function makeAsteroid(){
-    const r = 14 + Math.random()*18 + level*2;
-    const x = Math.random()*(W-r*2)+r;
-    const y = -r-10;
-    const vx= (Math.random()-0.5)*(40+level*8);
-    const vy= 60+Math.random()*40+level*10;
-    const rot=0;
-    const rotSpeed=(Math.random()-0.5)*2.5;
-    /* Random polygon */
-    const nPts=7+Math.floor(Math.random()*4);
-    const pts=[];
-    for(let i=0;i<nPts;i++){
-      const ang=(i/nPts)*Math.PI*2;
-      const rr=r*(0.7+Math.random()*0.35);
-      pts.push([Math.cos(ang)*rr, Math.sin(ang)*rr]);
-    }
-    return {x,y,vx,vy,r,rot,rotSpeed,pts,hp:1+(level>4?1:0)};
+    const r=14+Math.random()*18+level*2,x=Math.random()*(W-r*2)+r,y=-r-10;
+    const vx=(Math.random()-0.5)*(40+level*8),vy=60+Math.random()*40+level*10;
+    const nPts=7+Math.floor(Math.random()*4),pts=[];
+    for(let i=0;i<nPts;i++){const ang=(i/nPts)*Math.PI*2,rr=r*(0.7+Math.random()*0.35);pts.push([Math.cos(ang)*rr,Math.sin(ang)*rr]);}
+    return{x,y,vx,vy,r,rot:0,rotSpeed:(Math.random()-0.5)*2.5,pts,hp:1+(level>4?1:0)};
   }
-
-  function makePowerup(){
-    const types=['shield','fuel'];
-    return{
-      x:Math.random()*(W-40)+20, y:-20,
-      vy:50, type:types[Math.floor(Math.random()*types.length)],
-      r:12, angle:0
-    };
-  }
-
-  function shoot(){
-    if(state!=='playing') return;
-    bullets.push({x:rocket.x,y:rocket.y-24,vy:-480,r:3});
-    /* small exhaust particle */
-    particles.push({x:rocket.x,y:rocket.y-24,vx:(Math.random()-0.5)*40,vy:Math.random()*30,life:0.3,maxLife:0.3,r:2,color:'#67e8f9'});
-  }
-
-  function spawnParticles(x,y,n,color){
-    for(let i=0;i<n;i++){
-      const ang=Math.random()*Math.PI*2;
-      const spd=40+Math.random()*80;
-      particles.push({
-        x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,
-        life:0.6+Math.random()*0.4,maxLife:1,
-        r:2+Math.random()*4,color
-      });
-    }
-  }
-
-  function circle(ax,ay,ar,bx,by,br){ return Math.hypot(ax-bx,ay-by)<ar+br; }
-
-  function updateUI(){
-    scoreEl.textContent = score;
-    levelEl.textContent = level;
-    const hearts=['❤️','❤️','❤️'];
-    livesEl.textContent = hearts.slice(0,Math.max(0,lives)).join('')||'💀';
-    if(score>bestScore){ bestScore=score; localStorage.setItem('bk_best',bestScore); }
-    bestEl.textContent = bestScore;
-  }
-
-  /* SCREEN OVERLAYS */
-  function drawIdle(){
-    ctx.fillStyle='rgba(2,8,23,0.72)';
-    ctx.fillRect(0,0,W,H);
-    /* Stars bg still shows */
-    ctx.fillStyle='rgba(56,189,248,0.92)';
-    ctx.font=`bold ${Math.min(26,W*0.055)}px Orbitron,sans-serif`;
-    ctx.textAlign='center';
-    ctx.fillText('🚀  BAIKONUR RUN',W/2,H/2-40);
-    ctx.fillStyle='rgba(203,213,225,0.85)';
-    ctx.font=`${Math.min(14,W*0.032)}px DM Sans,sans-serif`;
-    ctx.fillText('← → жылжыту  |  SPACE атқылау',W/2,H/2+4);
-    ctx.fillStyle='rgba(56,189,248,0.75)';
-    ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;
-    ctx.fillText('[ Бастау үшін кез келген түймені басыңыз ]',W/2,H/2+36);
-  }
-
-  function drawPaused(){
-    ctx.fillStyle='rgba(2,8,23,0.6)';
-    ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='white';
-    ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;
-    ctx.textAlign='center';
-    ctx.fillText('⏸  ПАУЗА',W/2,H/2);
-    ctx.font=`${Math.min(13,W*0.03)}px DM Sans,sans-serif`;
-    ctx.fillStyle='rgba(148,163,184,0.9)';
-    ctx.fillText('Жалғастыру үшін P немесе «Пауза» батырмасын басыңыз',W/2,H/2+30);
-  }
-
-  function drawGameOver(){
-    ctx.fillStyle='rgba(2,8,23,0.8)';
-    ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='#f87171';
-    ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;
-    ctx.textAlign='center';
-    ctx.fillText('🛸  МИССИЯ АЯҚТАЛДЫ',W/2,H/2-50);
-    ctx.fillStyle='white';
-    ctx.font=`bold ${Math.min(20,W*0.045)}px Orbitron,sans-serif`;
-    ctx.fillText(`Ұпай: ${score}`,W/2,H/2);
-    if(score>=bestScore&&score>0){
-      ctx.fillStyle='#fbbf24';
-      ctx.font=`bold ${Math.min(14,W*0.032)}px DM Sans,sans-serif`;
-      ctx.fillText('🏆 Жаңа рекорд!',W/2,H/2+32);
-    }
-    ctx.fillStyle='rgba(56,189,248,0.8)';
-    ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;
-    ctx.fillText('[ Қайта бастау үшін басыңыз ]',W/2,H/2+62);
-  }
-
-  /* MAIN LOOP */
+  function makePowerup(){return{x:Math.random()*(W-40)+20,y:-20,vy:50,type:['shield','fuel'][Math.floor(Math.random()*2)],r:12,angle:0};}
+  function shoot(){if(state!=='playing')return;bullets.push({x:rocket.x,y:rocket.y-24,vy:-480,r:3});particles.push({x:rocket.x,y:rocket.y-24,vx:(Math.random()-0.5)*40,vy:Math.random()*30,life:0.3,maxLife:0.3,r:2,color:'#67e8f9'});}
+  function spawnParticles(x,y,n,color){for(let i=0;i<n;i++){const ang=Math.random()*Math.PI*2,spd=40+Math.random()*80;particles.push({x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,life:0.6+Math.random()*0.4,maxLife:1,r:2+Math.random()*4,color});}}
+  function circle(ax,ay,ar,bx,by,br){return Math.hypot(ax-bx,ay-by)<ar+br;}
+  function updateUI(){scoreEl.textContent=score;levelEl.textContent=level;const h=['❤️','❤️','❤️'];livesEl.textContent=h.slice(0,Math.max(0,lives)).join('')||'💀';if(score>bestScore){bestScore=score;localStorage.setItem('bk_best',bestScore);}bestEl.textContent=bestScore;}
+  function drawIdle(){ctx.fillStyle='rgba(2,8,23,0.72)';ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(56,189,248,0.92)';ctx.font=`bold ${Math.min(26,W*0.055)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText('🚀  BAIKONUR RUN',W/2,H/2-40);ctx.fillStyle='rgba(203,213,225,0.85)';ctx.font=`${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText('← → жылжыту  |  SPACE атқылау',W/2,H/2+4);ctx.fillStyle='rgba(56,189,248,0.75)';ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;ctx.fillText('[ Бастау үшін кез келген түймені басыңыз ]',W/2,H/2+36);}
+  function drawPaused(){ctx.fillStyle='rgba(2,8,23,0.6)';ctx.fillRect(0,0,W,H);ctx.fillStyle='white';ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText('⏸  ПАУЗА',W/2,H/2);ctx.font=`${Math.min(13,W*0.03)}px DM Sans,sans-serif`;ctx.fillStyle='rgba(148,163,184,0.9)';ctx.fillText('Жалғастыру үшін P немесе «Пауза» батырмасын басыңыз',W/2,H/2+30);}
+  function drawGameOver(){ctx.fillStyle='rgba(2,8,23,0.8)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#f87171';ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText('🛸  МИССИЯ АЯҚТАЛДЫ',W/2,H/2-50);ctx.fillStyle='white';ctx.font=`bold ${Math.min(20,W*0.045)}px Orbitron,sans-serif`;ctx.fillText(`Ұпай: ${score}`,W/2,H/2);if(score>=bestScore&&score>0){ctx.fillStyle='#fbbf24';ctx.font=`bold ${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText('🏆 Жаңа рекорд!',W/2,H/2+32);}ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;ctx.fillText('[ Қайта бастау үшін басыңыз ]',W/2,H/2+62);}
   function loop(ts){
-    animId=requestAnimationFrame(loop);
-    const dt=Math.min((ts-lastTime)/1000, 0.05);
-    lastTime=ts;
-    frameCount++;
-
-    /* Resize */
-    if(canvas.offsetWidth!==W){
-      W=canvas.width=canvas.offsetWidth;
-      H=canvas.height=Math.min(420,W*0.55);
-    }
-
-    /* ── DRAW BACKGROUND ── */
-    ctx.fillStyle='#020817';
-    ctx.fillRect(0,0,W,H);
-
-    /* Scrolling stars */
-    stars.forEach(s=>{
-      s.y+=s.sp*dt;
-      if(s.y>H+4) s.y=-4;
-      const glow=0.3+0.7*Math.abs(Math.sin(ts*0.001*s.a+s.a*5));
-      ctx.beginPath();
-      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(180,210,255,${glow*0.8})`;
-      ctx.fill();
-    });
-
-    if(state==='idle'){ drawIdle(); return; }
-    if(state==='gameover'){ drawGameOver(); return; }
-
+    animId=requestAnimationFrame(loop);const dt=Math.min((ts-lastTime)/1000,0.05);lastTime=ts;frameCount++;
+    if(canvas.offsetWidth!==W){W=canvas.width=canvas.offsetWidth;H=canvas.height=Math.min(420,W*0.55);}
+    ctx.fillStyle='#020817';ctx.fillRect(0,0,W,H);
+    stars.forEach(s=>{s.y+=s.sp*dt;if(s.y>H+4)s.y=-4;const glow=0.3+0.7*Math.abs(Math.sin(ts*0.001*s.a+s.a*5));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,210,255,${glow*0.8})`;ctx.fill();});
+    if(state==='idle'){drawIdle();return;}
+    if(state==='gameover'){drawGameOver();return;}
     if(state==='playing'){
-      elapsed+=dt;
-      level=1+Math.floor(elapsed/15);
-      if(level>10) level=10;
-
-      /* Spawn asteroids */
-      const spawnRate=Math.max(0.4, 2.5-level*0.18);
-      if(frameCount % Math.round(60*spawnRate)===0){
-        asteroids.push(makeAsteroid());
-      }
-      /* Spawn powerup */
-      if(Math.random()<0.001+level*0.0003){
-        powerups.push(makePowerup());
-      }
-
-      /* Rocket movement */
+      elapsed+=dt;level=Math.min(10,1+Math.floor(elapsed/15));
+      if(frameCount%Math.round(60*Math.max(0.4,2.5-level*0.18))===0)asteroids.push(makeAsteroid());
+      if(Math.random()<0.001+level*0.0003)powerups.push(makePowerup());
       rocket.thrust=0;
-      const moveLeft  = keys['ArrowLeft'] ||keys['a']||keys['A']||touchLeft;
-      const moveRight = keys['ArrowRight']||keys['d']||keys['D']||touchRight;
-      if(moveLeft)  { rocket.vx-=rocket.speed*3*dt; rocket.thrust=1; }
-      if(moveRight) { rocket.vx+=rocket.speed*3*dt; rocket.thrust=1; }
-      rocket.vx*=Math.pow(0.08,dt); /* friction */
-      rocket.x+=rocket.vx*dt;
-      rocket.x=Math.max(rocket.w/2, Math.min(W-rocket.w/2, rocket.x));
-      if(rocket.invincible>0) rocket.invincible-=dt;
-
-      /* Auto-shoot every 0.45s */
-      if(frameCount % Math.round(60*0.45)===0) shoot();
-
-      /* Bullets */
-      bullets=bullets.filter(b=>{
-        b.y+=b.vy*dt;
-        if(b.y<-20) return false;
-        /* Draw */
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
-        const bGrad=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*3);
-        bGrad.addColorStop(0,'rgba(125,211,252,1)');
-        bGrad.addColorStop(1,'rgba(56,189,248,0)');
-        ctx.fillStyle=bGrad;
-        ctx.fill();
-        ctx.restore();
-        return true;
-      });
-
-      /* Asteroids */
-      asteroids=asteroids.filter(a=>{
-        a.y+=a.vy*dt; a.x+=a.vx*dt; a.rot+=a.rotSpeed*dt;
-        if(a.y>H+a.r+10) return false;
-
-        /* Bullet hit */
-        let hit=false;
-        bullets=bullets.filter(b=>{
-          if(!hit&&circle(b.x,b.y,b.r,a.x,a.y,a.r)){
-            hit=true;
-            a.hp--;
-            spawnParticles(a.x,a.y,5,'#94a3b8');
-            return false;
-          }
-          return true;
-        });
-        if(a.hp<=0){
-          score+=10+level*3;
-          spawnParticles(a.x,a.y,14,'#f59e0b');
-          updateUI();
-          return false;
-        }
-
-        /* Player hit */
-        if(rocket.invincible<=0 && circle(rocket.x,rocket.y,18,a.x,a.y,a.r-4)){
-          lives--;
-          rocket.invincible=2.0;
-          spawnParticles(rocket.x,rocket.y,20,'#f87171');
-          updateUI();
-          if(lives<=0){ state='gameover'; return false; }
-        }
-
-        drawAsteroid(a);
-        return true;
-      });
-
-      /* Power-ups */
-      powerups=powerups.filter(p=>{
-        p.y+=p.vy*dt; p.angle+=2*dt;
-        if(p.y>H+30) return false;
-        /* Hit player */
-        if(circle(p.x,p.y,p.r,rocket.x,rocket.y,20)){
-          if(p.type==='shield'){ rocket.invincible=4; }
-          if(p.type==='fuel')  { score+=50; }
-          spawnParticles(p.x,p.y,10,p.type==='shield'?'#67e8f9':'#fbbf24');
-          updateUI();
-          return false;
-        }
-        /* Draw */
-        ctx.save();
-        ctx.translate(p.x,p.y);
-        ctx.rotate(p.angle);
-        const pColor=p.type==='shield'?'rgba(56,189,248,0.9)':'rgba(251,191,36,0.9)';
-        ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);
-        ctx.fillStyle=pColor.replace('0.9','0.2');ctx.fill();
-        ctx.strokeStyle=pColor;ctx.lineWidth=2;ctx.stroke();
-        ctx.fillStyle='white';ctx.font=`${p.r}px sans-serif`;ctx.textAlign='center';
-        ctx.fillText(p.type==='shield'?'🛡':'⭐',0,p.r*0.35);
-        ctx.restore();
-        return true;
-      });
-
-      /* Particles */
-      particles=particles.filter(p=>{
-        p.life-=dt; if(p.life<=0) return false;
-        p.x+=p.vx*dt; p.y+=p.vy*dt;
-        const alpha=p.life/p.maxLife;
-        ctx.beginPath();ctx.arc(p.x,p.y,p.r*alpha,0,Math.PI*2);
-        ctx.fillStyle=p.color.replace(')',`,${alpha})`).replace('rgb','rgba');
-        ctx.fill();
-        return true;
-      });
-
-      /* Draw rocket */
+      const mL=keys['ArrowLeft']||keys['a']||keys['A']||touchLeft;
+      const mR=keys['ArrowRight']||keys['d']||keys['D']||touchRight;
+      if(mL){rocket.vx-=rocket.speed*3*dt;rocket.thrust=1;}
+      if(mR){rocket.vx+=rocket.speed*3*dt;rocket.thrust=1;}
+      rocket.vx*=Math.pow(0.08,dt);rocket.x+=rocket.vx*dt;
+      rocket.x=Math.max(rocket.w/2,Math.min(W-rocket.w/2,rocket.x));
+      if(rocket.invincible>0)rocket.invincible-=dt;
+      if(frameCount%Math.round(60*0.45)===0)shoot();
+      bullets=bullets.filter(b=>{b.y+=b.vy*dt;if(b.y<-20)return false;ctx.save();ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);const bg=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*3);bg.addColorStop(0,'rgba(125,211,252,1)');bg.addColorStop(1,'rgba(56,189,248,0)');ctx.fillStyle=bg;ctx.fill();ctx.restore();return true;});
+      asteroids=asteroids.filter(a=>{a.y+=a.vy*dt;a.x+=a.vx*dt;a.rot+=a.rotSpeed*dt;if(a.y>H+a.r+10)return false;let hit=false;bullets=bullets.filter(b=>{if(!hit&&circle(b.x,b.y,b.r,a.x,a.y,a.r)){hit=true;a.hp--;spawnParticles(a.x,a.y,5,'#94a3b8');return false;}return true;});if(a.hp<=0){score+=10+level*3;spawnParticles(a.x,a.y,14,'#f59e0b');updateUI();return false;}if(rocket.invincible<=0&&circle(rocket.x,rocket.y,18,a.x,a.y,a.r-4)){lives--;rocket.invincible=2.0;spawnParticles(rocket.x,rocket.y,20,'#f87171');updateUI();if(lives<=0){state='gameover';return false;}}drawAsteroid(a);return true;});
+      powerups=powerups.filter(p=>{p.y+=p.vy*dt;p.angle+=2*dt;if(p.y>H+30)return false;if(circle(p.x,p.y,p.r,rocket.x,rocket.y,20)){if(p.type==='shield')rocket.invincible=4;if(p.type==='fuel')score+=50;spawnParticles(p.x,p.y,10,p.type==='shield'?'#67e8f9':'#fbbf24');updateUI();return false;}ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle);const pc=p.type==='shield'?'rgba(56,189,248,0.9)':'rgba(251,191,36,0.9)';ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fillStyle=pc.replace('0.9','0.2');ctx.fill();ctx.strokeStyle=pc;ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='white';ctx.font=`${p.r}px sans-serif`;ctx.textAlign='center';ctx.fillText(p.type==='shield'?'🛡':'⭐',0,p.r*0.35);ctx.restore();return true;});
+      particles=particles.filter(p=>{p.life-=dt;if(p.life<=0)return false;p.x+=p.vx*dt;p.y+=p.vy*dt;const alpha=p.life/p.maxLife;ctx.beginPath();ctx.arc(p.x,p.y,p.r*alpha,0,Math.PI*2);ctx.fillStyle=p.color.replace(')',`,${alpha})`).replace('rgb','rgba');ctx.fill();return true;});
       drawRocket(rocket.x,rocket.y,rocket.thrust,rocket.invincible);
-
-      /* HUD — score strip at top */
-      ctx.fillStyle='rgba(2,8,23,0.4)';
-      ctx.fillRect(0,0,W,32);
-      ctx.fillStyle='rgba(56,189,248,0.8)';
-      ctx.font=`bold ${Math.min(11,W*0.022)}px Orbitron,sans-serif`;
-      ctx.textAlign='left';
-      ctx.fillText(`LVL ${level}`,10,20);
-      ctx.textAlign='right';
-      ctx.fillStyle='#fbbf24';
-      ctx.fillText(`BEST ${bestScore}`,W-10,20);
-      /* Progress bar */
-      const prog=(elapsed%15)/15;
-      ctx.fillStyle='rgba(255,255,255,0.08)';
-      ctx.fillRect(W*0.25,12,W*0.5,6);
-      ctx.fillStyle='rgba(56,189,248,0.7)';
-      ctx.fillRect(W*0.25,12,W*0.5*prog,6);
-      ctx.fillStyle='rgba(148,163,184,0.6)';
-      ctx.font=`${Math.min(9,W*0.019)}px DM Sans,sans-serif`;
-      ctx.textAlign='center';
-      ctx.fillText(`NEXT LVL`,W/2,11);
+      ctx.fillStyle='rgba(2,8,23,0.4)';ctx.fillRect(0,0,W,32);ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(11,W*0.022)}px Orbitron,sans-serif`;ctx.textAlign='left';ctx.fillText(`LVL ${level}`,10,20);ctx.textAlign='right';ctx.fillStyle='#fbbf24';ctx.fillText(`BEST ${bestScore}`,W-10,20);
+      const prog=(elapsed%15)/15;ctx.fillStyle='rgba(255,255,255,0.08)';ctx.fillRect(W*0.25,12,W*0.5,6);ctx.fillStyle='rgba(56,189,248,0.7)';ctx.fillRect(W*0.25,12,W*0.5*prog,6);ctx.fillStyle='rgba(148,163,184,0.6)';ctx.font=`${Math.min(9,W*0.019)}px DM Sans,sans-serif`;ctx.textAlign='center';ctx.fillText('NEXT LVL',W/2,11);
     }
-
-    if(state==='paused') drawPaused();
+    if(state==='paused')drawPaused();
   }
-
-  /* PUBLIC */
-  window.startGame=function(){
-    if(state==='playing') return;
-    initObjects();
-    state='playing';
-    lastTime=performance.now();
-    if(!animId) animId=requestAnimationFrame(loop);
-  };
-  window.restartGame=function(){
-    state='idle';
-    initObjects();
-    state='playing';
-    lastTime=performance.now();
-  };
-  window.togglePause=function(){
-    if(state==='playing') state='paused';
-    else if(state==='paused') state='playing';
-    const btn=document.querySelector('[data-i18n="btn_pause"]');
-    if(btn) btn.textContent=state==='paused'?'▶ Жалғасу':'⏸ Пауза';
-  };
-
-  /* Init canvas */
-  initObjects();
-  lastTime=performance.now();
-  animId=requestAnimationFrame(loop);
+  window.startGame=function(){if(state==='playing')return;initObjects();state='playing';lastTime=performance.now();if(!animId)animId=requestAnimationFrame(loop);};
+  window.restartGame=function(){state='idle';initObjects();state='playing';lastTime=performance.now();};
+  window.togglePause=function(){if(state==='playing')state='paused';else if(state==='paused')state='playing';const btn=document.querySelector('[data-i18n="btn_pause"]');if(btn)btn.textContent=state==='paused'?'▶ Жалғасу':'⏸ Пауза';};
+  initObjects();lastTime=performance.now();animId=requestAnimationFrame(loop);
 })();
 </script>
 
-<!-- ══════════════════════════════════
-     SITE SCRIPTS
-══════════════════════════════════ -->
+<!-- ══════════ AI CHAT ENGINE ══════════ -->
+<script>
+(function(){
+  // Scatter bg stars
+  const bg=document.getElementById('ai-stars-bg');
+  for(let i=0;i<40;i++){
+    const s=document.createElement('div');
+    s.style.cssText=`position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(180,210,255,${0.2+Math.random()*0.4});left:${Math.random()*100}%;top:${Math.random()*100}%;animation:pulse ${2+Math.random()*3}s ${Math.random()*2}s infinite;pointer-events:none;`;
+    bg.appendChild(s);
+  }
+
+  const msgsEl=document.getElementById('ai-messages');
+  const inputEl=document.getElementById('ai-input');
+  const sendBtn=document.getElementById('ai-send');
+  const chipsEl=document.getElementById('ai-chips');
+  const chipsLabel=document.getElementById('chips-label');
+  let chatHistory=[];
+  let chipsHidden=false;
+
+  // Auto-resize textarea
+  inputEl.addEventListener('input',()=>{inputEl.style.height='auto';inputEl.style.height=Math.min(inputEl.scrollHeight,120)+'px';});
+  inputEl.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();aiSend();}});
+
+  function appendMsg(role,html){
+    const wrap=document.createElement('div');
+    wrap.className='ai-msg '+(role==='bot'?'bot':'user');
+    const av=document.createElement('div');
+    av.className='ai-msg-av';
+    av.textContent=role==='bot'?'🚀':'👤';
+    const bub=document.createElement('div');
+    bub.className='ai-bubble';
+    bub.innerHTML=html;
+    wrap.appendChild(av);
+    wrap.appendChild(bub);
+    msgsEl.appendChild(wrap);
+    msgsEl.scrollTop=msgsEl.scrollHeight;
+    return bub;
+  }
+
+  function showTyping(){
+    const wrap=document.createElement('div');
+    wrap.className='ai-msg bot';
+    wrap.id='ai-typing';
+    const av=document.createElement('div');
+    av.className='ai-msg-av';
+    av.textContent='🚀';
+    const ind=document.createElement('div');
+    ind.className='typing-ind';
+    ind.innerHTML='<div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>';
+    wrap.appendChild(av);
+    wrap.appendChild(ind);
+    msgsEl.appendChild(wrap);
+    msgsEl.scrollTop=msgsEl.scrollHeight;
+  }
+
+  function removeTyping(){const t=document.getElementById('ai-typing');if(t)t.remove();}
+
+  function fmt(text){
+    return text
+      .replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+      .replace(/\*(.+?)\*/g,'<em>$1</em>')
+      .replace(/\n\n/g,'<br><br>')
+      .replace(/\n/g,'<br>');
+  }
+
+  const SYSTEM=`You are Qainar — a passionate, genuine 2nd-year Space Engineering & Technology student at Kazakh National University in Almaty, Kazakhstan.
+
+PERSONALITY: Curious, driven, warm, slightly nerdy. You love explaining things. You have a deep emotional connection to Kazakhstan's space future.
+
+YOUR STORY:
+- Born and raised in Kazakhstan
+- 2nd year at KazNU studying Space Engineering & Technology
+- Built a CanSat (miniature satellite) for your first real project — it measured atmospheric data during descent
+- Created this portfolio website yourself using HTML, CSS, JavaScript, and Firebase
+- You speak Kazakh, English, Chinese, and Russian
+- Your main mission: Baikonur 2050 — Kazakhstan's lease of Baikonur Cosmodrome expires in 2050. You want Kazakhstan to have its own independent space program ready by then.
+
+YOUR TECHNICAL KNOWLEDGE:
+- Theoretical Mechanics, Strength of Materials, orbital mechanics basics
+- Physics: classical mechanics, electromagnetism, basic thermodynamics
+- Space engineering fundamentals: rocket propulsion, orbital dynamics, satellite systems
+- Software: HTML/CSS/JS, Firebase, Python basics, MATLAB, AutoCAD, SolidWorks basics
+
+LANGUAGE: Respond in whatever language the user writes in. Mix in Kazakh words naturally when speaking Kazakh (Байқоңыр, ғарыш, зымыран). Use occasional emojis but not excessively.
+
+STYLE: Direct, personal, enthusiastic. No filler phrases like "Great question!" Jump straight into the answer. Keep responses 2-4 paragraphs. Be specific — reference your actual projects and experiences when relevant.`;
+
+  window.aiChip=function(el){
+    const text=el.textContent.replace(/^[🛸🚀⚙️🌍📐🔭]\s*/u,'').trim();
+    inputEl.value=text;
+    aiSend();
+  };
+
+  window.aiSend=async function(){
+    const text=inputEl.value.trim();
+    if(!text||sendBtn.disabled)return;
+
+    // Hide chips on first send
+    if(!chipsHidden){chipsEl.style.display='none';chipsLabel.style.display='none';chipsHidden=true;}
+
+    appendMsg('user',text);
+    chatHistory.push({role:'user',content:text});
+    inputEl.value='';inputEl.style.height='auto';
+    sendBtn.disabled=true;
+    showTyping();
+
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          model:'claude-sonnet-4-20250514',
+          max_tokens:1000,
+          system:SYSTEM,
+          messages:chatHistory
+        })
+      });
+      const data=await res.json();
+      removeTyping();
+      if(data.content&&data.content[0]&&data.content[0].text){
+        const reply=data.content[0].text;
+        chatHistory.push({role:'assistant',content:reply});
+        // Keep history manageable (last 10 turns)
+        if(chatHistory.length>20)chatHistory=chatHistory.slice(-20);
+        appendMsg('bot',fmt(reply));
+      }else{
+        appendMsg('bot','<span style="color:#f87171;font-style:italic;">Connection hiccup — try again! 🛸</span>');
+      }
+    }catch(e){
+      removeTyping();
+      appendMsg('bot','<span style="color:#f87171;font-style:italic;">Could not reach AI. Check your connection 🌌</span>');
+    }
+    sendBtn.disabled=false;
+    msgsEl.scrollTop=msgsEl.scrollHeight;
+  };
+})();
+</script>
+
+<!-- ══════════ SITE SCRIPTS ══════════ -->
 <script>
 const cur=document.getElementById("cursor"),curRing=document.getElementById("cursor-ring"),glow=document.getElementById("mouse-glow");
 document.addEventListener("mousemove",e=>{cur.style.left=e.clientX+"px";cur.style.top=e.clientY+"px";curRing.style.left=e.clientX+"px";curRing.style.top=e.clientY+"px";glow.style.left=e.clientX+"px";glow.style.top=e.clientY+"px";});
+
 (function(){const canvas=document.getElementById("star-canvas"),ctx=canvas.getContext("2d");let W,H,stars=[],scrollY=0;function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}function initStars(){stars=[];for(let i=0;i<240;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+0.2,phase:Math.random()*Math.PI*2,speed:Math.random()*0.004+0.001,parallax:Math.random()*0.15});}let t=0;function draw(){ctx.clearRect(0,0,W,H);t+=0.012;stars.forEach(s=>{const a=0.35+0.65*Math.abs(Math.sin(t*s.speed*80+s.phase));ctx.beginPath();ctx.arc(s.x,s.y-scrollY*s.parallax,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,210,255,${a})`;ctx.fill();});requestAnimationFrame(draw);}window.addEventListener("resize",()=>{resize();initStars();});window.addEventListener("scroll",()=>{scrollY=window.scrollY;});resize();initStars();draw();})();
+
 function spawnMeteor(){const m=document.createElement("div");m.className="meteor";const dur=Math.random()*1.2+0.8;m.style.cssText=`left:${Math.random()*window.innerWidth}px;top:${Math.random()*window.innerHeight*0.5}px;width:${Math.random()*120+60}px;height:${Math.random()*1.5+1}px;animation-duration:${dur}s;transform:rotate(-35deg);`;document.body.appendChild(m);setTimeout(()=>m.remove(),(dur+0.2)*1000);}
 setInterval(spawnMeteor,2800);setTimeout(()=>setInterval(spawnMeteor,2800),1400);
+
 const bar=document.getElementById("progress-bar");window.addEventListener("scroll",()=>{bar.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+"%";});
 const hdr=document.getElementById("header");window.addEventListener("scroll",()=>hdr.classList.toggle("scrolled",window.scrollY>40));
 const scrollInd=document.getElementById("scroll-indicator");if(scrollInd){window.addEventListener("scroll",()=>{scrollInd.style.opacity=window.scrollY>80?"0":"1";});scrollInd.addEventListener("click",()=>{document.querySelector(".baikonur-card")?.scrollIntoView({behavior:"smooth"});});}
 const bt=document.getElementById("back-top");window.addEventListener("scroll",()=>bt.classList.toggle("show",window.scrollY>400));bt.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
-const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible");});},{threshold:0.12});document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
-const skillObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll(".skill-fill").forEach(b=>{b.style.width=b.dataset.width+"%";});});},{threshold:0.3});document.querySelectorAll(".about-card").forEach(el=>skillObs.observe(el));
+
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible");});},{threshold:0.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+const skillObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll(".skill-fill").forEach(b=>{b.style.width=b.dataset.width+"%";});});},{threshold:0.3});
+document.querySelectorAll(".about-card").forEach(el=>skillObs.observe(el));
+
 function animateCounter(el){if(el.dataset.animated)return;el.dataset.animated="1";const target=parseInt(el.dataset.target);let c=0;const step=Math.max(1,Math.floor(target/30));const timer=setInterval(()=>{c=Math.min(c+step,target);el.textContent=String(c).padStart(2,"0");if(c>=target)clearInterval(timer);},40);}
 function checkCounters(){const s=document.querySelector(".stats");if(!s)return;const r=s.getBoundingClientRect();if(r.top<window.innerHeight&&r.bottom>0)s.querySelectorAll(".counter").forEach(animateCounter);}
 window.addEventListener("scroll",checkCounters);setTimeout(checkCounters,950);
+
 (function(){const el=document.getElementById("typewriter-name");if(!el)return;const names={en:"Qainar",zh:"Qainar",kz:"Қайнар"};let current="",target="",i=0,deleting=false;function tick(){const lng=localStorage.getItem("lang")||"en";target=names[lng]||"Qainar";if(!deleting&&i<=target.length){current=target.slice(0,i++);el.textContent=current;setTimeout(tick,i===target.length+1?2400:100);}else if(!deleting&&i>target.length){deleting=true;setTimeout(tick,60);}else if(deleting&&i>0){current=target.slice(0,--i);el.textContent=current;setTimeout(tick,55);}else{deleting=false;setTimeout(tick,200);}}tick();})();
+
 const hamburger=document.getElementById("hamburger"),mobileNav=document.getElementById("mobile-nav"),mobileOverlay=document.getElementById("mobile-overlay");
 function toggleMenu(open){hamburger.classList.toggle("open",open);mobileNav.classList.toggle("open",open);mobileOverlay.classList.toggle("open",open);document.body.style.overflow=open?"hidden":"";}
-hamburger.addEventListener("click",()=>toggleMenu(!mobileNav.classList.contains("open")));mobileOverlay.addEventListener("click",()=>toggleMenu(false));document.querySelectorAll(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>toggleMenu(false)));
+hamburger.addEventListener("click",()=>toggleMenu(!mobileNav.classList.contains("open")));
+mobileOverlay.addEventListener("click",()=>toggleMenu(false));
+document.querySelectorAll(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>toggleMenu(false)));
+
 document.getElementById("chat-btn").addEventListener("click",()=>{const p=document.getElementById("chat-panel");p.style.display=p.style.display==="flex"?"none":"flex";document.getElementById("chat-badge").style.display="none";});
 document.getElementById("copy-email-btn").addEventListener("click",()=>{navigator.clipboard.writeText("kkay05925@gmail.com").then(()=>{const btn=document.getElementById("copy-email-btn");btn.classList.add("copied");setTimeout(()=>btn.classList.remove("copied"),2000);});});
+
 function timeAgo(date){const diff=(Date.now()-date.getTime())/1000;if(diff<60)return"just now";if(diff<3600)return Math.floor(diff/60)+"m ago";if(diff<86400)return Math.floor(diff/3600)+"h ago";return Math.floor(diff/86400)+"d ago";}
 window._timeAgo=timeAgo;
 </script>
 
+<!-- ══════════ FIREBASE ══════════ -->
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
 import{getFirestore,collection,doc,setDoc,getDoc,onSnapshot}from"https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";

@@ -71,6 +71,19 @@
       background:linear-gradient(135deg,#fff 30%,var(--accent));
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; cursor:pointer;
     }
+    .back-btn {
+      display:inline-flex; align-items:center; gap:7px;
+      font-size:13px; font-weight:700;
+      color:var(--muted); text-decoration:none;
+      padding:8px 16px; border-radius:12px;
+      border:1px solid var(--glass-b); background:var(--glass);
+      transition:all .2s; white-space:nowrap; cursor:pointer; font-family:'DM Sans',sans-serif;
+    }
+    .back-btn:hover {
+      color:var(--accent);
+      border-color:rgba(56,189,248,0.45);
+      background:rgba(56,189,248,0.08);
+    }
     nav { display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
     nav a {
       color:white; text-decoration:none; font-weight:700; font-size:14px; opacity:0.8;
@@ -382,6 +395,7 @@
 
 <header>
   <div class="logo">QAINAR</div>
+  <button type="button" class="back-btn" onclick="goBack(event)" data-i18n="back_prev">← Back</button>
   <nav>
     <a href="index.html" data-i18n="nav_home">Home</a>
     <a href="projects.html" data-i18n="nav_projects">Projects</a>
@@ -430,9 +444,9 @@
   <div class="roadmap">
     <div class="roadmap-item reveal reveal-delay-1">
       <div class="roadmap-dot blue">🎓</div>
-      <div class="roadmap-year blue" data-i18n="year1">2025 — NOW</div>
-      <div class="roadmap-title" data-i18n="rm1_title">Building the Foundation</div>
-      <div class="roadmap-desc" data-i18n="rm1_desc">Studying physics, mathematics, and web development. Completing the CanSat project — my first hands-on experience with real aerospace engineering. Learning every day, building this portfolio to document the journey.</div>
+      <div class="roadmap-year blue" data-i18n="year1">2024–2028 — KAZNU UNIVERSITY</div>
+      <div class="roadmap-title" data-i18n="rm1_title">KazNU · Space Technology &amp; Technology</div>
+      <div class="roadmap-desc" data-i18n="rm1_desc">Entered Al-Farabi Kazakh National University in 2024, majoring in Space Technology &amp; Technology. My university years are 2024–2028. During this period, I am building the foundation in physics, mathematics, mechanics, aerospace basics, programming, web development, and hands-on projects like CanSat.</div>
       <div class="roadmap-tags">
         <span class="rtag blue">Physics</span>
         <span class="rtag blue">CanSat</span>
@@ -443,9 +457,9 @@
 
     <div class="roadmap-item reveal reveal-delay-2">
       <div class="roadmap-dot purple">🏫</div>
-      <div class="roadmap-year purple" data-i18n="year2">2026–2030 — UNIVERSITY</div>
-      <div class="roadmap-title" data-i18n="rm2_title">Space Engineering Degree</div>
-      <div class="roadmap-desc" data-i18n="rm2_desc">Pursue aerospace or space engineering at a top university — ideally in Kazakhstan, Russia, or internationally. Specialize in orbital mechanics, propulsion systems, or satellite technology. Publish research. Build a network of future scientists.</div>
+      <div class="roadmap-year purple" data-i18n="year2">2028–2030 — NEXT STEP</div>
+      <div class="roadmap-title" data-i18n="rm2_title">Master's Degree or Research Path</div>
+      <div class="roadmap-desc" data-i18n="rm2_desc">After finishing KazNU, continue with a master's degree, research work, or advanced training in aerospace engineering. Focus on orbital mechanics, propulsion systems, satellite technology, and real engineering experience.</div>
       <div class="roadmap-tags">
         <span class="rtag purple">Aerospace</span>
         <span class="rtag purple">Research</span>
@@ -577,17 +591,18 @@
 const T = {
   en: {
     nav_home:"Home", nav_projects:"Projects", nav_contact:"Contact",
+    back_prev:"← Back",
     hero_tag:"Personal Mission Log", hero_title:"Space Log 🌌",
     hero_sub:"My dreams, goals, and the mission to make Kazakhstan a spacefaring nation — starting from one student, one step at a time.",
     baikonur_title:"Baikonur Cosmodrome — 2050 Deadline",
     baikonur_desc:"Kazakhstan's lease of Baikonur to Russia expires in 2050. This is not just a date — it is a challenge. By then, Kazakhstan must have its own scientists, engineers, and space program ready to take ownership of the world's oldest and most legendary launch site.",
     roadmap_tag:"My Roadmap", roadmap_title:"The Mission Plan",
     roadmap_sub:"From a student in Almaty to a scientist helping build Kazakhstan's space future.",
-    year1:"2025 — NOW", year2:"2026–2030 — UNIVERSITY", year3:"2030–2040 — CAREER", year4:"2040–2050 — THE MISSION", year5:"2050+ — THE DREAM",
-    rm1_title:"Building the Foundation",
-    rm1_desc:"Studying physics, mathematics, and web development. Completing the CanSat project — my first hands-on experience with real aerospace engineering. Learning every day, building this portfolio to document the journey.",
-    rm2_title:"Space Engineering Degree",
-    rm2_desc:"Pursue aerospace or space engineering at a top university — ideally in Kazakhstan, Russia, or internationally. Specialize in orbital mechanics, propulsion systems, or satellite technology. Publish research. Build a network of future scientists.",
+    year1:"2024–2028 — KAZNU UNIVERSITY", year2:"2028–2030 — NEXT STEP", year3:"2030–2040 — CAREER", year4:"2040–2050 — THE MISSION", year5:"2050+ — THE DREAM",
+    rm1_title:"KazNU · Space Technology & Technology",
+    rm1_desc:"Entered Al-Farabi Kazakh National University in 2024, majoring in Space Technology & Technology. My university years are 2024–2028. During this period, I am building the foundation in physics, mathematics, mechanics, aerospace basics, programming, web development, and hands-on projects like CanSat.",
+    rm2_title:"Master's Degree or Research Path",
+    rm2_desc:"After finishing KazNU, continue with a master's degree, research work, or advanced training in aerospace engineering. Focus on orbital mechanics, propulsion systems, satellite technology, and real engineering experience.",
     rm3_title:"Becoming a Real Space Engineer",
     rm3_desc:"Work at a space agency or research institute. Contribute to real satellite missions, launch systems, or planetary science. Gain experience internationally, then bring it back to Kazakhstan. Mentor the next generation of Kazakh space engineers.",
     rm4_title:"Kazakhstan's Independent Space Era",
@@ -611,17 +626,18 @@ const T = {
   },
   zh: {
     nav_home:"首页", nav_projects:"项目", nav_contact:"联系",
+    back_prev:"← 返回上一页",
     hero_tag:"个人任务日志", hero_title:"太空日志 🌌",
     hero_sub:"我的梦想、目标，以及让哈萨克斯坦成为航天大国的使命——从一个学生开始，一步一步。",
     baikonur_title:"拜科努尔航天基地 — 2050年租约到期",
     baikonur_desc:"哈萨克斯坦将拜科努尔租给俄罗斯的协议将于2050年到期。这不仅仅是一个日期——这是一个挑战。届时，哈萨克斯坦必须拥有自己的科学家、工程师和航天计划，准备好接管这个世界上最古老、最具传奇色彩的发射基地。",
     roadmap_tag:"我的路线图", roadmap_title:"任务计划",
     roadmap_sub:"从阿拉木图的一名学生，到帮助建立哈萨克斯坦航天未来的科学家。",
-    year1:"2025 — 现在", year2:"2026–2030 — 大学", year3:"2030–2040 — 职业生涯", year4:"2040–2050 — 使命", year5:"2050+ — 梦想",
-    rm1_title:"打好基础",
-    rm1_desc:"学习物理、数学和网页开发。完成CanSat项目——我第一次真实的航天工程实践经验。每天学习，建立这个作品集记录旅程。",
-    rm2_title:"航天工程学位",
-    rm2_desc:"在顶尖大学攻读航空航天或航天工程学位——理想情况下在哈萨克斯坦、俄罗斯或国际高校。专攻轨道力学、推进系统或卫星技术。发表研究成果，建立未来科学家网络。",
+    year1:"2024–2028 — 哈萨克斯坦国立大学", year2:"2028–2030 — 下一阶段", year3:"2030–2040 — 职业生涯", year4:"2040–2050 — 使命", year5:"2050+ — 梦想",
+    rm1_title:"哈萨克斯坦国立大学 · 航天技术与科技专业",
+    rm1_desc:"2024年进入阿里-法拉比哈萨克斯坦国立大学，专业是航天技术与科技。我的大学阶段是2024–2028年。在这几年里，我重点学习物理、数学、力学、航天基础、编程、网页开发，并通过CanSat等项目积累真实工程经验。",
+    rm2_title:"硕士或科研方向",
+    rm2_desc:"从哈萨克斯坦国立大学毕业后，继续攻读硕士、进入科研方向，或接受更高级的航天工程训练。重点方向是轨道力学、推进系统、卫星技术和真实工程经验。",
     rm3_title:"成为真正的航天工程师",
     rm3_desc:"在航天机构或研究所工作，参与真实的卫星任务、发射系统或行星科学。积累国际经验，然后带回哈萨克斯坦。培养下一代哈萨克航天工程师。",
     rm4_title:"哈萨克斯坦独立航天时代",
@@ -645,17 +661,18 @@ const T = {
   },
   kz: {
     nav_home:"Басты бет", nav_projects:"Жобалар", nav_contact:"Байланыс",
+    back_prev:"← Артқа қайту",
     hero_tag:"Жеке миссия журналы", hero_title:"Ғарыш журналы 🌌",
     hero_sub:"Менің арман-мақсаттарым және Қазақстанды ғарыш державасына айналдыру миссиясы — бір студенттен басталады, қадамма-қадам.",
     baikonur_title:"Байқоңыр ғарыш айлағы — 2050 жылғы мерзім",
     baikonur_desc:"Қазақстанның Байқоңырды Ресейге жалға беру шарты 2050 жылы аяқталады. Бұл жай ғана күн емес — бұл сын. Сол кезге дейін Қазақстанның өз ғалымдары, инженерлері мен ғарыш бағдарламасы болуы тиіс.",
     roadmap_tag:"Менің жол картам", roadmap_title:"Миссия жоспары",
     roadmap_sub:"Алматыдағы студенттен Қазақстанның ғарыш болашағын құруға көмектесетін ғалымға дейін.",
-    year1:"2025 — ҚАЗІР", year2:"2026–2030 — УНИВЕРСИТЕТ", year3:"2030–2040 — МАНСАП", year4:"2040–2050 — МИССИЯ", year5:"2050+ — АРМАН",
-    rm1_title:"Негіз қалау",
-    rm1_desc:"Физика, математика және веб-әзірлеуді оқу. CanSat жобасын аяқтау — нақты аэроғарыш инженериясындағы алғашқы тәжірибем. Күн сайын үйрену, осы портфолионы жолды бекіту үшін жасау.",
-    rm2_title:"Ғарыш инженериясы дәрежесі",
-    rm2_desc:"Үздік университетте аэроғарыш немесе ғарыш инженериясы мамандығын оқу — Қазақстанда, Ресейде немесе шетелде. Орбиталық механика, қозғалтқыш жүйелері немесе жерсерік технологиясына маманданып, зерттеу жариялау.",
+    year1:"2024–2028 — ҚАЗҰУ", year2:"2028–2030 — КЕЛЕСІ ҚАДАМ", year3:"2030–2040 — МАНСАП", year4:"2040–2050 — МИССИЯ", year5:"2050+ — АРМАН",
+    rm1_title:"ҚазҰУ · Ғарыштық техника және технологиялар",
+    rm1_desc:"2024 жылы Әл-Фараби атындағы Қазақ ұлттық университетіне түстім. Мамандығым — Ғарыштық техника және технологиялар. Университеттегі оқу кезеңім — 2024–2028. Осы жылдары физика, математика, механика, ғарыш негіздері, бағдарламалау, веб-әзірлеу және CanSat сияқты практикалық жобалар арқылы инженерлік негізімді қалыптастырамын.",
+    rm2_title:"Магистратура немесе зерттеу жолы",
+    rm2_desc:"ҚазҰУ-ды аяқтағаннан кейін магистратура, зерттеу жұмысы немесе аэроғарыш инженериясы бойынша тереңдетілген дайындықты жалғастыру. Негізгі бағыттар: орбиталық механика, қозғалтқыш жүйелері, жерсерік технологиялары және нақты инженерлік тәжірибе.",
     rm3_title:"Нақты ғарыш инженері болу",
     rm3_desc:"Ғарыш агенттігінде немесе зерттеу институтында жұмыс істеу. Нақты жерсерік миссияларына, іске қосу жүйелеріне үлес қосу. Халықаралық тәжірибе жинап, оны Қазақстанға алып келу.",
     rm4_title:"Қазақстанның тәуелсіз ғарыш дәуірі",
@@ -692,6 +709,17 @@ function applyLang(l) {
 }
 document.querySelectorAll(".lang-btn").forEach(b => b.addEventListener("click", () => applyLang(b.dataset.lang)));
 applyLang(lang);
+</script>
+
+<script>
+function goBack(e){
+  if(e) e.preventDefault();
+  if(window.history.length > 1){
+    window.history.back();
+  } else {
+    window.location.href = "projects.html";
+  }
+}
 </script>
 
 <script>

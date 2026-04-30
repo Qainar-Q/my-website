@@ -364,7 +364,7 @@
 </div>
 
 <header id="header">
-  <div class="logo">QAINAR</div>
+ <div class="logo" id="logo-tap">QAINAR</div>
   <nav>
     <a href="index.html" data-i18n="nav_home">Home</a>
     <a href="projects.html" data-i18n="nav_projects">Projects</a>
@@ -679,18 +679,23 @@
   </div>
 </div>
 
-<!-- ══════════ KAINARLOVER 彩蛋 ══════════ -->
+<!-- ══════════ KAINARLOVER 彩蛋 v2 ══════════ -->
 <!-- 把这段代码粘贴到 index.html 的 </body> 前面 -->
+<!-- 同时把 <div class="logo">QAINAR</div> 改成 <div class="logo" id="logo-tap">QAINAR</div> -->
 <style>
 @keyframes eggFadeIn{from{opacity:0;transform:scale(0.85);}to{opacity:1;transform:scale(1);}}
-@keyframes eggHeartFloat{0%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r));}100%{opacity:0;transform:translateY(-140px) scale(0.3) rotate(var(--r));}}
+@keyframes eggHeartFloat{
+  0%{opacity:1;transform:translateY(0) scale(1) rotate(var(--r));}
+  60%{opacity:1;}
+  100%{opacity:0;transform:translateY(-180px) scale(0.2) rotate(var(--r));}
+}
 #crush-overlay{display:none;position:fixed;inset:0;background:rgba(2,8,23,0.96);z-index:99999;backdrop-filter:blur(24px);align-items:center;justify-content:center;}
 #crush-overlay.open{display:flex;}
-#crush-box{animation:eggFadeIn .55s cubic-bezier(.16,1,.3,1) forwards;text-align:center;padding:40px 32px;max-width:340px;}
+#crush-box{animation:eggFadeIn .6s cubic-bezier(.16,1,.3,1) forwards;text-align:center;padding:40px 32px;max-width:340px;}
 #crush-photo{width:200px;height:200px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid rgba(56,189,248,0.5);box-shadow:0 0 60px rgba(56,189,248,0.35),0 0 120px rgba(56,189,248,0.1);margin-bottom:22px;}
 #crush-close{margin-top:22px;padding:10px 30px;border-radius:999px;border:1px solid rgba(56,189,248,0.35);background:transparent;color:rgba(125,211,252,0.8);font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
 #crush-close:hover{background:rgba(56,189,248,0.1);}
-.crush-heart{position:fixed;pointer-events:none;z-index:100000;font-size:20px;animation:eggHeartFloat 2s ease forwards;}
+.crush-heart{position:fixed;pointer-events:none;z-index:100000;font-size:28px;animation:eggHeartFloat 1.8s ease forwards;}
 </style>
 
 <div id="crush-overlay">
@@ -708,27 +713,51 @@
   const SECRET='kainarlover';
   let buf='';
 
+  // 键盘密码（桌面端）
   document.addEventListener('keydown',function(e){
     if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
     buf+=e.key.toLowerCase();
     if(buf.length>SECRET.length)buf=buf.slice(-SECRET.length);
-    if(buf===SECRET){buf='';openCrush();}
+    if(buf===SECRET){buf='';burstThenOpen();}
   });
 
-  function openCrush(){
-    document.getElementById('crush-overlay').classList.add('open');
-    for(let i=0;i<20;i++){
+  // 点击QAINAR logo九下（手机端）
+  let tapCount=0,tapTimer;
+  const logo=document.getElementById('logo-tap');
+  if(logo){
+    logo.addEventListener('click',function(){
+      tapCount++;
+      clearTimeout(tapTimer);
+      tapTimer=setTimeout(()=>{tapCount=0;},3000);
+      if(tapCount>=9){tapCount=0;burstThenOpen();}
+    });
+  }
+
+  // 九颗爱心爆出，然后显示彩蛋
+  function burstThenOpen(){
+    const positions=[
+      {l:15,t:20},{l:30,t:10},{l:50,t:5},{l:70,t:10},{l:85,t:20},
+      {l:20,t:40},{l:80,t:40},{l:40,t:15},{l:60,t:15}
+    ];
+    positions.forEach((pos,i)=>{
       setTimeout(()=>{
         const h=document.createElement('div');
         h.className='crush-heart';
-        h.textContent=['💙','💫','✨'][Math.floor(Math.random()*3)];
-        h.style.left=Math.random()*100+'vw';
-        h.style.top=(50+Math.random()*40)+'vh';
+        h.textContent='💙';
+        h.style.left=pos.l+'vw';
+        h.style.top=pos.t+'vh';
         h.style.setProperty('--r',(Math.random()*30-15)+'deg');
+        h.style.fontSize=(22+Math.random()*16)+'px';
         document.body.appendChild(h);
         setTimeout(()=>h.remove(),2000);
-      },i*90);
-    }
+      },i*120);
+    });
+    // 爱心全部出来后再显示照片
+    setTimeout(openCrush, 1400);
+  }
+
+  function openCrush(){
+    document.getElementById('crush-overlay').classList.add('open');
   }
 
   window.closeCrush=function(){
@@ -740,6 +769,7 @@
   });
 })();
 </script>
+<!-- ══════════════════════════════════════ -->
 <!-- ══════════════════════════════════════ --><button id="chat-btn" style="position:fixed;">💬<span id="chat-badge"></span></button>
 <div id="chat-panel">
   <h3 data-i18n="chat_title">Latest Comments</h3>

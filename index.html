@@ -210,8 +210,9 @@
 .leaderboard-icon{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,rgba(56,189,248,0.22),rgba(37,99,235,0.12));display:flex;align-items:center;justify-content:center;border:1px solid rgba(56,189,248,0.24);}
 .leaderboard-title{font-family:'Orbitron',sans-serif;font-size:15px;letter-spacing:1px;color:white;}
 .leaderboard-sub{font-size:12px;color:var(--muted);margin-top:3px;}
-.leaderboard-refresh{border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);color:#cbd5e1;border-radius:999px;padding:8px 13px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:.2s;}
-.leaderboard-refresh:hover{border-color:rgba(56,189,248,0.45);color:white;background:rgba(56,189,248,0.12);transform:translateY(-2px);}
+.leaderboard-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.leaderboard-refresh,.leaderboard-name-btn{border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);color:#cbd5e1;border-radius:999px;padding:8px 13px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:.2s;}
+.leaderboard-refresh:hover,.leaderboard-name-btn:hover{border-color:rgba(56,189,248,0.45);color:white;background:rgba(56,189,248,0.12);transform:translateY(-2px);}
 .leaderboard-list{display:flex;flex-direction:column;gap:8px;min-height:54px;}
 .lb-row{display:grid;grid-template-columns:42px 1fr 92px;align-items:center;gap:10px;padding:11px 13px;border-radius:15px;background:rgba(2,8,23,0.38);border:1px solid rgba(255,255,255,0.08);}
 .lb-rank{font-family:'Orbitron',sans-serif;font-size:13px;color:#7dd3fc;font-weight:900;}
@@ -554,7 +555,10 @@
             <div class="leaderboard-sub" data-lb-i18n="rocket_board">Baikonur Run leaderboard</div>
           </div>
         </div>
-        <button class="leaderboard-refresh" data-lb-refresh="baikonur_run">↻</button>
+        <div class="leaderboard-actions">
+          <button class="leaderboard-name-btn" data-lb-name-btn>NAME</button>
+          <button class="leaderboard-refresh" data-lb-refresh="baikonur_run">↻</button>
+        </div>
       </div>
       <div class="leaderboard-list" id="lb-list-baikonur_run">
         <div class="lb-empty" data-lb-i18n="loading">Loading leaderboard…</div>
@@ -616,7 +620,10 @@
             <div class="leaderboard-sub" data-lb-i18n="formula_board">Formula Challenge leaderboard</div>
           </div>
         </div>
-        <button class="leaderboard-refresh" data-lb-refresh="formula_challenge">↻</button>
+        <div class="leaderboard-actions">
+          <button class="leaderboard-name-btn" data-lb-name-btn>NAME</button>
+          <button class="leaderboard-refresh" data-lb-refresh="formula_challenge">↻</button>
+        </div>
       </div>
       <div class="leaderboard-list" id="lb-list-formula_challenge">
         <div class="lb-empty" data-lb-i18n="loading">Loading leaderboard…</div>
@@ -824,8 +831,8 @@ body.secret-mode-active{overflow:hidden;}
 .secret-gate-core::after{right:0;border-left:1px solid rgba(125,211,252,.25);transform-origin:right center;}
 #secret-overlay.gate-open .secret-gate-core::before{transform:translateX(-108%) rotateY(15deg);}#secret-overlay.gate-open .secret-gate-core::after{transform:translateX(108%) rotateY(-15deg);}
 .secret-gate-content{position:relative;z-index:2;padding:24px;}.secret-gate-title{font-family:'Orbitron',sans-serif;font-size:15px;letter-spacing:2.7px;color:#e0f2fe;text-transform:uppercase;text-shadow:0 0 24px rgba(125,211,252,.75);}.secret-gate-sub{margin-top:12px;color:#93c5fd;font-size:13px;letter-spacing:.4px;}.secret-gate-dots{display:flex;justify-content:center;gap:7px;margin-top:18px}.secret-gate-dots span{width:7px;height:7px;border-radius:50%;background:#38bdf8;box-shadow:0 0 12px #38bdf8;animation:secretPulse 1.1s infinite}.secret-gate-dots span:nth-child(2){animation-delay:.18s}.secret-gate-dots span:nth-child(3){animation-delay:.36s}
-.secret-shell{position:relative;z-index:4;width:min(780px,94vw);max-height:min(86vh,780px);overflow:auto;border-radius:32px;background:linear-gradient(135deg,rgba(255,255,255,.095),rgba(255,255,255,.034));border:1px solid rgba(255,255,255,.17);box-shadow:0 32px 110px rgba(0,0,0,.60),inset 0 1px 0 rgba(255,255,255,.17);backdrop-filter:blur(21px);padding:36px 34px;text-align:left;animation:secretCardIn .65s cubic-bezier(.16,1,.3,1) forwards;}
-.secret-shell.shell-hidden{display:none;}.secret-shell::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(56,189,248,.06),transparent);opacity:0;pointer-events:none;animation:secretScan 2.2s .35s ease-out forwards;}
+.secret-shell{position:relative;z-index:4;width:min(780px,94vw);max-height:min(86vh,780px);overflow:auto;scrollbar-width:none;-ms-overflow-style:none;border-radius:32px;background:linear-gradient(135deg,rgba(255,255,255,.095),rgba(255,255,255,.034));border:1px solid rgba(255,255,255,.17);box-shadow:0 32px 110px rgba(0,0,0,.60),inset 0 1px 0 rgba(255,255,255,.17);backdrop-filter:blur(21px);padding:36px 34px;text-align:left;animation:secretCardIn .65s cubic-bezier(.16,1,.3,1) forwards;}
+.secret-shell.shell-hidden{display:none;}.secret-shell::-webkit-scrollbar{width:0;height:0;}.secret-shell::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(56,189,248,.06),transparent);opacity:0;pointer-events:none;animation:secretScan 2.2s .35s ease-out forwards;}
 .secret-topline{display:flex;align-items:center;gap:12px;margin-bottom:24px;}.secret-dot{width:10px;height:10px;border-radius:50%;background:#38bdf8;box-shadow:0 0 14px #38bdf8;animation:secretPulse 1.8s ease-in-out infinite;}.secret-kicker{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:4px;color:#7dd3fc;text-transform:uppercase;opacity:.88;}.secret-line{height:1px;background:linear-gradient(90deg,rgba(56,189,248,.78),transparent);margin:20px 0 24px;transform-origin:left;animation:secretGlowLine 1.2s ease forwards;}
 #secret-message{white-space:pre-line;color:#e5efff;font-size:17px;line-height:1.86;letter-spacing:.15px;text-shadow:0 0 22px rgba(56,189,248,.10);min-height:210px;}.secret-caret{display:inline-block;width:8px;height:1.25em;background:#38bdf8;margin-left:3px;vertical-align:-.2em;animation:secretPulse .8s infinite;}
 .secret-console-label{display:none;margin:28px 0 10px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:3px;color:#7dd3fc;text-transform:uppercase;}.secret-console-label.show{display:block;animation:secretCardIn .45s ease both;}
@@ -934,6 +941,7 @@ body.secret-mode-active{overflow:hidden;}
   function clean(v){return String(v||'').toLowerCase().replace(/\s+/g,'').trim();}
   function sleep(ms){return new Promise(function(resolve){setTimeout(resolve,ms);});}
   function vibrate(ms){try{if(navigator.vibrate)navigator.vibrate(ms||45);}catch(e){}}
+  function secretAutoScroll(){try{shell.scrollTop=shell.scrollHeight;}catch(e){}}
 
   function setUi(){
     const t=pack();
@@ -1023,10 +1031,12 @@ body.secret-mode-active{overflow:hidden;}
           else out+=chars[Math.floor(Math.random()*chars.length)];
         }
         message.textContent=prefix+out;
+        secretAutoScroll();
         await sleep(16);
       }
       prefix+=block+(b<blocks.length-1?'\n\n':'');
       message.textContent=prefix;
+      secretAutoScroll();
       await sleep(620);
     }
     if(run!==typingRun)return;
@@ -1036,6 +1046,7 @@ body.secret-mode-active{overflow:hidden;}
     if(run!==typingRun)return;
     inputLabel.classList.add('show');
     form.classList.add('show');
+    secretAutoScroll();
     input.focus();
   }
 
@@ -1064,6 +1075,7 @@ body.secret-mode-active{overflow:hidden;}
       if(stage!=='gate')return;
       gate.style.display='none';
       shell.classList.remove('shell-hidden');
+      secretAutoScroll();
       stage='typing';
       decodeText(introText[lang()]||introText.en);
     },1900);
@@ -1079,6 +1091,7 @@ body.secret-mode-active{overflow:hidden;}
     crushCard.classList.remove('show');
     void envelopeCard.offsetWidth;
     envelopeCard.classList.add('show');
+    secretAutoScroll();
     createSparks(42,true);
   }
 
@@ -1398,25 +1411,28 @@ applyLang(lang);
   const livesEl=document.getElementById('lives-display');
   const levelEl=document.getElementById('level-display');
   const bestEl=document.getElementById('best-display');
+
   let W,H,state='idle',score=0,lives=3,level=1,bestScore=parseInt(localStorage.getItem('bk_best')||0),scoreModalShown=false;
+  let animId=null,lastTime=0,elapsed=0,frameCount=0,nextBossAt=28,bossWarning=0,lastShot=0;
+
   const gameText={
-    en:{moveShoot:'← → move  |  SPACE shoot',start:'[ Press any key to start ]',pause:'⏸  PAUSED',pauseHint:'Press P or the Pause button to continue',over:'🛸  MISSION FAILED',score:'Score',newBest:'🏆 New record!',restart:'[ Press to restart ]',lvl:'LVL',best:'BEST',next:'NEXT LVL',resume:'▶ Resume',pauseBtn:'⏸ Pause'},
-    zh:{moveShoot:'← → 移动  |  SPACE 射击',start:'[ 按任意键开始 ]',pause:'⏸  暂停',pauseHint:'按 P 或“暂停”按钮继续',over:'🛸  任务结束',score:'分数',newBest:'🏆 新纪录！',restart:'[ 按下重新开始 ]',lvl:'等级',best:'最高分',next:'下一等级',resume:'▶ 继续',pauseBtn:'⏸ 暂停'},
-    kz:{moveShoot:'← → жылжыту  |  SPACE атқылау',start:'[ Бастау үшін кез келген түймені басыңыз ]',pause:'⏸  ПАУЗА',pauseHint:'Жалғастыру үшін P немесе «Пауза» батырмасын басыңыз',over:'🛸  МИССИЯ АЯҚТАЛДЫ',score:'Ұпай',newBest:'🏆 Жаңа рекорд!',restart:'[ Қайта бастау үшін басыңыз ]',lvl:'ДЕҢГЕЙ',best:'РЕКОРД',next:'КЕЛЕСІ ДЕҢГЕЙ',resume:'▶ Жалғасу',pauseBtn:'⏸ Пауза'}
+    en:{moveShoot:'↑ ↓ ← → / WASD move  |  SPACE shoot',start:'[ Press any key to start ]',pause:'⏸  PAUSED',pauseHint:'Press P or the Pause button to continue',over:'🛸  MISSION FAILED',score:'Score',newBest:'🏆 New record!',restart:'[ Press to restart ]',lvl:'LVL',best:'BEST',next:'NEXT LVL',resume:'▶ Resume',pauseBtn:'⏸ Pause',boss:'⚠ MASSIVE ASTEROID DETECTED',weapon:'WEAPON',shield:'SHIELD'},
+    zh:{moveShoot:'↑ ↓ ← → / WASD 移动  |  SPACE 射击',start:'[ 按任意键开始 ]',pause:'⏸  暂停',pauseHint:'按 P 或“暂停”按钮继续',over:'🛸  任务结束',score:'分数',newBest:'🏆 新纪录！',restart:'[ 按下重新开始 ]',lvl:'等级',best:'最高分',next:'下一等级',resume:'▶ 继续',pauseBtn:'⏸ 暂停',boss:'⚠ 检测到大型陨石',weapon:'武器',shield:'护盾'},
+    kz:{moveShoot:'↑ ↓ ← → / WASD жылжу  |  SPACE атқылау',start:'[ Бастау үшін кез келген түймені басыңыз ]',pause:'⏸  ПАУЗА',pauseHint:'Жалғастыру үшін P немесе «Пауза» батырмасын басыңыз',over:'🛸  МИССИЯ АЯҚТАЛДЫ',score:'Ұпай',newBest:'🏆 Жаңа рекорд!',restart:'[ Қайта бастау үшін басыңыз ]',lvl:'ДЕҢГЕЙ',best:'РЕКОРД',next:'КЕЛЕСІ ДЕҢГЕЙ',resume:'▶ Жалғасу',pauseBtn:'⏸ Пауза',boss:'⚠ ҮЛКЕН АСТЕРОИД АНЫҚТАЛДЫ',weapon:'ҚАРУ',shield:'ҚАЛҚАН'}
   };
   function gt(k){const l=window.__qainarLang||localStorage.getItem('lang')||'en';return (gameText[l]||gameText.en)[k];}
 
-  let animId=null,lastTime=0,elapsed=0,frameCount=0;
   const keys={};
   document.addEventListener('keydown',e=>{
     if(window.__isTypingField&&window.__isTypingField())return;
     keys[e.key]=true;
     if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key))e.preventDefault();
-    if(e.key===' '){shoot();}
+    if(e.key===' '){shoot(true);}
     if(e.key==='p'||e.key==='P')togglePause();
     if(state==='gameover'||state==='idle')startGame();
   },{passive:false});
   document.addEventListener('keyup',e=>{if(window.__isTypingField&&window.__isTypingField())return;keys[e.key]=false;});
+
   let touchLeft=false,touchRight=false,touchUp=false,touchDown=false;
   function bindTouchControl(id,onStart,onEnd){
     const el=document.getElementById(id);
@@ -1433,78 +1449,163 @@ applyLang(lang);
   bindTouchControl('touch-up',()=>touchUp=true,()=>touchUp=false);
   bindTouchControl('touch-down',()=>touchDown=true,()=>touchDown=false);
   canvas.addEventListener('click',()=>{if(state==='idle'||state==='gameover')startGame();});
+
   let rocket,bullets,asteroids,stars,particles,powerups;
+
   function initObjects(){
     W=canvas.offsetWidth;H=canvas.height=Math.min(420,W*0.55);canvas.width=W;
-    rocket={x:W/2,y:H-80,w:28,h:48,vx:0,vy:0,speed:260,invincible:0,thrust:0};
+    rocket={x:W/2,y:H-80,w:28,h:48,vx:0,vy:0,speed:260,invincible:0,thrust:0,weapon:1,weaponTimer:0};
     bullets=[];asteroids=[];stars=[];particles=[];powerups=[];
-    score=0;lives=3;level=1;elapsed=0;frameCount=0;scoreModalShown=false;
-    for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+0.2,sp:Math.random()*18+4,a:Math.random()});
+    score=0;lives=3;level=1;elapsed=0;frameCount=0;scoreModalShown=false;nextBossAt=28;bossWarning=0;lastShot=0;
+    for(let i=0;i<100;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+0.2,sp:Math.random()*18+4,a:Math.random()});
     updateUI();
   }
+
   function drawRocket(x,y,thrust,invincible){
     ctx.save();ctx.translate(x,y);
-    if(invincible>0&&Math.floor(invincible*10)%2===0)ctx.globalAlpha=0.4;
-    if(thrust>0){const fH=18+Math.random()*12;const g=ctx.createLinearGradient(0,10,0,10+fH);g.addColorStop(0,'rgba(251,146,60,0.9)');g.addColorStop(0.5,'rgba(239,68,68,0.7)');g.addColorStop(1,'rgba(239,68,68,0)');ctx.beginPath();ctx.moveTo(-6,10);ctx.lineTo(0,10+fH);ctx.lineTo(6,10);ctx.fillStyle=g;ctx.fill();}
+    if(invincible>0&&Math.floor(invincible*10)%2===0)ctx.globalAlpha=0.45;
+    if(invincible>0){
+      ctx.beginPath();ctx.arc(0,0,30+Math.sin(performance.now()/80)*2,0,Math.PI*2);
+      ctx.strokeStyle='rgba(56,189,248,0.62)';ctx.lineWidth=2;ctx.stroke();
+    }
+    if(thrust>0){
+      const fH=18+Math.random()*12+rocket.weapon*1.8;
+      const g=ctx.createLinearGradient(0,10,0,10+fH);
+      g.addColorStop(0,'rgba(251,146,60,0.95)');g.addColorStop(0.5,'rgba(239,68,68,0.7)');g.addColorStop(1,'rgba(239,68,68,0)');
+      ctx.beginPath();ctx.moveTo(-7,10);ctx.lineTo(0,10+fH);ctx.lineTo(7,10);ctx.fillStyle=g;ctx.fill();
+    }
     ctx.beginPath();ctx.moveTo(0,-24);ctx.lineTo(12,12);ctx.lineTo(8,18);ctx.lineTo(-8,18);ctx.lineTo(-12,12);ctx.closePath();
     const bg=ctx.createLinearGradient(-12,-24,12,18);bg.addColorStop(0,'#e2e8f0');bg.addColorStop(1,'#94a3b8');ctx.fillStyle=bg;ctx.fill();ctx.strokeStyle='rgba(56,189,248,0.6)';ctx.lineWidth=1;ctx.stroke();
     ctx.beginPath();ctx.moveTo(0,-24);ctx.lineTo(8,-8);ctx.lineTo(-8,-8);ctx.closePath();ctx.fillStyle='#38bdf8';ctx.fill();
     ctx.beginPath();ctx.moveTo(-12,12);ctx.lineTo(-22,22);ctx.lineTo(-10,18);ctx.closePath();ctx.fillStyle='#2563eb';ctx.fill();
     ctx.beginPath();ctx.moveTo(12,12);ctx.lineTo(22,22);ctx.lineTo(10,18);ctx.closePath();ctx.fillStyle='#2563eb';ctx.fill();
     ctx.beginPath();ctx.arc(0,-6,5,0,Math.PI*2);ctx.fillStyle='rgba(125,211,252,0.7)';ctx.fill();ctx.strokeStyle='rgba(56,189,248,0.9)';ctx.lineWidth=1;ctx.stroke();
-    ctx.globalAlpha=1;ctx.restore();
+    if(rocket.weapon>1){
+      ctx.fillStyle='#fbbf24';ctx.font='bold 10px Orbitron,sans-serif';ctx.textAlign='center';ctx.fillText('W'+rocket.weapon,0,32);
+    }
+    ctx.restore();
   }
+
+  function makeRockPoints(r){
+    const nPts=8+Math.floor(Math.random()*5),pts=[];
+    for(let i=0;i<nPts;i++){const ang=(i/nPts)*Math.PI*2,rr=r*(0.66+Math.random()*0.42);pts.push([Math.cos(ang)*rr,Math.sin(ang)*rr]);}
+    return pts;
+  }
+
   function drawAsteroid(a){
     ctx.save();ctx.translate(a.x,a.y);ctx.rotate(a.rot);ctx.beginPath();
     for(let i=0;i<a.pts.length;i++){const p=a.pts[i];if(i===0)ctx.moveTo(p[0],p[1]);else ctx.lineTo(p[0],p[1]);}
     ctx.closePath();
     const ag=ctx.createRadialGradient(-a.r*0.25,-a.r*0.25,0,0,0,a.r);
-    ag.addColorStop(0,a.maxHp>2?'#94a3b8':'#64748b');
-    ag.addColorStop(1,a.maxHp>2?'#1f2937':'#334155');
+    ag.addColorStop(0,a.boss?'#fed7aa':a.maxHp>2?'#94a3b8':'#64748b');
+    ag.addColorStop(1,a.boss?'#7c2d12':a.maxHp>2?'#1f2937':'#334155');
     ctx.fillStyle=ag;ctx.fill();
-    ctx.strokeStyle=a.maxHp>2?'rgba(251,191,36,0.46)':'rgba(148,163,184,0.5)';
-    ctx.lineWidth=a.maxHp>2?2:1;ctx.stroke();
+    ctx.strokeStyle=a.boss?'rgba(248,113,113,0.85)':a.maxHp>2?'rgba(251,191,36,0.46)':'rgba(148,163,184,0.5)';
+    ctx.lineWidth=a.boss?3:a.maxHp>2?2:1;ctx.stroke();
     if(a.maxHp>1){
       ctx.rotate(-a.rot);
       const ratio=Math.max(0,a.hp/a.maxHp);
-      ctx.beginPath();
-      ctx.arc(0,0,a.r+5,-Math.PI/2,-Math.PI/2+Math.PI*2*ratio);
-      ctx.strokeStyle=ratio>0.5?'rgba(251,191,36,0.85)':'rgba(248,113,113,0.9)';
-      ctx.lineWidth=3;
-      ctx.stroke();
+      ctx.beginPath();ctx.arc(0,0,a.r+6,-Math.PI/2,-Math.PI/2+Math.PI*2*ratio);
+      ctx.strokeStyle=a.boss?'rgba(248,113,113,0.95)':ratio>0.5?'rgba(251,191,36,0.85)':'rgba(248,113,113,0.9)';
+      ctx.lineWidth=a.boss?5:3;ctx.stroke();
     }
     ctx.restore();
   }
+
   function makeAsteroid(){
     const big=Math.random()<Math.min(0.12+level*0.025,0.34);
     const r=big?(30+Math.random()*18+level*1.4):(14+Math.random()*16+level*1.4);
     const x=Math.random()*(W-r*2)+r,y=-r-10;
     const vx=(Math.random()-0.5)*(big?26+level*5:42+level*8);
     const vy=(big?42:62)+Math.random()*(big?28:42)+level*(big?6:10);
-    const nPts=8+Math.floor(Math.random()*5),pts=[];
-    for(let i=0;i<nPts;i++){const ang=(i/nPts)*Math.PI*2,rr=r*(0.66+Math.random()*0.42);pts.push([Math.cos(ang)*rr,Math.sin(ang)*rr]);}
     const hp=Math.max(1,Math.ceil((r-12)/14)+(level>6?1:0));
-    return{x,y,vx,vy,r,rot:0,rotSpeed:(Math.random()-0.5)*(big?1.4:2.6),pts,hp,maxHp:hp,big};
+    return{x,y,vx,vy,r,rot:0,rotSpeed:(Math.random()-0.5)*(big?1.4:2.6),pts:makeRockPoints(r),hp,maxHp:hp,big};
   }
-  function makePowerup(){return{x:Math.random()*(W-40)+20,y:-20,vy:50,type:['shield','fuel'][Math.floor(Math.random()*2)],r:12,angle:0};}
-  function shoot(){if(state!=='playing')return;bullets.push({x:rocket.x,y:rocket.y-24,vy:-480,r:3});particles.push({x:rocket.x,y:rocket.y-24,vx:(Math.random()-0.5)*40,vy:Math.random()*30,life:0.3,maxLife:0.3,r:2,color:'#67e8f9'});}
-  function spawnParticles(x,y,n,color){for(let i=0;i<n;i++){const ang=Math.random()*Math.PI*2,spd=40+Math.random()*80;particles.push({x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,life:0.6+Math.random()*0.4,maxLife:1,r:2+Math.random()*4,color});}}
+
+  function makeBossAsteroid(){
+    const r=Math.min(78,54+level*2.5);
+    const hp=18+level*4;
+    return{x:W/2,y:-r-20,vx:(Math.random()<.5?-1:1)*(18+level*2),vy:22+level*2,r,rot:0,rotSpeed:.55,pts:makeRockPoints(r),hp,maxHp:hp,big:true,boss:true};
+  }
+
+  function makePowerup(){
+    const types=['shield','bonus','weapon','life'];
+    const type=types[Math.floor(Math.random()*types.length)];
+    return{x:Math.random()*(W-40)+20,y:-20,vy:50,type,r:13,angle:0};
+  }
+
+  function addBullet(x,y,vx,vy,dmg,color,r=3){
+    bullets.push({x,y,vx,vy,dmg,r,color});
+  }
+
+  function shoot(manual=false){
+    if(state!=='playing')return;
+    const now=performance.now();
+    if(manual && now-lastShot<110)return;
+    lastShot=now;
+    const w=rocket.weapon;
+    if(w===1){
+      addBullet(rocket.x,rocket.y-25,0,-500,1,'#67e8f9',3);
+    }else if(w===2){
+      addBullet(rocket.x-7,rocket.y-24,-20,-520,1,'#67e8f9',3);
+      addBullet(rocket.x+7,rocket.y-24,20,-520,1,'#67e8f9',3);
+    }else if(w===3){
+      addBullet(rocket.x,rocket.y-25,0,-560,1,'#fbbf24',3.5);
+      addBullet(rocket.x-10,rocket.y-20,-80,-520,1,'#67e8f9',3);
+      addBullet(rocket.x+10,rocket.y-20,80,-520,1,'#67e8f9',3);
+    }else{
+      addBullet(rocket.x,rocket.y-28,0,-640,2,'#fbbf24',4.5);
+      addBullet(rocket.x-10,rocket.y-22,-60,-560,1,'#67e8f9',3);
+      addBullet(rocket.x+10,rocket.y-22,60,-560,1,'#67e8f9',3);
+    }
+    particles.push({x:rocket.x,y:rocket.y-24,vx:(Math.random()-0.5)*40,vy:Math.random()*30,life:0.28,maxLife:0.28,r:2,color:'#67e8f9'});
+  }
+
+  function spawnParticles(x,y,n,color){
+    for(let i=0;i<n;i++){const ang=Math.random()*Math.PI*2,spd=45+Math.random()*120;particles.push({x,y,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,life:0.55+Math.random()*0.45,maxLife:1,r:2+Math.random()*4,color});}
+  }
   function circle(ax,ay,ar,bx,by,br){return Math.hypot(ax-bx,ay-by)<ar+br;}
-  function updateUI(){scoreEl.textContent=score;levelEl.textContent=level;const h=['❤️','❤️','❤️'];livesEl.textContent=h.slice(0,Math.max(0,lives)).join('')||'💀';if(score>bestScore){bestScore=score;localStorage.setItem('bk_best',bestScore);}bestEl.textContent=bestScore;}
+  function updateUI(){scoreEl.textContent=score;levelEl.textContent=level;const h=['❤️','❤️','❤️','❤️','❤️'];livesEl.textContent=h.slice(0,Math.max(0,lives)).join('')||'💀';if(score>bestScore){bestScore=score;localStorage.setItem('bk_best',bestScore);}bestEl.textContent=bestScore;}
+
   function drawIdle(){ctx.fillStyle='rgba(2,8,23,0.72)';ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(56,189,248,0.92)';ctx.font=`bold ${Math.min(26,W*0.055)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText('🚀  BAIKONUR RUN',W/2,H/2-40);ctx.fillStyle='rgba(203,213,225,0.85)';ctx.font=`${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText(gt('moveShoot'),W/2,H/2+4);ctx.fillStyle='rgba(56,189,248,0.75)';ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;ctx.fillText(gt('start'),W/2,H/2+36);}
   function drawPaused(){ctx.fillStyle='rgba(2,8,23,0.6)';ctx.fillRect(0,0,W,H);ctx.fillStyle='white';ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText(gt('pause'),W/2,H/2);ctx.font=`${Math.min(13,W*0.03)}px DM Sans,sans-serif`;ctx.fillStyle='rgba(148,163,184,0.9)';ctx.fillText(gt('pauseHint'),W/2,H/2+30);}
   function drawGameOver(){ctx.fillStyle='rgba(2,8,23,0.8)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#f87171';ctx.font=`bold ${Math.min(28,W*0.06)}px Orbitron,sans-serif`;ctx.textAlign='center';ctx.fillText(gt('over'),W/2,H/2-50);ctx.fillStyle='white';ctx.font=`bold ${Math.min(20,W*0.045)}px Orbitron,sans-serif`;ctx.fillText(`${gt('score')}: ${score}`,W/2,H/2);if(score>=bestScore&&score>0){ctx.fillStyle='#fbbf24';ctx.font=`bold ${Math.min(14,W*0.032)}px DM Sans,sans-serif`;ctx.fillText(gt('newBest'),W/2,H/2+32);}ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(13,W*0.028)}px Orbitron,sans-serif`;ctx.fillText(gt('restart'),W/2,H/2+62);}
+
+  function endGame(){
+    state='gameover';
+    const finalScore=score;
+    if(!scoreModalShown){
+      scoreModalShown=true;
+      setTimeout(()=>{if(window.__qainarAutoScore)window.__qainarAutoScore('baikonur_run',finalScore);else if(window.__qainarOpenScore)window.__qainarOpenScore('baikonur_run',finalScore);},650);
+    }
+  }
+
   function loop(ts){
-    animId=requestAnimationFrame(loop);const dt=Math.min((ts-lastTime)/1000,0.05);lastTime=ts;frameCount++;
+    animId=requestAnimationFrame(loop);
+    const dt=Math.min((ts-lastTime)/1000,0.05);lastTime=ts;frameCount++;
     if(canvas.offsetWidth!==W){W=canvas.width=canvas.offsetWidth;H=canvas.height=Math.min(420,W*0.55);}
     ctx.fillStyle='#020817';ctx.fillRect(0,0,W,H);
-    stars.forEach(s=>{s.y+=s.sp*dt;if(s.y>H+4)s.y=-4;const glow=0.3+0.7*Math.abs(Math.sin(ts*0.001*s.a+s.a*5));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,210,255,${glow*0.8})`;ctx.fill();});
+    const bgHue=(level%5)*16;
+    const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,`hsla(${210+bgHue},80%,9%,1)`);bg.addColorStop(1,'#020817');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    stars.forEach(s=>{s.y+=s.sp*dt;if(s.y>H+4){s.y=-4;s.x=Math.random()*W;}const glow=0.3+0.7*Math.abs(Math.sin(ts*0.001*s.a+s.a*5));ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(180,210,255,${glow*0.8})`;ctx.fill();});
+
     if(state==='idle'){drawIdle();return;}
     if(state==='gameover'){drawGameOver();return;}
+
     if(state==='playing'){
-      elapsed+=dt;level=Math.min(10,1+Math.floor(elapsed/15));
-      if(frameCount%Math.round(60*Math.max(0.4,2.5-level*0.18))===0)asteroids.push(makeAsteroid());
-      if(Math.random()<0.001+level*0.0003)powerups.push(makePowerup());
+      elapsed+=dt;level=Math.min(12,1+Math.floor(elapsed/15));
+      if(rocket.weaponTimer>0){rocket.weaponTimer-=dt;if(rocket.weaponTimer<=0)rocket.weapon=1;}
+      if(bossWarning>0)bossWarning-=dt;
+
+      const spawnEvery=Math.round(60*Math.max(0.35,2.4-level*0.17));
+      if(frameCount%spawnEvery===0)asteroids.push(makeAsteroid());
+      if(elapsed>nextBossAt && !asteroids.some(a=>a.boss)){
+        asteroids.push(makeBossAsteroid());
+        bossWarning=3.2;
+        nextBossAt+=40;
+      }
+      if(Math.random()<0.002+level*0.00045)powerups.push(makePowerup());
+
       rocket.thrust=0;
       const mL=keys['ArrowLeft']||keys['a']||keys['A']||touchLeft;
       const mR=keys['ArrowRight']||keys['d']||keys['D']||touchRight;
@@ -1519,24 +1620,96 @@ applyLang(lang);
       rocket.x=Math.max(rocket.w/2,Math.min(W-rocket.w/2,rocket.x));
       rocket.y=Math.max(rocket.h/2+36,Math.min(H-rocket.h/2-10,rocket.y));
       if(rocket.invincible>0)rocket.invincible-=dt;
-      if(frameCount%Math.round(60*0.45)===0)shoot();
-      bullets=bullets.filter(b=>{b.y+=b.vy*dt;if(b.y<-20)return false;ctx.save();ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);const bg=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*3);bg.addColorStop(0,'rgba(125,211,252,1)');bg.addColorStop(1,'rgba(56,189,248,0)');ctx.fillStyle=bg;ctx.fill();ctx.restore();return true;});
-      asteroids=asteroids.filter(a=>{a.y+=a.vy*dt;a.x+=a.vx*dt;a.rot+=a.rotSpeed*dt;if(a.y>H+a.r+10)return false;let hit=false;bullets=bullets.filter(b=>{if(!hit&&circle(b.x,b.y,b.r,a.x,a.y,a.r)){hit=true;a.hp--;a.vy+=6;spawnParticles(b.x,b.y,a.hp>0?7:10,a.hp>0?'#94a3b8':'#fbbf24');return false;}return true;});if(a.hp<=0){score+=Math.round(8+level*3+a.r*0.75+a.maxHp*6);spawnParticles(a.x,a.y,a.big?24:14,a.big?'#fbbf24':'#f59e0b');updateUI();return false;}if(rocket.invincible<=0&&circle(rocket.x,rocket.y,18,a.x,a.y,a.r-4)){lives--;rocket.invincible=2.0;spawnParticles(rocket.x,rocket.y,20,'#f87171');updateUI();if(lives<=0){state='gameover';const finalScore=score;if(!scoreModalShown){scoreModalShown=true;setTimeout(()=>{if(window.__qainarAutoScore)window.__qainarAutoScore('baikonur_run',finalScore);else if(window.__qainarOpenScore)window.__qainarOpenScore('baikonur_run',finalScore);},650);}return false;}}drawAsteroid(a);return true;});
-      powerups=powerups.filter(p=>{p.y+=p.vy*dt;p.angle+=2*dt;if(p.y>H+30)return false;if(circle(p.x,p.y,p.r,rocket.x,rocket.y,20)){if(p.type==='shield')rocket.invincible=4;if(p.type==='fuel')score+=50;spawnParticles(p.x,p.y,10,p.type==='shield'?'#67e8f9':'#fbbf24');updateUI();return false;}ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle);const pc=p.type==='shield'?'rgba(56,189,248,0.9)':'rgba(251,191,36,0.9)';ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fillStyle=pc.replace('0.9','0.2');ctx.fill();ctx.strokeStyle=pc;ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='white';ctx.font=`${p.r}px sans-serif`;ctx.textAlign='center';ctx.fillText(p.type==='shield'?'🛡':'⭐',0,p.r*0.35);ctx.restore();return true;});
-      particles=particles.filter(p=>{p.life-=dt;if(p.life<=0)return false;p.x+=p.vx*dt;p.y+=p.vy*dt;const alpha=p.life/p.maxLife;ctx.beginPath();ctx.arc(p.x,p.y,p.r*alpha,0,Math.PI*2);ctx.fillStyle=p.color.replace(')',`,${alpha})`).replace('rgb','rgba');ctx.fill();return true;});
+      if(frameCount%Math.round(60*(rocket.weapon>1?0.32:0.45))===0)shoot(false);
+
+      bullets=bullets.filter(b=>{
+        b.x+=b.vx*dt;b.y+=b.vy*dt;
+        if(b.y<-30||b.x<-30||b.x>W+30)return false;
+        ctx.save();ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+        const bg=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*3.4);bg.addColorStop(0,b.color);bg.addColorStop(1,'rgba(56,189,248,0)');
+        ctx.fillStyle=bg;ctx.fill();ctx.restore();return true;
+      });
+
+      asteroids=asteroids.filter(a=>{
+        a.y+=a.vy*dt;a.x+=a.vx*dt;a.rot+=a.rotSpeed*dt;
+        if(a.x<a.r || a.x>W-a.r)a.vx*=-1;
+        if(a.y>H+a.r+24){
+          if(a.boss){lives--;updateUI();if(lives<=0)endGame();}
+          return false;
+        }
+        let hit=false;
+        bullets=bullets.filter(b=>{
+          if(!hit&&circle(b.x,b.y,b.r,a.x,a.y,a.r)){
+            hit=true;a.hp-=b.dmg;a.vy+=a.boss?1.5:6;
+            spawnParticles(b.x,b.y,a.hp>0?8:14,a.hp>0?'#94a3b8':'#fbbf24');
+            return false;
+          }
+          return true;
+        });
+        if(a.hp<=0){
+          score+=Math.round((a.boss?260:8)+level*4+a.r*0.9+a.maxHp*7);
+          if(a.boss){rocket.weapon=Math.min(4,rocket.weapon+1);rocket.weaponTimer=22;}
+          spawnParticles(a.x,a.y,a.boss?52:a.big?24:14,a.boss?'#fb7185':a.big?'#fbbf24':'#f59e0b');
+          updateUI();return false;
+        }
+        if(rocket.invincible<=0&&circle(rocket.x,rocket.y,18,a.x,a.y,a.r-4)){
+          lives--;rocket.invincible=2.0;spawnParticles(rocket.x,rocket.y,24,'#f87171');updateUI();
+          if(lives<=0){endGame();return false;}
+        }
+        drawAsteroid(a);return true;
+      });
+
+      powerups=powerups.filter(p=>{
+        p.y+=p.vy*dt;p.angle+=2*dt;if(p.y>H+30)return false;
+        if(circle(p.x,p.y,p.r,rocket.x,rocket.y,20)){
+          if(p.type==='shield')rocket.invincible=4.5;
+          if(p.type==='bonus')score+=150;
+          if(p.type==='weapon'){rocket.weapon=Math.min(4,rocket.weapon+1);rocket.weaponTimer=20;}
+          if(p.type==='life')lives=Math.min(5,lives+1);
+          spawnParticles(p.x,p.y,16,p.type==='shield'?'#67e8f9':p.type==='weapon'?'#fbbf24':p.type==='life'?'#f87171':'#a78bfa');
+          updateUI();return false;
+        }
+        ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.angle);
+        const color=p.type==='shield'?'#38bdf8':p.type==='weapon'?'#fbbf24':p.type==='life'?'#f87171':'#a78bfa';
+        ctx.beginPath();ctx.arc(0,0,p.r,0,Math.PI*2);ctx.fillStyle=color+'33';ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke();
+        ctx.fillStyle='white';ctx.font=`${p.r+1}px sans-serif`;ctx.textAlign='center';
+        ctx.fillText(p.type==='shield'?'🛡':p.type==='weapon'?'⚡':p.type==='life'?'❤️':'⭐',0,p.r*0.35);ctx.restore();return true;
+      });
+
+      particles=particles.filter(p=>{
+        p.life-=dt;if(p.life<=0)return false;p.x+=p.vx*dt;p.y+=p.vy*dt;
+        const alpha=Math.max(0,p.life/p.maxLife);ctx.save();ctx.globalAlpha=alpha;ctx.beginPath();ctx.arc(p.x,p.y,p.r*alpha,0,Math.PI*2);ctx.fillStyle=p.color;ctx.fill();ctx.restore();return true;
+      });
+
       drawRocket(rocket.x,rocket.y,rocket.thrust,rocket.invincible);
-      ctx.fillStyle='rgba(2,8,23,0.4)';ctx.fillRect(0,0,W,32);ctx.fillStyle='rgba(56,189,248,0.8)';ctx.font=`bold ${Math.min(11,W*0.022)}px Orbitron,sans-serif`;ctx.textAlign='left';ctx.fillText(`${gt('lvl')} ${level}`,10,20);ctx.textAlign='right';ctx.fillStyle='#fbbf24';ctx.fillText(`${gt('best')} ${bestScore}`,W-10,20);
-      const prog=(elapsed%15)/15;ctx.fillStyle='rgba(255,255,255,0.08)';ctx.fillRect(W*0.25,12,W*0.5,6);ctx.fillStyle='rgba(56,189,248,0.7)';ctx.fillRect(W*0.25,12,W*0.5*prog,6);ctx.fillStyle='rgba(148,163,184,0.6)';ctx.font=`${Math.min(9,W*0.019)}px DM Sans,sans-serif`;ctx.textAlign='center';ctx.fillText(gt('next'),W/2,11);
+
+      ctx.fillStyle='rgba(2,8,23,0.45)';ctx.fillRect(0,0,W,42);
+      ctx.fillStyle='rgba(56,189,248,0.88)';ctx.font=`bold ${Math.min(11,W*0.022)}px Orbitron,sans-serif`;ctx.textAlign='left';ctx.fillText(`${gt('lvl')} ${level}`,10,18);
+      ctx.fillStyle='#fbbf24';ctx.fillText(`${gt('weapon')} ${rocket.weapon}`,10,35);
+      ctx.textAlign='right';ctx.fillStyle='#fbbf24';ctx.fillText(`${gt('best')} ${bestScore}`,W-10,18);
+      if(rocket.invincible>0){ctx.fillStyle='#67e8f9';ctx.fillText(`${gt('shield')} ${Math.ceil(rocket.invincible)}`,W-10,35);}
+      const prog=(elapsed%15)/15;ctx.fillStyle='rgba(255,255,255,0.08)';ctx.fillRect(W*0.25,14,W*0.5,6);ctx.fillStyle='rgba(56,189,248,0.7)';ctx.fillRect(W*0.25,14,W*0.5*prog,6);ctx.fillStyle='rgba(148,163,184,0.65)';ctx.font=`${Math.min(9,W*0.019)}px DM Sans,sans-serif`;ctx.textAlign='center';ctx.fillText(gt('next'),W/2,12);
+      if(bossWarning>0){
+        ctx.fillStyle=`rgba(248,113,113,${0.55+Math.sin(ts/80)*0.25})`;
+        ctx.font=`bold ${Math.min(18,W*0.04)}px Orbitron,sans-serif`;ctx.textAlign='center';
+        ctx.fillText(gt('boss'),W/2,68);
+      }
+      const boss=asteroids.find(a=>a.boss);
+      if(boss){
+        const ratio=Math.max(0,boss.hp/boss.maxHp);
+        ctx.fillStyle='rgba(255,255,255,0.08)';ctx.fillRect(W*0.20,H-18,W*0.60,7);
+        ctx.fillStyle='rgba(248,113,113,0.85)';ctx.fillRect(W*0.20,H-18,W*0.60*ratio,7);
+      }
     }
     if(state==='paused')drawPaused();
   }
+
   window.startGame=function(){if(state==='playing')return;initObjects();state='playing';lastTime=performance.now();if(!animId)animId=requestAnimationFrame(loop);};
   window.restartGame=function(){state='idle';initObjects();state='playing';lastTime=performance.now();};
   window.togglePause=function(){if(state==='playing')state='paused';else if(state==='paused')state='playing';const btn=document.querySelector('[data-i18n="btn_pause"]');if(btn)btn.textContent=state==='paused'?gt('resume'):gt('pauseBtn');};
   initObjects();lastTime=performance.now();animId=requestAnimationFrame(loop);
 })();
 </script>
-
 
 
 <!-- ══════════ SPACE FORMULA CHALLENGE GAME ══════════ -->
@@ -1554,47 +1727,11 @@ applyLang(lang);
   const fbEl=document.getElementById('formula-feedback');
   const fillEl=document.getElementById('formula-progress-fill');
   let W=0,H=420,stars=[],particles=[];
-  let index=0,score=0,fuel=0,locked=false,finished=false,scoreModalShown=false;
+  let index=0,score=0,fuel=0,locked=false,finished=false,scoreModalShown=false,combo=0;
+  let activeQuestions=[];
   let best=parseInt(localStorage.getItem('space_formula_best')||'0',10);
 
-  const questionBank={
-    en:[
-      {q:'Which formula gives orbital speed for a circular orbit?', sub:'For a satellite around a planet with mass M and orbital radius r.', a:'v = √(GM / r)', opts:['v = √(GM / r)','v = GM r²','v = mgh','v = F / m'], exp:'Correct: circular orbital speed comes from gravity providing centripetal force.'},
-      {q:'Newton’s second law is...', sub:'The basic law connecting force, mass, and acceleration.', a:'F = ma', opts:['F = ma','E = mc²','p = mv²','W = mg / h'], exp:'Yes. Net force equals mass times acceleration.'},
-      {q:'Kinetic energy of a moving body is...', sub:'Used for spacecraft speed and impact energy.', a:'Eₖ = 1/2 mv²', opts:['Eₖ = 1/2 mv²','Eₖ = mgh','Eₖ = Fd / t','Eₖ = p / v'], exp:'Right. Kinetic energy grows with the square of velocity.'},
-      {q:'Gravitational potential energy near Earth is...', sub:'Approximation for small heights near the surface.', a:'Eₚ = mgh', opts:['Eₚ = mgh','Eₚ = 1/2 kx²','Eₚ = mv','Eₚ = GM / v'], exp:'Correct. mgh is used close to Earth’s surface.'},
-      {q:'Momentum is...', sub:'Important for rocket motion and collisions.', a:'p = mv', opts:['p = mv','p = ma','p = F / t','p = v / m'], exp:'Correct. Momentum equals mass times velocity.'},
-      {q:'Rocket thrust mainly follows...', sub:'Exhaust goes one way, the rocket goes the other.', a:'Conservation of momentum', opts:['Conservation of momentum','Ohm’s law','Snell’s law','Archimedes principle'], exp:'Yes. Rocket motion is a momentum conservation effect.'},
-      {q:'Centripetal acceleration is...', sub:'Acceleration toward the center of circular motion.', a:'a = v² / r', opts:['a = v² / r','a = vr','a = r / v²','a = mg'], exp:'Correct. Circular motion needs inward acceleration v²/r.'},
-      {q:'Work done by a constant force is...', sub:'Force acting through a distance in the same direction.', a:'W = Fd', opts:['W = Fd','W = F / d','W = mv','W = gh'], exp:'Correct. Work equals force times displacement.'},
-      {q:'Escape velocity formula is...', sub:'Minimum speed to escape a planet without more thrust.', a:'v = √(2GM / r)', opts:['v = √(2GM / r)','v = √(GM / r)','v = GMm / r²','v = 2πr / T'], exp:'Correct. Escape velocity is √2 times circular orbital speed at the same radius.'},
-      {q:'Angular velocity relation is...', sub:'Used in rotation and orbital period problems.', a:'ω = 2π / T', opts:['ω = 2π / T','ω = T / 2π','ω = mv','ω = Fr'], exp:'Correct. One full rotation is 2π radians over period T.'}
-    ],
-    zh:[
-      {q:'圆形轨道的轨道速度公式是？', sub:'卫星绕质量为 M 的天体，在轨道半径 r 上运动。', a:'v = √(GM / r)', opts:['v = √(GM / r)','v = GM r²','v = mgh','v = F / m'], exp:'正确：万有引力提供向心力，所以得到圆轨道速度公式。'},
-      {q:'牛顿第二定律是？', sub:'连接力、质量和加速度的基本定律。', a:'F = ma', opts:['F = ma','E = mc²','p = mv²','W = mg / h'], exp:'对。合力等于质量乘以加速度。'},
-      {q:'运动物体的动能公式是？', sub:'用于描述飞船速度和撞击能量。', a:'Eₖ = 1/2 mv²', opts:['Eₖ = 1/2 mv²','Eₖ = mgh','Eₖ = Fd / t','Eₖ = p / v'], exp:'正确。动能和速度的平方成正比。'},
-      {q:'地球附近的重力势能近似公式是？', sub:'适用于离地面高度不大的情况。', a:'Eₚ = mgh', opts:['Eₚ = mgh','Eₚ = 1/2 kx²','Eₚ = mv','Eₚ = GM / v'], exp:'正确。在地球表面附近常用 mgh。'},
-      {q:'动量公式是？', sub:'火箭运动和碰撞问题里很重要。', a:'p = mv', opts:['p = mv','p = ma','p = F / t','p = v / m'], exp:'正确。动量等于质量乘以速度。'},
-      {q:'火箭推进主要遵循什么原理？', sub:'喷气向一个方向，火箭向相反方向运动。', a:'动量守恒', opts:['动量守恒','欧姆定律','折射定律','阿基米德原理'], exp:'对。火箭运动本质上是动量守恒的结果。'},
-      {q:'向心加速度公式是？', sub:'圆周运动中指向圆心的加速度。', a:'a = v² / r', opts:['a = v² / r','a = vr','a = r / v²','a = mg'], exp:'正确。圆周运动需要向心加速度 v²/r。'},
-      {q:'恒力做功公式是？', sub:'力和位移方向相同时。', a:'W = Fd', opts:['W = Fd','W = F / d','W = mv','W = gh'], exp:'正确。功等于力乘以位移。'},
-      {q:'逃逸速度公式是？', sub:'不再继续推进也能逃离天体引力所需的最小速度。', a:'v = √(2GM / r)', opts:['v = √(2GM / r)','v = √(GM / r)','v = GMm / r²','v = 2πr / T'], exp:'正确。同一半径处，逃逸速度是圆轨道速度的 √2 倍。'},
-      {q:'角速度与周期的关系是？', sub:'用于旋转和轨道周期问题。', a:'ω = 2π / T', opts:['ω = 2π / T','ω = T / 2π','ω = mv','ω = Fr'], exp:'正确。一圈是 2π 弧度，用周期 T 除即可。'}
-    ],
-    kz:[
-      {q:'Дөңгелек орбитадағы жылдамдық формуласы қайсы?', sub:'Массасы M планетаның айналасында r радиуста қозғалатын серік үшін.', a:'v = √(GM / r)', opts:['v = √(GM / r)','v = GM r²','v = mgh','v = F / m'], exp:'Дұрыс: тартылыс күші центрге тартқыш күш рөлін атқарады.'},
-      {q:'Ньютонның екінші заңы...', sub:'Күш, масса және үдеуді байланыстыратын негізгі заң.', a:'F = ma', opts:['F = ma','E = mc²','p = mv²','W = mg / h'], exp:'Дұрыс. Қорытқы күш масса мен үдеудің көбейтіндісіне тең.'},
-      {q:'Қозғалыстағы дененің кинетикалық энергиясы...', sub:'Ғарыш кемесінің жылдамдығы мен соқтығысу энергиясында қолданылады.', a:'Eₖ = 1/2 mv²', opts:['Eₖ = 1/2 mv²','Eₖ = mgh','Eₖ = Fd / t','Eₖ = p / v'], exp:'Дұрыс. Кинетикалық энергия жылдамдықтың квадратына тәуелді.'},
-      {q:'Жер маңындағы ауырлық потенциалдық энергиясы...', sub:'Биіктік аз болған кезде қолданылатын жуық формула.', a:'Eₚ = mgh', opts:['Eₚ = mgh','Eₚ = 1/2 kx²','Eₚ = mv','Eₚ = GM / v'], exp:'Дұрыс. Жер бетіне жақын жерде mgh қолданылады.'},
-      {q:'Импульс формуласы...', sub:'Зымыран қозғалысы мен соқтығыстарда маңызды.', a:'p = mv', opts:['p = mv','p = ma','p = F / t','p = v / m'], exp:'Дұрыс. Импульс масса мен жылдамдықтың көбейтіндісіне тең.'},
-      {q:'Зымыран тартуы негізінен қандай заңға сүйенеді?', sub:'Газ бір жаққа шығады, зымыран кері бағытта қозғалады.', a:'Импульстің сақталуы', opts:['Импульстің сақталуы','Ом заңы','Сыну заңы','Архимед принципі'], exp:'Дұрыс. Зымыран қозғалысы импульстің сақталуына негізделеді.'},
-      {q:'Центрге тартқыш үдеу...', sub:'Шеңберлік қозғалыста центрге бағытталған үдеу.', a:'a = v² / r', opts:['a = v² / r','a = vr','a = r / v²','a = mg'], exp:'Дұрыс. Шеңберлік қозғалысқа v²/r үдеуі қажет.'},
-      {q:'Тұрақты күштің жұмысы...', sub:'Күш пен орын ауыстыру бір бағытта болса.', a:'W = Fd', opts:['W = Fd','W = F / d','W = mv','W = gh'], exp:'Дұрыс. Жұмыс күш пен орын ауыстырудың көбейтіндісіне тең.'},
-      {q:'Қашу жылдамдығы формуласы...', sub:'Планетадан қосымша тартусыз қашу үшін ең аз жылдамдық.', a:'v = √(2GM / r)', opts:['v = √(2GM / r)','v = √(GM / r)','v = GMm / r²','v = 2πr / T'], exp:'Дұрыс. Қашу жылдамдығы сол радиустағы орбиталық жылдамдықтан √2 есе үлкен.'},
-      {q:'Бұрыштық жылдамдық пен период байланысы...', sub:'Айналу және орбиталық период есептерінде қолданылады.', a:'ω = 2π / T', opts:['ω = 2π / T','ω = T / 2π','ω = mv','ω = Fr'], exp:'Дұрыс. Бір толық айналым 2π радиан, оны T периодына бөлеміз.'}
-    ]
-  };
+  const questionBank={"en": [{"q": "Which formula gives orbital speed for a circular orbit?", "sub": "For a satellite around a planet with mass M and orbital radius r.", "a": "v = √(GM / r)", "opts": ["v = √(GM / r)", "v = GM r²", "v = mgh", "v = F / m"], "exp": "Circular orbital speed comes from gravity providing centripetal force."}, {"q": "Newton’s second law is...", "sub": "The basic law connecting force, mass, and acceleration.", "a": "F = ma", "opts": ["F = ma", "E = mc²", "p = mv²", "W = mg / h"], "exp": "Net force equals mass times acceleration."}, {"q": "Kinetic energy of a moving body is...", "sub": "Used for spacecraft speed and impact energy.", "a": "Eₖ = 1/2 mv²", "opts": ["Eₖ = 1/2 mv²", "Eₖ = mgh", "Eₖ = Fd / t", "Eₖ = p / v"], "exp": "Kinetic energy grows with the square of velocity."}, {"q": "Gravitational potential energy near Earth is...", "sub": "Approximation for small heights near the surface.", "a": "Eₚ = mgh", "opts": ["Eₚ = mgh", "Eₚ = 1/2 kx²", "Eₚ = mv", "Eₚ = GM / v"], "exp": "mgh is used close to Earth’s surface."}, {"q": "Momentum is...", "sub": "Important for rocket motion and collisions.", "a": "p = mv", "opts": ["p = mv", "p = ma", "p = F / t", "p = v / m"], "exp": "Momentum equals mass times velocity."}, {"q": "Rocket thrust mainly follows...", "sub": "Exhaust goes one way, the rocket goes the other.", "a": "Conservation of momentum", "opts": ["Conservation of momentum", "Ohm’s law", "Snell’s law", "Archimedes principle"], "exp": "Rocket motion is a momentum conservation effect."}, {"q": "Centripetal acceleration is...", "sub": "Acceleration toward the center of circular motion.", "a": "a = v² / r", "opts": ["a = v² / r", "a = vr", "a = r / v²", "a = mg"], "exp": "Circular motion needs inward acceleration v²/r."}, {"q": "Work done by a constant force is...", "sub": "Force acting through a distance in the same direction.", "a": "W = Fd", "opts": ["W = Fd", "W = F / d", "W = mv", "W = gh"], "exp": "Work equals force times displacement."}, {"q": "Escape velocity formula is...", "sub": "Minimum speed to escape a planet without more thrust.", "a": "v = √(2GM / r)", "opts": ["v = √(2GM / r)", "v = √(GM / r)", "v = GMm / r²", "v = 2πr / T"], "exp": "Escape velocity is √2 times circular orbital speed at the same radius."}, {"q": "Angular velocity relation is...", "sub": "Used in rotation and orbital period problems.", "a": "ω = 2π / T", "opts": ["ω = 2π / T", "ω = T / 2π", "ω = mv", "ω = Fr"], "exp": "One full rotation is 2π radians over period T."}, {"q": "Newton’s law of gravitation is...", "sub": "Force between two masses M and m separated by r.", "a": "F = GMm / r²", "opts": ["F = GMm / r²", "F = ma²", "F = mv / r", "F = kx"], "exp": "Gravity decreases with the square of distance."}, {"q": "The period of circular orbit can be written as...", "sub": "Use circumference divided by orbital speed.", "a": "T = 2πr / v", "opts": ["T = 2πr / v", "T = v / 2πr", "T = Fr", "T = mg"], "exp": "Period is distance for one orbit divided by speed."}, {"q": "Power is...", "sub": "How fast work or energy is transferred.", "a": "P = W / t", "opts": ["P = W / t", "P = Ft", "P = mv", "P = ρV"], "exp": "Power is work divided by time."}, {"q": "Impulse is...", "sub": "Force acting over a time interval.", "a": "J = FΔt", "opts": ["J = FΔt", "J = F / t", "J = mv²", "J = gh"], "exp": "Impulse equals change in momentum."}, {"q": "Hooke’s law is...", "sub": "For an ideal spring.", "a": "F = kx", "opts": ["F = kx", "F = GMm / r²", "F = qE", "F = ρgV"], "exp": "Spring force is proportional to extension."}, {"q": "Density formula is...", "sub": "Mass per unit volume.", "a": "ρ = m / V", "opts": ["ρ = m / V", "ρ = V / m", "ρ = mg", "ρ = Fd"], "exp": "Density equals mass divided by volume."}, {"q": "Pressure is...", "sub": "Force distributed over area.", "a": "p = F / A", "opts": ["p = F / A", "p = FA", "p = mv", "p = 1/2 mv²"], "exp": "Pressure equals normal force per area."}, {"q": "Uniform acceleration displacement formula is...", "sub": "Starting with initial velocity v₀.", "a": "s = v₀t + 1/2 at²", "opts": ["s = v₀t + 1/2 at²", "s = at / 2", "s = mv²", "s = F / A"], "exp": "This is the standard kinematics displacement equation."}, {"q": "Frequency and period relation is...", "sub": "Used for waves and rotations.", "a": "f = 1 / T", "opts": ["f = 1 / T", "f = T", "f = 2πT", "f = mv"], "exp": "Frequency is the reciprocal of period."}, {"q": "Wave speed relation is...", "sub": "For wavelength λ and frequency f.", "a": "v = fλ", "opts": ["v = fλ", "v = f / λ", "v = λ / f", "v = mg"], "exp": "Wave speed equals frequency times wavelength."}], "zh": [{"q": "圆形轨道的轨道速度公式是？", "sub": "卫星绕质量为 M 的天体，在轨道半径 r 上运动。", "a": "v = √(GM / r)", "opts": ["v = √(GM / r)", "v = GM r²", "v = mgh", "v = F / m"], "exp": "万有引力提供向心力，所以得到圆轨道速度公式。"}, {"q": "牛顿第二定律是？", "sub": "连接力、质量和加速度的基本定律。", "a": "F = ma", "opts": ["F = ma", "E = mc²", "p = mv²", "W = mg / h"], "exp": "合力等于质量乘以加速度。"}, {"q": "运动物体的动能公式是？", "sub": "用于描述飞船速度和撞击能量。", "a": "Eₖ = 1/2 mv²", "opts": ["Eₖ = 1/2 mv²", "Eₖ = mgh", "Eₖ = Fd / t", "Eₖ = p / v"], "exp": "动能和速度的平方成正比。"}, {"q": "地球附近的重力势能近似公式是？", "sub": "适用于离地面高度不大的情况。", "a": "Eₚ = mgh", "opts": ["Eₚ = mgh", "Eₚ = 1/2 kx²", "Eₚ = mv", "Eₚ = GM / v"], "exp": "在地球表面附近常用 mgh。"}, {"q": "动量公式是？", "sub": "火箭运动和碰撞问题里很重要。", "a": "p = mv", "opts": ["p = mv", "p = ma", "p = F / t", "p = v / m"], "exp": "动量等于质量乘以速度。"}, {"q": "火箭推进主要遵循什么原理？", "sub": "喷气向一个方向，火箭向相反方向运动。", "a": "动量守恒", "opts": ["动量守恒", "欧姆定律", "折射定律", "阿基米德原理"], "exp": "火箭运动本质上是动量守恒的结果。"}, {"q": "向心加速度公式是？", "sub": "圆周运动中指向圆心的加速度。", "a": "a = v² / r", "opts": ["a = v² / r", "a = vr", "a = r / v²", "a = mg"], "exp": "圆周运动需要向心加速度 v²/r。"}, {"q": "恒力做功公式是？", "sub": "力和位移方向相同时。", "a": "W = Fd", "opts": ["W = Fd", "W = F / d", "W = mv", "W = gh"], "exp": "功等于力乘以位移。"}, {"q": "逃逸速度公式是？", "sub": "不再继续推进也能逃离天体引力所需的最小速度。", "a": "v = √(2GM / r)", "opts": ["v = √(2GM / r)", "v = √(GM / r)", "v = GMm / r²", "v = 2πr / T"], "exp": "同一半径处，逃逸速度是圆轨道速度的 √2 倍。"}, {"q": "角速度与周期的关系是？", "sub": "用于旋转和轨道周期问题。", "a": "ω = 2π / T", "opts": ["ω = 2π / T", "ω = T / 2π", "ω = mv", "ω = Fr"], "exp": "一圈是 2π 弧度，用周期 T 除即可。"}, {"q": "万有引力定律公式是？", "sub": "两个质量 M 和 m，相距 r。", "a": "F = GMm / r²", "opts": ["F = GMm / r²", "F = ma²", "F = mv / r", "F = kx"], "exp": "引力大小与距离平方成反比。"}, {"q": "圆形轨道周期可以写成？", "sub": "用一圈的路程除以速度。", "a": "T = 2πr / v", "opts": ["T = 2πr / v", "T = v / 2πr", "T = Fr", "T = mg"], "exp": "周期等于一圈轨道长度除以速度。"}, {"q": "功率公式是？", "sub": "表示做功或能量转化的快慢。", "a": "P = W / t", "opts": ["P = W / t", "P = Ft", "P = mv", "P = ρV"], "exp": "功率等于功除以时间。"}, {"q": "冲量公式是？", "sub": "力作用一段时间。", "a": "J = FΔt", "opts": ["J = FΔt", "J = F / t", "J = mv²", "J = gh"], "exp": "冲量等于动量的变化量。"}, {"q": "胡克定律是？", "sub": "理想弹簧的受力公式。", "a": "F = kx", "opts": ["F = kx", "F = GMm / r²", "F = qE", "F = ρgV"], "exp": "弹簧力与形变量成正比。"}, {"q": "密度公式是？", "sub": "单位体积的质量。", "a": "ρ = m / V", "opts": ["ρ = m / V", "ρ = V / m", "ρ = mg", "ρ = Fd"], "exp": "密度等于质量除以体积。"}, {"q": "压强公式是？", "sub": "力分布在面积上。", "a": "p = F / A", "opts": ["p = F / A", "p = FA", "p = mv", "p = 1/2 mv²"], "exp": "压强等于压力除以受力面积。"}, {"q": "匀加速直线运动位移公式是？", "sub": "已知初速度 v₀。", "a": "s = v₀t + 1/2 at²", "opts": ["s = v₀t + 1/2 at²", "s = at / 2", "s = mv²", "s = F / A"], "exp": "这是匀变速运动常用位移公式。"}, {"q": "频率和周期关系是？", "sub": "用于波和转动。", "a": "f = 1 / T", "opts": ["f = 1 / T", "f = T", "f = 2πT", "f = mv"], "exp": "频率是周期的倒数。"}, {"q": "波速公式是？", "sub": "已知波长 λ 和频率 f。", "a": "v = fλ", "opts": ["v = fλ", "v = f / λ", "v = λ / f", "v = mg"], "exp": "波速等于频率乘以波长。"}], "kz": [{"q": "Дөңгелек орбитадағы жылдамдық формуласы қайсы?", "sub": "Массасы M планетаның айналасында r радиуста қозғалатын серік үшін.", "a": "v = √(GM / r)", "opts": ["v = √(GM / r)", "v = GM r²", "v = mgh", "v = F / m"], "exp": "Тартылыс күші центрге тартқыш күш рөлін атқарады."}, {"q": "Ньютонның екінші заңы...", "sub": "Күш, масса және үдеуді байланыстыратын негізгі заң.", "a": "F = ma", "opts": ["F = ma", "E = mc²", "p = mv²", "W = mg / h"], "exp": "Қорытқы күш масса мен үдеудің көбейтіндісіне тең."}, {"q": "Қозғалыстағы дененің кинетикалық энергиясы...", "sub": "Ғарыш кемесінің жылдамдығы мен соқтығысу энергиясында қолданылады.", "a": "Eₖ = 1/2 mv²", "opts": ["Eₖ = 1/2 mv²", "Eₖ = mgh", "Eₖ = Fd / t", "Eₖ = p / v"], "exp": "Кинетикалық энергия жылдамдықтың квадратына тәуелді."}, {"q": "Жер маңындағы ауырлық потенциалдық энергиясы...", "sub": "Биіктік аз болған кезде қолданылатын жуық формула.", "a": "Eₚ = mgh", "opts": ["Eₚ = mgh", "Eₚ = 1/2 kx²", "Eₚ = mv", "Eₚ = GM / v"], "exp": "Жер бетіне жақын жерде mgh қолданылады."}, {"q": "Импульс формуласы...", "sub": "Зымыран қозғалысы мен соқтығыстарда маңызды.", "a": "p = mv", "opts": ["p = mv", "p = ma", "p = F / t", "p = v / m"], "exp": "Импульс масса мен жылдамдықтың көбейтіндісіне тең."}, {"q": "Зымыран тартуы негізінен қандай заңға сүйенеді?", "sub": "Газ бір жаққа шығады, зымыран кері бағытта қозғалады.", "a": "Импульстің сақталуы", "opts": ["Импульстің сақталуы", "Ом заңы", "Сыну заңы", "Архимед принципі"], "exp": "Зымыран қозғалысы импульстің сақталуына негізделеді."}, {"q": "Центрге тартқыш үдеу...", "sub": "Шеңберлік қозғалыста центрге бағытталған үдеу.", "a": "a = v² / r", "opts": ["a = v² / r", "a = vr", "a = r / v²", "a = mg"], "exp": "Шеңберлік қозғалысқа v²/r үдеуі қажет."}, {"q": "Тұрақты күштің жұмысы...", "sub": "Күш пен орын ауыстыру бір бағытта болса.", "a": "W = Fd", "opts": ["W = Fd", "W = F / d", "W = mv", "W = gh"], "exp": "Жұмыс күш пен орын ауыстырудың көбейтіндісіне тең."}, {"q": "Қашу жылдамдығы формуласы...", "sub": "Планетадан қосымша тартусыз қашу үшін ең аз жылдамдық.", "a": "v = √(2GM / r)", "opts": ["v = √(2GM / r)", "v = √(GM / r)", "v = GMm / r²", "v = 2πr / T"], "exp": "Қашу жылдамдығы сол радиустағы орбиталық жылдамдықтан √2 есе үлкен."}, {"q": "Бұрыштық жылдамдық пен период байланысы...", "sub": "Айналу және орбиталық период есептерінде қолданылады.", "a": "ω = 2π / T", "opts": ["ω = 2π / T", "ω = T / 2π", "ω = mv", "ω = Fr"], "exp": "Бір толық айналым 2π радиан, оны T периодына бөлеміз."}, {"q": "Бүкіләлемдік тартылыс заңы...", "sub": "M және m массалары r қашықтықта орналасқан.", "a": "F = GMm / r²", "opts": ["F = GMm / r²", "F = ma²", "F = mv / r", "F = kx"], "exp": "Тартылыс күші қашықтық квадратына кері пропорционал."}, {"q": "Дөңгелек орбита периоды...", "sub": "Бір айналым жолын жылдамдыққа бөлеміз.", "a": "T = 2πr / v", "opts": ["T = 2πr / v", "T = v / 2πr", "T = Fr", "T = mg"], "exp": "Период бір айналым ұзындығын жылдамдыққа бөлгенге тең."}, {"q": "Қуат формуласы...", "sub": "Жұмыс немесе энергияның берілу жылдамдығы.", "a": "P = W / t", "opts": ["P = W / t", "P = Ft", "P = mv", "P = ρV"], "exp": "Қуат жұмыс пен уақыттың қатынасына тең."}, {"q": "Импульс күш әсері ретінде...", "sub": "Күш белгілі бір уақыт аралығында әсер етеді.", "a": "J = FΔt", "opts": ["J = FΔt", "J = F / t", "J = mv²", "J = gh"], "exp": "Импульс дене импульсінің өзгерісіне тең."}, {"q": "Гук заңы...", "sub": "Идеал серіппе үшін.", "a": "F = kx", "opts": ["F = kx", "F = GMm / r²", "F = qE", "F = ρgV"], "exp": "Серіппе күші созылуға пропорционал."}, {"q": "Тығыздық формуласы...", "sub": "Көлем бірлігіне келетін масса.", "a": "ρ = m / V", "opts": ["ρ = m / V", "ρ = V / m", "ρ = mg", "ρ = Fd"], "exp": "Тығыздық масса мен көлемнің қатынасына тең."}, {"q": "Қысым формуласы...", "sub": "Күш ауданға таралады.", "a": "p = F / A", "opts": ["p = F / A", "p = FA", "p = mv", "p = 1/2 mv²"], "exp": "Қысым күштің ауданға қатынасына тең."}, {"q": "Бірқалыпты үдемелі қозғалыстағы орын ауыстыру...", "sub": "Бастапқы жылдамдық v₀ белгілі.", "a": "s = v₀t + 1/2 at²", "opts": ["s = v₀t + 1/2 at²", "s = at / 2", "s = mv²", "s = F / A"], "exp": "Бұл үдемелі қозғалыстың негізгі формуласы."}, {"q": "Жиілік пен период байланысы...", "sub": "Толқындар мен айналыста қолданылады.", "a": "f = 1 / T", "opts": ["f = 1 / T", "f = T", "f = 2πT", "f = mv"], "exp": "Жиілік периодқа кері шама."}, {"q": "Толқын жылдамдығы формуласы...", "sub": "Толқын ұзындығы λ және жиілік f белгілі.", "a": "v = fλ", "opts": ["v = fλ", "v = f / λ", "v = λ / f", "v = mg"], "exp": "Толқын жылдамдығы жиілік пен толқын ұзындығының көбейтіндісіне тең."}]};
   const uiText={
     en:{readyQ:'Ready for launch?',readySub:'Choose the correct physics formula. Every correct answer adds fuel. Wrong answers reduce mission stability.',readyFb:'Press Start Mission to begin.',question:'Question',choose:'choose the correct answer',fuel:'+10% fuel',wrong:'Not this one. Correct answer:',launch:'🚀 Mission Launched!',training:'🛠 Mission Training Complete',final:'Final score',best:'Best score',success:'Kazakhstan mission is ready for launch. Great work, commander.',tryAgain:'You need more correct formulas to fully launch the rocket. Try again.',pad:'BAIKONUR LAUNCH PAD',fuelHint:'Fuel charged by correct physics answers'},
     zh:{readyQ:'准备发射了吗？',readySub:'选择正确的物理公式。答对会增加燃料，答错会降低任务稳定性。',readyFb:'点击“开始任务”开始。',question:'第',choose:'题 — 选择正确答案',fuel:'+10% 燃料',wrong:'不是这个。正确答案：',launch:'🚀 发射成功！',training:'🛠 任务训练完成',final:'最终分数',best:'最高分',success:'哈萨克斯坦任务已准备发射。干得漂亮，指挥官。',tryAgain:'还需要更多正确公式才能完全发射火箭，再试一次。',pad:'拜科努尔发射台',fuelHint:'答对物理题为火箭充能'},
@@ -1602,13 +1739,14 @@ applyLang(lang);
   };
   function flang(){return window.__qainarLang||localStorage.getItem('lang')||'en';}
   function ft(k){return (uiText[flang()]||uiText.en)[k];}
-  function questions(){return questionBank[flang()]||questionBank.en;}
+  function baseQuestions(){return questionBank[flang()]||questionBank.en;}
+  function questions(){return activeQuestions.length?activeQuestions:baseQuestions();}
 
   function resize(){W=canvas.offsetWidth||520;H=Math.max(420,canvas.offsetHeight||420);canvas.width=W;canvas.height=H;makeStars();}
   function makeStars(){stars=[];for(let i=0;i<90;i++)stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.4,a:Math.random()*0.75+0.2,s:Math.random()*18+8});}
   function updateHUD(){fuelEl.textContent=fuel+'%';scoreEl.textContent=score;bestEl.textContent=best;fillEl.style.width=fuel+'%';}
   function shuffle(arr){return [...arr].sort(()=>Math.random()-0.5);}
-  function start(){index=0;score=0;fuel=0;locked=false;finished=false;scoreModalShown=false;particles=[];updateHUD();showQuestion();}
+  function start(){index=0;score=0;fuel=0;combo=0;locked=false;finished=false;scoreModalShown=false;particles=[];activeQuestions=shuffle(baseQuestions()).slice(0,12);updateHUD();showQuestion();}
   window.restartDocking=start;
   function setReadyText(){ if(finished||index>0||fuel>0||optsEl.children.length){return;} qEl.textContent=ft('readyQ'); subEl.textContent=ft('readySub'); fbEl.textContent=ft('readyFb'); }
   window.addEventListener('qainar-lang-change',()=>{ if(!finished&&optsEl.children.length>0){ showQuestion(); } else if(!finished&&index===0&&fuel===0){ setReadyText(); } else if(finished){ finish(); } });
@@ -1636,11 +1774,19 @@ applyLang(lang);
     const buttons=[...optsEl.querySelectorAll('.formula-option')];
     buttons.forEach(b=>{if(b.textContent.includes(item.a))b.classList.add('correct');});
     if(txt===item.a){
-      score+=100+(index*15);fuel=Math.min(100,fuel+10);btn.classList.add('correct');
-      fbEl.innerHTML='✅ '+item.exp+' <b style="color:#fbbf24">'+ft('fuel')+'</b>';
+      combo++;
+      const bonus=Math.max(0,(combo-1)*25);
+      score+=100+(index*15)+bonus;
+      fuel=Math.min(100,fuel+9);
+      btn.classList.add('correct');
+      const comboText=combo>1?` <b style="color:#fbbf24">Combo x${combo} +${bonus}</b>`:'';
+      fbEl.innerHTML='✅ '+item.exp+' <b style="color:#fbbf24">'+ft('fuel')+'</b>'+comboText;
       burst(W*0.5,H*0.72,'#38bdf8');
     }else{
-      score=Math.max(0,score-35);fuel=Math.max(0,fuel-5);btn.classList.add('wrong');
+      combo=0;
+      score=Math.max(0,score-35);
+      fuel=Math.max(0,fuel-5);
+      btn.classList.add('wrong');
       fbEl.innerHTML='❌ '+ft('wrong')+' <b style="color:#38bdf8">'+item.a+'</b>. '+item.exp;
       burst(W*0.5,H*0.78,'#ef4444');
     }
@@ -1648,7 +1794,7 @@ applyLang(lang);
     setTimeout(()=>{
       index++;
       if(index>=questions().length||fuel>=100)finish(); else showQuestion();
-    },1100);
+    },1200);
   }
 
   function finish(){
@@ -1918,9 +2064,9 @@ onSnapshot(collection(db,"comments"),snap=>{const items=[];snap.forEach(d=>items
 
 // ══════════ PUBLIC LEADERBOARD ══════════
 const lbText={
-  en:{top_pilots:"TOP PILOTS",rocket_board:"Baikonur Run leaderboard",formula_board:"Formula Challenge leaderboard",loading:"Loading leaderboard…",empty:"No scores yet. Be the first pilot.",submit_kicker:"MISSION SCORE",submit_title:"Submit your score",submit_desc:"Enter your pilot name. Everyone can join the leaderboard.",your_score:"Your score",name_placeholder:"Pilot name",submit_btn:"Submit Score",cancel_btn:"Later",saving:"Saving…",saved:"Score submitted. You are on the board.",name_err:"Name must be 1–12 characters.",wait_err:"Wait a few seconds before submitting again.",save_err:"Could not save. Check Firestore rules.",rank:"Rank"},
-  zh:{top_pilots:"最佳飞行员",rocket_board:"Baikonur Run 排行榜",formula_board:"公式挑战排行榜",loading:"正在加载排行榜…",empty:"还没有分数，成为第一个飞行员。",submit_kicker:"任务分数",submit_title:"提交你的分数",submit_desc:"输入你的飞行员名字。所有人都可以参加排行榜。",your_score:"你的分数",name_placeholder:"飞行员名字",submit_btn:"提交分数",cancel_btn:"以后再说",saving:"正在保存…",saved:"分数已提交，已进入排行榜。",name_err:"名字必须是 1–12 个字符。",wait_err:"等几秒再提交。",save_err:"保存失败，检查 Firestore 规则。",rank:"排名"},
-  kz:{top_pilots:"ҮЗДІК ҰШҚЫШТАР",rocket_board:"Baikonur Run рейтингі",formula_board:"Formula Challenge рейтингі",loading:"Рейтинг жүктелуде…",empty:"Әзірге ұпай жоқ. Бірінші ұшқыш бол.",submit_kicker:"МИССИЯ ҰПАЙЫ",submit_title:"Ұпайды жіберу",submit_desc:"Ұшқыш атыңды енгіз. Рейтингке бәрі қатыса алады.",your_score:"Сенің ұпайың",name_placeholder:"Ұшқыш аты",submit_btn:"Ұпай жіберу",cancel_btn:"Кейін",saving:"Сақталуда…",saved:"Ұпай жіберілді. Рейтингке кірдің.",name_err:"Аты 1–12 таңба болуы керек.",wait_err:"Қайта жіберу үшін бірнеше секунд күт.",save_err:"Сақталмады. Firestore ережесін тексер.",rank:"Орын"}
+  en:{top_pilots:"TOP PILOTS",rocket_board:"Baikonur Run leaderboard",formula_board:"Formula Challenge leaderboard",loading:"Loading leaderboard…",empty:"No scores yet. Be the first pilot.",submit_kicker:"MISSION SCORE",submit_title:"Submit your score",submit_desc:"Enter your pilot name. Everyone can join the leaderboard.",your_score:"Your score",name_placeholder:"Pilot name",submit_btn:"Submit Score",cancel_btn:"Later",saving:"Saving…",saved:"Score saved. Your previous record was replaced.",name_err:"Name must be 1–12 characters.",wait_err:"Wait a few seconds before submitting again.",save_err:"Could not save. Check Firestore rules.",rank:"Rank",name_btn:"Name",name_prompt:"Enter new pilot name",name_saved:"Pilot name updated."},
+  zh:{top_pilots:"最佳飞行员",rocket_board:"Baikonur Run 排行榜",formula_board:"公式挑战排行榜",loading:"正在加载排行榜…",empty:"还没有分数，成为第一个飞行员。",submit_kicker:"任务分数",submit_title:"提交你的分数",submit_desc:"输入你的飞行员名字。所有人都可以参加排行榜。",your_score:"你的分数",name_placeholder:"飞行员名字",submit_btn:"提交分数",cancel_btn:"以后再说",saving:"正在保存…",saved:"分数已保存，已覆盖你之前的记录。",name_err:"名字必须是 1–12 个字符。",wait_err:"等几秒再提交。",save_err:"保存失败，检查 Firestore 规则。",rank:"排名",name_btn:"名字",name_prompt:"输入新的飞行员名字",name_saved:"飞行员名字已更新。"},
+  kz:{top_pilots:"ҮЗДІК ҰШҚЫШТАР",rocket_board:"Baikonur Run рейтингі",formula_board:"Formula Challenge рейтингі",loading:"Рейтинг жүктелуде…",empty:"Әзірге ұпай жоқ. Бірінші ұшқыш бол.",submit_kicker:"МИССИЯ ҰПАЙЫ",submit_title:"Ұпайды жіберу",submit_desc:"Ұшқыш атыңды енгіз. Рейтингке бәрі қатыса алады.",your_score:"Сенің ұпайың",name_placeholder:"Ұшқыш аты",submit_btn:"Ұпай жіберу",cancel_btn:"Кейін",saving:"Сақталуда…",saved:"Ұпай сақталды. Бұрынғы нәтижең ауыстырылды.",name_err:"Аты 1–12 таңба болуы керек.",wait_err:"Қайта жіберу үшін бірнеше секунд күт.",save_err:"Сақталмады. Firestore ережесін тексер.",rank:"Орын",name_btn:"Ат",name_prompt:"Жаңа ұшқыш атын енгіз",name_saved:"Ұшқыш аты жаңартылды."}
 };
 let lbCache=[];
 let pendingScore={game:null,score:0};
@@ -1937,9 +2083,32 @@ function applyLbText(){
   document.querySelectorAll("[data-lb-i18n]").forEach(el=>{const k=el.getAttribute("data-lb-i18n");el.textContent=lbT(k);});
   if(scoreNameInput)scoreNameInput.placeholder=lbT("name_placeholder");
   if(scoreModalTitle)scoreModalTitle.textContent=lbT("submit_title");
+  document.querySelectorAll("[data-lb-name-btn]").forEach(btn=>btn.textContent=lbT("name_btn"));
   renderLeaderboards();
 }
 function cleanName(name){return String(name||"").replace(/[<>]/g,"").trim().slice(0,12);}
+function getPilotId(){
+  let id=localStorage.getItem("qainar_pilot_id");
+  if(!id){
+    id=(crypto&&crypto.randomUUID)?crypto.randomUUID():("pilot_"+Date.now()+"_"+Math.random().toString(36).slice(2));
+    localStorage.setItem("qainar_pilot_id",id);
+  }
+  return id;
+}
+function lbDocId(game){return game+"_"+getPilotId().replace(/[^a-zA-Z0-9_-]/g,"");}
+async function saveLeaderboardScore(game,score,name){
+  const safeScore=Math.max(0,Math.round(Number(score)||0));
+  const safeName=cleanName(name);
+  await setDoc(doc(db,"leaderboard",lbDocId(game)),{
+    pilotId:getPilotId(),
+    name:safeName,
+    score:safeScore,
+    game,
+    createdAt:serverTimestamp()
+  });
+  localStorage.setItem("qainar_pilot_name",safeName);
+  localStorage.setItem("qainar_lb_last_submit",String(Date.now()));
+}
 function renderLeaderboards(){
   ["baikonur_run","formula_challenge"].forEach(game=>{
     const list=document.getElementById("lb-list-"+game);
@@ -1984,13 +2153,7 @@ window.__qainarAutoScore=async function(game,score){
     return;
   }
   try{
-    await addDoc(collection(db,"leaderboard"),{
-      name:savedName,
-      score:safeScore,
-      game,
-      createdAt:serverTimestamp()
-    });
-    localStorage.setItem("qainar_lb_last_submit",String(Date.now()));
+    await saveLeaderboardScore(game,safeScore,savedName);
   }catch(e){
     console.error(e);
     window.__qainarOpenScore(game,safeScore);
@@ -2013,14 +2176,7 @@ scoreSubmitBtn&&scoreSubmitBtn.addEventListener("click",async()=>{
   scoreStatus.textContent=lbT("saving");scoreStatus.className="score-status";
   scoreSubmitBtn.disabled=true;
   try{
-    await addDoc(collection(db,"leaderboard"),{
-      name,
-      score:pendingScore.score,
-      game:pendingScore.game,
-      createdAt:serverTimestamp()
-    });
-    localStorage.setItem("qainar_pilot_name",name);
-    localStorage.setItem("qainar_lb_last_submit",String(Date.now()));
+    await saveLeaderboardScore(pendingScore.game,pendingScore.score,name);
     scoreStatus.textContent=lbT("saved");
     scoreStatus.className="score-status ok";
     setTimeout(closeScoreModal,900);
@@ -2032,6 +2188,23 @@ scoreSubmitBtn&&scoreSubmitBtn.addEventListener("click",async()=>{
     scoreSubmitBtn.disabled=false;
   }
 });
+document.querySelectorAll("[data-lb-name-btn]").forEach(btn=>btn.addEventListener("click",async()=>{
+  const current=localStorage.getItem("qainar_pilot_name")||"";
+  const next=cleanName(prompt(lbT("name_prompt"),current)||"");
+  if(!next)return;
+  localStorage.setItem("qainar_pilot_name",next);
+  const myId=getPilotId();
+  const myRows=lbCache.filter(r=>r.pilotId===myId && ["baikonur_run","formula_challenge"].includes(r.game));
+  try{
+    for(const row of myRows){
+      await saveLeaderboardScore(row.game,row.score,next);
+    }
+    alert(lbT("name_saved"));
+  }catch(e){
+    console.error(e);
+    alert(lbT("save_err"));
+  }
+}));
 document.querySelectorAll("[data-lb-refresh]").forEach(btn=>btn.addEventListener("click",renderLeaderboards));
 onSnapshot(collection(db,"leaderboard"),snap=>{
   const rows=[];

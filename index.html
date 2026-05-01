@@ -698,8 +698,10 @@ body.secret-mode-active{overflow:hidden;}
 #secret-overlay.open{display:flex;animation:secretOverlayIn .45s cubic-bezier(.16,1,.3,1) forwards;}
 #secret-overlay::before{content:'';position:absolute;inset:-22%;background-image:radial-gradient(circle,rgba(255,255,255,.70) 1px,transparent 1.4px);background-size:46px 46px;opacity:.13;animation:secretSpin 96s linear infinite;}
 #secret-overlay::after{content:'';position:absolute;left:50%;top:50%;width:540px;height:540px;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(56,189,248,.13);box-shadow:0 0 90px rgba(56,189,248,.13),inset 0 0 80px rgba(56,189,248,.06);pointer-events:none;}
-.secret-close{position:absolute;top:22px;right:24px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#e2e8f0;font-size:20px;cursor:pointer;z-index:6;transition:.2s;backdrop-filter:blur(14px);}
-.secret-close:hover{transform:translateY(-2px);border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.13);}
+.secret-close{position:absolute;top:22px;right:24px;min-width:42px;height:42px;border-radius:999px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#e2e8f0;font-size:18px;cursor:pointer;z-index:6;transition:.2s;backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;gap:7px;padding:0 14px;font-weight:900;}
+.secret-close:hover{transform:translateY(-2px);border-color:rgba(56,189,248,.55);background:rgba(56,189,248,.13);box-shadow:0 0 24px rgba(56,189,248,.18);}
+.secret-close-x{font-size:21px;line-height:1;}
+.secret-close-text{font-size:11px;letter-spacing:1.3px;text-transform:uppercase;font-family:'Orbitron',sans-serif;color:#bae6fd;}
 .secret-launch{position:absolute;left:50%;bottom:18%;font-size:36px;filter:drop-shadow(0 0 26px rgba(56,189,248,.85));opacity:0;z-index:1;pointer-events:none;}
 #secret-overlay.launching .secret-launch{animation:secretLaunch 1.55s ease-in forwards;}
 .secret-spark{position:fixed;left:50vw;top:54vh;font-size:18px;pointer-events:none;z-index:100000;animation:secretSpark 1.7s cubic-bezier(.16,1,.3,1) forwards;text-shadow:0 0 18px rgba(125,211,252,.9);}
@@ -718,9 +720,13 @@ body.secret-mode-active{overflow:hidden;}
 #secret-name-input::placeholder{color:#64748b;}
 .secret-unlock-btn{border:none;border-radius:16px;padding:15px 22px;background:linear-gradient(135deg,#38bdf8,#2563eb);color:white;font-weight:900;font-family:'DM Sans',sans-serif;cursor:pointer;box-shadow:0 12px 30px rgba(37,99,235,.38);transition:.25s;white-space:nowrap;}
 .secret-unlock-btn:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(37,99,235,.52);}
-.secret-error{display:none;margin-top:12px;color:#fb7185;font-size:13px;font-weight:700;}
+.secret-error{display:none;margin-top:12px;color:#fb7185;font-size:13px;font-weight:800;letter-spacing:.2px;}
 .secret-error.show{display:block;}
 .secret-name-form.shake{animation:secretShake .55s ease;}
+.secret-name-form.input-error #secret-name-input{border-color:rgba(251,113,133,.88);box-shadow:0 0 26px rgba(251,113,133,.24),inset 0 0 24px rgba(251,113,133,.08);}
+.logo.secret-awake{filter:drop-shadow(0 0 14px rgba(56,189,248,.8));animation:secretPulse .55s ease 2;}
+.logo.secret-awake-strong{filter:drop-shadow(0 0 24px rgba(251,191,36,.75)) drop-shadow(0 0 34px rgba(56,189,248,.58));animation:secretPulse .42s ease 3;}
+.secret-logo-hint{position:fixed;z-index:100000;pointer-events:none;color:#7dd3fc;text-shadow:0 0 16px rgba(125,211,252,.9);font-size:17px;animation:secretSpark 1.15s cubic-bezier(.16,1,.3,1) forwards;}
 .secret-crush-card{display:none;text-align:center;animation:secretCardIn .7s cubic-bezier(.16,1,.3,1) forwards;}
 .secret-crush-card.show{display:block;}
 .secret-crush-label{font-family:'Orbitron',sans-serif;font-size:20px;line-height:1.45;letter-spacing:1.5px;color:white;margin:4px 0 24px;text-shadow:0 0 30px rgba(56,189,248,.58);}
@@ -730,10 +736,15 @@ body.secret-mode-active{overflow:hidden;}
 .secret-orbit-ring.r2{width:96%;height:122%;transform:rotate(18deg);border-color:rgba(251,191,36,.25);animation:secretSpinReverse 24s linear infinite;}
 .secret-orbit-dot{position:absolute;width:8px;height:8px;border-radius:50%;background:#7dd3fc;top:6%;left:50%;box-shadow:0 0 18px #7dd3fc;animation:secretSpin 8s linear infinite;transform-origin:0 165px;}
 .secret-photo-frame{position:relative;z-index:2;width:min(330px,72vw);aspect-ratio:3/4;margin:0 auto;padding:5px;border-radius:32px;background:linear-gradient(135deg,rgba(56,189,248,.94),rgba(251,191,36,.54),rgba(168,85,247,.66));box-shadow:0 0 46px rgba(56,189,248,.32),0 0 100px rgba(168,85,247,.12);overflow:hidden;}
+.secret-photo-frame::before{content:'';position:absolute;z-index:4;inset:-35% -20%;background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,.05) 38%,rgba(125,211,252,.72) 48%,rgba(255,255,255,.85) 50%,rgba(125,211,252,.48) 54%,transparent 68%);transform:translateY(-120%);pointer-events:none;mix-blend-mode:screen;}
+.secret-photo-frame::after{content:'';position:absolute;z-index:3;inset:5px;border-radius:27px;background:radial-gradient(circle at 50% 18%,rgba(255,255,255,.20),transparent 36%),linear-gradient(120deg,transparent,rgba(255,255,255,.16),transparent);opacity:0;pointer-events:none;}
 #secret-crush-card.show .secret-photo-frame{animation:secretFrameReveal .9s cubic-bezier(.16,1,.3,1) both;}
+#secret-crush-card.show .secret-photo-frame::before{animation:secretScan 1.65s .38s ease-out both;}
+#secret-crush-card.show .secret-photo-frame::after{animation:secretOverlayIn 1.2s .65s ease both;}
 #secret-crush-photo{width:100%;height:100%;display:block;object-fit:cover;object-position:top;border-radius:27px;background:#020817;}
 #secret-crush-card.show #secret-crush-photo{animation:secretPhotoReveal 1.55s ease both;}
-.secret-confirmed{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#7dd3fc;opacity:.78;font-weight:900;margin:10px 0 18px;}
+.secret-confirmed{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#7dd3fc;opacity:.78;font-weight:900;margin:10px 0 10px;}
+.secret-photo-note{font-size:14px;line-height:1.7;color:#c7d2fe;opacity:.82;margin:0 auto 8px;text-shadow:0 0 18px rgba(125,211,252,.2);}
 .secret-mission-card{opacity:0;max-width:520px;margin:18px auto 0;padding:18px;border-radius:22px;background:rgba(2,8,23,.56);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 18px 50px rgba(0,0,0,.22);text-align:left;}
 #secret-crush-card.show .secret-mission-card{animation:secretDossierIn .75s 1.05s ease both;}
 .secret-mission-title{font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:3px;color:#fbbf24;text-transform:uppercase;margin-bottom:12px;}
@@ -741,11 +752,11 @@ body.secret-mode-active{overflow:hidden;}
 .secret-mission-row{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;padding:9px 0;border-top:1px solid rgba(255,255,255,.08);}
 .secret-mission-key{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:#94a3b8;font-weight:900;}
 .secret-mission-val{font-size:14px;color:#e2e8f0;font-weight:800;line-height:1.45;}
-@media(max-width:640px){#secret-overlay{padding:18px}.secret-shell{padding:28px 20px;border-radius:26px;max-height:84vh}#secret-message{font-size:15px;line-height:1.82;min-height:260px}.secret-name-form{flex-direction:column}.secret-unlock-btn,#secret-name-input{width:100%}.secret-crush-label{font-size:17px}.secret-close{top:14px;right:14px}.secret-mission-row{grid-template-columns:1fr;gap:4px}.secret-mission-card{padding:16px}.secret-photo-stage{width:min(330px,78vw)}}
+@media(max-width:640px){#secret-overlay{padding:18px}.secret-shell{padding:28px 20px;border-radius:26px;max-height:84vh}#secret-message{font-size:15px;line-height:1.82;min-height:260px}.secret-name-form{flex-direction:column}.secret-unlock-btn,#secret-name-input{width:100%}.secret-crush-label{font-size:17px}.secret-close{top:14px;right:14px;padding:0 12px}.secret-close-text{display:none}.secret-mission-row{grid-template-columns:1fr;gap:4px}.secret-mission-card{padding:16px}.secret-photo-stage{width:min(330px,78vw)}}
 </style>
 
 <div id="secret-overlay" aria-hidden="true">
-  <button class="secret-close" id="secret-close" aria-label="Close">×</button>
+  <button class="secret-close" id="secret-close" aria-label="Close"><span class="secret-close-x">×</span><span class="secret-close-text" id="secret-close-text">Back</span></button>
   <div class="secret-launch">🚀</div>
   <div class="secret-shell">
     <div id="secret-intro-card">
@@ -770,13 +781,14 @@ body.secret-mode-active{overflow:hidden;}
         </div>
       </div>
       <div class="secret-confirmed" id="secret-confirmed">JANASYL · 01</div>
+      <div class="secret-photo-note" id="secret-photo-note">A name I remembered.</div>
     </div>
   </div>
 </div>
 
 <script>
 (function(){
-  console.log('QAINAR hidden orbit loaded v3');
+  console.log('QAINAR hidden orbit loaded v4.1');
   const introText={
   "en": "You found this place.\n\nThere are no boring physics formulas here,\nand this is not just another boring 2050 plan.\n\nIt is just a small corner I hid inside my website,\nwith a few words that do not really belong on the homepage.\n\nTo me,\n2050 is a faraway but serious direction.\n\nI want to see Kazakhstan's rocket\ntruly rise into the sky,\nand I want to be part of that future with my own hands.\n\nAnd you,\nsomehow, at some point,\nbecame one of the reasons I want to make it happen.\n\nIf one day,\na Kazakh rocket is truly launched successfully,\n\nthat rocket\nwould carry your name.",
   "zh": "你找到这里了。\n\n这里没有枯燥的物理公式，\n也不是什么无聊的 2050 计划。\n\n这里只是我藏在网站里的一个小角落，\n放着几句不太适合写在首页的话。\n\n2050 对我来说，\n是一个很远，但很认真的方向。\n\n我想看见哈萨克斯坦的火箭\n真正升向天空，\n也想亲手参与那个未来。\n\n而你，\n不知道从什么时候开始，\n也成了我想把这件事做到的一个原因。\n\n如果有一天，\n哈萨克斯坦的火箭真的成功发射，\n\n那枚火箭，\n我会用你的名字命名。",
@@ -809,12 +821,14 @@ body.secret-mode-active{overflow:hidden;}
         "Hidden orbit unlocked"
       ]
     ],
-    "confirmed": "JANASYL · 01"
+    "confirmed": "JANASYL · 01",
+    "photoNote": "A name I remembered.",
+    "close": "Back"
   },
   "zh": {
     "placeholder": "输入名字",
     "unlock": "解锁",
-    "wrong": "名字不对。",
+    "wrong": "未找到信号。",
     "introKicker": "隐藏轨道",
     "crushKicker": "轨道确认",
     "crush": "心里悄悄喜欢的人",
@@ -837,12 +851,14 @@ body.secret-mode-active{overflow:hidden;}
         "隐藏轨道已解锁"
       ]
     ],
-    "confirmed": "JANASYL · 01"
+    "confirmed": "JANASYL · 01",
+    "photoNote": "这个名字，我记住了。",
+    "close": "返回"
   },
   "kz": {
     "placeholder": "Есімді енгіз",
     "unlock": "Ашу",
-    "wrong": "Белгі табылмады.",
+    "wrong": "Сигнал табылмады.",
     "introKicker": "Жасырын орбита",
     "crushKicker": "Орбита расталды",
     "crush": "Жүрегім үнсіз таңдаған жан",
@@ -865,7 +881,9 @@ body.secret-mode-active{overflow:hidden;}
         "Жасырын орбита ашылды"
       ]
     ],
-    "confirmed": "JANASYL · 01"
+    "confirmed": "JANASYL · 01",
+    "photoNote": "Есімде қалған есім.",
+    "close": "Қайту"
   }
 };
   const firstPass=['kai','nar','lo','ver'].join('');
@@ -883,6 +901,8 @@ body.secret-mode-active{overflow:hidden;}
   const introKicker=document.getElementById('secret-intro-kicker');
   const crushKicker=document.getElementById('secret-crush-kicker');
   const confirmed=document.getElementById('secret-confirmed');
+  const photoNote=document.getElementById('secret-photo-note');
+  const closeText=document.getElementById('secret-close-text');
   let typingTimer=null;
   let stage='closed';
 
@@ -900,6 +920,8 @@ body.secret-mode-active{overflow:hidden;}
     introKicker.textContent=t.introKicker;
     crushKicker.textContent=t.crushKicker;
     confirmed.textContent=t.confirmed;
+    if(photoNote) photoNote.textContent=t.photoNote||'';
+    if(closeText) closeText.textContent=t.close||'Back';
     if(stage==='ready') message.textContent=introText[lang()]||introText.en;
   }
 
@@ -921,6 +943,29 @@ body.secret-mode-active{overflow:hidden;}
     }
   }
 
+  function pulseLogo(strong){
+    const logoEl=document.getElementById('logo-tap');
+    if(!logoEl) return;
+    logoEl.classList.remove('secret-awake','secret-awake-strong');
+    void logoEl.offsetWidth;
+    logoEl.classList.add(strong?'secret-awake-strong':'secret-awake');
+    const rect=logoEl.getBoundingClientRect();
+    for(let i=0;i<(strong?7:3);i++){
+      const star=document.createElement('div');
+      star.className='secret-logo-hint';
+      star.textContent=i%2?'✧':'✦';
+      star.style.left=(rect.left+rect.width/2+(Math.random()*46-23))+'px';
+      star.style.top=(rect.top+rect.height/2+(Math.random()*24-12))+'px';
+      star.style.setProperty('--x',(Math.random()*90-45)+'px');
+      star.style.setProperty('--y',(-40-Math.random()*70)+'px');
+      star.style.setProperty('--rot',(Math.random()*260-130)+'deg');
+      star.style.animationDelay=(Math.random()*.12)+'s';
+      document.body.appendChild(star);
+      setTimeout(function(){star.remove();},1400);
+    }
+    setTimeout(function(){logoEl.classList.remove('secret-awake','secret-awake-strong');},strong?1250:900);
+  }
+
   function typeTextWithPauses(text){
     clearTimeout(typingTimer);
     const blocks=text.split('\n\n');
@@ -930,6 +975,7 @@ body.secret-mode-active{overflow:hidden;}
     caret.style.display='inline-block';
     form.classList.remove('show');
     error.classList.remove('show');
+    form.classList.remove('input-error');
 
     function typeNext(){
       if(blockIndex>=blocks.length){
@@ -989,6 +1035,7 @@ body.secret-mode-active{overflow:hidden;}
     input.value='';
     form.classList.remove('show','shake');
     error.classList.remove('show');
+    form.classList.remove('input-error');
     crushCard.classList.remove('show');
     introCard.style.display='block';
   }
@@ -1010,18 +1057,26 @@ body.secret-mode-active{overflow:hidden;}
       tapCount++;
       clearTimeout(tapTimer);
       tapTimer=setTimeout(function(){tapCount=0;},2800);
-      if(tapCount>=6){createSparks(8,false);}
+      if(tapCount===6){pulseLogo(false);createSparks(10,false);}
+      if(tapCount===8){pulseLogo(true);createSparks(20,true);}
       if(tapCount>=9){tapCount=0;openSecret();}
     });
   }
+
+  input.addEventListener('input',function(){
+    error.classList.remove('show');
+    form.classList.remove('input-error');
+  });
 
   form.addEventListener('submit',function(e){
     e.preventDefault();
     if(clean(input.value)===secondPass){
       error.classList.remove('show');
+      form.classList.remove('input-error');
       showCrush();
     }else{
       error.classList.add('show');
+      form.classList.add('input-error');
       form.classList.remove('shake');
       void form.offsetWidth;
       form.classList.add('shake');

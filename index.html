@@ -834,7 +834,7 @@ body.secret-mode-active{overflow:hidden;}
 .secret-shell{position:relative;z-index:4;width:min(780px,94vw);max-height:min(86vh,780px);overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;overscroll-behavior:contain;scrollbar-width:none;-ms-overflow-style:none;border-radius:32px;background:linear-gradient(135deg,rgba(255,255,255,.095),rgba(255,255,255,.034));border:1px solid rgba(255,255,255,.17);box-shadow:0 32px 110px rgba(0,0,0,.60),inset 0 1px 0 rgba(255,255,255,.17);backdrop-filter:blur(21px);padding:36px 34px;text-align:left;animation:secretCardIn .65s cubic-bezier(.16,1,.3,1) forwards;}
 .secret-shell.shell-hidden{display:none;}.secret-shell::-webkit-scrollbar{width:0!important;height:0!important;display:none!important;}.secret-shell::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(56,189,248,.06),transparent);opacity:0;pointer-events:none;animation:secretScan 2.2s .35s ease-out forwards;}
 .secret-topline{display:flex;align-items:center;gap:12px;margin-bottom:24px;}.secret-dot{width:10px;height:10px;border-radius:50%;background:#38bdf8;box-shadow:0 0 14px #38bdf8;animation:secretPulse 1.8s ease-in-out infinite;}.secret-kicker{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:4px;color:#7dd3fc;text-transform:uppercase;opacity:.88;}.secret-line{height:1px;background:linear-gradient(90deg,rgba(56,189,248,.78),transparent);margin:20px 0 24px;transform-origin:left;animation:secretGlowLine 1.2s ease forwards;}
-#secret-message{display:block;white-space:pre-line;color:#e5efff;font-size:17px;line-height:1.86;letter-spacing:.15px;text-shadow:0 0 22px rgba(56,189,248,.10);min-height:210px;padding-bottom:18px;}.secret-caret{display:inline-block;width:8px;height:1.25em;background:#38bdf8;margin-left:3px;vertical-align:-.2em;animation:secretPulse .8s infinite;}
+#secret-message{display:block;white-space:pre-line;color:#e5efff;font-size:17px;line-height:1.86;letter-spacing:.15px;text-shadow:0 0 22px rgba(56,189,248,.10);min-height:150px;padding-bottom:8px;}.secret-caret{display:inline-block;width:8px;height:1.25em;background:#38bdf8;margin-left:3px;vertical-align:-.2em;animation:secretPulse .8s infinite;}
 .secret-console-label{display:none;margin:28px 0 10px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:3px;color:#7dd3fc;text-transform:uppercase;}.secret-console-label.show{display:block;animation:secretCardIn .45s ease both;}
 .secret-name-form{display:none;gap:12px;align-items:center;animation:secretCardIn .5s ease forwards;padding:12px;border-radius:20px;background:rgba(2,8,23,.44);border:1px solid rgba(125,211,252,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);}.secret-name-form.show{display:flex;}
 #secret-name-input{flex:1;min-width:0;border:1px solid rgba(56,189,248,.25);background:linear-gradient(180deg,rgba(2,8,23,.78),rgba(2,8,23,.54));border-radius:15px;color:white;padding:15px 18px;outline:none;font-size:15px;font-family:'DM Sans',sans-serif;box-shadow:inset 0 0 24px rgba(56,189,248,.05);}
@@ -942,14 +942,11 @@ body.secret-mode-active{overflow:hidden;}
   function sleep(ms){return new Promise(function(resolve){setTimeout(resolve,ms);});}
   function vibrate(ms){try{if(navigator.vibrate)navigator.vibrate(ms||45);}catch(e){}}
   function secretAutoScroll(){
+    // Do not force the card to the bottom.
+    // Previous versions could scroll to an empty area on some phones.
     try{
       if(!shell)return;
-      const go=function(){
-        shell.scrollTop=shell.scrollHeight;
-      };
-      go();
-      requestAnimationFrame(go);
-      setTimeout(go,35);
+      shell.scrollTop=0;
     }catch(e){}
   }
   function secretResetScroll(){
@@ -957,6 +954,7 @@ body.secret-mode-active{overflow:hidden;}
       if(!shell)return;
       shell.scrollTop=0;
       requestAnimationFrame(function(){shell.scrollTop=0;});
+      setTimeout(function(){shell.scrollTop=0;},40);
     }catch(e){}
   }
 
@@ -1026,8 +1024,7 @@ body.secret-mode-active{overflow:hidden;}
   async function decodeText(text){
     const run=++typingRun;
     const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789░▒▓█/*+-';
-    const blocks=text.split('\n\n');
-    let prefix='';
+    const blocks=text.split('\n\n').filter(Boolean);
     message.textContent='';
     secretResetScroll();
     caret.style.display='inline-block';
@@ -1039,6 +1036,8 @@ body.secret-mode-active{overflow:hidden;}
     for(let b=0;b<blocks.length;b++){
       const block=blocks[b];
       const frames=block.length+18;
+      secretResetScroll();
+
       for(let f=0;f<=frames;f++){
         if(run!==typingRun)return;
         const reveal=Math.max(0,f-12);
@@ -1048,24 +1047,30 @@ body.secret-mode-active{overflow:hidden;}
           if(ch===' '||ch==='\n'||i<reveal) out+=ch;
           else out+=chars[Math.floor(Math.random()*chars.length)];
         }
-        message.textContent=prefix+out;
-        secretAutoScroll();
+        // Show only the current paragraph, so the card never jumps to a blank bottom.
+        message.textContent=out;
+        secretResetScroll();
         await sleep(16);
       }
-      prefix+=block+(b<blocks.length-1?'\n\n':'');
-      message.textContent=prefix;
-      secretAutoScroll();
-      await sleep(620);
+
+      message.textContent=block;
+      secretResetScroll();
+      await sleep(b===blocks.length-1 ? 950 : 1150);
     }
+
     if(run!==typingRun)return;
     stage='ready';
     caret.style.display='none';
-    await sleep(2300);
+
+    // Keep the final sentence visible, then reveal the name console under it.
+    message.textContent=blocks[blocks.length-1] || '';
+    secretResetScroll();
+    await sleep(1200);
+
     if(run!==typingRun)return;
     inputLabel.classList.add('show');
     form.classList.add('show');
-    secretAutoScroll();
-    setTimeout(secretAutoScroll,180);
+    secretResetScroll();
     input.focus();
   }
 
@@ -1111,6 +1116,7 @@ body.secret-mode-active{overflow:hidden;}
     void envelopeCard.offsetWidth;
     envelopeCard.classList.add('show');
     secretResetScroll();
+    setTimeout(secretResetScroll,80);
     createSparks(42,true);
   }
 

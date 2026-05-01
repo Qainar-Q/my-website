@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Qainar Galaxy & Solar System Explorer — interactive Milky Way and Solar System page."/>
+  <title>Galaxy Explorer | Qainar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent:#38bdf8;
+      --accent2:#2563eb;
+      --gold:#fbbf24;
+      --purple:#a78bfa;
+      --green:#34d399;
+      --rose:#fb7185;
+      --glass:rgba(255,255,255,0.075);
+      --glass2:rgba(255,255,255,0.045);
+      --glass-b:rgba(255,255,255,0.14);
+      --muted:#94a3b8;
+      --bg:#020817;
+      --r:22px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      min-height:100vh;
+      font-family:'DM Sans',sans-serif;
+      color:white;
+      background:#020817;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:'';
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 16% 18%,rgba(56,189,248,.16),transparent 30%),
+        radial-gradient(circle at 82% 16%,rgba(167,139,250,.13),transparent 32%),
+        radial-gradient(circle at 76% 80%,rgba(251,191,36,.10),transparent 30%),
+        linear-gradient(180deg,#020817,#030712 67%,#020617);
+    }
+    #stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+    .grain{
+      position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.10;
+      background-image:radial-gradient(circle,rgba(255,255,255,.55) 1px,transparent 1.4px);
+      background-size:43px 43px;
+      mask-image:linear-gradient(180deg,rgba(0,0,0,.9),rgba(0,0,0,.24));
+    }
+    .mouse-glow{
+      position:fixed;z-index:1;width:520px;height:520px;border-radius:50%;
+      pointer-events:none;transform:translate(-50%,-50%);
+      background:radial-gradient(circle,rgba(56,189,248,.075),transparent 70%);
+      transition:left .12s linear,top .12s linear;
+    }
+
+    header{
+      position:fixed;top:0;left:0;width:100%;
+      padding:16px 58px;
+      display:flex;justify-content:space-between;align-items:center;
+      z-index:20;
+      background:rgba(2,8,23,.82);
+      backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--glass-b);
+      box-shadow:0 6px 30px rgba(0,0,0,.32);
+    }
+    .logo{
+      font-family:'Orbitron',sans-serif;
+      font-size:20px;font-weight:900;letter-spacing:3px;
+      background:linear-gradient(135deg,#fff 25%,var(--accent));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      text-decoration:none;white-space:nowrap;
+    }
+    nav{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+    nav a{
+      color:white;text-decoration:none;font-weight:800;font-size:14px;
+      opacity:.78;transition:.25s;
+    }
+    nav a:hover{color:var(--accent);opacity:1;}
+    .lang-switcher{display:flex;gap:5px;}
+    .lang-btn,.small-btn{
+      border:1px solid var(--glass-b);
+      background:var(--glass);
+      color:var(--muted);
+      border-radius:999px;
+      padding:5px 11px;
+      font-size:11px;
+      font-weight:900;
+      cursor:pointer;
+      transition:.2s;
+      font-family:'DM Sans',sans-serif;
+    }
+    .lang-btn:hover,.lang-btn.active,.small-btn:hover,.small-btn.active{
+      border-color:transparent;color:white;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 0 20px rgba(56,189,248,.22);
+    }
+
+    main{position:relative;z-index:2;}
+    .hero{
+      min-height:78vh;
+      padding:142px 70px 50px;
+      display:grid;
+      grid-template-columns:1.02fr .98fr;
+      align-items:center;
+      gap:40px;
+      max-width:1240px;
+      margin:0 auto;
+    }
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:9px;
+      padding:7px 16px;border-radius:999px;
+      background:rgba(56,189,248,.12);
+      border:1px solid rgba(56,189,248,.34);
+      color:#7dd3fc;
+      font-size:12px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;
+      margin-bottom:22px;
+    }
+    .eyebrow-dot{
+      width:7px;height:7px;border-radius:50%;
+      background:var(--accent);box-shadow:0 0 12px var(--accent);
+      animation:pulse 1.7s infinite;
+    }
+    h1{
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(42px,6vw,76px);
+      line-height:1.03;letter-spacing:-1px;
+      margin-bottom:22px;
+      background:linear-gradient(135deg,#fff 30%,#7dd3fc 58%,#a78bfa 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      text-shadow:0 0 60px rgba(56,189,248,.15);
+    }
+    .hero p{
+      max-width:560px;color:#c5d8f0;
+      font-size:18px;line-height:1.8;margin-bottom:30px;
+    }
+    .hero-actions{display:flex;gap:13px;flex-wrap:wrap;}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:9px;
+      border-radius:15px;padding:13px 23px;
+      font-weight:900;font-size:14px;border:1px solid transparent;
+      cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;color:white;
+      transition:.28s;
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 12px 34px rgba(37,99,235,.38);
+    }
+    .btn.secondary{
+      background:var(--glass);
+      border-color:var(--glass-b);
+      backdrop-filter:blur(14px);
+    }
+    .btn:hover{transform:translateY(-4px);}
+    .btn.primary:hover{box-shadow:0 18px 45px rgba(37,99,235,.52);}
+    .btn.secondary:hover{border-color:rgba(56,189,248,.48);background:rgba(56,189,248,.10);}
+
+    .preview-card{
+      position:relative;min-height:430px;border-radius:34px;
+      background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.15);
+      backdrop-filter:blur(20px);overflow:hidden;
+      box-shadow:0 32px 90px rgba(0,0,0,.46);
+    }
+    .preview-card::before{
+      content:'';position:absolute;inset:-45%;
+      background:
+        radial-gradient(ellipse at center,rgba(56,189,248,.25),transparent 31%),
+        conic-gradient(from 30deg,rgba(56,189,248,.05),rgba(167,139,250,.35),rgba(251,191,36,.12),rgba(56,189,248,.05));
+      animation:rotate 28s linear infinite;opacity:.90;
+    }
+    .preview-card::after{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(circle at 52% 50%,transparent 18%,rgba(2,8,23,.18) 33%,rgba(2,8,23,.72) 70%);
+    }
+    .preview-center{
+      position:absolute;inset:0;z-index:2;display:grid;place-items:center;text-align:center;padding:34px;
+    }
+    .galaxy-badge{
+      width:186px;height:186px;border-radius:50%;position:relative;display:grid;place-items:center;
+      border:1px solid rgba(125,211,252,.30);
+      box-shadow:0 0 54px rgba(56,189,248,.28), inset 0 0 50px rgba(56,189,248,.06);
+      background:radial-gradient(circle,#e0f2fe 0 2%,#38bdf8 3%,rgba(37,99,235,.24) 12%,rgba(2,8,23,.7) 44%,rgba(2,8,23,.92) 100%);
+    }
+    .galaxy-badge span{
+      font-family:'Orbitron',sans-serif;font-size:16px;letter-spacing:3px;font-weight:900;color:#e0f2fe;
+      text-shadow:0 0 18px rgba(56,189,248,.75);
+    }
+    .mini-orbit{position:absolute;border:1px dashed rgba(255,255,255,.20);border-radius:50%;animation:rotate 9s linear infinite;}
+    .mini-orbit.o1{width:246px;height:84px;transform:rotate(18deg);}
+    .mini-orbit.o2{width:250px;height:250px;animation-duration:16s;border-color:rgba(251,191,36,.20);}
+    .mini-dot{
+      position:absolute;width:8px;height:8px;border-radius:50%;background:#fbbf24;
+      top:calc(50% - 4px);left:calc(50% + 120px);
+      box-shadow:0 0 18px #fbbf24;
+    }
+    .preview-caption{
+      position:absolute;left:28px;right:28px;bottom:28px;z-index:3;
+      display:flex;justify-content:space-between;gap:14px;align-items:end;
+    }
+    .caption-small{color:#93c5fd;font-size:11px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase;}
+    .caption-title{margin-top:7px;font-family:'Orbitron',sans-serif;font-size:17px;letter-spacing:1px;}
+    .caption-pill{
+      padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);color:#cbd5e1;font-size:12px;font-weight:900;white-space:nowrap;
+    }
+
+    .explorer{max-width:1240px;margin:0 auto;padding:35px 70px 90px;}
+    .panel{
+      border-radius:32px;
+      background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.030));
+      border:1px solid rgba(255,255,255,.15);
+      backdrop-filter:blur(20px);
+      box-shadow:0 26px 80px rgba(0,0,0,.42);
+      overflow:hidden;
+    }
+    .panel-head{
+      display:flex;justify-content:space-between;align-items:center;gap:20px;
+      padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.10);flex-wrap:wrap;
+    }
+    .mode-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+    .tab{
+      border:1px solid rgba(255,255,255,.13);
+      background:rgba(255,255,255,.055);color:#cbd5e1;border-radius:999px;
+      padding:10px 15px;cursor:pointer;font-weight:900;font-size:13px;
+      transition:.2s;font-family:'DM Sans',sans-serif;
+    }
+    .tab:hover{border-color:rgba(56,189,248,.45);color:#e0f2fe;}
+    .tab.active{
+      color:white;border-color:transparent;
+      background:linear-gradient(135deg,rgba(56,189,248,.88),rgba(37,99,235,.88));
+      box-shadow:0 0 24px rgba(56,189,248,.25);
+    }
+    .control-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .speed-control{
+      display:flex;align-items:center;gap:11px;color:#94a3b8;font-weight:900;
+      font-size:12px;text-transform:uppercase;letter-spacing:1px;
+    }
+    input[type=range]{width:145px;accent-color:#38bdf8;}
+    .canvas-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;min-height:660px;}
+    .canvas-wrap{
+      position:relative;min-height:660px;overflow:hidden;
+      background:radial-gradient(circle at 50% 50%,rgba(56,189,248,.09),transparent 38%),rgba(2,8,23,.44);
+    }
+    #spaceCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:crosshair;}
+    .canvas-hud{
+      position:absolute;top:18px;left:18px;right:18px;z-index:4;
+      display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none;
+    }
+    .hud-box{
+      padding:10px 13px;border-radius:16px;background:rgba(2,8,23,.58);
+      border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(14px);
+      color:#cbd5e1;font-size:12px;font-weight:900;letter-spacing:.5px;
+    }
+    .hud-box strong{color:#7dd3fc;font-family:'Orbitron',sans-serif;letter-spacing:1.2px;}
+    .canvas-hint{position:absolute;left:20px;bottom:20px;display:flex;flex-wrap:wrap;gap:8px;z-index:3;}
+    .hint-chip{
+      padding:7px 12px;border-radius:999px;background:rgba(2,8,23,.60);
+      border:1px solid rgba(255,255,255,.12);color:#cbd5e1;
+      font-size:12px;font-weight:800;backdrop-filter:blur(12px);
+    }
+    .tooltip{
+      position:absolute;z-index:5;pointer-events:none;
+      padding:8px 11px;border-radius:12px;background:rgba(2,8,23,.88);
+      border:1px solid rgba(56,189,248,.28);color:#e0f2fe;font-weight:900;font-size:12px;
+      transform:translate(14px,-24px);opacity:0;transition:opacity .15s;
+      box-shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+    .tooltip.show{opacity:1;}
+    .side{
+      border-left:1px solid rgba(255,255,255,.10);
+      padding:28px;display:flex;flex-direction:column;gap:18px;
+      background:rgba(255,255,255,.025);
+    }
+    .side-card{
+      border-radius:24px;background:rgba(255,255,255,.055);
+      border:1px solid rgba(255,255,255,.12);padding:22px;
+    }
+    .side-kicker{
+      font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2.8px;
+      color:#7dd3fc;text-transform:uppercase;margin-bottom:12px;
+    }
+    .side-title{
+      font-family:'Orbitron',sans-serif;font-size:24px;line-height:1.25;margin-bottom:11px;
+      background:linear-gradient(135deg,#fff,#7dd3fc);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .side-text{color:#c5d8f0;font-size:14px;line-height:1.75;}
+    .fact-list{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+    .fact{
+      display:flex;justify-content:space-between;gap:14px;
+      padding:10px 0;border-top:1px solid rgba(255,255,255,.08);
+      color:#cbd5e1;font-size:13px;
+    }
+    .fact span:first-child{color:#94a3b8;font-weight:900;}
+    .fact span:last-child{color:white;font-weight:900;text-align:right;}
+    .planet-list{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+    .planet-btn{
+      border:1px solid rgba(255,255,255,.11);
+      background:rgba(255,255,255,.05);color:#e2e8f0;border-radius:14px;
+      padding:10px 9px;font-size:12px;font-weight:900;cursor:pointer;transition:.2s;
+      font-family:'DM Sans',sans-serif;
+    }
+    .planet-btn:hover,.planet-btn.active{
+      border-color:rgba(56,189,248,.48);background:rgba(56,189,248,.12);transform:translateY(-2px);
+    }
+    .compare-card{
+      display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;
+    }
+    .metric{
+      padding:14px;border-radius:18px;background:rgba(2,8,23,.36);
+      border:1px solid rgba(255,255,255,.09);
+    }
+    .metric-label{font-size:10px;color:#94a3b8;font-weight:900;letter-spacing:1px;text-transform:uppercase;}
+    .metric-value{margin-top:7px;font-family:'Orbitron',sans-serif;color:#e0f2fe;font-size:18px;}
+
+    .route{
+      margin-top:28px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+    }
+    .route-step{
+      border-radius:22px;background:var(--glass);border:1px solid var(--glass-b);
+      padding:18px;min-height:138px;transition:.28s;
+    }
+    .route-step:hover{transform:translateY(-6px);border-color:rgba(56,189,248,.45);background:rgba(56,189,248,.08);}
+    .route-year{font-family:'Orbitron',sans-serif;color:#7dd3fc;font-size:14px;letter-spacing:1.5px;margin-bottom:11px;}
+    .route-title{font-weight:900;line-height:1.45;margin-bottom:8px;}
+    .route-text{color:#94a3b8;font-size:13px;line-height:1.55;}
+    .toast{
+      position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);
+      z-index:50;opacity:0;pointer-events:none;transition:.28s;
+      background:rgba(2,8,23,.88);border:1px solid rgba(56,189,248,.32);
+      color:#e0f2fe;border-radius:999px;padding:10px 16px;font-weight:900;
+      box-shadow:0 0 32px rgba(56,189,248,.18);backdrop-filter:blur(14px);font-size:13px;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+    .warp{
+      position:fixed;inset:0;z-index:40;pointer-events:none;opacity:0;
+      background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.95),rgba(56,189,248,.45) 14%,rgba(37,99,235,.14) 34%,transparent 70%);
+      transform:scale(.25);transition:opacity .35s,transform .65s cubic-bezier(.16,1,.3,1);
+      mix-blend-mode:screen;
+    }
+    .warp.show{opacity:1;transform:scale(1.7);}
+    @keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.72)}}
+
+    @media(max-width:1040px){
+      header{padding:15px 22px;}
+      nav{gap:12px;}
+      .hero{grid-template-columns:1fr;padding:128px 22px 44px;text-align:center;}
+      .hero p{margin-left:auto;margin-right:auto;}
+      .hero-actions{justify-content:center;}
+      .preview-card{min-height:360px;}
+      .explorer{padding:25px 18px 75px;}
+      .canvas-grid{grid-template-columns:1fr;}
+      .side{border-left:none;border-top:1px solid rgba(255,255,255,.10);}
+      .canvas-wrap{min-height:590px;}
+      .route{grid-template-columns:1fr 1fr;}
+    }
+    @media(max-width:640px){
+      header{align-items:flex-start;gap:12px;flex-direction:column;}
+      nav{width:100%;justify-content:space-between;}
+      nav a{font-size:13px;}
+      .hero{padding-top:165px;}
+      .panel-head{padding:16px;}
+      .tab{font-size:12px;padding:9px 12px;}
+      .control-row{width:100%;justify-content:space-between;}
+      .canvas-wrap{min-height:520px;}
+      .side{padding:20px;}
+      .route{grid-template-columns:1fr;}
+      .preview-caption{flex-direction:column;align-items:flex-start;}
+      input[type=range]{width:120px;}
+      .canvas-hud{flex-direction:column;right:auto;}
+      .compare-card{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="grain"></div>
+  <div class="mouse-glow" id="mouseGlow"></div>
+  <div class="warp" id="warp"></div>
+
+  <header>
+    <a class="logo" href="index.html">QAINAR</a>
+    <nav>
+      <a href="index.html" data-i18n="nav_home">Home</a>
+      <a href="projects.html" data-i18n="nav_projects">Projects</a>
+      <a href="contact.html" data-i18n="nav_contact">Contact</a>
+      <div class="lang-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+        <button class="lang-btn" data-lang="kz">ҚАЗ</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow"><span class="eyebrow-dot"></span><span data-i18n="hero_tag">Galaxy & Solar System Explorer</span></div>
+        <h1 data-i18n="hero_title">From the Milky Way to the Solar System</h1>
+        <p data-i18n="hero_desc">An interactive space map for QAINAR SPACE: find the Sun’s place in the Milky Way, then enter the Solar System and explore each planet.</p>
+        <div class="hero-actions">
+          <button class="btn primary" id="startSolar" data-i18n="btn_solar">Enter Solar System</button>
+          <button class="btn secondary" id="startGalaxy" data-i18n="btn_galaxy">View Milky Way</button>
+          <button class="btn secondary" id="autoTour" data-i18n="btn_tour">Auto Tour</button>
+        </div>
+      </div>
+      <div class="preview-card">
+        <div class="preview-center">
+          <div class="galaxy-badge">
+            <div class="mini-orbit o1"><div class="mini-dot"></div></div>
+            <div class="mini-orbit o2"></div>
+            <span>QAINAR</span>
+          </div>
+        </div>
+        <div class="preview-caption">
+          <div>
+            <div class="caption-small" data-i18n="preview_small">Interactive Map</div>
+            <div class="caption-title" data-i18n="preview_title">Milky Way · Solar System</div>
+          </div>
+          <div class="caption-pill" data-i18n="preview_pill">Canvas Simulation</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="explorer" id="explorer">
+      <div class="panel">
+        <div class="panel-head">
+          <div class="mode-tabs">
+            <button class="tab active" data-mode="galaxy" data-i18n="tab_galaxy">Milky Way View</button>
+            <button class="tab" data-mode="solar" data-i18n="tab_solar">Solar System View</button>
+          </div>
+          <div class="control-row">
+            <button class="small-btn active" id="compactBtn" data-i18n="compact">Compact</button>
+            <button class="small-btn" id="scaleBtn" data-i18n="edu_scale">Edu Scale</button>
+            <div class="speed-control">
+              <span data-i18n="speed">Orbit Speed</span>
+              <input id="speedRange" type="range" min="0" max="3" step="0.1" value="1">
+            </div>
+          </div>
+        </div>
+        <div class="canvas-grid">
+          <div class="canvas-wrap">
+            <canvas id="spaceCanvas"></canvas>
+            <div class="canvas-hud">
+              <div class="hud-box"><strong id="hudMode">MILKY WAY</strong><br><span id="hudSub">Orion Arm · Solar location</span></div>
+              <div class="hud-box"><span id="hudCoords">X: 000 · Y: 000</span></div>
+            </div>
+            <div class="tooltip" id="tooltip"></div>
+            <div class="canvas-hint">
+              <div class="hint-chip" data-i18n="hint_click">Click planets / markers</div>
+              <div class="hint-chip" data-i18n="hint_speed">Use speed control</div>
+              <div class="hint-chip" data-i18n="hint_hover">Hover for labels</div>
+            </div>
+          </div>
+          <aside class="side">
+            <div class="side-card">
+              <div class="side-kicker" id="infoKicker">MILKY WAY</div>
+              <h2 class="side-title" id="infoTitle">Solar System Location</h2>
+              <p class="side-text" id="infoText">The Solar System sits in the Orion Arm, one of the smaller spiral arms of the Milky Way.</p>
+              <div class="fact-list" id="factList"></div>
+            </div>
+            <div class="side-card">
+              <div class="side-kicker" data-i18n="quick_select">Quick Select</div>
+              <div class="planet-list" id="planetList"></div>
+            </div>
+            <div class="side-card">
+              <div class="side-kicker" data-i18n="mission_stats">Mission Stats</div>
+              <div class="compare-card">
+                <div class="metric"><div class="metric-label" data-i18n="metric_view">View</div><div class="metric-value" id="metricView">Galaxy</div></div>
+                <div class="metric"><div class="metric-label" data-i18n="metric_target">Target</div><div class="metric-value" id="metricTarget">Orion</div></div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div class="route">
+        <div class="route-step">
+          <div class="route-year">01</div>
+          <div class="route-title" data-i18n="step1_title">Milky Way</div>
+          <div class="route-text" data-i18n="step1_text">Start from the galaxy and locate our small star system.</div>
+        </div>
+        <div class="route-step">
+          <div class="route-year">02</div>
+          <div class="route-title" data-i18n="step2_title">Orion Arm</div>
+          <div class="route-text" data-i18n="step2_text">See the Sun’s neighborhood inside the galactic disk.</div>
+        </div>
+        <div class="route-step">
+          <div class="route-year">03</div>
+          <div class="route-title" data-i18n="step3_title">Solar System</div>
+          <div class="route-text" data-i18n="step3_text">Enter the planetary system and follow the orbital motion.</div>
+        </div>
+        <div class="route-step">
+          <div class="route-year">04</div>
+          <div class="route-title" data-i18n="step4_title">Engineering View</div>
+          <div class="route-text" data-i18n="step4_text">Read each planet from a future mission perspective.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">Solar System selected</div>
+
+  <script>
+    const translations = {
+      en:{
+        nav_home:"Home",nav_projects:"Projects",nav_contact:"Contact",
+        hero_tag:"Galaxy & Solar System Explorer",
+        hero_title:"From the Milky Way to the Solar System",
+        hero_desc:"An interactive space map for QAINAR SPACE: find the Sun’s place in the Milky Way, then enter the Solar System and explore each planet.",
+        btn_solar:"Enter Solar System",btn_galaxy:"View Milky Way",btn_tour:"Auto Tour",
+        preview_small:"Interactive Map",preview_title:"Milky Way · Solar System",preview_pill:"Canvas Simulation",
+        tab_galaxy:"Milky Way View",tab_solar:"Solar System View",speed:"Orbit Speed",
+        compact:"Compact",edu_scale:"Edu Scale",
+        hint_click:"Click planets / markers",hint_speed:"Use speed control",hint_hover:"Hover for labels",quick_select:"Quick Select",
+        mission_stats:"Mission Stats",metric_view:"View",metric_target:"Target",
+        step1_title:"Milky Way",step1_text:"Start from the galaxy and locate our small star system.",
+        step2_title:"Orion Arm",step2_text:"See the Sun’s neighborhood inside the galactic disk.",
+        step3_title:"Solar System",step3_text:"Enter the planetary system and follow the orbital motion.",
+        step4_title:"Engineering View",step4_text:"Read each planet from a future mission perspective.",
+        galaxyTitle:"Solar System Location",
+        galaxyKicker:"Milky Way",
+        galaxyText:"The Solar System sits in the Orion Arm, one of the smaller spiral arms of the Milky Way. From this quiet neighborhood, every dream of reaching the sky begins.",
+        galacticCenter:"Galactic Center",orionArm:"Orion Arm",solarLocation:"Solar System",
+        fact_type:"Type",fact_distance:"Position",fact_note:"Note",fact_mission:"Mission View",fact_scale:"Scale",
+        spiralGalaxy:"Spiral galaxy",orionPosition:"Orion Arm",navigationScale:"Navigation scale",educationalView:"Educational view",
+        solarToast:"Solar System selected",galaxyToast:"Milky Way selected",tourToast:"Auto tour started",
+        hudGalaxy:"Orion Arm · Solar location",hudSolar:"Planetary system · compact orbit",
+        planets:{
+          Sun:["Sun","Star","Center","Main energy source","Every orbit in this system begins here.","1 star","Core"],
+          Mercury:["Mercury","Rocky planet","1st planet","Extreme temperature","Fast orbit, hard thermal engineering.","88 days","Thermal"],
+          Venus:["Venus","Rocky planet","2nd planet","Dense atmosphere","A pressure and heat challenge.","225 days","Pressure"],
+          Earth:["Earth","Rocky planet","3rd planet","Home world","Launch point of human spaceflight.","365 days","Home"],
+          Mars:["Mars","Rocky planet","4th planet","Red planet","Future robotics and habitat target.","687 days","Base"],
+          Jupiter:["Jupiter","Gas giant","5th planet","Largest planet","Gravity, radiation, and moons.","12 years","Gravity"],
+          Saturn:["Saturn","Gas giant","6th planet","Ring system","Orbital beauty and icy moon science.","29 years","Rings"],
+          Uranus:["Uranus","Ice giant","7th planet","Tilted axis","Strange rotation and cold atmosphere.","84 years","Tilt"],
+          Neptune:["Neptune","Ice giant","8th planet","Blue winds","Outer system navigation challenge.","165 years","Outer"]
+        }
+      },
+      zh:{
+        nav_home:"首页",nav_projects:"项目",nav_contact:"联系",
+        hero_tag:"银河系与太阳系探索器",
+        hero_title:"从银河系飞向太阳系",
+        hero_desc:"为 QAINAR SPACE 做的交互式宇宙地图：先找到太阳系在银河系中的位置，再进入太阳系探索每一颗行星。",
+        btn_solar:"进入太阳系",btn_galaxy:"查看银河系",btn_tour:"自动导览",
+        preview_small:"交互地图",preview_title:"银河系 · 太阳系",preview_pill:"Canvas 模拟",
+        tab_galaxy:"银河系视图",tab_solar:"太阳系视图",speed:"轨道速度",
+        compact:"紧凑",edu_scale:"教学比例",
+        hint_click:"点击行星 / 标记",hint_speed:"可调节速度",hint_hover:"悬停显示标签",quick_select:"快速选择",
+        mission_stats:"任务数据",metric_view:"视图",metric_target:"目标",
+        step1_title:"银河系",step1_text:"从整个银河出发，找到我们小小的恒星系统。",
+        step2_title:"猎户臂",step2_text:"查看太阳所在的银河系邻域。",
+        step3_title:"太阳系",step3_text:"进入行星系统，观察轨道运动。",
+        step4_title:"工程视角",step4_text:"用未来任务的角度理解每颗行星。",
+        galaxyTitle:"太阳系位置",
+        galaxyKicker:"银河系",
+        galaxyText:"太阳系位于银河系的猎户臂中。正是从这个安静的星际邻域开始，人类才一步步产生了飞向天空的梦想。",
+        galacticCenter:"银河中心",orionArm:"猎户臂",solarLocation:"太阳系",
+        fact_type:"类型",fact_distance:"位置",fact_note:"特点",fact_mission:"任务视角",fact_scale:"比例",
+        spiralGalaxy:"旋涡星系",orionPosition:"猎户臂",navigationScale:"导航尺度",educationalView:"教学展示",
+        solarToast:"已进入太阳系",galaxyToast:"已切换到银河系",tourToast:"自动导览开始",
+        hudGalaxy:"猎户臂 · 太阳系位置",hudSolar:"行星系统 · 紧凑轨道",
+        planets:{
+          Sun:["太阳","恒星","中心","主要能量来源","所有轨道都从这里开始。","1 颗恒星","核心"],
+          Mercury:["水星","岩石行星","第 1 颗行星","极端温差","轨道很快，热控很难。","88 天","热控"],
+          Venus:["金星","岩石行星","第 2 颗行星","浓厚大气","高压与高温挑战。","225 天","高压"],
+          Earth:["地球","岩石行星","第 3 颗行星","人类家园","人类航天的出发点。","365 天","家园"],
+          Mars:["火星","岩石行星","第 4 颗行星","红色行星","未来机器人与基地目标。","687 天","基地"],
+          Jupiter:["木星","气态巨行星","第 5 颗行星","最大行星","引力、辐射与卫星系统。","12 年","引力"],
+          Saturn:["土星","气态巨行星","第 6 颗行星","环系统","轨道之美与冰卫星科学。","29 年","星环"],
+          Uranus:["天王星","冰巨行星","第 7 颗行星","倾斜自转轴","奇特自转与寒冷大气。","84 年","倾斜"],
+          Neptune:["海王星","冰巨行星","第 8 颗行星","蓝色强风","外太阳系导航挑战。","165 年","外侧"]
+        }
+      },
+      kz:{
+        nav_home:"Басты бет",nav_projects:"Жобалар",nav_contact:"Байланыс",
+        hero_tag:"Галактика және Күн жүйесі",
+        hero_title:"Құс жолынан Күн жүйесіне дейін",
+        hero_desc:"QAINAR SPACE үшін жасалған интерактивті ғарыш картасы: алдымен Күн жүйесінің Құс жолындағы орнын тап, кейін планеталарды зертте.",
+        btn_solar:"Күн жүйесіне кіру",btn_galaxy:"Құс жолын көру",btn_tour:"Авто тур",
+        preview_small:"Интерактивті карта",preview_title:"Құс жолы · Күн жүйесі",preview_pill:"Canvas симуляция",
+        tab_galaxy:"Құс жолы көрінісі",tab_solar:"Күн жүйесі көрінісі",speed:"Орбита жылдамдығы",
+        compact:"Ықшам",edu_scale:"Оқу масштабы",
+        hint_click:"Планетаны / белгіні бас",hint_speed:"Жылдамдықты өзгерт",hint_hover:"Атауларды көру үшін апар",quick_select:"Жылдам таңдау",
+        mission_stats:"Миссия деректері",metric_view:"Көрініс",metric_target:"Нысана",
+        step1_title:"Құс жолы",step1_text:"Галактикадан бастап, біздің шағын жұлдыз жүйемізді тап.",
+        step2_title:"Орион тармағы",step2_text:"Күн орналасқан галактикалық аймақты көр.",
+        step3_title:"Күн жүйесі",step3_text:"Планеталық жүйеге кіріп, орбиталық қозғалысты бақыла.",
+        step4_title:"Инженерлік көзқарас",step4_text:"Әр планетаны болашақ миссия тұрғысынан қара.",
+        galaxyTitle:"Күн жүйесінің орны",
+        galaxyKicker:"Құс жолы",
+        galaxyText:"Күн жүйесі Құс жолындағы Орион тармағында орналасқан. Осы тыныш жұлдыздық аймақтан аспанға жету арманы басталады.",
+        galacticCenter:"Галактика орталығы",orionArm:"Орион тармағы",solarLocation:"Күн жүйесі",
+        fact_type:"Түрі",fact_distance:"Орны",fact_note:"Ерекшелігі",fact_mission:"Миссия көзқарасы",fact_scale:"Масштаб",
+        spiralGalaxy:"Спираль галактика",orionPosition:"Орион тармағы",navigationScale:"Навигация масштабы",educationalView:"Оқу көрінісі",
+        solarToast:"Күн жүйесі таңдалды",galaxyToast:"Құс жолы таңдалды",tourToast:"Авто тур басталды",
+        hudGalaxy:"Орион тармағы · Күн жүйесінің орны",hudSolar:"Планеталық жүйе · ықшам орбита",
+        planets:{
+          Sun:["Күн","Жұлдыз","Орталық","Негізгі энергия көзі","Бұл жүйедегі барлық орбита осы жерден басталады.","1 жұлдыз","Ядро"],
+          Mercury:["Меркурий","Жартасты планета","1-планета","Өте үлкен температура айырмасы","Жылдам орбита және күрделі жылу қорғанысы.","88 күн","Жылу"],
+          Venus:["Шолпан","Жартасты планета","2-планета","Қалың атмосфера","Қысым мен жылу бойынша қиын орта.","225 күн","Қысым"],
+          Earth:["Жер","Жартасты планета","3-планета","Біздің үй","Адамзат ғарышқа осы жерден ұшады.","365 күн","Үй"],
+          Mars:["Марс","Жартасты планета","4-планета","Қызыл планета","Болашақ роботтар мен база нысаны.","687 күн","База"],
+          Jupiter:["Юпитер","Газ алыбы","5-планета","Ең үлкен планета","Гравитация, радиация және серіктер.","12 жыл","Гравитация"],
+          Saturn:["Сатурн","Газ алыбы","6-планета","Сақина жүйесі","Орбита сұлулығы және мұзды серіктер.","29 жыл","Сақина"],
+          Uranus:["Уран","Мұз алыбы","7-планета","Көлбеу ось","Ерекше айналу және суық атмосфера.","84 жыл","Көлбеу"],
+          Neptune:["Нептун","Мұз алыбы","8-планета","Көк желдер","Сыртқы жүйедегі навигация сынағы.","165 жыл","Сыртқы"]
+        }
+      }
+    };
+
+    let lang = localStorage.getItem('qainar_lang') || 'en';
+    let mode = 'galaxy';
+    let selected = 'Earth';
+    let speed = 1;
+    let scaleMode = 'compact';
+    let mouse = {x:-999,y:-999, canvasX:-999, canvasY:-999};
+    let hovered = null;
+    let t = 0;
+
+    const starCanvas = document.getElementById('stars');
+    const starCtx = starCanvas.getContext('2d');
+    const canvas = document.getElementById('spaceCanvas');
+    const ctx = canvas.getContext('2d');
+    const infoKicker = document.getElementById('infoKicker');
+    const infoTitle = document.getElementById('infoTitle');
+    const infoText = document.getElementById('infoText');
+    const factList = document.getElementById('factList');
+    const planetList = document.getElementById('planetList');
+    const toast = document.getElementById('toast');
+    const speedRange = document.getElementById('speedRange');
+    const tooltip = document.getElementById('tooltip');
+    const hudMode = document.getElementById('hudMode');
+    const hudSub = document.getElementById('hudSub');
+    const hudCoords = document.getElementById('hudCoords');
+    const metricView = document.getElementById('metricView');
+    const metricTarget = document.getElementById('metricTarget');
+    const warp = document.getElementById('warp');
+    const mouseGlow = document.getElementById('mouseGlow');
+
+    const planetKeys = ['Sun','Mercury','Venus','Earth','Mars','Jupiter','Saturn','Uranus','Neptune'];
+    const planetColors = {
+      Sun:'#fbbf24', Mercury:'#cbd5e1', Venus:'#f59e0b', Earth:'#38bdf8', Mars:'#fb7185',
+      Jupiter:'#fcd34d', Saturn:'#fde68a', Uranus:'#67e8f9', Neptune:'#60a5fa'
+    };
+    const planetRadii = {Sun:25,Mercury:5,Venus:8,Earth:9,Mars:7,Jupiter:17,Saturn:15,Uranus:12,Neptune:12};
+    const orbitRCompact = {Mercury:64,Venus:92,Earth:123,Mars:158,Jupiter:215,Saturn:275,Uranus:335,Neptune:390};
+    const orbitREdu = {Mercury:55,Venus:82,Earth:116,Mars:158,Jupiter:250,Saturn:318,Uranus:365,Neptune:405};
+    const orbitSpeed = {Mercury:4.15,Venus:1.62,Earth:1,Mars:.53,Jupiter:.084,Saturn:.034,Uranus:.012,Neptune:.006};
+
+    let bgStars = [];
+    let galaxyDots = [];
+    let galaxyMarkers = [];
+    let planetPositions = {};
+
+    function tr(){ return translations[lang] || translations.en; }
+
+    function resizeCanvas(){
+      const dpr = Math.min(devicePixelRatio || 1, 2);
+      starCanvas.width = innerWidth * dpr;
+      starCanvas.height = innerHeight * dpr;
+      starCanvas.style.width = innerWidth + 'px';
+      starCanvas.style.height = innerHeight + 'px';
+      starCtx.setTransform(dpr,0,0,dpr,0,0);
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      createStars();
+      createGalaxyDots();
+    }
+
+    function createStars(){
+      bgStars = Array.from({length:Math.min(250, Math.floor(innerWidth*innerHeight/5600))},()=>({
+        x:Math.random()*innerWidth,y:Math.random()*innerHeight,
+        r:Math.random()*1.6+.2,a:Math.random()*.7+.15,v:Math.random()*.28+.05
+      }));
+    }
+
+    function createGalaxyDots(){
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const w = rect.width, h = rect.height;
+      galaxyDots = [];
+      for(let i=0;i<1450;i++){
+        const arm = i % 4;
+        const r = Math.pow(Math.random(), .70) * Math.min(w,h)*.43;
+        const angle = r*.031 + arm*Math.PI/2 + (Math.random()-.5)*.72;
+        const flat = .43 + Math.random()*.14;
+        const x = Math.cos(angle)*r + (Math.random()-.5)*10;
+        const y = Math.sin(angle)*r*flat + (Math.random()-.5)*10;
+        galaxyDots.push({x,y,r:Math.random()*1.7+.25,a:Math.random()*.62+.22,c:Math.random()});
+      }
+    }
+
+    function drawBgStars(){
+      starCtx.clearRect(0,0,innerWidth,innerHeight);
+      for(const s of bgStars){
+        s.y += s.v*.04;
+        if(s.y > innerHeight) s.y = 0;
+        starCtx.globalAlpha = s.a * (0.7 + Math.sin(t*0.02+s.x)*0.25);
+        starCtx.fillStyle = '#fff';
+        starCtx.beginPath();
+        starCtx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        starCtx.fill();
+      }
+      starCtx.globalAlpha = 1;
+    }
+
+    function setLang(next){
+      lang = next;
+      localStorage.setItem('qainar_lang', lang);
+      document.documentElement.lang = lang === 'kz' ? 'kk' : lang;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.dataset.i18n;
+        if(tr()[key]) el.textContent = tr()[key];
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.lang === lang));
+      buildPlanetButtons();
+      updateInfo();
+    }
+
+    function showToast(text){
+      toast.textContent = text;
+      toast.classList.add('show');
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(()=>toast.classList.remove('show'),1500);
+    }
+
+    function showWarp(){
+      warp.classList.add('show');
+      setTimeout(()=>warp.classList.remove('show'),620);
+    }
+
+    function setMode(next, jump=true){
+      if(mode !== next && jump) showWarp();
+      mode = next;
+      document.querySelectorAll('.tab').forEach(tab=>tab.classList.toggle('active', tab.dataset.mode === mode));
+      if(mode === 'solar' && selected === 'Sun') selected = 'Earth';
+      updateInfo();
+      showToast(mode === 'solar' ? tr().solarToast : tr().galaxyToast);
+      document.getElementById('explorer').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    function updateInfo(){
+      const T = tr();
+      metricView.textContent = mode === 'solar' ? 'Solar' : 'Galaxy';
+      metricTarget.textContent = mode === 'solar' ? T.planets[selected][0] : T.orionArm;
+      if(mode === 'galaxy'){
+        infoKicker.textContent = T.galaxyKicker;
+        infoTitle.textContent = T.galaxyTitle;
+        infoText.textContent = T.galaxyText;
+        hudMode.textContent = 'MILKY WAY';
+        hudSub.textContent = T.hudGalaxy;
+        factList.innerHTML = `
+          <div class="fact"><span>${T.fact_type}</span><span>${T.spiralGalaxy}</span></div>
+          <div class="fact"><span>${T.fact_distance}</span><span>${T.orionPosition}</span></div>
+          <div class="fact"><span>${T.fact_note}</span><span>${T.solarLocation}</span></div>
+          <div class="fact"><span>${T.fact_mission}</span><span>${T.navigationScale}</span></div>
+        `;
+        return;
+      }
+      const p = T.planets[selected];
+      infoKicker.textContent = 'SOLAR SYSTEM';
+      infoTitle.textContent = p[0];
+      infoText.textContent = p[4];
+      hudMode.textContent = 'SOLAR SYSTEM';
+      hudSub.textContent = T.hudSolar;
+      factList.innerHTML = `
+        <div class="fact"><span>${T.fact_type}</span><span>${p[1]}</span></div>
+        <div class="fact"><span>${T.fact_distance}</span><span>${p[2]}</span></div>
+        <div class="fact"><span>${T.fact_note}</span><span>${p[3]}</span></div>
+        <div class="fact"><span>${T.fact_scale}</span><span>${p[5]}</span></div>
+        <div class="fact"><span>${T.fact_mission}</span><span>${p[6]}</span></div>
+      `;
+      document.querySelectorAll('.planet-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.planet === selected));
+    }
+
+    function buildPlanetButtons(){
+      const T = tr();
+      planetList.innerHTML = '';
+      planetKeys.forEach(key=>{
+        const btn = document.createElement('button');
+        btn.className = 'planet-btn';
+        btn.dataset.planet = key;
+        btn.textContent = T.planets[key][0];
+        btn.onclick = () => { selected = key; setMode('solar'); updateInfo(); };
+        planetList.appendChild(btn);
+      });
+      updateInfo();
+    }
+
+    function galaxyMarkerPositions(cx,cy,w,h){
+      const s = Math.min(w,h);
+      return [
+        {id:'center',key:'galacticCenter',x:cx,y:cy,color:'#fbbf24',action:'info'},
+        {id:'orion',key:'orionArm',x:cx+s*.20,y:cy-s*.09,color:'#a78bfa',action:'info'},
+        {id:'solar',key:'solarLocation',x:cx+s*.31,y:cy-s*.13,color:'#38bdf8',action:'solar'}
+      ];
+    }
+
+    function drawGalaxy(){
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      const cx = w/2, cy = h/2;
+      ctx.clearRect(0,0,w,h);
+      ctx.save();
+      ctx.translate(cx,cy);
+      ctx.rotate(t*0.00045*speed);
+
+      const coreGrad = ctx.createRadialGradient(0,0,0,0,0,Math.min(w,h)*.20);
+      coreGrad.addColorStop(0,'rgba(255,255,255,.95)');
+      coreGrad.addColorStop(.08,'rgba(251,191,36,.82)');
+      coreGrad.addColorStop(.28,'rgba(56,189,248,.34)');
+      coreGrad.addColorStop(1,'rgba(56,189,248,0)');
+      ctx.fillStyle = coreGrad;
+      ctx.beginPath();
+      ctx.arc(0,0,Math.min(w,h)*.20,0,Math.PI*2);
+      ctx.fill();
+
+      for(const d of galaxyDots){
+        ctx.globalAlpha = d.a;
+        ctx.fillStyle = d.c > .82 ? '#fde68a' : d.c > .62 ? '#a5f3fc' : '#dbeafe';
+        ctx.beginPath();
+        ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      ctx.restore();
+
+      galaxyMarkers = galaxyMarkerPositions(cx,cy,w,h);
+      galaxyMarkers.forEach((m,i)=>{
+        const isHover = hovered && hovered.id === m.id;
+        ctx.save();
+        ctx.strokeStyle = m.color;ctx.fillStyle = m.color;ctx.shadowColor = m.color;
+        ctx.shadowBlur = isHover ? 28 : 18;
+        ctx.beginPath();
+        ctx.arc(m.x,m.y,(isHover?8:6)+Math.sin(t*.05+i)*1.5,0,Math.PI*2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = .55;
+        ctx.beginPath();
+        ctx.arc(m.x,m.y,isHover?25:18,0,Math.PI*2);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        ctx.fillStyle = '#e0f2fe';
+        ctx.font = '800 12px DM Sans';
+        ctx.fillText(tr()[m.key], m.x+16, m.y-12);
+        ctx.restore();
+      });
+    }
+
+    function drawSolar(){
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      const cx = w/2, cy = h/2;
+      ctx.clearRect(0,0,w,h);
+
+      const scale = Math.min(w,h) < 600 ? .78 : 1;
+      const maxR = Math.min(w,h)*.45;
+      const orbitScale = maxR / (scaleMode === 'edu' ? 420 : 405);
+      const orbits = scaleMode === 'edu' ? orbitREdu : orbitRCompact;
+
+      ctx.save();
+      ctx.translate(cx,cy);
+      const sunGlow = ctx.createRadialGradient(0,0,0,0,0,94*scale);
+      sunGlow.addColorStop(0,'rgba(251,191,36,.96)');
+      sunGlow.addColorStop(.22,'rgba(251,191,36,.29)');
+      sunGlow.addColorStop(1,'rgba(251,191,36,0)');
+      ctx.fillStyle = sunGlow;
+      ctx.beginPath();
+      ctx.arc(0,0,94*scale,0,Math.PI*2);
+      ctx.fill();
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.shadowColor = '#fbbf24';
+      ctx.shadowBlur = 30;
+      ctx.beginPath();
+      ctx.arc(0,0,planetRadii.Sun*scale,0,Math.PI*2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      for(const key of planetKeys.slice(1)){
+        const r = orbits[key]*orbitScale;
+        ctx.strokeStyle = 'rgba(255,255,255,.12)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(0,0,r,0,Math.PI*2);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      planetPositions = {Sun:{x:cx,y:cy,r:planetRadii.Sun*scale,id:'Sun'}};
+      for(const key of planetKeys.slice(1)){
+        const r = orbits[key]*orbitScale;
+        const angle = t*0.012*orbitSpeed[key]*speed + planetKeys.indexOf(key)*.72;
+        const x = cx + Math.cos(angle)*r;
+        const y = cy + Math.sin(angle)*r;
+        planetPositions[key] = {x,y,r:planetRadii[key]*scale,id:key};
+
+        const isSel = selected === key;
+        const isHover = hovered && hovered.id === key;
+        ctx.save();
+        if(isSel || isHover){
+          ctx.strokeStyle = isSel ? 'rgba(125,211,252,.80)' : 'rgba(255,255,255,.55)';
+          ctx.lineWidth = isSel ? 1.7 : 1;
+          ctx.beginPath();
+          ctx.arc(x,y,planetRadii[key]*scale+12,0,Math.PI*2);
+          ctx.stroke();
+        }
+        ctx.fillStyle = planetColors[key];
+        ctx.shadowColor = planetColors[key];
+        ctx.shadowBlur = isSel || isHover ? 28 : 13;
+        ctx.beginPath();
+        ctx.arc(x,y,planetRadii[key]*scale*(isSel?1.28:isHover?1.18:1),0,Math.PI*2);
+        ctx.fill();
+        if(key === 'Saturn'){
+          ctx.strokeStyle = 'rgba(253,230,138,.7)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.ellipse(x,y,planetRadii[key]*1.75*scale,planetRadii[key]*.55*scale,0.25,0,Math.PI*2);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      ctx.save();
+      ctx.fillStyle = '#e0f2fe';
+      ctx.font = '900 12px DM Sans';
+      const labelKey = hovered && hovered.id && planetPositions[hovered.id] ? hovered.id : selected;
+      const p = planetPositions[labelKey] || planetPositions.Earth;
+      if(labelKey !== 'Sun') ctx.fillText(tr().planets[labelKey][0], p.x+16, p.y-12);
+      ctx.restore();
+    }
+
+    function updateHover(){
+      hovered = null;
+      const mx = mouse.canvasX, my = mouse.canvasY;
+      if(mode === 'galaxy'){
+        for(const m of galaxyMarkers){
+          if(Math.hypot(mx-m.x,my-m.y) < 28){ hovered = m; break; }
+        }
+        if(hovered) showTooltip(tr()[hovered.key], mx, my);
+        else hideTooltip();
+      }else{
+        for(const key of planetKeys){
+          const p = planetPositions[key];
+          if(!p) continue;
+          if(Math.hypot(mx-p.x,my-p.y) < Math.max(18,p.r+10)){
+            hovered = {id:key};
+            break;
+          }
+        }
+        if(hovered) showTooltip(tr().planets[hovered.id][0], mx, my);
+        else hideTooltip();
+      }
+    }
+
+    function showTooltip(text,x,y){
+      tooltip.textContent = text;
+      tooltip.style.left = x + 'px';
+      tooltip.style.top = y + 'px';
+      tooltip.classList.add('show');
+    }
+    function hideTooltip(){ tooltip.classList.remove('show'); }
+
+    function animate(){
+      t += 1;
+      drawBgStars();
+      updateHover();
+      if(mode === 'galaxy') drawGalaxy();
+      else drawSolar();
+      requestAnimationFrame(animate);
+    }
+
+    function handleCanvasClick(e){
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left, y = e.clientY - rect.top;
+      if(mode === 'galaxy'){
+        let clicked = null;
+        for(const m of galaxyMarkers){
+          if(Math.hypot(x-m.x,y-m.y) < 34){ clicked = m; break; }
+        }
+        if(!clicked || clicked.action === 'solar') setMode('solar');
+        else showToast(tr()[clicked.key]);
+        return;
+      }
+      for(const key of planetKeys){
+        const p = planetPositions[key];
+        if(!p) continue;
+        const dist = Math.hypot(x-p.x,y-p.y);
+        if(dist < Math.max(19,p.r+11)){
+          selected = key;
+          updateInfo();
+          return;
+        }
+      }
+    }
+
+    function setScaleMode(next){
+      scaleMode = next;
+      document.getElementById('compactBtn').classList.toggle('active', next === 'compact');
+      document.getElementById('scaleBtn').classList.toggle('active', next === 'edu');
+    }
+
+    function runTour(){
+      showToast(tr().tourToast);
+      setMode('galaxy');
+      setTimeout(()=>setMode('solar'),1600);
+      setTimeout(()=>{ selected='Earth'; updateInfo(); },2300);
+      setTimeout(()=>{ selected='Mars'; updateInfo(); },3800);
+      setTimeout(()=>{ selected='Jupiter'; updateInfo(); },5200);
+    }
+
+    canvas.addEventListener('mousemove', e=>{
+      const rect = canvas.getBoundingClientRect();
+      mouse.canvasX = e.clientX - rect.left;
+      mouse.canvasY = e.clientY - rect.top;
+      hudCoords.textContent = `X: ${Math.round(mouse.canvasX)} · Y: ${Math.round(mouse.canvasY)}`;
+    });
+    canvas.addEventListener('mouseleave', ()=>{ mouse.canvasX=-999; mouse.canvasY=-999; hideTooltip(); });
+    canvas.addEventListener('click', handleCanvasClick);
+
+    document.addEventListener('mousemove', e=>{
+      mouseGlow.style.left = e.clientX + 'px';
+      mouseGlow.style.top = e.clientY + 'px';
+    });
+
+    speedRange.addEventListener('input', e=>{ speed = parseFloat(e.target.value); });
+    document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>setMode(tab.dataset.mode)));
+    document.querySelectorAll('.lang-btn').forEach(btn=>btn.addEventListener('click',()=>setLang(btn.dataset.lang)));
+    document.getElementById('startSolar').addEventListener('click',()=>setMode('solar'));
+    document.getElementById('startGalaxy').addEventListener('click',()=>setMode('galaxy'));
+    document.getElementById('autoTour').addEventListener('click',runTour);
+    document.getElementById('compactBtn').addEventListener('click',()=>setScaleMode('compact'));
+    document.getElementById('scaleBtn').addEventListener('click',()=>setScaleMode('edu'));
+
+    addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    setLang(lang);
+    buildPlanetButtons();
+    animate();
+  </script>
+</body>
+</html>

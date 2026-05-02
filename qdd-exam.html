@@ -1321,19 +1321,376 @@
       </section>
 
       <!-- 3–39-СҰРАҚТАР: ОСЫЛАЙ ДАЙЫН ТҰР. КЕЙІН ІШІНЕ КОД ҚОЯСЫҢ. -->
-      <section class="question-section" id="q3">
-        <div class="card question-card">
-          <h2>3-сұрақ</h2>
-          <p><strong>Толық емтихан сұрағы:</strong></p>
-          <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
-            Бұл жерге 3-сұрақтың толық тақырыбын қоямыз.
-          </p>
-        </div>
-        <div class="card placeholder">
-          <h3>3-сұрақ контенті әзірге бос</h3>
-          <p>Кейін осы section ішіне 3-сұрақтың толық жауабын, суретін және мысал есептерін қоямыз.</p>
-        </div>
-      </section>
+     <!-- 3-СҰРАҚ -->
+<section class="question-section" id="q3">
+  <div class="card question-card">
+    <h2>3-сұрақ</h2>
+    <p><strong>Толық емтихан сұрағы:</strong></p>
+    <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+      Массалар геометриясы. Оське, жазықтыққа қатысты дененің инерция моменттерін
+      түсіндіріп, біртекті дөңгелек пластинаның центрі арқылы өтетін, пластинаға
+      перпендикуляр оське қатысты инерция моментін есептеңіз.
+    </p>
+  </div>
+
+  <div class="section-title">1 · Тақырыптың негізгі мағынасы</div>
+
+  <div class="card">
+    <p>
+      Бұл сұрақта массалар геометриясының негізгі ұғымдары қарастырылады:
+      дененің өске және жазықтыққа қатысты инерция моменттері, содан кейін
+      біртекті дөңгелек пластинаның центрі арқылы өтетін перпендикуляр оське
+      қатысты инерция моменті есептеледі.
+    </p>
+
+    <p>
+      Дөңгелек пластина біртекті болса, оның массасы бүкіл аудан бойынша бірдей
+      таралған деп есептеледі. Сондықтан есептеуде аудандық тығыздық қолданылады.
+    </p>
+
+    <div class="formula">
+      <div class="label">Негізгі идея</div>
+      $$I=\int r^2dm$$
+      <div class="note">
+        Мұндағы \(r\) — массаның кішкентай элементінен айналу осіне дейінгі қашықтық,
+        \(dm\) — сол элементтің массасы.
+      </div>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 300">
+        <circle cx="380" cy="155" r="95" fill="rgba(245,158,11,0.22)" stroke="#f59e0b" stroke-width="3"></circle>
+        <circle cx="380" cy="155" r="5" fill="#38bdf8"></circle>
+
+        <line x1="380" y1="155" x2="465" y2="115" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+        <text x="420" y="125" fill="#94a3b8" font-size="15">r</text>
+
+        <line x1="380" y1="55" x2="380" y2="255" stroke="#38bdf8" stroke-width="3" stroke-dasharray="8 7"></line>
+        <text x="395" y="65" fill="#7dd3fc" font-size="15">z осі</text>
+
+        <text x="285" y="280" fill="#e2e8f0" font-size="15">біртекті дөңгелек пластина</text>
+
+        <text x="270" y="40" class="svg-formula" font-size="17">
+          I<tspan baseline-shift="-30%" font-size="12">z</tspan> = ∫r²dm
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Қарапайым мысал</h4>
+      <p>
+        Егер массасы \(m=2\,кг\) кішкентай нүкте центрден \(r=3\,м\) қашықтықта болса,
+        оның центр арқылы өтетін оське қатысты инерция моменті:
+      </p>
+      $$I=mr^2=2\cdot3^2=18\,кг\cdot м^2$$
+      <p>
+        Осы идея тұтас дөңгелек пластинаға қолданылғанда, барлық кішкентай элементтер
+        бойынша интеграл алынады.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">2 · Оське қатысты инерция моменті</div>
+
+  <div class="card">
+    <p>
+      <strong>Оське қатысты инерция моменті</strong> дене массасының берілген оське
+      қатысты қалай таралғанын сипаттайды. Айналу осінен алыс орналасқан масса
+      инерция моментін көбірек арттырады.
+    </p>
+
+    <div class="formula">
+      <div class="label">Дискретті жүйе үшін</div>
+      $$I_z=\sum m_kr_k^2$$
+      <div class="note">
+        Мұндағы \(r_k\) — \(m_k\) массалы нүктеден \(z\) осіне дейінгі қашықтық.
+      </div>
+    </div>
+
+    <div class="formula green">
+      <div class="label">Тұтас дене үшін</div>
+      $$I_z=\int r^2dm$$
+      <div class="note">
+        Тұтас денеде масса үздіксіз таралғандықтан, қосынды орнына интеграл қолданылады.
+      </div>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 300">
+        <line x1="380" y1="40" x2="380" y2="255" stroke="#38bdf8" stroke-width="4"></line>
+        <text x="395" y="55" fill="#38bdf8" font-size="15">z осі</text>
+
+        <circle cx="520" cy="150" r="20" fill="#f59e0b"></circle>
+        <text x="547" y="155" fill="#e2e8f0" font-size="14">mₖ</text>
+
+        <line x1="380" y1="150" x2="520" y2="150" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+        <text x="445" y="137" fill="#94a3b8" font-size="15">rₖ</text>
+
+        <text x="260" y="75" class="svg-formula" font-size="17">
+          I<tspan baseline-shift="-30%" font-size="12">z</tspan> = Σmₖrₖ²
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Екі нүкте берілген: \(m_1=1\,кг,\;r_1=2\,м\),
+        \(m_2=3\,кг,\;r_2=1\,м\). Оське қатысты инерция моментін табамыз.
+      </p>
+      $$I=m_1r_1^2+m_2r_2^2$$
+      $$I=1\cdot2^2+3\cdot1^2=4+3=7\,кг\cdot м^2$$
+      <p>Жауабы: \(I=7\,кг\cdot м^2\).</p>
+    </div>
+  </div>
+
+  <div class="section-title">3 · Жазықтыққа қатысты инерция моменті</div>
+
+  <div class="card">
+    <p>
+      <strong>Жазықтыққа қатысты инерция моменті</strong> дене нүктелерінің берілген
+      жазықтықтан қаншалықты алыста орналасқанын көрсетеді. Мысалы, \(xOy\)
+      жазықтығына дейінгі қашықтық \(z\)-ке тең.
+    </p>
+
+    <div class="formula">
+      <div class="label">Жазықтықтарға қатысты формулалар</div>
+      $$I_{xOy}=\sum m_kz_k^2$$
+      $$I_{yOz}=\sum m_kx_k^2$$
+      $$I_{xOz}=\sum m_ky_k^2$$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 300">
+        <polygon points="150,220 590,220 680,125 240,125" fill="rgba(56,189,248,0.10)" stroke="#38bdf8" stroke-width="2"></polygon>
+        <text x="350" y="247" fill="#38bdf8" font-size="16">xOy жазықтығы</text>
+
+        <circle cx="430" cy="70" r="16" fill="#f59e0b"></circle>
+        <text x="455" y="76" fill="#e2e8f0" font-size="14">m</text>
+
+        <line x1="430" y1="70" x2="430" y2="170" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+        <text x="440" y="125" fill="#94a3b8" font-size="15">z</text>
+
+        <circle cx="430" cy="170" r="5" fill="#38bdf8"></circle>
+
+        <text x="240" y="70" class="svg-formula" font-size="17">
+          I<tspan baseline-shift="-30%" font-size="12">xOy</tspan> = m z²
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Массасы \(m=4\,кг\) нүкте \(xOy\) жазықтығынан \(z=3\,м\) қашықтықта орналасқан.
+      </p>
+      $$I_{xOy}=mz^2=4\cdot3^2=36\,кг\cdot м^2$$
+      <p>Жауабы: \(I_{xOy}=36\,кг\cdot м^2\).</p>
+    </div>
+  </div>
+
+  <div class="section-title">4 · Біртекті дөңгелек пластинаны элементтерге бөлу</div>
+
+  <div class="card">
+    <p>
+      Дөңгелек пластинаның радиусы \(R\), массасы \(M\) болсын. Пластина біртекті
+      болғандықтан, оның аудандық тығыздығы тұрақты:
+    </p>
+
+    <div class="formula green">
+      <div class="label">Аудандық тығыздық</div>
+      $$\rho=\frac{M}{S}=\frac{M}{\pi R^2}$$
+      <div class="note">
+        Мұндағы \(S=\pi R^2\) — дөңгелек пластинаның ауданы.
+      </div>
+    </div>
+
+    <p>
+      Пластинаны радиусы \(r\), қалыңдығы \(dr\) болатын жұқа сақина түріндегі
+      элементтерге бөлеміз. Бұл сақинаның ауданы:
+    </p>
+
+    <div class="formula">
+      <div class="label">Жұқа сақина ауданы</div>
+      $$dS=2\pi r\,dr$$
+    </div>
+
+    <p>
+      Сондықтан сақина элементінің массасы:
+    </p>
+
+    <div class="formula">
+      <div class="label">Элемент массасы</div>
+      $$dm=\rho\,dS=\rho\cdot2\pi r\,dr$$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 340">
+        <circle cx="380" cy="170" r="110" fill="rgba(245,158,11,0.14)" stroke="#f59e0b" stroke-width="3"></circle>
+        <circle cx="380" cy="170" r="70" fill="none" stroke="#38bdf8" stroke-width="4"></circle>
+        <circle cx="380" cy="170" r="76" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="6 5"></circle>
+
+        <circle cx="380" cy="170" r="5" fill="#10b981"></circle>
+        <line x1="380" y1="170" x2="450" y2="170" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+        <text x="412" y="158" fill="#94a3b8" font-size="15">r</text>
+
+        <text x="462" y="180" fill="#7dd3fc" font-size="15">dr</text>
+        <text x="285" y="55" class="svg-formula" font-size="17">
+          dS = 2πr dr
+        </text>
+        <text x="260" y="300" fill="#e2e8f0" font-size="15">жұқа сақина элементі</text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал түсіндіру</h4>
+      <p>
+        Егер \(R=2\,м\), \(M=8\,кг\) болса, пластинаның аудандық тығыздығы:
+      </p>
+      $$\rho=\frac{M}{\pi R^2}=\frac{8}{\pi\cdot2^2}=\frac{2}{\pi}\,кг/м^2$$
+      <p>
+        Яғни пластинаның әрбір аудан бірлігіне бірдей масса таралған.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">5 · Дөңгелек пластинаның инерция моментін шығару</div>
+
+  <div class="card">
+    <p>
+      Центр арқылы өтетін және пластинаға перпендикуляр \(z\) осіне қатысты
+      инерция моментін есептейміз. Жұқа сақина элементінің барлық нүктелері
+      осьтен \(r\) қашықтықта орналасқан.
+    </p>
+
+    <div class="formula">
+      <div class="label">Элемент инерция моменті</div>
+      $$dI=r^2dm$$
+    </div>
+
+    <p>
+      Ал \(dm=\rho\cdot2\pi r\,dr\), сондықтан:
+    </p>
+
+    <div class="formula">
+      $$dI=r^2\cdot\rho\cdot2\pi r\,dr$$
+      $$dI=2\pi\rho r^3\,dr$$
+    </div>
+
+    <p>
+      Енді \(r=0\)-ден \(R\)-ге дейін интегралдаймыз:
+    </p>
+
+    <div class="formula">
+      $$I_z=\int_0^R 2\pi\rho r^3\,dr$$
+      $$I_z=2\pi\rho\int_0^R r^3\,dr$$
+    </div>
+
+    <div class="formula amber">
+      $$\int_0^R r^3\,dr=\frac{R^4}{4}$$
+    </div>
+
+    <p>
+      Сондықтан:
+    </p>
+
+    <div class="formula">
+      $$I_z=2\pi\rho\cdot\frac{R^4}{4}$$
+      $$I_z=\frac{\pi\rho R^4}{2}$$
+    </div>
+
+    <p>
+      \(\rho=\frac{M}{\pi R^2}\) екенін орнына қоямыз:
+    </p>
+
+    <div class="formula green">
+      $$I_z=\frac{\pi R^4}{2}\cdot\frac{M}{\pi R^2}$$
+      $$I_z=\frac{MR^2}{2}$$
+    </div>
+
+    <div class="example">
+      <h4>Қорытынды формула</h4>
+      <p>
+        Біртекті дөңгелек пластинаның центрі арқылы өтетін, пластинаға перпендикуляр
+        оське қатысты инерция моменті:
+      </p>
+      $$\boxed{I_z=\frac{MR^2}{2}}$$
+    </div>
+  </div>
+
+  <div class="section-title">6 · Сандық мысал</div>
+
+  <div class="card">
+    <p>
+      Біртекті дөңгелек пластинаның массасы \(M=10\,кг\), радиусы \(R=0.5\,м\).
+      Центр арқылы өтетін, пластинаға перпендикуляр оське қатысты инерция моментін табамыз.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Формула</div>
+      $$I_z=\frac{MR^2}{2}$$
+    </div>
+
+    <div class="example">
+      <h4>Шешуі</h4>
+      $$I_z=\frac{10\cdot(0.5)^2}{2}$$
+      $$I_z=\frac{10\cdot0.25}{2}=\frac{2.5}{2}=1.25\,кг\cdot м^2$$
+      <p>
+        Жауабы: \(I_z=1.25\,кг\cdot м^2\).
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">7 · Қысқаша емтихан жауабы</div>
+
+  <div class="card quick">
+    <h3>Емтиханда айтуға дайын нұсқа</h3>
+
+    <p>
+      Массалар геометриясы денедегі массаның кеңістікте қалай таралғанын зерттейді.
+      Оське қатысты инерция моменті \(I=\sum m_kr_k^2\), ал тұтас дене үшін
+      \(I=\int r^2dm\) формуласымен анықталады. Жазықтыққа қатысты инерция моменті
+      нүктелердің жазықтыққа дейінгі қашықтықтарының квадраты арқылы табылады,
+      мысалы \(I_{xOy}=\sum m_kz_k^2\).
+    </p>
+
+    <p>
+      Біртекті дөңгелек пластина үшін радиусы \(R\), массасы \(M\) болсын.
+      Аудандық тығыздық \(\rho=\frac{M}{\pi R^2}\). Пластинаны жұқа сақинаға бөлеміз:
+      \(dS=2\pi r\,dr\), \(dm=\rho dS=\rho 2\pi r\,dr\).
+    </p>
+
+    <p>
+      Сондықтан:
+    </p>
+
+    $$I_z=\int_0^R r^2dm=\int_0^R r^2\cdot\rho 2\pi r\,dr$$
+    $$I_z=2\pi\rho\int_0^R r^3dr=\frac{\pi\rho R^4}{2}$$
+    $$\rho=\frac{M}{\pi R^2}\Rightarrow I_z=\frac{MR^2}{2}$$
+
+    <p>
+      Демек, біртекті дөңгелек пластинаның центрі арқылы өтетін, пластинаға
+      перпендикуляр оське қатысты инерция моменті:
+      \(I_z=\frac{MR^2}{2}\).
+    </p>
+  </div>
+
+  <div class="section-title">8 · Өзіңді тексер</div>
+
+  <div class="card">
+    <h3>Ауызша жауапқа дайындық сұрақтары</h3>
+
+    <div class="mini-list">
+      <div class="mini-item">1. Оське қатысты инерция моменті нені сипаттайды?</div>
+      <div class="mini-item">2. Жазықтыққа қатысты инерция моменті қалай анықталады?</div>
+      <div class="mini-item">3. Дөңгелек пластина үшін неге аудандық тығыздық қолданылады?</div>
+      <div class="mini-item">4. Жұқа сақина элементінің ауданы қалай жазылады?</div>
+      <div class="mini-item">5. Неге \(dm=\rho 2\pi r\,dr\) деп аламыз?</div>
+      <div class="mini-item">6. Дөңгелек пластина үшін интеграл қандай шектерде алынады?</div>
+      <div class="mini-item">7. Біртекті дөңгелек пластина үшін соңғы формула қандай?</div>
+    </div>
+  </div>
+</section>
 
       <section class="question-section" id="q4"><div class="card question-card"><h2>4-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 4-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>4-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
       <section class="question-section" id="q5"><div class="card question-card"><h2>5-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 5-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>5-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>

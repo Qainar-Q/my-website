@@ -2112,7 +2112,460 @@
     </div>
   </div>
 </section>
-      <section class="question-section" id="q5"><div class="card question-card"><h2>5-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 5-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>5-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+     <!-- 5-СҰРАҚ -->
+<section class="question-section" id="q5">
+  <div class="card question-card">
+    <h2>5-сұрақ</h2>
+    <p><strong>Толық емтихан сұрағы:</strong></p>
+    <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+      Параллель осьтерге қатысты инерция моменттерінің арасындағы байланыс туралы
+      теореманы дәлелдеп, центрден тепкіш инерция моменттері арасындағы тәуелділікті
+      анықтау үшін қолданыңыз. Гюйгенс–Штейнер теоремасы.
+    </p>
+  </div>
+
+  <div class="section-title">1 · Сұрақтың негізгі мағынасы</div>
+
+  <div class="card">
+    <p>
+      Бұл сұрақта <strong>Гюйгенс–Штейнер теоремасы</strong> қарастырылады.
+      Бұл теорема массалар центрі арқылы өтетін оське қатысты инерция моменті белгілі
+      болса, оған параллель басқа оське қатысты инерция моментін табуға мүмкіндік береді.
+    </p>
+
+    <p>
+      Яғни есептің негізгі идеясы: инерция моментін бір осьтен оған параллель екінші
+      оське көшіру.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Гюйгенс–Штейнер теоремасы</div>
+      $$I=I_C+Md^2$$
+      <div class="note">
+        Мұндағы \(I_C\) — массалар центрі арқылы өтетін оське қатысты инерция моменті,
+        \(M\) — дененің толық массасы, \(d\) — екі параллель осьтің арақашықтығы.
+      </div>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 300">
+        <rect x="230" y="135" width="300" height="32" rx="16" fill="rgba(245,158,11,0.72)" stroke="#f59e0b" stroke-width="2"></rect>
+        <text x="325" y="122" fill="#e2e8f0" font-size="15">қатты дене</text>
+
+        <line x1="380" y1="55" x2="380" y2="245" stroke="#10b981" stroke-width="4" stroke-dasharray="8 7"></line>
+        <text x="395" y="68" fill="#6ee7b7" font-size="15">центрлік ось</text>
+
+        <line x1="230" y1="55" x2="230" y2="245" stroke="#38bdf8" stroke-width="4"></line>
+        <text x="150" y="68" fill="#7dd3fc" font-size="15">параллель ось</text>
+
+        <line x1="230" y1="230" x2="380" y2="230" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
+        <text x="298" y="218" fill="#94a3b8" font-size="15">d</text>
+
+        <circle cx="380" cy="151" r="6" fill="#10b981"></circle>
+        <text x="392" y="154" fill="#6ee7b7" font-size="14">C</text>
+
+        <text x="272" y="275" class="svg-formula" font-size="17">
+          I = I<tspan baseline-shift="-30%" font-size="12">C</tspan> + Md²
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Қарапайым мысал</h4>
+      <p>
+        Егер \(I_C=5\,кг\cdot м^2\), \(M=2\,кг\), ал осьтердің арақашықтығы
+        \(d=3\,м\) болса:
+      </p>
+      $$I=I_C+Md^2=5+2\cdot3^2=5+18=23\,кг\cdot м^2$$
+      <p>
+        Демек, параллель оське қатысты инерция моменті \(23\,кг\cdot м^2\)-ге тең.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">2 · Теореманың тұжырымдамасы</div>
+
+  <div class="card">
+    <p>
+      Егер екі ось бір-біріне параллель болса және олардың біреуі дененің массалар
+      центрі арқылы өтсе, онда екінші оське қатысты инерция моменті массалар центрі
+      арқылы өтетін оське қатысты инерция моментіне \(Md^2\) шамасын қосу арқылы табылады.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Теорема</div>
+      $$I_O=I_C+Md^2$$
+    </div>
+
+    <p>
+      Бұл формула әсіресе сырық, диск, пластина, цилиндр сияқты қарапайым денелердің
+      шеткі немесе ығысқан осьтерге қатысты инерция моменттерін табуда өте жиі қолданылады.
+    </p>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 320">
+        <circle cx="405" cy="160" r="90" fill="rgba(56,189,248,0.10)" stroke="#38bdf8" stroke-width="2"></circle>
+        <circle cx="405" cy="160" r="6" fill="#10b981"></circle>
+        <text x="418" y="165" fill="#6ee7b7" font-size="14">C</text>
+
+        <line x1="405" y1="55" x2="405" y2="265" stroke="#10b981" stroke-width="4" stroke-dasharray="8 7"></line>
+        <text x="418" y="68" fill="#6ee7b7" font-size="15">C арқылы өтетін ось</text>
+
+        <line x1="255" y1="55" x2="255" y2="265" stroke="#f59e0b" stroke-width="4"></line>
+        <text x="170" y="68" fill="#fbbf24" font-size="15">O арқылы өтетін ось</text>
+
+        <line x1="255" y1="285" x2="405" y2="285" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
+        <text x="325" y="305" fill="#94a3b8" font-size="15">d</text>
+
+        <text x="265" y="35" class="svg-formula" font-size="17">
+          I<tspan baseline-shift="-30%" font-size="12">O</tspan> = I<tspan baseline-shift="-30%" font-size="12">C</tspan> + Md²
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Бір дененің центрлік оське қатысты инерция моменті \(I_C=12\,кг\cdot м^2\),
+        массасы \(M=4\,кг\), ал параллель ось центрден \(d=2\,м\) қашықтықта.
+      </p>
+      $$I_O=I_C+Md^2=12+4\cdot2^2=12+16=28\,кг\cdot м^2$$
+      <p>Жауабы: \(I_O=28\,кг\cdot м^2\).</p>
+    </div>
+  </div>
+
+  <div class="section-title">3 · Гюйгенс–Штейнер теоремасын дәлелдеу</div>
+
+  <div class="card">
+    <p>
+      Дәлелдеу үшін дененің массалар центрі \(C\) арқылы өтетін оське параллель
+      \(O\) осін аламыз. Координаталарды былай таңдаймыз: \(C\) нүктесі центрлік
+      координаталар жүйесінің басы болсын, ал \(O\) осі \(C\) осінен \(d\) қашықтыққа
+      ығысқан болсын.
+    </p>
+
+    <p>
+      Материалдық нүктенің центрлік жүйедегі координатасы \(x_k\) болса, жаңа оське
+      қатысты координата \(x_k+d\) түрінде жазылады.
+    </p>
+
+    <div class="formula">
+      <div class="label">Жаңа оське қатысты инерция моменті</div>
+      $$I_O=\sum m_k(x_k+d)^2$$
+    </div>
+
+    <p>
+      Квадратты ашамыз:
+    </p>
+
+    <div class="formula">
+      $$I_O=\sum m_k(x_k^2+2dx_k+d^2)$$
+      $$I_O=\sum m_kx_k^2+2d\sum m_kx_k+d^2\sum m_k$$
+    </div>
+
+    <p>
+      Массалар центрі арқылы өтетін жүйеде:
+    </p>
+
+    <div class="formula amber">
+      $$\sum m_kx_k=0$$
+    </div>
+
+    <p>
+      Себебі координаталар массалар центрінен алынған. Сонымен қатар:
+    </p>
+
+    <div class="formula">
+      $$\sum m_kx_k^2=I_C,\qquad \sum m_k=M$$
+    </div>
+
+    <p>
+      Сондықтан:
+    </p>
+
+    <div class="formula green">
+      $$I_O=I_C+Md^2$$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 340">
+        <line x1="160" y1="270" x2="660" y2="270" stroke="#64748b" stroke-width="2"></line>
+
+        <line x1="380" y1="70" x2="380" y2="270" stroke="#10b981" stroke-width="4" stroke-dasharray="8 7"></line>
+        <text x="392" y="85" fill="#6ee7b7" font-size="14">C осі</text>
+
+        <line x1="240" y1="70" x2="240" y2="270" stroke="#38bdf8" stroke-width="4"></line>
+        <text x="185" y="85" fill="#7dd3fc" font-size="14">O осі</text>
+
+        <circle cx="500" cy="165" r="18" fill="#f59e0b"></circle>
+        <text x="526" y="170" fill="#e2e8f0" font-size="14">mₖ</text>
+
+        <line x1="380" y1="165" x2="500" y2="165" stroke="#10b981" stroke-width="2" stroke-dasharray="7 6"></line>
+        <text x="430" y="152" fill="#6ee7b7" font-size="14">xₖ</text>
+
+        <line x1="240" y1="205" x2="380" y2="205" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
+        <text x="305" y="193" fill="#94a3b8" font-size="14">d</text>
+
+        <line x1="240" y1="235" x2="500" y2="235" stroke="#38bdf8" stroke-width="2" stroke-dasharray="7 6"></line>
+        <text x="350" y="252" fill="#7dd3fc" font-size="14">xₖ + d</text>
+
+        <text x="215" y="40" class="svg-formula" font-size="17">
+          I<tspan baseline-shift="-30%" font-size="12">O</tspan> = Σmₖ(xₖ + d)²
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Дәлелдеудегі маңызды нүкте</h4>
+      <p>
+        Неге \(2d\sum m_kx_k\) мүшесі нөл болады? Себебі координаталар массалар
+        центрінен алынса, массалар центрінің координатасы нөлге тең:
+      </p>
+      $$x_C=\frac{1}{M}\sum m_kx_k=0$$
+      <p>
+        Сондықтан \(\sum m_kx_k=0\).
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">4 · Біртекті сырыққа қолдану</div>
+
+  <div class="card">
+    <p>
+      Гюйгенс–Штейнер теоремасын қарапайым мысалда көрсетейік. Ұзындығы \(l\),
+      массасы \(M\) болатын біртекті сырықтың центрі арқылы өтетін перпендикуляр
+      оське қатысты инерция моменті:
+    </p>
+
+    <div class="formula">
+      <div class="label">Центрлік ось үшін</div>
+      $$I_C=\frac{Ml^2}{12}$$
+    </div>
+
+    <p>
+      Егер ось сырықтың бір ұшы арқылы өтсе, онда ол центрлік оське параллель,
+      ал осьтер арақашықтығы:
+    </p>
+
+    <div class="formula amber">
+      $$d=\frac{l}{2}$$
+    </div>
+
+    <p>
+      Гюйгенс–Штейнер теоремасы бойынша:
+    </p>
+
+    <div class="formula green">
+      $$I=I_C+Md^2$$
+      $$I=\frac{Ml^2}{12}+M\left(\frac{l}{2}\right)^2$$
+      $$I=\frac{Ml^2}{12}+\frac{Ml^2}{4}
+      =\frac{Ml^2}{12}+\frac{3Ml^2}{12}
+      =\frac{Ml^2}{3}$$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 320">
+        <rect x="190" y="150" width="390" height="28" rx="14" fill="rgba(245,158,11,0.75)" stroke="#f59e0b"></rect>
+        <text x="330" y="135" fill="#e2e8f0" font-size="15">біртекті сырық</text>
+
+        <line x1="385" y1="75" x2="385" y2="245" stroke="#10b981" stroke-width="4" stroke-dasharray="8 7"></line>
+        <text x="397" y="90" fill="#6ee7b7" font-size="14">центрлік ось</text>
+
+        <line x1="190" y1="75" x2="190" y2="245" stroke="#38bdf8" stroke-width="4"></line>
+        <text x="120" y="90" fill="#7dd3fc" font-size="14">шеткі ось</text>
+
+        <line x1="190" y1="235" x2="385" y2="235" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
+        <text x="275" y="255" fill="#94a3b8" font-size="15">l/2</text>
+
+        <text x="275" y="50" class="svg-formula" font-size="17">
+          I = I<tspan baseline-shift="-30%" font-size="12">C</tspan> + M(l/2)²
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        \(M=6\,кг\), \(l=2\,м\). Сырықтың шетінен өтетін оське қатысты инерция моменті:
+      </p>
+      $$I=\frac{Ml^2}{3}=\frac{6\cdot2^2}{3}=8\,кг\cdot м^2$$
+      <p>Жауабы: \(I=8\,кг\cdot м^2\).</p>
+    </div>
+  </div>
+
+  <div class="section-title">5 · Центрден тепкіш инерция моменттері үшін тәуелділік</div>
+
+  <div class="card">
+    <p>
+      Гюйгенс–Штейнер теоремасының ұқсас түрі центрден тепкіш инерция моменттері
+      үшін де қолданылады. Егер координаталар массалар центрінен алынған жүйеден
+      \(a\) және \(b\) шамаларына ығысса, онда центрден тепкіш инерция моменті де өзгереді.
+    </p>
+
+    <div class="formula">
+      <div class="label">Центрден тепкіш инерция моменті</div>
+      $$I_{xy}=\sum m_kx_ky_k$$
+    </div>
+
+    <p>
+      Жаңа координаталар:
+    </p>
+
+    <div class="formula">
+      $$x'_k=x_k+a,\qquad y'_k=y_k+b$$
+    </div>
+
+    <p>
+      Онда жаңа жүйедегі центрден тепкіш инерция моменті:
+    </p>
+
+    <div class="formula">
+      $$I'_{xy}=\sum m_k(x_k+a)(y_k+b)$$
+    </div>
+
+    <p>
+      Көбейткіштерді ашамыз:
+    </p>
+
+    <div class="formula">
+      $$I'_{xy}=\sum m_kx_ky_k+a\sum m_ky_k+b\sum m_kx_k+ab\sum m_k$$
+    </div>
+
+    <p>
+      Массалар центріне қатысты жүйеде:
+    </p>
+
+    <div class="formula amber">
+      $$\sum m_kx_k=0,\qquad \sum m_ky_k=0$$
+    </div>
+
+    <p>
+      Сондықтан:
+    </p>
+
+    <div class="formula green">
+      $$I'_{xy}=I_{xy}+Mab$$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 330">
+        <line x1="150" y1="250" x2="640" y2="250" stroke="#64748b" stroke-width="2"></line>
+        <line x1="150" y1="250" x2="150" y2="70" stroke="#64748b" stroke-width="2"></line>
+        <text x="650" y="255" fill="#94a3b8" font-size="14">x</text>
+        <text x="135" y="60" fill="#94a3b8" font-size="14">y</text>
+
+        <line x1="300" y1="250" x2="300" y2="70" stroke="#38bdf8" stroke-width="3" stroke-dasharray="8 7"></line>
+        <line x1="150" y1="160" x2="640" y2="160" stroke="#10b981" stroke-width="3" stroke-dasharray="8 7"></line>
+
+        <text x="305" y="85" fill="#7dd3fc" font-size="14">x' осі ығысқан</text>
+        <text x="500" y="150" fill="#6ee7b7" font-size="14">y' осі ығысқан</text>
+
+        <line x1="150" y1="280" x2="300" y2="280" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
+        <text x="220" y="302" fill="#94a3b8" font-size="14">a</text>
+
+        <line x1="120" y1="250" x2="120" y2="160" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
+        <text x="95" y="208" fill="#94a3b8" font-size="14">b</text>
+
+        <text x="250" y="45" class="svg-formula" font-size="17">
+          I'ₓᵧ = Iₓᵧ + Mab
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Егер \(I_{xy}=10\,кг\cdot м^2\), \(M=5\,кг\), \(a=2\,м\), \(b=3\,м\) болса:
+      </p>
+      $$I'_{xy}=I_{xy}+Mab=10+5\cdot2\cdot3=40\,кг\cdot м^2$$
+      <p>Жауабы: \(I'_{xy}=40\,кг\cdot м^2\).</p>
+    </div>
+  </div>
+
+  <div class="section-title">6 · Жалпы қорытынды формулалар</div>
+
+  <div class="card">
+    <p>
+      Параллель осьтерге көшу кезінде инерция моменттері мен центрден тепкіш
+      инерция моменттері төмендегідей өзгереді:
+    </p>
+
+    <div class="formula green">
+      <div class="label">Өске қатысты инерция моменті</div>
+      $$I_O=I_C+Md^2$$
+    </div>
+
+    <div class="formula amber">
+      <div class="label">Центрден тепкіш инерция моменті</div>
+      $$I'_{xy}=I_{xy}+Mab$$
+      $$I'_{xz}=I_{xz}+Mac$$
+      $$I'_{yz}=I_{yz}+Mbc$$
+    </div>
+
+    <div class="note">
+      Мұндағы \(a,b,c\) — жаңа координаталар жүйесінің массалар центріне қатысты
+      \(x,y,z\) бағыттарындағы ығысулары.
+    </div>
+
+    <div class="example">
+      <h4>Есте сақтау</h4>
+      <p>
+        Егер ось массалар центрінен алысқа жылжыса, инерция моменті артады.
+        Себебі қосымша \(Md^2\) мүшесі әрқашан оң болады.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">7 · Қысқаша емтихан жауабы</div>
+
+  <div class="card quick">
+    <h3>Емтиханда айтуға дайын нұсқа</h3>
+
+    <p>
+      Гюйгенс–Штейнер теоремасы параллель осьтерге қатысты инерция моменттерінің
+      арасындағы байланысты береді. Егер \(C\) массалар центрі арқылы өтетін ось
+      болса, ал оған параллель \(O\) осі \(d\) қашықтықта орналасса, онда:
+    </p>
+
+    $$I_O=I_C+Md^2.$$
+
+    <p>
+      Дәлелдеу үшін \(I_O=\sum m_k(x_k+d)^2\) деп жазамыз. Квадратты ашсақ:
+    </p>
+
+    $$I_O=\sum m_kx_k^2+2d\sum m_kx_k+d^2\sum m_k.$$
+
+    <p>
+      Массалар центріне қатысты жүйеде \(\sum m_kx_k=0\), ал
+      \(\sum m_kx_k^2=I_C\), \(\sum m_k=M\). Сондықтан:
+    </p>
+
+    $$I_O=I_C+Md^2.$$
+
+    <p>
+      Центрден тепкіш инерция моменттері үшін де ұқсас байланыс бар:
+      егер координаталар \(a\) және \(b\) шамаларына ығысса, онда
+      \(I'_{xy}=I_{xy}+Mab\). Сол сияқты:
+      \(I'_{xz}=I_{xz}+Mac\), \(I'_{yz}=I_{yz}+Mbc\).
+    </p>
+  </div>
+
+  <div class="section-title">8 · Өзіңді тексер</div>
+
+  <div class="card">
+    <h3>Ауызша жауапқа дайындық сұрақтары</h3>
+
+    <div class="mini-list">
+      <div class="mini-item">1. Гюйгенс–Штейнер теоремасы нені анықтайды?</div>
+      <div class="mini-item">2. \(I=I_C+Md^2\) формуласындағы \(d\) нені білдіреді?</div>
+      <div class="mini-item">3. Неге дәлелдеуде \(\sum m_kx_k=0\) болады?</div>
+      <div class="mini-item">4. Теорема біртекті сырыққа қалай қолданылады?</div>
+      <div class="mini-item">5. Центрден тепкіш инерция моменті қалай анықталады?</div>
+      <div class="mini-item">6. \(I'_{xy}=I_{xy}+Mab\) формуласындағы \(a\) және \(b\) нені білдіреді?</div>
+      <div class="mini-item">7. Ось массалар центрінен алыстағанда инерция моменті қалай өзгереді?</div>
+    </div>
+  </div>
+</section>
       <section class="question-section" id="q6"><div class="card question-card"><h2>6-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 6-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>6-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
       <section class="question-section" id="q7"><div class="card question-card"><h2>7-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 7-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>7-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
       <section class="question-section" id="q8"><div class="card question-card"><h2>8-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 8-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>8-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>

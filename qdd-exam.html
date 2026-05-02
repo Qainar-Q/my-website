@@ -1,61 +1,903 @@
 <!DOCTYPE html>
 <html lang="kk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ҚДД емтихан | Qainar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(','\\)']],
+        displayMath: [['$$','$$']]
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+
   <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #020817;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 24px;
+    :root {
+      --bg: #020817;
+      --card: rgba(255,255,255,0.065);
+      --border: rgba(255,255,255,0.14);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --cyan: #38bdf8;
+      --blue: #2563eb;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --radius: 22px;
+      --font-display: 'Orbitron', sans-serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
     }
 
-    .box {
-      max-width: 760px;
-      padding: 36px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.16);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(56,189,248,0.16), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(37,99,235,0.14), transparent 30%),
+        radial-gradient(circle at 50% 90%, rgba(16,185,129,0.08), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.035) 1px, transparent 1px);
+      background-size: 56px 56px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 22px 80px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 0 28px;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      letter-spacing: 3px;
+      font-size: 18px;
+      background: linear-gradient(135deg, white, var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .back {
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--border);
+      transition: 0.25s;
+    }
+
+    .back:hover {
+      border-color: rgba(56,189,248,0.45);
+      background: rgba(56,189,248,0.12);
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      padding: 38px 0 34px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.10);
+      border: 1px solid rgba(56,189,248,0.28);
+      color: #7dd3fc;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
     }
 
     h1 {
-      color: #38bdf8;
-      margin-bottom: 14px;
+      font-family: var(--font-display);
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.12;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, white 30%, var(--cyan), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    p {
-      color: #cbd5e1;
-      line-height: 1.7;
+    .hero p {
+      color: var(--muted);
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 16px;
     }
 
-    a {
-      display: inline-block;
-      margin-top: 24px;
-      color: white;
-      text-decoration: none;
-      background: linear-gradient(135deg, #38bdf8, #2563eb);
-      padding: 12px 22px;
-      border-radius: 12px;
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 24px 0 38px;
+    }
+
+    .tab {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.065);
+      color: var(--muted);
       font-weight: 700;
+      font-size: 14px;
+    }
+
+    .tab.active {
+      color: white;
+      border-color: rgba(56,189,248,0.45);
+      background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(37,99,235,0.16));
+      box-shadow: 0 0 26px rgba(56,189,248,0.10);
+    }
+
+    .section-title {
+      margin: 30px 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--cyan);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      margin-bottom: 18px;
+      box-shadow: 0 18px 48px rgba(0,0,0,0.18);
+    }
+
+    .question-card {
+      border-color: rgba(56,189,248,0.35);
+      background: rgba(56,189,248,0.075);
+    }
+
+    .card h2 {
+      font-family: var(--font-display);
+      color: white;
+      font-size: clamp(20px, 3vw, 28px);
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      color: var(--cyan);
+      font-size: 15px;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .card p {
+      color: #cbd5e1;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .formula {
+      position: relative;
+      padding: 22px 24px;
+      border-radius: 18px;
+      background: rgba(56,189,248,0.075);
+      border: 1px solid rgba(56,189,248,0.25);
+      margin: 16px 0;
+      overflow: hidden;
+    }
+
+    .formula::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--cyan), var(--blue));
+    }
+
+    .formula.green {
+      background: rgba(16,185,129,0.075);
+      border-color: rgba(16,185,129,0.25);
+    }
+
+    .formula.green::before {
+      background: linear-gradient(180deg, var(--green), #047857);
+    }
+
+    .formula.amber {
+      background: rgba(245,158,11,0.075);
+      border-color: rgba(245,158,11,0.27);
+    }
+
+    .formula.amber::before {
+      background: linear-gradient(180deg, var(--amber), #d97706);
+    }
+
+    .label {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+
+    .formula.green .label {
+      color: var(--green);
+    }
+
+    .formula.amber .label {
+      color: var(--amber);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13.5px;
+      margin-top: 10px;
+    }
+
+    .example {
+      padding: 20px 22px;
+      border-radius: 18px;
+      background: rgba(16,185,129,0.07);
+      border: 1px solid rgba(16,185,129,0.25);
+      margin: 16px 0;
+    }
+
+    .example h4 {
+      color: #6ee7b7;
+      font-family: var(--font-display);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .example p {
+      color: #d1fae5;
+      font-size: 14.5px;
+    }
+
+    .svg-box {
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(56,189,248,0.08), rgba(2,8,23,0.70));
+      overflow: hidden;
+      margin: 18px 0;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      min-height: 240px;
+    }
+
+    svg text {
+      font-family: var(--font-body);
+    }
+
+    .quick {
+      background: linear-gradient(135deg, rgba(16,185,129,0.10), rgba(56,189,248,0.05));
+      border-color: rgba(16,185,129,0.35);
+    }
+
+    .quick h3 {
+      color: #6ee7b7;
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-item {
+      padding: 13px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.10);
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 36px 0 0;
+      font-size: 13px;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 22px 16px 60px;
+      }
+
+      header {
+        flex-direction: column;
+      }
+
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .formula {
+        padding: 18px;
+      }
+
+      svg {
+        min-height: 210px;
+      }
     }
   </style>
 </head>
+
 <body>
-  <div class="box">
-    <h1>Қатты дене механикасы емтиханға дайындық</h1>
-    <p>
-      Бұл бетте ҚДД емтиханына арналған теориялық сұрақтар, формулалар,
-      түсіндірмелер және мысал есептер болады.
-    </p>
-    <a href="index.html">← Басты бетке қайту</a>
+  <div class="page">
+    <header>
+      <div class="logo">QAINAR</div>
+      <a class="back" href="index.html">← Басты бетке қайту</a>
+    </header>
+
+    <section class="hero">
+      <div class="eyebrow">Емтиханға дайындық</div>
+      <h1>Қатты дене механикасы</h1>
+      <p>
+        Теориялық сұрақтар, негізгі формулалар, суретпен түсіндіру және мысал есептер.
+        Бұл бет ауызша емтиханға қысқа әрі нақты дайындалуға арналған.
+      </p>
+    </section>
+
+    <div class="tabs">
+      <div class="tab active">1-сұрақ · Массалар геометриясы</div>
+      <div class="tab">2-сұрақ · Біртекті сырық</div>
+      <div class="tab">3-сұрақ · Дөңгелек пластина</div>
+      <div class="tab">Келесі сұрақтар</div>
+    </div>
+
+    <main>
+      <div class="card question-card">
+        <h2>1-сұрақ</h2>
+        <p>
+          <strong>Толық емтихан сұрағы:</strong>
+        </p>
+        <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+          Массалар геометриясын түсіндіріп, өске, нүктеге, жазықтыққа қатысты дененің
+          инерция моменттері мен центрден тепкіш инерция моменттерін түсіндіріңіз.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Негізгі анықтама</h3>
+          <p>
+            <strong>Массалар геометриясы</strong> — қатты денеде немесе механикалық жүйеде
+            массаның кеңістікте қалай таралғанын зерттейтін бөлім.
+          </p>
+          <p>
+            Қатты дененің қозғалысын зерттегенде тек оның толық массасын білу жеткіліксіз.
+            Сонымен қатар массалар центрін, инерция моменттерін және массаның өске,
+            нүктеге, жазықтыққа қатысты таралуын білу керек.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Физикалық мағынасы</h3>
+          <p>
+            Инерция моменті дененің айналмалы қозғалыстағы инерттілігін сипаттайды.
+            Масса айналу өсінен неғұрлым алыс орналасса, инерция моменті соғұрлым үлкен болады.
+          </p>
+          <p>
+            Сондықтан бірдей массалы екі дененің айналуы әртүрлі болуы мүмкін:
+            масса өске жақын болса, денені айналдыру жеңіл; масса өстен алыс болса, қиын.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-title">1 · Жүйенің толық массасы</div>
+
+      <div class="card">
+        <p>
+          Механикалық жүйе бірнеше материалдық нүктеден тұрса, оның толық массасы
+          барлық нүктелер массаларының қосындысына тең.
+        </p>
+
+        <div class="formula">
+          <div class="label">Формула</div>
+          $$M=\sum_{k=1}^{n}m_k$$
+          <div class="note">
+            Мұндағы \(M\) — жүйенің толық массасы, \(m_k\) — жеке материалдық нүктелердің массалары.
+          </div>
+        </div>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 760 240">
+            <circle cx="180" cy="120" r="24" fill="#38bdf8"></circle>
+            <text x="150" y="170" fill="#e2e8f0" font-size="15">m1 = 2 kg</text>
+
+            <circle cx="370" cy="120" r="30" fill="#10b981"></circle>
+            <text x="340" y="175" fill="#e2e8f0" font-size="15">m2 = 3 kg</text>
+
+            <circle cx="580" cy="120" r="38" fill="#f59e0b"></circle>
+            <text x="550" y="185" fill="#e2e8f0" font-size="15">m3 = 5 kg</text>
+
+            <text x="260" y="50" fill="#94a3b8" font-size="16">M = m1 + m2 + m3</text>
+          </svg>
+        </div>
+
+        <div class="example">
+          <h4>Мысал есеп</h4>
+          <p>
+            Егер жүйеде үш нүкте болса:
+            \(m_1=2\,kg\), \(m_2=3\,kg\), \(m_3=5\,kg\).
+          </p>
+          $$M=2+3+5=10\,kg$$
+          <p>Демек, жүйенің толық массасы \(10\,kg\)-ға тең.</p>
+        </div>
+      </div>
+
+      <div class="section-title">2 · Массалар центрі</div>
+
+      <div class="card">
+        <p>
+          <strong>Массалар центрі</strong> — жүйенің барлық массасын шартты түрде жинақтауға
+          болатын нүкте. Дененің ілгерілемелі қозғалысын көбіне осы нүкте арқылы сипаттайды.
+        </p>
+
+        <div class="formula green">
+          <div class="label">Массалар центрінің координаталары</div>
+          $$x_c=\frac{1}{M}\sum m_kx_k$$
+          $$y_c=\frac{1}{M}\sum m_ky_k$$
+          $$z_c=\frac{1}{M}\sum m_kz_k$$
+        </div>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 760 300">
+            <defs>
+              <marker id="arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6 Z" fill="#38bdf8"></path>
+              </marker>
+            </defs>
+
+            <line x1="80" y1="230" x2="690" y2="230" stroke="#64748b" stroke-width="2" marker-end="url(#arrow1)"></line>
+            <text x="690" y="255" fill="#94a3b8" font-size="14">x</text>
+
+            <circle cx="150" cy="170" r="18" fill="#38bdf8"></circle>
+            <text x="118" y="135" fill="#e2e8f0" font-size="14">m1 = 2 kg</text>
+            <text x="140" y="255" fill="#94a3b8" font-size="13">x1 = 0</text>
+
+            <circle cx="520" cy="170" r="28" fill="#f59e0b"></circle>
+            <text x="482" y="125" fill="#e2e8f0" font-size="14">m2 = 4 kg</text>
+            <text x="505" y="255" fill="#94a3b8" font-size="13">x2 = 3 m</text>
+
+            <line x1="397" y1="92" x2="397" y2="230" stroke="#10b981" stroke-width="3" stroke-dasharray="8 7"></line>
+            <circle cx="397" cy="170" r="8" fill="#10b981"></circle>
+            <text x="345" y="76" fill="#6ee7b7" font-size="15">C - массалар центрі</text>
+            <text x="377" y="255" fill="#6ee7b7" font-size="13">xc = 2 m</text>
+          </svg>
+        </div>
+
+        <div class="example">
+          <h4>Мысал есеп</h4>
+          <p>
+            Екі нүкте бір түзудің бойында орналасқан:
+            \(m_1=2\,kg,\;x_1=0\), \(m_2=4\,kg,\;x_2=3\,m\).
+          </p>
+          $$M=2+4=6\,kg$$
+          $$x_c=\frac{m_1x_1+m_2x_2}{M}=\frac{2\cdot0+4\cdot3}{6}=2\,m$$
+          <p>
+            Демек, массалар центрі \(x_c=2\,m\) нүктесінде орналасады.
+            Ол ауыр массаға жақынырақ болады.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-title">3 · Өске қатысты инерция моменті</div>
+
+      <div class="card">
+        <p>
+          <strong>Өске қатысты инерция моменті</strong> дене массасының берілген өске қатысты
+          қалай таралғанын сипаттайды. Ол дененің айналмалы қозғалыстағы инерттілігін көрсетеді.
+        </p>
+
+        <div class="formula">
+          <div class="label">Негізгі формула</div>
+          $$I_z=\sum m_kh_k^2$$
+          <div class="note">
+            Мұндағы \(h_k\) — материалдық нүктеден берілген өске дейінгі перпендикуляр қашықтық.
+            Тұтас дене үшін \(I=\int h^2dm\).
+          </div>
+        </div>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 760 280">
+            <defs>
+              <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                <path d="M0,0 L8,3 L0,6 Z" fill="#2563eb"></path>
+              </marker>
+            </defs>
+
+            <line x1="190" y1="40" x2="190" y2="235" stroke="#38bdf8" stroke-width="4"></line>
+            <text x="145" y="30" fill="#38bdf8" font-size="15">айналу өсі</text>
+
+            <circle cx="500" cy="140" r="18" fill="#f59e0b"></circle>
+            <text x="488" y="113" fill="#e2e8f0" font-size="14">m</text>
+
+            <line x1="190" y1="140" x2="500" y2="140" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+            <text x="335" y="125" fill="#94a3b8" font-size="15">h</text>
+
+            <path d="M190 220 C280 260, 430 260, 500 170" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow2)"></path>
+            <text x="290" y="258" fill="#93c5fd" font-size="14">h үлкен болса, I үлкен</text>
+          </svg>
+        </div>
+
+        <div class="example">
+          <h4>Мысал есеп</h4>
+          <p>
+            Массасы \(m=3\,kg\) нүкте айналу өсінен \(h=2\,m\) қашықтықта орналасқан.
+          </p>
+          $$I=mh^2=3\cdot2^2=12\,kg\cdot m^2$$
+          <p>
+            Егер сол масса \(h=4\,m\) қашықтықта болса:
+          </p>
+          $$I=3\cdot4^2=48\,kg\cdot m^2$$
+          <p>
+            Қашықтық екі есе артқанда, инерция моменті төрт есе артады.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-title">4 · Координаталық өстерге қатысты инерция моменттері</div>
+
+      <div class="card">
+        <p>
+          Егер материалдық нүктелердің координаталары \(x_k,y_k,z_k\) белгілі болса,
+          координаталық өстерге қатысты инерция моменттері төмендегі формулалармен жазылады.
+        </p>
+
+        <div class="formula">
+          <div class="label">Координаталық өстер</div>
+          $$I_x=\sum m_k(y_k^2+z_k^2)$$
+          $$I_y=\sum m_k(x_k^2+z_k^2)$$
+          $$I_z=\sum m_k(x_k^2+y_k^2)$$
+          <div class="note">
+            Мысалы, \(z\) өсіне дейінгі қашықтықтың квадраты \(h^2=x^2+y^2\),
+            сондықтан \(I_z=\sum m_k(x_k^2+y_k^2)\).
+          </div>
+        </div>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 760 300">
+            <line x1="120" y1="240" x2="650" y2="240" stroke="#64748b" stroke-width="2"></line>
+            <line x1="120" y1="240" x2="120" y2="60" stroke="#64748b" stroke-width="2"></line>
+            <text x="660" y="245" fill="#94a3b8" font-size="15">x</text>
+            <text x="105" y="50" fill="#94a3b8" font-size="15">y</text>
+
+            <circle cx="420" cy="130" r="18" fill="#f59e0b"></circle>
+            <text x="445" y="135" fill="#e2e8f0" font-size="14">m</text>
+
+            <line x1="120" y1="130" x2="420" y2="130" stroke="#38bdf8" stroke-width="2" stroke-dasharray="7 6"></line>
+            <line x1="420" y1="240" x2="420" y2="130" stroke="#10b981" stroke-width="2" stroke-dasharray="7 6"></line>
+
+            <text x="260" y="120" fill="#7dd3fc" font-size="14">x</text>
+            <text x="430" y="190" fill="#6ee7b7" font-size="14">y</text>
+            <text x="300" y="70" fill="#e2e8f0" font-size="15">Iz = m(x^2 + y^2)</text>
+          </svg>
+        </div>
+
+        <div class="example">
+          <h4>Мысал есеп</h4>
+          <p>
+            \(m=4\,kg\), \(x=2\,m\), \(y=1\,m\). \(z\) өсіне қатысты инерция моментін табамыз.
+          </p>
+          $$I_z=m(x^2+y^2)=4(2^2+1^2)=4\cdot5=20\,kg\cdot m^2$$
+          <p>Жауабы: \(I_z=20\,kg\cdot m^2\).</p>
+        </div>
+      </div>
+
+      <div class="section-title">5 · Нүктеге қатысты инерция моменті</div>
+
+      <div class="card">
+        <p>
+          <strong>Нүктеге қатысты инерция моменті</strong> материалдық нүктелердің
+          берілген нүктеге дейінгі арақашықтықтарының квадраты арқылы анықталады.
+        </p>
+
+        <div class="formula amber">
+          <div class="label">Формула</div>
+          $$J_O=\sum m_k(x_k^2+y_k^2+z_k^2)$$
+          <div class="note">
+            Мұндағы \(O\) — таңдалған нүкте, ал \(x_k^2+y_k^2+z_k^2\)
+            сол нүктеге дейінгі қашықтықтың квадраты.
+          </div>
+        </div>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 760 280">
+            <circle cx="210" cy="205" r="7" fill="#38bdf8"></circle>
+            <text x="185" y="232" fill="#38bdf8" font-size="14">O</text>
+
+            <circle cx="520" cy="95" r="18" fill="#f59e0b"></circle>
+            <text x="545" y="100" fill="#e2e8f0" font-size="14">m</text>
+
+            <line x1="210" y1="205" x2="520" y2="95" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+            <text x="360" y="135" fill="#94a3b8" font-size="15">r</text>
+
+            <text x="285" y="45" fill="#e2e8f0" font-size="15">JO = m r^2</text>
+            <text x="270" y="68" fill="#94a3b8" font-size="14">r^2 = x^2 + y^2 + z^2</text>
+          </svg>
+        </div>
+
+        <div class="example">
+          <h4>Мысал есеп</h4>
+          <p>
+            \(m=2\,kg\), \(x=1\,m\), \(y=2\,m\), \(z=2\,m\).
+          </p>
+          $$J_O=2(1^2+2^2+2^2)=2(1+4+4)=18\,kg\cdot m^2$$
+          <p>Жауабы: \(J_O=18\,kg\cdot m^2\).</p>
+        </div>
+      </div>
+
+      <div class="section-title">6 · Жазықтыққа қатысты инерция моменті</div>
+
+      <div class="card">
+        <p>
+          <strong>Жазықтыққа қатысты инерция моменті</strong> дене нүктелерінің
+          берілген жазықтықтан қаншалықты алыста орналасқанын көрсетеді.
+        </p>
+
+        <div class="formula">
+          <div class="label">Жазықтықтарға қатысты формулалар</div>
+          $$I_{xOy}=\sum m_kz_k^2$$
+          $$I_{yOz}=\sum m_kx_k^2$$
+          $$I_{xOz}=\sum m_ky_k^2$$
+          <div class="note">
+            Мысалы, \(xOy\) жазықтығына дейінгі қашықтық \(z\)-ке тең.
+          </div>
+        </div>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 760 300">
+            <polygon points="150,220 580,220 680,120 250,120" fill="rgba(56,189,248,0.10)" stroke="#38bdf8" stroke-width="2"></polygon>
+            <text x="355" y="246" fill="#38bdf8" font-size="16">xOy жазықтығы</text>
+
+            <circle cx="420" cy="70" r="15" fill="#f59e0b"></circle>
+            <text x="444" y="76" fill="#e2e8f0" font-size="14">m</text>
+
+            <line x1="420" y1="70" x2="420" y2="170" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+            <text x="430" y="125" fill="#94a3b8" font-size="15">z</text>
+
+            <circle cx="420" cy="170" r="5" fill="#38bdf8"></circle>
+            <text x="455" y="165" fill="#94a3b8" font-size="13">проекция</text>
+          </svg>
+        </div>
+
+        <div class="example">
+          <h4>Мысал есеп</h4>
+          <p>
+            Массасы \(m=5\,kg\) нүкте \(xOy\) жазықтығынан \(z=2\,m\) қашықтықта орналасқан.
+          </p>
+          $$I_{xOy}=mz^2=5\cdot2^2=20\,kg\cdot m^2$$
+          <p>Жауабы: \(I_{xOy}=20\,kg\cdot m^2\).</p>
+        </div>
+      </div>
+
+      <div class="section-title">7 · Центрден тепкіш инерция моменттері</div>
+
+      <div class="card">
+        <p>
+          <strong>Центрден тепкіш инерция моменттері</strong> массаның координаталарға қатысты
+          аралас таралуын сипаттайды. Олар инерция тензорын және бас инерция өстерін анықтауда қолданылады.
+        </p>
+
+        <div class="formula amber">
+          <div class="label">Формулалар</div>
+          $$I_{xy}=\sum m_kx_ky_k$$
+          $$I_{xz}=\sum m_kx_kz_k$$
+          $$I_{yz}=\sum m_ky_kz_k$$
+        </div>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 760 280">
+            <line x1="140" y1="230" x2="640" y2="230" stroke="#64748b" stroke-width="2"></line>
+            <line x1="140" y1="230" x2="140" y2="55" stroke="#64748b" stroke-width="2"></line>
+            <text x="650" y="235" fill="#94a3b8" font-size="14">x</text>
+            <text x="125" y="45" fill="#94a3b8" font-size="14">y</text>
+
+            <circle cx="450" cy="105" r="18" fill="#f59e0b"></circle>
+            <text x="475" y="110" fill="#e2e8f0" font-size="14">m</text>
+
+            <line x1="140" y1="105" x2="450" y2="105" stroke="#38bdf8" stroke-width="2" stroke-dasharray="7 6"></line>
+            <line x1="450" y1="230" x2="450" y2="105" stroke="#10b981" stroke-width="2" stroke-dasharray="7 6"></line>
+
+            <text x="280" y="95" fill="#7dd3fc" font-size="14">x</text>
+            <text x="460" y="170" fill="#6ee7b7" font-size="14">y</text>
+            <text x="270" y="55" fill="#e2e8f0" font-size="15">Ixy = mxy</text>
+          </svg>
+        </div>
+
+        <div class="example">
+          <h4>Мысал есеп</h4>
+          <p>
+            \(m=2\,kg\), \(x=3\,m\), \(y=4\,m\). \(I_{xy}\)-ті табамыз.
+          </p>
+          $$I_{xy}=mxy=2\cdot3\cdot4=24\,kg\cdot m^2$$
+          <p>Жауабы: \(I_{xy}=24\,kg\cdot m^2\).</p>
+        </div>
+      </div>
+
+      <div class="section-title">8 · Гюйгенс-Штейнер теоремасы</div>
+
+      <div class="card">
+        <p>
+          Егер инерция моментін массалар центрі арқылы өтетін өске емес, оған параллель
+          басқа өске қатысты табу керек болса, <strong>Гюйгенс-Штейнер теоремасы</strong> қолданылады.
+        </p>
+
+        <div class="formula green">
+          <div class="label">Параллель өстер теоремасы</div>
+          $$I=I_C+Md^2$$
+          <div class="note">
+            Мұндағы \(I_C\) — массалар центрі арқылы өтетін өске қатысты инерция моменті,
+            \(M\) — дене массасы, \(d\) — екі параллель өстің арақашықтығы.
+          </div>
+        </div>
+
+        <div class="svg-box">
+          <svg viewBox="0 0 760 280">
+            <rect x="220" y="130" width="320" height="24" rx="12" fill="rgba(245,158,11,0.7)" stroke="#f59e0b"></rect>
+            <line x1="380" y1="65" x2="380" y2="220" stroke="#10b981" stroke-width="3" stroke-dasharray="8 7"></line>
+            <text x="340" y="55" fill="#6ee7b7" font-size="14">центрлік өс</text>
+
+            <line x1="220" y1="65" x2="220" y2="220" stroke="#38bdf8" stroke-width="3"></line>
+            <text x="170" y="55" fill="#7dd3fc" font-size="14">параллель өс</text>
+
+            <line x1="220" y1="205" x2="380" y2="205" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
+            <text x="292" y="195" fill="#94a3b8" font-size="14">d</text>
+
+            <text x="275" y="250" fill="#e2e8f0" font-size="15">I = IC + Md^2</text>
+          </svg>
+        </div>
+
+        <div class="example">
+          <h4>Мысал есеп</h4>
+          <p>
+            Жіңішке сырықтың центрінен өтетін өске қатысты инерция моменті:
+          </p>
+          $$I_C=\frac{Ml^2}{12}$$
+          <p>
+            Егер ось сырықтың шетінен өтсе, онда \(d=\frac{l}{2}\).
+          </p>
+          $$I=I_C+Md^2=\frac{Ml^2}{12}+M\left(\frac{l}{2}\right)^2$$
+          $$I=\frac{Ml^2}{12}+\frac{Ml^2}{4}
+          =\frac{Ml^2}{12}+\frac{3Ml^2}{12}
+          =\frac{Ml^2}{3}$$
+          <p>
+            Демек, сырықтың шетінен өтетін өске қатысты инерция моменті
+            \(I=\frac{Ml^2}{3}\).
+          </p>
+        </div>
+      </div>
+
+      <div class="section-title">9 · Қысқаша емтихан жауабы</div>
+
+      <div class="card quick">
+        <h3>Емтиханда айтуға дайын нұсқа</h3>
+        <p>
+          <strong>Массалар геометриясы</strong> қатты денеде немесе механикалық жүйеде
+          массаның кеңістікте қалай таралғанын зерттейді. Жүйенің толық массасы
+          \(M=\sum m_k\). Массалар центрінің координаталары
+          \(x_c=\frac{1}{M}\sum m_kx_k\),
+          \(y_c=\frac{1}{M}\sum m_ky_k\),
+          \(z_c=\frac{1}{M}\sum m_kz_k\).
+        </p>
+        <p>
+          Өске қатысты инерция моменті \(I=\sum m_kh_k^2\) формуласымен анықталады
+          және дененің айналмалы қозғалыстағы инерттілігін сипаттайды.
+          Нүктеге қатысты инерция моменті
+          \(J_O=\sum m_k(x_k^2+y_k^2+z_k^2)\), жазықтыққа қатысты
+          \(I_{xOy}=\sum m_kz_k^2\) түрінде жазылады.
+        </p>
+        <p>
+          Центрден тепкіш инерция моменттері \(I_{xy}, I_{xz}, I_{yz}\)
+          инерция тензорын және бас инерция өстерін анықтауда қолданылады.
+          Параллель өстер үшін Гюйгенс-Штейнер теоремасы қолданылады:
+          \(I=I_C+Md^2\).
+        </p>
+      </div>
+
+      <div class="section-title">10 · Өзіңді тексер</div>
+
+      <div class="card">
+        <h3>Ауызша жауапқа дайындық сұрақтары</h3>
+        <div class="mini-list">
+          <div class="mini-item">1. Массалар геометриясы нені зерттейді?</div>
+          <div class="mini-item">2. Массалар центрі қалай анықталады?</div>
+          <div class="mini-item">3. Өске қатысты инерция моментінің физикалық мағынасы қандай?</div>
+          <div class="mini-item">4. Нүктеге қатысты инерция моменті қалай жазылады?</div>
+          <div class="mini-item">5. Жазықтыққа қатысты инерция моменті қандай қашықтық арқылы табылады?</div>
+          <div class="mini-item">6. Центрден тепкіш инерция моменттері не үшін қолданылады?</div>
+          <div class="mini-item">7. Гюйгенс-Штейнер теоремасының формуласы қандай?</div>
+        </div>
+      </div>
+    </main>
+
+    <div class="footer">
+      Qainar · Қатты дене механикасы емтиханға дайындық · 1-сұрақ
+    </div>
   </div>
 </body>
 </html>

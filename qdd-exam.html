@@ -2566,9 +2566,1318 @@
     </div>
   </div>
 </section>
-      <section class="question-section" id="q6"><div class="card question-card"><h2>6-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 6-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>6-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
-      <section class="question-section" id="q7"><div class="card question-card"><h2>7-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 7-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>7-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
-      <section class="question-section" id="q8"><div class="card question-card"><h2>8-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 8-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>8-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+     <!-- 6-СҰРАҚ -->
+<section class="question-section" id="q6">
+  <div class="card question-card">
+    <h2>6-сұрақ</h2>
+    <p><strong>Толық емтихан сұрағы:</strong></p>
+    <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+      Берілген нүкте арқылы өтетін осьтер шоғырына қатысты алынған дененің
+      инерция моментін есептеп, инерция тензорын сипаттаңыз.
+    </p>
+  </div>
+
+  <div class="section-title">1 · Сұрақтың негізгі мағынасы</div>
+
+  <div class="card">
+    <p>
+      Бұл сұрақта қатты дененің бір ғана оське емес, <strong>бір нүкте арқылы өтетін
+      әртүрлі осьтерге</strong> қатысты инерция моменті қарастырылады.
+      Мұндай осьтер жиынын осьтер шоғыры деп атайды.
+    </p>
+
+    <p>
+      Егер осьтің бағыты өзгерсе, дененің сол оське қатысты инерция моменті де өзгереді.
+      Осы тәуелділікті толық сипаттау үшін <strong>инерция тензоры</strong> қолданылады.
+    </p>
+
+    <div class="formula">
+      <div class="label">Негізгі идея</div>
+      $$I_l=\sum m_kh_k^2$$
+      <div class="note">
+        Мұндағы \(I_l\) — берілген \(l\) осіне қатысты инерция моменті,
+        \(h_k\) — \(m_k\) массалы нүктеден сол оське дейінгі перпендикуляр қашықтық.
+      </div>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 320">
+        <circle cx="380" cy="170" r="7" fill="#38bdf8"></circle>
+        <text x="392" y="175" fill="#7dd3fc" font-size="15">O</text>
+
+        <line x1="380" y1="170" x2="620" y2="170" stroke="#64748b" stroke-width="2"></line>
+        <line x1="380" y1="170" x2="230" y2="55" stroke="#10b981" stroke-width="3" stroke-dasharray="8 7"></line>
+        <line x1="380" y1="170" x2="250" y2="280" stroke="#f59e0b" stroke-width="3" stroke-dasharray="8 7"></line>
+        <line x1="380" y1="170" x2="520" y2="60" stroke="#38bdf8" stroke-width="4"></line>
+
+        <text x="625" y="175" fill="#94a3b8" font-size="14">x</text>
+        <text x="215" y="48" fill="#6ee7b7" font-size="14">l₁</text>
+        <text x="235" y="292" fill="#fbbf24" font-size="14">l₂</text>
+        <text x="525" y="58" fill="#7dd3fc" font-size="14">l</text>
+
+        <circle cx="505" cy="115" r="18" fill="#f59e0b"></circle>
+        <text x="530" y="120" fill="#e2e8f0" font-size="14">mₖ</text>
+
+        <line x1="505" y1="115" x2="470" y2="100" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
+        <text x="482" y="92" fill="#94a3b8" font-size="14">hₖ</text>
+
+        <text x="245" y="35" class="svg-formula" font-size="17">
+          O арқылы өтетін осьтер шоғыры
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Қарапайым мысал</h4>
+      <p>
+        Бір нүкте \(O\) арқылы екі түрлі ось өтсін. Бірінші оське дейінгі қашықтық
+        \(h_1=1\,м\), екінші оське дейінгі қашықтық \(h_2=3\,м\), ал нүкте массасы
+        \(m=2\,кг\).
+      </p>
+      $$I_1=mh_1^2=2\cdot1^2=2\,кг\cdot м^2$$
+      $$I_2=mh_2^2=2\cdot3^2=18\,кг\cdot м^2$$
+      <p>
+        Ось бағыты өзгергенде инерция моменті де өзгеретінін көреміз.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">2 · Ось бағыты және бағыттаушы косинустар</div>
+
+  <div class="card">
+    <p>
+      Берілген \(O\) нүктесі арқылы өтетін кез келген осьтің бағытын бірлік вектор
+      арқылы көрсетуге болады. Егер осьтің координаталық өстермен жасайтын
+      бағыттаушы косинустары \(l\), \(m\), \(n\) болса, онда:
+    </p>
+
+    <div class="formula green">
+      <div class="label">Бағыттаушы косинустар шарты</div>
+      $$l^2+m^2+n^2=1$$
+      <div class="note">
+        Мұндағы \(l\), \(m\), \(n\) — ось бағытының \(x\), \(y\), \(z\) өстеріне қатысты
+        бағыттаушы косинустары.
+      </div>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 330">
+        <line x1="170" y1="260" x2="630" y2="260" stroke="#64748b" stroke-width="2"></line>
+        <line x1="170" y1="260" x2="170" y2="70" stroke="#64748b" stroke-width="2"></line>
+        <line x1="170" y1="260" x2="90" y2="310" stroke="#64748b" stroke-width="2"></line>
+
+        <text x="638" y="265" fill="#94a3b8" font-size="15">x</text>
+        <text x="155" y="60" fill="#94a3b8" font-size="15">z</text>
+        <text x="75" y="318" fill="#94a3b8" font-size="15">y</text>
+
+        <line x1="170" y1="260" x2="505" y2="105" stroke="#38bdf8" stroke-width="4"></line>
+        <text x="515" y="108" fill="#7dd3fc" font-size="15">ось бағыты</text>
+
+        <path d="M255 260 A85 85 0 0 1 315 223" fill="none" stroke="#f59e0b" stroke-width="2"></path>
+        <text x="285" y="248" fill="#fbbf24" font-size="14">α</text>
+
+        <path d="M170 218 A45 45 0 0 1 195 225" fill="none" stroke="#10b981" stroke-width="2"></path>
+        <text x="190" y="210" fill="#6ee7b7" font-size="14">γ</text>
+
+        <text x="275" y="55" class="svg-formula" font-size="17">
+          e = (l, m, n)
+        </text>
+        <text x="270" y="82" class="svg-small" font-size="14">
+          l² + m² + n² = 1
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Егер бағыттаушы косинустар \(l=\frac{1}{2}\), \(m=\frac{1}{2}\),
+        \(n=\frac{\sqrt{2}}{2}\) болса, тексереміз:
+      </p>
+      $$l^2+m^2+n^2=\left(\frac12\right)^2+\left(\frac12\right)^2+
+      \left(\frac{\sqrt2}{2}\right)^2$$
+      $$=\frac14+\frac14+\frac12=1$$
+      <p>
+        Демек, бұл шын мәнінде бірлік бағыт векторы болады.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">3 · Инерция тензорының анықтамасы</div>
+
+  <div class="card">
+    <p>
+      <strong>Инерция тензоры</strong> — қатты дененің берілген нүктеге қатысты
+      массалық таралуын толық сипаттайтын матрица. Ол координаталық өстерге қатысты
+      инерция моменттері мен центрден тепкіш инерция моменттерінен құралады.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Инерция тензоры</div>
+      $$
+      \mathbf{I}=
+      \begin{pmatrix}
+      I_x & -I_{xy} & -I_{xz}\\
+      -I_{xy} & I_y & -I_{yz}\\
+      -I_{xz} & -I_{yz} & I_z
+      \end{pmatrix}
+      $$
+    </div>
+
+    <p>
+      Мұндағы \(I_x\), \(I_y\), \(I_z\) — координаталық өстерге қатысты инерция
+      моменттері, ал \(I_{xy}\), \(I_{xz}\), \(I_{yz}\) — центрден тепкіш инерция
+      моменттері.
+    </p>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 300">
+        <rect x="235" y="70" width="290" height="190" rx="18" fill="rgba(56,189,248,0.08)" stroke="#38bdf8" stroke-width="2"></rect>
+
+        <line x1="330" y1="70" x2="330" y2="260" stroke="#64748b" stroke-width="1.5"></line>
+        <line x1="430" y1="70" x2="430" y2="260" stroke="#64748b" stroke-width="1.5"></line>
+        <line x1="235" y1="130" x2="525" y2="130" stroke="#64748b" stroke-width="1.5"></line>
+        <line x1="235" y1="195" x2="525" y2="195" stroke="#64748b" stroke-width="1.5"></line>
+
+        <text x="275" y="108" class="svg-formula" font-size="16">Iₓ</text>
+        <text x="355" y="108" class="svg-formula" font-size="16">-Iₓᵧ</text>
+        <text x="455" y="108" class="svg-formula" font-size="16">-Iₓ𝓏</text>
+
+        <text x="260" y="170" class="svg-formula" font-size="16">-Iₓᵧ</text>
+        <text x="365" y="170" class="svg-formula" font-size="16">Iᵧ</text>
+        <text x="455" y="170" class="svg-formula" font-size="16">-Iᵧ𝓏</text>
+
+        <text x="260" y="232" class="svg-formula" font-size="16">-Iₓ𝓏</text>
+        <text x="355" y="232" class="svg-formula" font-size="16">-Iᵧ𝓏</text>
+        <text x="465" y="232" class="svg-formula" font-size="16">I𝓏</text>
+
+        <text x="270" y="40" fill="#e2e8f0" font-size="16">инерция тензоры</text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал түсіндіру</h4>
+      <p>
+        Егер дене симметриялы болса және координаталық өстер бас инерция өстері
+        ретінде таңдалса, онда центрден тепкіш инерция моменттері нөл болуы мүмкін:
+      </p>
+      $$I_{xy}=I_{xz}=I_{yz}=0$$
+      <p>
+        Онда инерция тензоры диагональ түрінде жазылады.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">4 · Тензор элементтері</div>
+
+  <div class="card">
+    <p>
+      Инерция тензорының элементтері координаталар арқылы төмендегідей анықталады.
+      Олар денедегі барлық материалдық нүктелер бойынша қосылады немесе тұтас дене
+      үшін интеграл арқылы есептеледі.
+    </p>
+
+    <div class="formula">
+      <div class="label">Координаталық инерция моменттері</div>
+      $$I_x=\sum m_k(y_k^2+z_k^2)$$
+      $$I_y=\sum m_k(x_k^2+z_k^2)$$
+      $$I_z=\sum m_k(x_k^2+y_k^2)$$
+    </div>
+
+    <div class="formula amber">
+      <div class="label">Центрден тепкіш инерция моменттері</div>
+      $$I_{xy}=\sum m_kx_ky_k$$
+      $$I_{xz}=\sum m_kx_kz_k$$
+      $$I_{yz}=\sum m_ky_kz_k$$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 320">
+        <line x1="130" y1="250" x2="650" y2="250" stroke="#64748b" stroke-width="2"></line>
+        <line x1="130" y1="250" x2="130" y2="70" stroke="#64748b" stroke-width="2"></line>
+        <line x1="130" y1="250" x2="75" y2="300" stroke="#64748b" stroke-width="2"></line>
+
+        <text x="660" y="255" fill="#94a3b8" font-size="15">x</text>
+        <text x="115" y="60" fill="#94a3b8" font-size="15">z</text>
+        <text x="60" y="310" fill="#94a3b8" font-size="15">y</text>
+
+        <circle cx="460" cy="130" r="18" fill="#f59e0b"></circle>
+        <text x="485" y="135" fill="#e2e8f0" font-size="14">mₖ</text>
+
+        <line x1="130" y1="130" x2="460" y2="130" stroke="#38bdf8" stroke-width="2" stroke-dasharray="7 6"></line>
+        <line x1="460" y1="250" x2="460" y2="130" stroke="#10b981" stroke-width="2" stroke-dasharray="7 6"></line>
+
+        <text x="295" y="118" fill="#7dd3fc" font-size="14">xₖ</text>
+        <text x="470" y="190" fill="#6ee7b7" font-size="14">zₖ</text>
+
+        <text x="238" y="45" class="svg-formula" font-size="17">
+          I<tspan baseline-shift="-30%" font-size="12">z</tspan> = Σmₖ(xₖ² + yₖ²)
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Бір материалдық нүкте үшін \(m=2\,кг\), \(x=1\,м\), \(y=2\,м\), \(z=3\,м\).
+        Координаталық инерция моменттерін табайық:
+      </p>
+      $$I_x=2(2^2+3^2)=2(4+9)=26\,кг\cdot м^2$$
+      $$I_y=2(1^2+3^2)=2(1+9)=20\,кг\cdot м^2$$
+      $$I_z=2(1^2+2^2)=2(1+4)=10\,кг\cdot м^2$$
+    </div>
+  </div>
+
+  <div class="section-title">5 · Кез келген оське қатысты инерция моментін есептеу</div>
+
+  <div class="card">
+    <p>
+      Егер берілген \(O\) нүктесі арқылы өтетін осьтің бағыттаушы косинустары
+      \(l\), \(m\), \(n\) болса, онда осы оське қатысты инерция моменті инерция
+      тензоры арқылы табылады.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Кез келген ось үшін формула</div>
+      $$I_l=I_xl^2+I_ym^2+I_zn^2-2I_{xy}lm-2I_{xz}ln-2I_{yz}mn$$
+    </div>
+
+    <p>
+      Бұл формула бір нүкте арқылы өтетін барлық осьтер шоғыры үшін инерция
+      моментінің қалай өзгеретінін көрсетеді.
+    </p>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 330">
+        <circle cx="375" cy="180" r="7" fill="#38bdf8"></circle>
+        <text x="390" y="185" fill="#7dd3fc" font-size="15">O</text>
+
+        <line x1="375" y1="180" x2="610" y2="180" stroke="#64748b" stroke-width="2"></line>
+        <line x1="375" y1="180" x2="375" y2="55" stroke="#64748b" stroke-width="2"></line>
+        <line x1="375" y1="180" x2="250" y2="280" stroke="#64748b" stroke-width="2"></line>
+
+        <text x="618" y="185" fill="#94a3b8" font-size="14">x</text>
+        <text x="388" y="55" fill="#94a3b8" font-size="14">z</text>
+        <text x="235" y="292" fill="#94a3b8" font-size="14">y</text>
+
+        <line x1="375" y1="180" x2="530" y2="80" stroke="#38bdf8" stroke-width="4"></line>
+        <text x="540" y="82" fill="#7dd3fc" font-size="15">l осі</text>
+
+        <text x="250" y="42" class="svg-formula" font-size="16">
+          Iₗ = eᵀ I e
+        </text>
+        <text x="250" y="68" class="svg-small" font-size="14">
+          e = (l, m, n)
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Егер \(I_x=4\), \(I_y=6\), \(I_z=8\,кг\cdot м^2\), ал центрден тепкіш
+        моменттер нөл болса: \(I_{xy}=I_{xz}=I_{yz}=0\). Ось бағыты
+        \(l=1\), \(m=0\), \(n=0\) болса:
+      </p>
+      $$I_l=I_xl^2+I_ym^2+I_zn^2$$
+      $$I_l=4\cdot1^2+6\cdot0^2+8\cdot0^2=4\,кг\cdot м^2$$
+      <p>
+        Бұл ось \(x\) бағытымен бағытталғандықтан, нәтиже \(I_x\)-ке тең.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">6 · Матрицалық түрде жазылуы</div>
+
+  <div class="card">
+    <p>
+      Кез келген оське қатысты инерция моментін қысқаша матрицалық түрде жазуға болады.
+      Егер осьтің бірлік бағыт векторы:
+    </p>
+
+    <div class="formula">
+      $$\mathbf{e}=
+      \begin{pmatrix}
+      l\\m\\n
+      \end{pmatrix}
+      $$
+    </div>
+
+    <p>
+      ал инерция тензоры \(\mathbf{I}\) болса, онда:
+    </p>
+
+    <div class="formula green">
+      <div class="label">Матрицалық жазылу</div>
+      $$I_l=\mathbf{e}^{T}\mathbf{I}\mathbf{e}$$
+    </div>
+
+    <p>
+      Бұл жазылу өте ықшам және кез келген бағыттағы оське қатысты инерция моментін
+      табуға мүмкіндік береді.
+    </p>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 300">
+        <rect x="190" y="75" width="380" height="160" rx="20" fill="rgba(56,189,248,0.08)" stroke="#38bdf8" stroke-width="2"></rect>
+        <text x="240" y="130" class="svg-formula" font-size="20">Iₗ = eᵀ · I · e</text>
+        <text x="240" y="170" class="svg-small" font-size="15">e — осьтің бағыт векторы</text>
+        <text x="240" y="198" class="svg-small" font-size="15">I — инерция тензоры</text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал түсіндіру</h4>
+      <p>
+        Егер осьтің бағыты өзгерсе, \(e=(l,m,n)\) векторы өзгереді.
+        Бірақ дененің инерциялық қасиеті \(\mathbf{I}\) тензоры арқылы сақталады.
+        Сондықтан әртүрлі ось үшін тек \(e\) векторын өзгертіп, \(I_l\)-ді есептейміз.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">7 · Қысқаша емтихан жауабы</div>
+
+  <div class="card quick">
+    <h3>Емтиханда айтуға дайын нұсқа</h3>
+
+    <p>
+      Берілген нүкте арқылы өтетін осьтер шоғыры дегеніміз — бір \(O\) нүктесі арқылы
+      өтетін барлық мүмкін осьтер жиыны. Әр осьтің бағыты әртүрлі болғандықтан,
+      дененің сол оське қатысты инерция моменті де әртүрлі болады.
+    </p>
+
+    <p>
+      Ось бағыты бағыттаушы косинустармен беріледі:
+      \(l\), \(m\), \(n\), мұнда \(l^2+m^2+n^2=1\).
+      Дененің инерциялық қасиеттерін толық сипаттау үшін инерция тензоры қолданылады:
+    </p>
+
+    $$
+    \mathbf{I}=
+    \begin{pmatrix}
+    I_x & -I_{xy} & -I_{xz}\\
+    -I_{xy} & I_y & -I_{yz}\\
+    -I_{xz} & -I_{yz} & I_z
+    \end{pmatrix}.
+    $$
+
+    <p>
+      Мұндағы \(I_x,I_y,I_z\) — координаталық өстерге қатысты инерция моменттері,
+      ал \(I_{xy},I_{xz},I_{yz}\) — центрден тепкіш инерция моменттері.
+    </p>
+
+    <p>
+      Бағыты \(l,m,n\) болатын кез келген оське қатысты инерция моменті:
+    </p>
+
+    $$I_l=I_xl^2+I_ym^2+I_zn^2-2I_{xy}lm-2I_{xz}ln-2I_{yz}mn.$$
+
+    <p>
+      Матрицалық түрде бұл формула \(I_l=\mathbf{e}^{T}\mathbf{I}\mathbf{e}\)
+      деп жазылады.
+    </p>
+  </div>
+
+  <div class="section-title">8 · Өзіңді тексер</div>
+
+  <div class="card">
+    <h3>Ауызша жауапқа дайындық сұрақтары</h3>
+
+    <div class="mini-list">
+      <div class="mini-item">1. Осьтер шоғыры дегеніміз не?</div>
+      <div class="mini-item">2. Ось бағыты қандай шамалармен беріледі?</div>
+      <div class="mini-item">3. Бағыттаушы косинустар қандай шартты қанағаттандырады?</div>
+      <div class="mini-item">4. Инерция тензоры қандай элементтерден тұрады?</div>
+      <div class="mini-item">5. Центрден тепкіш инерция моменттері тензорда қай жерде орналасады?</div>
+      <div class="mini-item">6. Кез келген оське қатысты инерция моментінің формуласы қандай?</div>
+      <div class="mini-item">7. \(I_l=\mathbf{e}^{T}\mathbf{I}\mathbf{e}\) формуласының мағынасы қандай?</div>
+    </div>
+  </div>
+</section>
+      <!-- 7-СҰРАҚ -->
+<section class="question-section" id="q7">
+  <div class="card question-card">
+    <h2>7-сұрақ</h2>
+    <p><strong>Толық емтихан сұрағы:</strong></p>
+    <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+      Инерция эллипсоидын сипаттаңыз. Қатты дененің инерциялық бас осьтерін
+      түсіндіріп, қасиеттерін келтіріңіз.
+    </p>
+  </div>
+
+  <div class="section-title">1 · Сұрақтың негізгі мағынасы</div>
+
+  <div class="card">
+    <p>
+      Бұл сұрақта қатты дененің әртүрлі бағыттағы осьтерге қатысты инерция
+      моментінің қалай өзгеретінін геометриялық түрде сипаттайтын
+      <strong>инерция эллипсоиды</strong> қарастырылады.
+    </p>
+
+    <p>
+      Инерция эллипсоиды арқылы бір нүкте арқылы өтетін барлық осьтердің
+      инерция моменттерін салыстыруға болады. Ал осы эллипсоидтың негізгі
+      осьтері қатты дененің <strong>бас инерция осьтері</strong> деп аталады.
+    </p>
+
+    <div class="formula">
+      <div class="label">Негізгі идея</div>
+      $$I_l=I_xl^2+I_ym^2+I_zn^2-2I_{xy}lm-2I_{xz}ln-2I_{yz}mn$$
+      <div class="note">
+        Мұндағы \(I_l\) — бағыты \(l,m,n\) болатын оське қатысты инерция моменті.
+      </div>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 340">
+        <ellipse cx="380" cy="170" rx="170" ry="85" fill="rgba(56,189,248,0.08)" stroke="#38bdf8" stroke-width="3"></ellipse>
+        <ellipse cx="380" cy="170" rx="80" ry="135" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="8 7"></ellipse>
+
+        <line x1="170" y1="170" x2="590" y2="170" stroke="#64748b" stroke-width="2"></line>
+        <line x1="380" y1="40" x2="380" y2="300" stroke="#64748b" stroke-width="2"></line>
+        <line x1="270" y1="270" x2="500" y2="70" stroke="#f59e0b" stroke-width="2" stroke-dasharray="8 7"></line>
+
+        <text x="600" y="176" fill="#94a3b8" font-size="14">бас ось 1</text>
+        <text x="392" y="48" fill="#94a3b8" font-size="14">бас ось 2</text>
+        <text x="505" y="74" fill="#fbbf24" font-size="14">бас ось 3</text>
+
+        <circle cx="380" cy="170" r="6" fill="#38bdf8"></circle>
+        <text x="392" y="176" fill="#7dd3fc" font-size="14">O</text>
+
+        <text x="260" y="320" class="svg-formula" font-size="17">
+          инерция эллипсоиды
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Қарапайым түсіндіру</h4>
+      <p>
+        Бір денені әртүрлі бағыттағы осьтерге қатысты айналдырсақ, кейбір бағытта
+        оны айналдыру жеңіл, кейбір бағытта қиын болады. Бұл айырмашылық инерция
+        моменттерінің әртүрлі болуымен түсіндіріледі.
+      </p>
+      <p>
+        Инерция эллипсоиды осы айырмашылықты геометриялық түрде көрсетеді.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">2 · Инерция эллипсоидының анықтамасы</div>
+
+  <div class="card">
+    <p>
+      <strong>Инерция эллипсоиды</strong> — берілген нүкте арқылы өтетін барлық
+      осьтерге қатысты инерция моменттерінің бағытына тәуелділігін көрсететін
+      геометриялық бет.
+    </p>
+
+    <p>
+      Егер осьтің бағыты бірлік вектор арқылы берілсе, онда осы бағыттағы
+      инерция моменті \(I_l\) болады. Инерция эллипсоидында радиус-вектор
+      ұзындығы инерция моментімен байланысты таңдалады.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Инерция эллипсоидының идеялық теңдеуі</div>
+      $$r=\frac{1}{\sqrt{I_l}}$$
+      <div class="note">
+        Яғни инерция моменті үлкен бағытта эллипсоид радиусы кіші болады,
+        ал инерция моменті кіші бағытта радиус үлкен болады.
+      </div>
+    </div>
+
+    <div class="formula">
+      <div class="label">Бағытқа тәуелді инерция моменті</div>
+      $$I_l=I_xl^2+I_ym^2+I_zn^2-2I_{xy}lm-2I_{xz}ln-2I_{yz}mn$$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 320">
+        <ellipse cx="380" cy="165" rx="180" ry="95" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="3"></ellipse>
+
+        <line x1="380" y1="165" x2="540" y2="110" stroke="#38bdf8" stroke-width="3"></line>
+        <circle cx="540" cy="110" r="6" fill="#38bdf8"></circle>
+        <text x="550" y="112" fill="#7dd3fc" font-size="14">P</text>
+
+        <text x="460" y="125" fill="#7dd3fc" font-size="14">r</text>
+        <circle cx="380" cy="165" r="6" fill="#10b981"></circle>
+        <text x="390" y="170" fill="#6ee7b7" font-size="14">O</text>
+
+        <line x1="160" y1="165" x2="600" y2="165" stroke="#64748b" stroke-width="2"></line>
+        <line x1="380" y1="40" x2="380" y2="285" stroke="#64748b" stroke-width="2"></line>
+
+        <text x="265" y="40" class="svg-formula" font-size="17">
+          r = 1 / √I<tspan baseline-shift="-30%" font-size="12">l</tspan>
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал түсіндіру</h4>
+      <p>
+        Егер бір бағытта \(I_l=4\,кг\cdot м^2\) болса, онда эллипсоидтағы радиус:
+      </p>
+      $$r=\frac{1}{\sqrt{4}}=\frac12$$
+      <p>
+        Ал басқа бағытта \(I_l=9\,кг\cdot м^2\) болса:
+      </p>
+      $$r=\frac{1}{\sqrt{9}}=\frac13$$
+      <p>
+        Инерция моменті үлкен болған сайын эллипсоид радиусы кішірейеді.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">3 · Инерция тензоры және эллипсоид</div>
+
+  <div class="card">
+    <p>
+      Инерция эллипсоиды инерция тензорымен тығыз байланысты. Инерция тензоры
+      дененің берілген нүктеге қатысты барлық инерциялық қасиеттерін сипаттайды.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Инерция тензоры</div>
+      $$
+      \mathbf{I}=
+      \begin{pmatrix}
+      I_x & -I_{xy} & -I_{xz}\\
+      -I_{xy} & I_y & -I_{yz}\\
+      -I_{xz} & -I_{yz} & I_z
+      \end{pmatrix}
+      $$
+    </div>
+
+    <p>
+      Егер координаталық осьтер дұрыс таңдалмаса, тензорда центрден тепкіш
+      инерция моменттері болады. Егер осьтер бас инерция осьтері ретінде таңдалса,
+      тензор диагональ түрге келеді.
+    </p>
+
+    <div class="formula amber">
+      <div class="label">Бас осьтер жүйесінде</div>
+      $$
+      \mathbf{I}=
+      \begin{pmatrix}
+      I_1 & 0 & 0\\
+      0 & I_2 & 0\\
+      0 & 0 & I_3
+      \end{pmatrix}
+      $$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 320">
+        <rect x="145" y="80" width="190" height="165" rx="16" fill="rgba(56,189,248,0.08)" stroke="#38bdf8" stroke-width="2"></rect>
+        <text x="185" y="125" class="svg-formula" font-size="16">Iₓ</text>
+        <text x="245" y="125" class="svg-formula" font-size="16">-Iₓᵧ</text>
+        <text x="185" y="175" class="svg-formula" font-size="16">-Iₓᵧ</text>
+        <text x="255" y="175" class="svg-formula" font-size="16">Iᵧ</text>
+        <text x="165" y="270" fill="#94a3b8" font-size="14">жалпы жүйе</text>
+
+        <line x1="380" y1="160" x2="440" y2="160" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowDiag7)"></line>
+
+        <defs>
+          <marker id="arrowDiag7" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"></path>
+          </marker>
+        </defs>
+
+        <rect x="470" y="80" width="190" height="165" rx="16" fill="rgba(16,185,129,0.08)" stroke="#10b981" stroke-width="2"></rect>
+        <text x="520" y="125" class="svg-formula" font-size="16">I₁</text>
+        <text x="585" y="125" class="svg-formula" font-size="16">0</text>
+        <text x="520" y="175" class="svg-formula" font-size="16">0</text>
+        <text x="585" y="175" class="svg-formula" font-size="16">I₂</text>
+        <text x="495" y="270" fill="#6ee7b7" font-size="14">бас осьтер жүйесі</text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал түсіндіру</h4>
+      <p>
+        Егер дене симметриялы болса, мысалы біртекті дөңгелек диск, оның симметрия
+        осьтері бас инерция осьтері болады. Бұл жағдайда:
+      </p>
+      $$I_{xy}=I_{xz}=I_{yz}=0$$
+      <p>
+        Сондықтан инерция тензоры қарапайым диагональ түрге келеді.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">4 · Бас инерция осьтері</div>
+
+  <div class="card">
+    <p>
+      <strong>Бас инерция осьтері</strong> — инерция тензоры диагональ түрге келетін
+      осьтер. Бұл осьтерге қатысты центрден тепкіш инерция моменттері нөлге тең болады.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Бас осьтер шарты</div>
+      $$I_{xy}=I_{xz}=I_{yz}=0$$
+    </div>
+
+    <p>
+      Бас осьтерге қатысты инерция моменттері <strong>бас инерция моменттері</strong>
+      деп аталады. Әдетте олар \(I_1\), \(I_2\), \(I_3\) деп белгіленеді.
+    </p>
+
+    <div class="formula">
+      <div class="label">Бас инерция моменттері</div>
+      $$I_1,\qquad I_2,\qquad I_3$$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 330">
+        <ellipse cx="380" cy="170" rx="160" ry="85" fill="rgba(56,189,248,0.08)" stroke="#38bdf8" stroke-width="3"></ellipse>
+
+        <line x1="180" y1="170" x2="580" y2="170" stroke="#10b981" stroke-width="4"></line>
+        <line x1="380" y1="55" x2="380" y2="285" stroke="#f59e0b" stroke-width="4"></line>
+        <line x1="275" y1="260" x2="500" y2="80" stroke="#38bdf8" stroke-width="4"></line>
+
+        <text x="590" y="176" fill="#6ee7b7" font-size="14">1-бас ось</text>
+        <text x="392" y="55" fill="#fbbf24" font-size="14">2-бас ось</text>
+        <text x="505" y="82" fill="#7dd3fc" font-size="14">3-бас ось</text>
+
+        <circle cx="380" cy="170" r="6" fill="#ffffff"></circle>
+
+        <text x="250" y="310" class="svg-formula" font-size="17">
+          I<tspan baseline-shift="-30%" font-size="12">xy</tspan> =
+          I<tspan baseline-shift="-30%" font-size="12">xz</tspan> =
+          I<tspan baseline-shift="-30%" font-size="12">yz</tspan> = 0
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал</h4>
+      <p>
+        Біртекті тікбұрышты пластина үшін оның симметрия осьтері бас инерция
+        осьтері болады. Себебі масса симметриялы таралғандықтан, аралас көбейтінділер
+        бір-бірін жояды:
+      </p>
+      $$I_{xy}=0$$
+      <p>
+        Сондықтан симметрия осін таңдасақ, есеп жеңілдейді.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">5 · Бас инерция осьтерінің қасиеттері</div>
+
+  <div class="card">
+    <p>
+      Бас инерция осьтері қатты дене динамикасында өте маңызды, себебі олар арқылы
+      айналмалы қозғалыстың теңдеулері қарапайым түрде жазылады.
+    </p>
+
+    <div class="formula green">
+      <div class="label">1-қасиет</div>
+      $$I_{xy}=I_{xz}=I_{yz}=0$$
+      <div class="note">
+        Бас осьтерде центрден тепкіш инерция моменттері нөлге тең.
+      </div>
+    </div>
+
+    <div class="formula">
+      <div class="label">2-қасиет</div>
+      $$\mathbf{H}=
+      \begin{pmatrix}
+      I_1\omega_1\\
+      I_2\omega_2\\
+      I_3\omega_3
+      \end{pmatrix}
+      $$
+      <div class="note">
+        Бас осьтер жүйесінде кинетикалық моменттің компоненттері қарапайым жазылады.
+      </div>
+    </div>
+
+    <div class="formula amber">
+      <div class="label">3-қасиет</div>
+      $$T=\frac12(I_1\omega_1^2+I_2\omega_2^2+I_3\omega_3^2)$$
+      <div class="note">
+        Айналмалы қозғалыстың кинетикалық энергиясы бас осьтерде жеңіл жазылады.
+      </div>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 320">
+        <rect x="190" y="70" width="380" height="190" rx="22" fill="rgba(16,185,129,0.08)" stroke="#10b981" stroke-width="2"></rect>
+        <text x="250" y="115" class="svg-formula" font-size="18">H₁ = I₁ω₁</text>
+        <text x="250" y="160" class="svg-formula" font-size="18">H₂ = I₂ω₂</text>
+        <text x="250" y="205" class="svg-formula" font-size="18">H₃ = I₃ω₃</text>
+        <text x="260" y="245" fill="#6ee7b7" font-size="14">бас осьтерде теңдеулер жеңілдейді</text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал түсіндіру</h4>
+      <p>
+        Егер дене бас осьтің біреуінің бойымен айналса, мысалы \(\omega_1\neq0\),
+        ал \(\omega_2=0\), \(\omega_3=0\), онда кинетикалық энергия:
+      </p>
+      $$T=\frac12I_1\omega_1^2$$
+      <p>
+        Бұл бас осьтерді қолдану есептеуді жеңілдететінін көрсетеді.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">6 · Симметрия және бас осьтер</div>
+
+  <div class="card">
+    <p>
+      Егер дененің симметрия осі немесе симметрия жазықтығы болса, онда көбінесе
+      осы симметрия бағыттары бас инерция осьтері болады.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Симметрия жағдайы</div>
+      <p style="color:#cbd5e1;">
+        Симметрия осі немесе симметрия жазықтығына перпендикуляр ось көбінесе
+        бас инерция осі болады.
+      </p>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 330">
+        <circle cx="380" cy="170" r="105" fill="rgba(56,189,248,0.10)" stroke="#38bdf8" stroke-width="3"></circle>
+
+        <line x1="380" y1="45" x2="380" y2="295" stroke="#10b981" stroke-width="4"></line>
+        <line x1="250" y1="170" x2="510" y2="170" stroke="#f59e0b" stroke-width="4"></line>
+
+        <text x="395" y="55" fill="#6ee7b7" font-size="14">симметрия осі</text>
+        <text x="520" y="176" fill="#fbbf24" font-size="14">бас ось</text>
+
+        <circle cx="380" cy="170" r="6" fill="#ffffff"></circle>
+        <text x="315" y="305" class="svg-formula" font-size="16">диск мысалы</text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал</h4>
+      <p>
+        Біртекті дөңгелек диск үшін центр арқылы өтетін және диск жазықтығына
+        перпендикуляр ось — бас инерция осі. Сонымен қатар диск жазықтығындағы
+        екі өзара перпендикуляр диаметр де бас осьтер болады.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">7 · Қысқаша емтихан жауабы</div>
+
+  <div class="card quick">
+    <h3>Емтиханда айтуға дайын нұсқа</h3>
+
+    <p>
+      Инерция эллипсоиды — берілген нүкте арқылы өтетін барлық осьтерге қатысты
+      инерция моменттерінің бағытына тәуелділігін көрсететін геометриялық бет.
+      Егер ось бағыты \(l,m,n\) бағыттаушы косинустарымен берілсе, сол бағыттағы
+      инерция моменті:
+    </p>
+
+    $$I_l=I_xl^2+I_ym^2+I_zn^2-2I_{xy}lm-2I_{xz}ln-2I_{yz}mn.$$
+
+    <p>
+      Инерция эллипсоидының радиусы \(r=\frac{1}{\sqrt{I_l}}\) шамасымен
+      байланысты қарастырылады. Инерция моменті үлкен бағытта радиус кіші,
+      ал инерция моменті кіші бағытта радиус үлкен болады.
+    </p>
+
+    <p>
+      Қатты дененің инерциялық бас осьтері — инерция тензоры диагональ түрге
+      келетін осьтер. Бұл осьтерде центрден тепкіш инерция моменттері нөлге тең:
+    </p>
+
+    $$I_{xy}=I_{xz}=I_{yz}=0.$$
+
+    <p>
+      Бас осьтерге қатысты инерция моменттері \(I_1,I_2,I_3\) деп аталады.
+      Бас осьтер жүйесінде инерция тензоры:
+    </p>
+
+    $$
+    \mathbf{I}=
+    \begin{pmatrix}
+    I_1 & 0 & 0\\
+    0 & I_2 & 0\\
+    0 & 0 & I_3
+    \end{pmatrix}.
+    $$
+
+    <p>
+      Симметрия осьтері көбінесе бас инерция осьтері болады. Бас осьтерді қолдану
+      қатты дененің айналмалы қозғалысын сипаттауды жеңілдетеді.
+    </p>
+  </div>
+
+  <div class="section-title">8 · Өзіңді тексер</div>
+
+  <div class="card">
+    <h3>Ауызша жауапқа дайындық сұрақтары</h3>
+
+    <div class="mini-list">
+      <div class="mini-item">1. Инерция эллипсоиды нені сипаттайды?</div>
+      <div class="mini-item">2. Инерция эллипсоидының радиусы инерция моментімен қалай байланысты?</div>
+      <div class="mini-item">3. Бас инерция осьтері дегеніміз не?</div>
+      <div class="mini-item">4. Бас осьтер жүйесінде центрден тепкіш инерция моменттері неге тең?</div>
+      <div class="mini-item">5. Бас инерция моменттері қалай белгіленеді?</div>
+      <div class="mini-item">6. Симметрия осі мен бас инерция осінің байланысы қандай?</div>
+      <div class="mini-item">7. Бас осьтер жүйесінде кинетикалық энергия қалай жазылады?</div>
+    </div>
+  </div>
+</section>
+      <!-- 8-СҰРАҚ -->
+<section class="question-section" id="q8">
+  <div class="card question-card">
+    <h2>8-сұрақ</h2>
+    <p><strong>Толық емтихан сұрағы:</strong></p>
+    <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+      Қозғалмайтын ось төңірегіндегі қатты дененің айналуын сипаттап,
+      динамиканың жалпы теоремалары арқылы қозғалыстың дифференциалдық
+      теңдеулерін алыңыз.
+    </p>
+  </div>
+
+  <div class="section-title">1 · Сұрақтың негізгі мағынасы</div>
+
+  <div class="card">
+    <p>
+      Бұл сұрақта қатты дененің <strong>қозғалмайтын ось төңірегіндегі айналмалы
+      қозғалысы</strong> қарастырылады. Мұндай қозғалыста дененің барлық нүктелері
+      бір ғана тұрақты осьті айнала шеңбер бойымен қозғалады.
+    </p>
+
+    <p>
+      Қозғалысты сипаттау үшін бұрыштық орын ауыстыру \(\varphi\), бұрыштық
+      жылдамдық \(\omega\), бұрыштық үдеу \(\varepsilon\) қолданылады.
+    </p>
+
+    <div class="formula">
+      <div class="label">Негізгі кинематикалық шамалар</div>
+      $$\omega=\dot{\varphi}$$
+      $$\varepsilon=\dot{\omega}=\ddot{\varphi}$$
+      <div class="note">
+        Мұндағы \(\varphi\) — бұрылу бұрышы, \(\omega\) — бұрыштық жылдамдық,
+        \(\varepsilon\) — бұрыштық үдеу.
+      </div>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 320">
+        <line x1="380" y1="45" x2="380" y2="275" stroke="#38bdf8" stroke-width="4"></line>
+        <text x="395" y="60" fill="#7dd3fc" font-size="15">қозғалмайтын ось</text>
+
+        <circle cx="380" cy="165" r="95" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="3"></circle>
+        <circle cx="470" cy="135" r="16" fill="#f59e0b"></circle>
+        <text x="492" y="140" fill="#e2e8f0" font-size="14">A</text>
+
+        <path d="M455 210 A78 78 0 0 0 475 95" fill="none" stroke="#10b981" stroke-width="3" marker-end="url(#arrowRot8)"></path>
+
+        <defs>
+          <marker id="arrowRot8" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#10b981"></path>
+          </marker>
+        </defs>
+
+        <text x="500" y="100" fill="#6ee7b7" font-size="15">ω</text>
+        <text x="270" y="290" class="svg-formula" font-size="17">
+          ω = φ̇, ε = ω̇ = φ̈
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Қарапайым мысал</h4>
+      <p>
+        Есік топсасы қозғалмайтын ось болады. Есіктің әрбір нүктесі осы топса
+        осін айнала шеңбер бойымен қозғалады. Сондықтан есіктің қозғалысы
+        қозғалмайтын ось төңірегіндегі айналысқа мысал болады.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">2 · Қозғалмайтын ось төңірегіндегі айналыстың кинематикасы</div>
+
+  <div class="card">
+    <p>
+      Қатты дене қозғалмайтын \(z\) осін айнала қозғалсын. Дененің кез келген
+      нүктесінің осы оське дейінгі қашықтығы \(r\) болса, оның сызықтық жылдамдығы
+      мен жанама үдеуі бұрыштық шамалар арқылы анықталады.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Нүкте жылдамдығы</div>
+      $$v=\omega r$$
+      <div class="note">
+        Мұндағы \(r\) — нүктеден айналу осіне дейінгі қашықтық.
+      </div>
+    </div>
+
+    <div class="formula">
+      <div class="label">Үдеулер</div>
+      $$a_{\tau}=\varepsilon r$$
+      $$a_n=\omega^2r$$
+      <div class="note">
+        \(a_{\tau}\) — жанама үдеу, \(a_n\) — нормаль немесе центрге тартқыш үдеу.
+      </div>
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 320">
+        <line x1="220" y1="55" x2="220" y2="270" stroke="#38bdf8" stroke-width="4"></line>
+        <text x="175" y="48" fill="#7dd3fc" font-size="15">z осі</text>
+
+        <circle cx="470" cy="165" r="18" fill="#f59e0b"></circle>
+        <text x="495" y="170" fill="#e2e8f0" font-size="14">A</text>
+
+        <line x1="220" y1="165" x2="470" y2="165" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+        <text x="335" y="152" fill="#94a3b8" font-size="15">r</text>
+
+        <line x1="470" y1="165" x2="470" y2="80" stroke="#10b981" stroke-width="3" marker-end="url(#arrowV8)"></line>
+        <text x="482" y="115" fill="#6ee7b7" font-size="15">v</text>
+
+        <line x1="470" y1="165" x2="330" y2="165" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowA8)"></line>
+        <text x="390" y="185" fill="#fbbf24" font-size="15">aₙ</text>
+
+        <defs>
+          <marker id="arrowV8" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#10b981"></path>
+          </marker>
+          <marker id="arrowA8" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#f59e0b"></path>
+          </marker>
+        </defs>
+
+        <text x="250" y="285" class="svg-formula" font-size="17">
+          v = ωr, aτ = εr, aₙ = ω²r
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Егер \(\omega=4\,рад/с\), \(r=0.5\,м\) болса, нүктенің жылдамдығы:
+      </p>
+      $$v=\omega r=4\cdot0.5=2\,м/с$$
+      <p>
+        Егер \(\varepsilon=3\,рад/с^2\) болса, жанама үдеу:
+      </p>
+      $$a_{\tau}=\varepsilon r=3\cdot0.5=1.5\,м/с^2$$
+    </div>
+  </div>
+
+  <div class="section-title">3 · Кинетикалық момент теоремасы</div>
+
+  <div class="card">
+    <p>
+      Қозғалмайтын ось төңірегіндегі айналмалы қозғалыстың негізгі динамикалық
+      теңдеуін алу үшін <strong>кинетикалық моменттің өзгеруі туралы теорема</strong>
+      қолданылады.
+    </p>
+
+    <div class="formula">
+      <div class="label">Кинетикалық момент теоремасы</div>
+      $$\frac{dK_z}{dt}=M_z^{(e)}$$
+      <div class="note">
+        Мұндағы \(K_z\) — дененің \(z\) осіне қатысты кинетикалық моменті,
+        \(M_z^{(e)}\) — сыртқы күштердің \(z\) осіне қатысты моменттерінің қосындысы.
+      </div>
+    </div>
+
+    <p>
+      Қатты дене \(z\) осін айналғанда оның кинетикалық моменті:
+    </p>
+
+    <div class="formula green">
+      $$K_z=I_z\omega$$
+    </div>
+
+    <p>
+      Егер \(I_z\) тұрақты болса:
+    </p>
+
+    <div class="formula green">
+      $$\frac{dK_z}{dt}=I_z\frac{d\omega}{dt}=I_z\varepsilon$$
+    </div>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 310">
+        <line x1="380" y1="55" x2="380" y2="260" stroke="#38bdf8" stroke-width="4"></line>
+        <text x="395" y="70" fill="#7dd3fc" font-size="15">z осі</text>
+
+        <circle cx="380" cy="160" r="85" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="3"></circle>
+
+        <path d="M310 205 A80 80 0 0 0 450 205" fill="none" stroke="#10b981" stroke-width="3" marker-end="url(#arrowK8)"></path>
+        <text x="455" y="212" fill="#6ee7b7" font-size="15">ω</text>
+
+        <path d="M520 160 C565 120, 585 190, 530 215" fill="none" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrowM8)"></path>
+        <text x="575" y="170" fill="#fbbf24" font-size="15">Mᶻ</text>
+
+        <defs>
+          <marker id="arrowK8" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#10b981"></path>
+          </marker>
+          <marker id="arrowM8" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#f59e0b"></path>
+          </marker>
+        </defs>
+
+        <text x="250" y="290" class="svg-formula" font-size="17">
+          dKz/dt = Mz, Kz = Izω
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Егер \(I_z=6\,кг\cdot м^2\), ал \(\omega=5t\) болса:
+      </p>
+      $$K_z=I_z\omega=6\cdot5t=30t$$
+      $$\frac{dK_z}{dt}=30$$
+      <p>
+        Демек, сыртқы күштердің моменті \(M_z=30\,Н\cdot м\).
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">4 · Қозғалыстың дифференциалдық теңдеуі</div>
+
+  <div class="card">
+    <p>
+      Кинетикалық момент теоремасынан қатты дененің қозғалмайтын ось төңірегіндегі
+      айналмалы қозғалысының негізгі дифференциалдық теңдеуі алынады.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Негізгі теңдеу</div>
+      $$I_z\varepsilon=M_z$$
+    </div>
+
+    <p>
+      Себебі \(\varepsilon=\ddot{\varphi}\), сондықтан:
+    </p>
+
+    <div class="formula green">
+      <div class="label">Дифференциалдық теңдеу</div>
+      $$I_z\ddot{\varphi}=M_z$$
+    </div>
+
+    <p>
+      Бұл теңдеу ілгерілемелі қозғалыстағы \(ma=F\) теңдеуіне ұқсас.
+      Мұнда массаның орнына инерция моменті, күштің орнына күш моменті,
+      сызықтық үдеудің орнына бұрыштық үдеу қолданылады.
+    </p>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 310">
+        <rect x="185" y="70" width="390" height="180" rx="24" fill="rgba(56,189,248,0.08)" stroke="#38bdf8" stroke-width="2"></rect>
+
+        <text x="255" y="125" class="svg-formula" font-size="21">
+          F = ma
+        </text>
+        <text x="255" y="160" fill="#94a3b8" font-size="15">ілгерілемелі қозғалыс</text>
+
+        <line x1="360" y1="140" x2="435" y2="140" stroke="#94a3b8" stroke-width="2"></line>
+
+        <text x="455" y="125" class="svg-formula" font-size="21">
+          M = Iε
+        </text>
+        <text x="455" y="160" fill="#94a3b8" font-size="15">айналмалы қозғалыс</text>
+
+        <text x="270" y="220" class="svg-formula" font-size="20">
+          I<tspan baseline-shift="-30%" font-size="13">z</tspan> φ̈ = M<tspan baseline-shift="-30%" font-size="13">z</tspan>
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Егер \(I_z=4\,кг\cdot м^2\), ал сыртқы момент \(M_z=12\,Н\cdot м\) болса,
+        бұрыштық үдеу:
+      </p>
+      $$I_z\varepsilon=M_z$$
+      $$\varepsilon=\frac{M_z}{I_z}=\frac{12}{4}=3\,рад/с^2$$
+      <p>Жауабы: \(\varepsilon=3\,рад/с^2\).</p>
+    </div>
+  </div>
+
+  <div class="section-title">5 · Жұмыс және кинетикалық энергия теоремасы</div>
+
+  <div class="card">
+    <p>
+      Қозғалмайтын ось төңірегінде айналатын дене үшін динамиканың тағы бір жалпы
+      теоремасы — <strong>кинетикалық энергияның өзгеруі туралы теорема</strong>.
+    </p>
+
+    <div class="formula">
+      <div class="label">Айналмалы қозғалыстың кинетикалық энергиясы</div>
+      $$T=\frac12I_z\omega^2$$
+    </div>
+
+    <div class="formula green">
+      <div class="label">Жұмыс және энергия теоремасы</div>
+      $$dA=M_z\,d\varphi$$
+      $$dT=dA$$
+    </div>
+
+    <p>
+      Егер күш моменті \(M_z\) денені \(d\varphi\) бұрышқа бұрса, элементар жұмыс
+      \(dA=M_zd\varphi\) болады.
+    </p>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 310">
+        <circle cx="380" cy="155" r="90" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="3"></circle>
+        <path d="M305 205 A90 90 0 0 0 455 205" fill="none" stroke="#10b981" stroke-width="3" marker-end="url(#arrowE8)"></path>
+        <text x="462" y="213" fill="#6ee7b7" font-size="15">dφ</text>
+
+        <path d="M515 155 C560 120, 580 185, 530 215" fill="none" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrowME8)"></path>
+        <text x="575" y="170" fill="#7dd3fc" font-size="15">Mz</text>
+
+        <defs>
+          <marker id="arrowE8" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#10b981"></path>
+          </marker>
+          <marker id="arrowME8" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#38bdf8"></path>
+          </marker>
+        </defs>
+
+        <text x="250" y="285" class="svg-formula" font-size="17">
+          T = 1/2 Izω², dA = Mz dφ
+        </text>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал есеп</h4>
+      <p>
+        Егер \(I_z=2\,кг\cdot м^2\), \(\omega=5\,рад/с\) болса, кинетикалық энергия:
+      </p>
+      $$T=\frac12I_z\omega^2=\frac12\cdot2\cdot5^2=25\,Дж$$
+      <p>Жауабы: \(T=25\,Дж\).</p>
+    </div>
+  </div>
+
+  <div class="section-title">6 · Импульс моменті және момент теңдеуі</div>
+
+  <div class="card">
+    <p>
+      Егер денеге сыртқы момент әсер етпесе, онда \(M_z=0\), демек кинетикалық
+      момент сақталады. Бұл айналмалы қозғалыстағы маңызды заң.
+    </p>
+
+    <div class="formula green">
+      <div class="label">Кинетикалық моменттің сақталуы</div>
+      $$M_z=0 \Rightarrow K_z=I_z\omega=\text{const}$$
+    </div>
+
+    <p>
+      Егер сыртқы момент бар болса, ол бұрыштық жылдамдықты өзгертеді.
+      Сондықтан \(M_z\) неғұрлым үлкен болса, бұрыштық үдеу де соғұрлым үлкен болады.
+    </p>
+
+    <div class="svg-box">
+      <svg viewBox="0 0 760 300">
+        <circle cx="380" cy="150" r="80" fill="rgba(16,185,129,0.10)" stroke="#10b981" stroke-width="3"></circle>
+        <path d="M315 195 A78 78 0 0 0 450 195" fill="none" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrowSave8)"></path>
+        <text x="455" y="203" fill="#7dd3fc" font-size="15">ω</text>
+
+        <text x="245" y="265" class="svg-formula" font-size="18">
+          Mz = 0 → Izω = const
+        </text>
+
+        <defs>
+          <marker id="arrowSave8" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+            <path d="M0,0 L8,3 L0,6 Z" fill="#38bdf8"></path>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+
+    <div class="example">
+      <h4>Мысал түсіндіру</h4>
+      <p>
+        Егер сыртқы момент жоқ болса және \(I_z=3\,кг\cdot м^2\), \(\omega=4\,рад/с\),
+        онда:
+      </p>
+      $$K_z=I_z\omega=3\cdot4=12\,кг\cdot м^2/с$$
+      <p>
+        Бұл мән сыртқы момент әсер етпеген жағдайда тұрақты сақталады.
+      </p>
+    </div>
+  </div>
+
+  <div class="section-title">7 · Қысқаша емтихан жауабы</div>
+
+  <div class="card quick">
+    <h3>Емтиханда айтуға дайын нұсқа</h3>
+
+    <p>
+      Қатты дене қозғалмайтын ось төңірегінде айналғанда, дененің барлық нүктелері
+      осы оське перпендикуляр жазықтықтарда шеңбер бойымен қозғалады. Қозғалыс
+      бұрылу бұрышы \(\varphi\), бұрыштық жылдамдық \(\omega=\dot{\varphi}\) және
+      бұрыштық үдеу \(\varepsilon=\dot{\omega}=\ddot{\varphi}\) арқылы сипатталады.
+    </p>
+
+    <p>
+      Дененің \(z\) осіне қатысты кинетикалық моменті:
+    </p>
+
+    $$K_z=I_z\omega.$$
+
+    <p>
+      Кинетикалық моменттің өзгеруі туралы теорема бойынша:
+    </p>
+
+    $$\frac{dK_z}{dt}=M_z.$$
+
+    <p>
+      Егер \(I_z\) тұрақты болса, онда:
+    </p>
+
+    $$\frac{d}{dt}(I_z\omega)=I_z\varepsilon=M_z.$$
+
+    <p>
+      Сондықтан қозғалмайтын ось төңірегіндегі қатты дененің айналу қозғалысының
+      дифференциалдық теңдеуі:
+    </p>
+
+    $$I_z\ddot{\varphi}=M_z.$$
+
+    <p>
+      Бұл теңдеу ілгерілемелі қозғалыстағы \(ma=F\) теңдеуіне ұқсас. Мұнда
+      \(I_z\) — инерция моменті, \(M_z\) — сыртқы күштердің оське қатысты моменті.
+      Кинетикалық энергия:
+    </p>
+
+    $$T=\frac12I_z\omega^2.$$
+  </div>
+
+  <div class="section-title">8 · Өзіңді тексер</div>
+
+  <div class="card">
+    <h3>Ауызша жауапқа дайындық сұрақтары</h3>
+
+    <div class="mini-list">
+      <div class="mini-item">1. Қозғалмайтын ось төңірегіндегі айналыс дегеніміз не?</div>
+      <div class="mini-item">2. Бұрыштық жылдамдық пен бұрыштық үдеу қалай анықталады?</div>
+      <div class="mini-item">3. Нүктенің сызықтық жылдамдығы қандай формуламен табылады?</div>
+      <div class="mini-item">4. Кинетикалық момент теоремасы қалай жазылады?</div>
+      <div class="mini-item">5. \(K_z=I_z\omega\) формуласының мағынасы қандай?</div>
+      <div class="mini-item">6. Қозғалыстың негізгі дифференциалдық теңдеуі қандай?</div>
+      <div class="mini-item">7. Айналмалы қозғалыстың кинетикалық энергиясы қалай жазылады?</div>
+    </div>
+  </div>
+</section>
       <section class="question-section" id="q9"><div class="card question-card"><h2>9-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 9-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>9-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
       <section class="question-section" id="q10"><div class="card question-card"><h2>10-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 10-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>10-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
       <section class="question-section" id="q11"><div class="card question-card"><h2>11-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 11-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>11-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>

@@ -943,6 +943,390 @@
       </div>
     </main>
 
+    <!-- =========================
+     2-СҰРАҚ
+========================= -->
+
+<div class="card question-card">
+  <h2>2-сұрақ</h2>
+  <p>
+    <strong>Толық емтихан сұрағы:</strong>
+  </p>
+  <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+    Массалар геометриясы. Оське, жазықтыққа қатысты дененің инерция моменттерін
+    түсіндіріп, біртекті сырыққа перпендикуляр бір ұшы арқылы өтетін оське қатысты
+    инерция моментін есептеңіз.
+  </p>
+</div>
+
+<div class="section-title">1 · Массалар геометриясы</div>
+
+<div class="card">
+  <p>
+    <strong>Массалар геометриясы</strong> — қатты денедегі массаның кеңістікте қалай
+    таралғанын зерттейтін бөлім. Қатты дененің айналмалы қозғалысын зерттеу үшін
+    тек оның массасын ғана емес, массаның айналу өсіне немесе жазықтыққа қатысты
+    қалай орналасқанын білу керек.
+  </p>
+
+  <p>
+    Бұл тақырыпта негізгі шамалар ретінде массалар центрі, өске қатысты инерция моменті
+    және жазықтыққа қатысты инерция моменті қарастырылады.
+  </p>
+
+  <div class="formula">
+    <div class="label">Негізгі идея</div>
+    $$I=\sum m_kh_k^2$$
+    <div class="note">
+      Мұндағы \(h_k\) — материалдық нүктеден берілген өске дейінгі қашықтық.
+      Масса өстен неғұрлым алыс болса, инерция моменті соғұрлым үлкен болады.
+    </div>
+  </div>
+
+  <div class="svg-box">
+    <svg viewBox="0 0 760 260">
+      <line x1="170" y1="45" x2="170" y2="220" stroke="#38bdf8" stroke-width="4"></line>
+      <text x="125" y="35" fill="#38bdf8" font-size="15">айналу өсі</text>
+
+      <circle cx="500" cy="135" r="22" fill="#f59e0b"></circle>
+      <text x="530" y="140" fill="#e2e8f0" font-size="15">m</text>
+
+      <line x1="170" y1="135" x2="500" y2="135" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+      <text x="325" y="122" fill="#94a3b8" font-size="15">h</text>
+
+      <text x="285" y="65" class="svg-formula" font-size="17">
+        I = m h²
+      </text>
+    </svg>
+  </div>
+
+  <div class="example">
+    <h4>Мысал есеп</h4>
+    <p>
+      Егер \(m=2\,кг\) нүкте айналу өсінен \(h=3\,м\) қашықтықта орналасса:
+    </p>
+    $$I=mh^2=2\cdot3^2=18\,кг\cdot м^2$$
+    <p>
+      Демек, инерция моменті \(18\,кг\cdot м^2\)-ге тең.
+    </p>
+  </div>
+</div>
+
+<div class="section-title">2 · Оське қатысты инерция моменті</div>
+
+<div class="card">
+  <p>
+    <strong>Оське қатысты инерция моменті</strong> дене массасының берілген оське
+    қатысты қалай таралғанын сипаттайды. Бұл шама дененің айналмалы қозғалыстағы
+    инерттілігін көрсетеді.
+  </p>
+
+  <div class="formula">
+    <div class="label">Дискретті жүйе үшін</div>
+    $$I_z=\sum m_kh_k^2$$
+    <div class="note">
+      Мұндағы \(m_k\) — материалдық нүктенің массасы,
+      \(h_k\) — осы нүктеден айналу осіне дейінгі перпендикуляр қашықтық.
+    </div>
+  </div>
+
+  <div class="formula green">
+    <div class="label">Тұтас дене үшін</div>
+    $$I_z=\int h^2dm$$
+    <div class="note">
+      Егер дене тұтас болса, онда қосындының орнына интеграл қолданылады.
+    </div>
+  </div>
+
+  <div class="svg-box">
+    <svg viewBox="0 0 760 300">
+      <defs>
+        <marker id="axisArrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#38bdf8"></path>
+        </marker>
+      </defs>
+
+      <line x1="180" y1="230" x2="650" y2="230" stroke="#64748b" stroke-width="2" marker-end="url(#axisArrow2)"></line>
+      <text x="660" y="235" fill="#94a3b8" font-size="15">x</text>
+
+      <line x1="180" y1="230" x2="180" y2="60" stroke="#38bdf8" stroke-width="4"></line>
+      <text x="122" y="50" fill="#38bdf8" font-size="15">z өсі</text>
+
+      <circle cx="430" cy="125" r="18" fill="#f59e0b"></circle>
+      <text x="455" y="130" fill="#e2e8f0" font-size="14">mₖ</text>
+
+      <line x1="180" y1="125" x2="430" y2="125" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+      <text x="295" y="112" fill="#94a3b8" font-size="15">hₖ</text>
+
+      <text x="285" y="70" class="svg-formula" font-size="17">
+        I<tspan baseline-shift="-30%" font-size="12">z</tspan> = Σmₖhₖ²
+      </text>
+    </svg>
+  </div>
+
+  <div class="example">
+    <h4>Мысал есеп</h4>
+    <p>
+      Екі материалдық нүкте берілген: \(m_1=2\,кг,\;h_1=1\,м\),
+      \(m_2=3\,кг,\;h_2=2\,м\). Оське қатысты инерция моментін табамыз.
+    </p>
+    $$I= m_1h_1^2+m_2h_2^2$$
+    $$I=2\cdot1^2+3\cdot2^2=2+12=14\,кг\cdot м^2$$
+    <p>
+      Жауабы: \(I=14\,кг\cdot м^2\).
+    </p>
+  </div>
+</div>
+
+<div class="section-title">3 · Жазықтыққа қатысты инерция моменті</div>
+
+<div class="card">
+  <p>
+    <strong>Жазықтыққа қатысты инерция моменті</strong> дене нүктелерінің берілген
+    жазықтықтан қаншалықты алыста орналасқанын көрсетеді. Яғни бұл шама нүктелердің
+    жазықтыққа дейінгі қашықтықтарының квадраты арқылы анықталады.
+  </p>
+
+  <div class="formula">
+    <div class="label">Жазықтықтарға қатысты формулалар</div>
+    $$I_{xOy}=\sum m_kz_k^2$$
+    $$I_{yOz}=\sum m_kx_k^2$$
+    $$I_{xOz}=\sum m_ky_k^2$$
+    <div class="note">
+      Мысалы, \(xOy\) жазықтығына дейінгі қашықтық \(z\)-ке тең,
+      сондықтан \(I_{xOy}=\sum m_kz_k^2\).
+    </div>
+  </div>
+
+  <div class="svg-box">
+    <svg viewBox="0 0 760 300">
+      <polygon points="150,220 590,220 680,125 240,125" fill="rgba(56,189,248,0.10)" stroke="#38bdf8" stroke-width="2"></polygon>
+      <text x="350" y="247" fill="#38bdf8" font-size="16">xOy жазықтығы</text>
+
+      <circle cx="430" cy="70" r="16" fill="#f59e0b"></circle>
+      <text x="455" y="76" fill="#e2e8f0" font-size="14">m</text>
+
+      <line x1="430" y1="70" x2="430" y2="170" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+      <text x="440" y="125" fill="#94a3b8" font-size="15">z</text>
+
+      <circle cx="430" cy="170" r="5" fill="#38bdf8"></circle>
+
+      <text x="240" y="70" class="svg-formula" font-size="17">
+        I<tspan baseline-shift="-30%" font-size="12">xOy</tspan> = m z²
+      </text>
+    </svg>
+  </div>
+
+  <div class="example">
+    <h4>Мысал есеп</h4>
+    <p>
+      Массасы \(m=5\,кг\) нүкте \(xOy\) жазықтығынан \(z=2\,м\) қашықтықта орналасқан.
+    </p>
+    $$I_{xOy}=mz^2=5\cdot2^2=20\,кг\cdot м^2$$
+    <p>
+      Жауабы: \(I_{xOy}=20\,кг\cdot м^2\).
+    </p>
+  </div>
+</div>
+
+<div class="section-title">4 · Біртекті сырықтың инерция моменті</div>
+
+<div class="card">
+  <p>
+    Енді ұзындығы \(l\), массасы \(M\) болатын <strong>біртекті жіңішке сырықты</strong>
+    қарастырамыз. Ось сырықтың бір ұшы арқылы өтеді және сырыққа перпендикуляр
+    бағытталған.
+  </p>
+
+  <p>
+    Сырық біртекті болғандықтан, оның сызықтық тығыздығы тұрақты болады:
+  </p>
+
+  <div class="formula green">
+    <div class="label">Сызықтық тығыздық</div>
+    $$\rho=\frac{M}{l}$$
+    <div class="note">
+      Мұндағы \(\rho\) — сызықтық тығыздық, \(M\) — сырық массасы, \(l\) — сырық ұзындығы.
+    </div>
+  </div>
+
+  <div class="formula">
+    <div class="label">Кішкентай элемент массасы</div>
+    $$dm=\rho\,dx$$
+    <div class="note">
+      \(dx\) — сырықтың өте кіші бөлігі, \(dm\) — сол бөліктің массасы.
+    </div>
+  </div>
+
+  <div class="svg-box">
+    <svg viewBox="0 0 760 320">
+      <defs>
+        <marker id="rodArrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+          <path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"></path>
+        </marker>
+      </defs>
+
+      <line x1="170" y1="70" x2="170" y2="255" stroke="#38bdf8" stroke-width="4"></line>
+      <text x="115" y="58" fill="#38bdf8" font-size="15">айналу осі</text>
+
+      <rect x="170" y="150" width="430" height="28" rx="14" fill="rgba(245,158,11,0.75)" stroke="#f59e0b"></rect>
+      <text x="335" y="135" fill="#e2e8f0" font-size="15">біртекті сырық</text>
+
+      <rect x="360" y="146" width="24" height="36" fill="rgba(56,189,248,0.55)" stroke="#38bdf8"></rect>
+      <text x="354" y="205" fill="#7dd3fc" font-size="14">dx</text>
+
+      <line x1="170" y1="235" x2="600" y2="235" stroke="#94a3b8" stroke-width="2" marker-end="url(#rodArrow2)"></line>
+      <text x="382" y="258" fill="#94a3b8" font-size="15">l</text>
+
+      <line x1="170" y1="110" x2="372" y2="110" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+      <text x="260" y="98" fill="#94a3b8" font-size="15">x</text>
+
+      <text x="270" y="60" class="svg-formula" font-size="17">
+        dI = x²dm
+      </text>
+    </svg>
+  </div>
+
+  <div class="example">
+    <h4>Мысал түсіндіру</h4>
+    <p>
+      Егер сырықтың кішкентай бөлігі айналу осінен \(x\) қашықтықта болса,
+      сол бөліктің инерция моменті:
+    </p>
+    $$dI=x^2dm$$
+    <p>
+      Ал \(dm=\rho dx\), сондықтан:
+    </p>
+    $$dI=x^2\rho dx$$
+  </div>
+</div>
+
+<div class="section-title">5 · Біртекті сырық үшін формуланы шығару</div>
+
+<div class="card">
+  <p>
+    Толық инерция моментін табу үшін сырықтың барлық кішкентай бөліктерінің
+    инерция моменттерін қосамыз. Тұтас дене болғандықтан, интеграл қолданамыз.
+  </p>
+
+  <div class="formula">
+    <div class="label">Интеграл түрі</div>
+    $$I=\int_0^l x^2dm$$
+  </div>
+
+  <p>
+    \(dm=\rho dx\) болғандықтан:
+  </p>
+
+  <div class="formula">
+    $$I=\int_0^l x^2\rho dx$$
+    $$I=\rho\int_0^l x^2dx$$
+  </div>
+
+  <p>
+    Интегралды есептейміз:
+  </p>
+
+  <div class="formula amber">
+    $$\int_0^l x^2dx=\frac{l^3}{3}$$
+  </div>
+
+  <p>
+    Сондықтан:
+  </p>
+
+  <div class="formula">
+    $$I=\rho\frac{l^3}{3}$$
+  </div>
+
+  <p>
+    Ал \(\rho=\frac{M}{l}\), оны орнына қоямыз:
+  </p>
+
+  <div class="formula green">
+    $$I=\frac{M}{l}\cdot\frac{l^3}{3}$$
+    $$I=\frac{Ml^2}{3}$$
+  </div>
+
+  <div class="example">
+    <h4>Қорытынды формула</h4>
+    <p>
+      Біртекті сырықтың бір ұшы арқылы өтетін және сырыққа перпендикуляр оське
+      қатысты инерция моменті:
+    </p>
+    $$\boxed{I=\frac{Ml^2}{3}}$$
+  </div>
+</div>
+
+<div class="section-title">6 · Сандық мысал</div>
+
+<div class="card">
+  <p>
+    Біртекті сырықтың массасы \(M=6\,кг\), ұзындығы \(l=2\,м\).
+    Сырықтың бір ұшы арқылы өтетін перпендикуляр оське қатысты инерция моментін табамыз.
+  </p>
+
+  <div class="formula green">
+    <div class="label">Формула</div>
+    $$I=\frac{Ml^2}{3}$$
+  </div>
+
+  <div class="example">
+    <h4>Шешуі</h4>
+    $$I=\frac{6\cdot2^2}{3}$$
+    $$I=\frac{6\cdot4}{3}=8\,кг\cdot м^2$$
+    <p>
+      Жауабы: \(I=8\,кг\cdot м^2\).
+    </p>
+  </div>
+</div>
+
+<div class="section-title">7 · Қысқаша емтихан жауабы</div>
+
+<div class="card quick">
+  <h3>Емтиханда айтуға дайын нұсқа</h3>
+
+  <p>
+    Массалар геометриясы қатты денеде массаның кеңістікте қалай таралғанын зерттейді.
+    Оське қатысты инерция моменті дене массасының берілген оське қатысты таралуын
+    сипаттайды және \(I=\sum m_kh_k^2\) формуласымен анықталады.
+  </p>
+
+  <p>
+    Тұтас дене үшін \(I=\int h^2dm\). Жазықтыққа қатысты инерция моменті дене
+    нүктелерінің сол жазықтыққа дейінгі қашықтықтарының квадраты арқылы табылады.
+    Мысалы, \(I_{xOy}=\sum m_kz_k^2\).
+  </p>
+
+  <p>
+    Біртекті сырық үшін ось сырықтың бір ұшы арқылы өтіп, сырыққа перпендикуляр
+    болса, \(dm=\rho dx\), \(\rho=\frac{M}{l}\). Сондықтан:
+  </p>
+
+  $$I=\int_0^l x^2dm=\int_0^l x^2\rho dx=\frac{Ml^2}{3}$$
+
+  <p>
+    Демек, біртекті сырықтың бір ұшы арқылы өтетін перпендикуляр оське қатысты
+    инерция моменті \(I=\frac{Ml^2}{3}\).
+  </p>
+</div>
+
+<div class="section-title">8 · Өзіңді тексер</div>
+
+<div class="card">
+  <h3>Ауызша жауапқа дайындық сұрақтары</h3>
+
+  <div class="mini-list">
+    <div class="mini-item">1. Оське қатысты инерция моменті нені сипаттайды?</div>
+    <div class="mini-item">2. Жазықтыққа қатысты инерция моменті қалай анықталады?</div>
+    <div class="mini-item">3. Тұтас дене үшін неге интеграл қолданылады?</div>
+    <div class="mini-item">4. Біртекті сырықтың сызықтық тығыздығы қалай жазылады?</div>
+    <div class="mini-item">5. Неге \(dm=\rho dx\) деп аламыз?</div>
+    <div class="mini-item">6. Біртекті сырық үшін соңғы формула қандай?</div>
+    <div class="mini-item">7. \(I=\frac{Ml^2}{3}\) формуласы қай ось үшін қолданылады?</div>
+  </div>
+</div>
+
     <div class="footer">
       Qainar · Қатты дене механикасы емтиханға дайындық · 1-сұрақ
     </div>

@@ -163,7 +163,18 @@
       margin: 24px 0 38px;
     }
 
+    .q-tabs {
+      max-height: 170px;
+      overflow-y: auto;
+      padding: 10px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
     .tab {
+      cursor: pointer;
+      font-family: var(--font-body);
       padding: 10px 18px;
       border-radius: 999px;
       border: 1px solid var(--border);
@@ -171,6 +182,13 @@
       color: var(--muted);
       font-weight: 700;
       font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .tab:hover {
+      color: white;
+      border-color: rgba(56,189,248,0.35);
+      background: rgba(56,189,248,0.09);
     }
 
     .tab.active {
@@ -178,6 +196,26 @@
       border-color: rgba(56,189,248,0.45);
       background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(37,99,235,0.16));
       box-shadow: 0 0 26px rgba(56,189,248,0.10);
+    }
+
+    .question-section {
+      display: none;
+    }
+
+    .question-section.active {
+      display: block;
+      animation: fadeInQuestion 0.25s ease;
+    }
+
+    @keyframes fadeInQuestion {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .section-title {
@@ -360,21 +398,6 @@
       letter-spacing: 0.2px;
     }
 
-    .svg-highlight {
-      fill: #7dd3fc;
-      font-weight: 700;
-    }
-
-    .svg-green {
-      fill: #6ee7b7;
-      font-weight: 700;
-    }
-
-    .svg-amber {
-      fill: #fbbf24;
-      font-weight: 700;
-    }
-
     .quick {
       background: linear-gradient(135deg, rgba(16,185,129,0.10), rgba(56,189,248,0.05));
       border-color: rgba(16,185,129,0.35);
@@ -397,6 +420,16 @@
       border: 1px solid rgba(255,255,255,0.10);
       color: #cbd5e1;
       font-size: 14px;
+    }
+
+    .placeholder {
+      border-style: dashed;
+      border-color: rgba(56,189,248,0.28);
+      background: rgba(56,189,248,0.045);
+    }
+
+    .placeholder p {
+      color: var(--muted);
     }
 
     .footer {
@@ -450,886 +483,934 @@
       </p>
     </section>
 
-    <div class="tabs">
-      <div class="tab active">1-сұрақ · Массалар геометриясы</div>
-      <div class="tab">2-сұрақ · Біртекті сырық</div>
-      <div class="tab">3-сұрақ · Дөңгелек пластина</div>
-      <div class="tab">Келесі сұрақтар</div>
+    <div class="tabs q-tabs">
+      <button class="tab active" onclick="showQuestion('q1', this)">1-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q2', this)">2-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q3', this)">3-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q4', this)">4-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q5', this)">5-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q6', this)">6-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q7', this)">7-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q8', this)">8-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q9', this)">9-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q10', this)">10-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q11', this)">11-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q12', this)">12-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q13', this)">13-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q14', this)">14-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q15', this)">15-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q16', this)">16-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q17', this)">17-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q18', this)">18-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q19', this)">19-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q20', this)">20-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q21', this)">21-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q22', this)">22-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q23', this)">23-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q24', this)">24-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q25', this)">25-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q26', this)">26-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q27', this)">27-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q28', this)">28-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q29', this)">29-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q30', this)">30-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q31', this)">31-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q32', this)">32-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q33', this)">33-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q34', this)">34-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q35', this)">35-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q36', this)">36-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q37', this)">37-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q38', this)">38-сұрақ</button>
+      <button class="tab" onclick="showQuestion('q39', this)">39-сұрақ</button>
     </div>
 
     <main>
-      <div class="card question-card">
-        <h2>1-сұрақ</h2>
-        <p>
-          <strong>Толық емтихан сұрағы:</strong>
-        </p>
-        <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
-          Массалар геометриясын түсіндіріп, өске, нүктеге, жазықтыққа қатысты дененің
-          инерция моменттері мен центрден тепкіш инерция моменттерін түсіндіріңіз.
-        </p>
-      </div>
+      <!-- 1-СҰРАҚ -->
+      <section class="question-section active" id="q1">
+        <div class="card question-card">
+          <h2>1-сұрақ</h2>
+          <p><strong>Толық емтихан сұрағы:</strong></p>
+          <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+            Массалар геометриясын түсіндіріп, өске, нүктеге, жазықтыққа қатысты дененің
+            инерция моменттері мен центрден тепкіш инерция моменттерін түсіндіріңіз.
+          </p>
+        </div>
 
-      <div class="grid-2">
+        <div class="grid-2">
+          <div class="card">
+            <h3>Негізгі анықтама</h3>
+            <p>
+              <strong>Массалар геометриясы</strong> — қатты денеде немесе механикалық жүйеде
+              массаның кеңістікте қалай таралғанын зерттейтін бөлім.
+            </p>
+            <p>
+              Қатты дененің қозғалысын зерттегенде тек оның толық массасын білу жеткіліксіз.
+              Сонымен қатар массалар центрін, инерция моменттерін және массаның өске,
+              нүктеге, жазықтыққа қатысты таралуын білу керек.
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Физикалық мағынасы</h3>
+            <p>
+              Инерция моменті дененің айналмалы қозғалыстағы инерттілігін сипаттайды.
+              Масса айналу өсінен неғұрлым алыс орналасса, инерция моменті соғұрлым үлкен болады.
+            </p>
+            <p>
+              Сондықтан бірдей массалы екі дененің айналуы әртүрлі болуы мүмкін:
+              масса өске жақын болса, денені айналдыру жеңіл; масса өстен алыс болса, қиын.
+            </p>
+          </div>
+        </div>
+
+        <div class="section-title">1 · Жүйенің толық массасы</div>
+
         <div class="card">
-          <h3>Негізгі анықтама</h3>
           <p>
-            <strong>Массалар геометриясы</strong> — қатты денеде немесе механикалық жүйеде
-            массаның кеңістікте қалай таралғанын зерттейтін бөлім.
+            Механикалық жүйе бірнеше материалдық нүктеден тұрса, оның толық массасы
+            барлық нүктелер массаларының қосындысына тең.
           </p>
-          <p>
-            Қатты дененің қозғалысын зерттегенде тек оның толық массасын білу жеткіліксіз.
-            Сонымен қатар массалар центрін, инерция моменттерін және массаның өске,
-            нүктеге, жазықтыққа қатысты таралуын білу керек.
-          </p>
+
+          <div class="formula">
+            <div class="label">Формула</div>
+            $$M=\sum_{k=1}^{n}m_k$$
+            <div class="note">
+              Мұндағы \(M\) — жүйенің толық массасы, \(m_k\) — жеке материалдық нүктелердің массалары.
+            </div>
+          </div>
+
+          <div class="svg-box">
+            <svg viewBox="0 0 760 240">
+              <circle cx="180" cy="120" r="24" fill="#38bdf8"></circle>
+              <text x="150" y="170" fill="#e2e8f0" font-size="15">m₁ = 2 кг</text>
+
+              <circle cx="370" cy="120" r="30" fill="#10b981"></circle>
+              <text x="340" y="175" fill="#e2e8f0" font-size="15">m₂ = 3 кг</text>
+
+              <circle cx="580" cy="120" r="38" fill="#f59e0b"></circle>
+              <text x="550" y="185" fill="#e2e8f0" font-size="15">m₃ = 5 кг</text>
+
+              <text x="250" y="50" class="svg-formula" font-size="16">
+                M = m₁ + m₂ + m₃
+              </text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              Егер жүйеде үш нүкте болса:
+              \(m_1=2\,кг\), \(m_2=3\,кг\), \(m_3=5\,кг\).
+            </p>
+            $$M=2+3+5=10\,кг$$
+            <p>Демек, жүйенің толық массасы \(10\,кг\)-ға тең.</p>
+          </div>
         </div>
+
+        <div class="section-title">2 · Массалар центрі</div>
 
         <div class="card">
-          <h3>Физикалық мағынасы</h3>
           <p>
-            Инерция моменті дененің айналмалы қозғалыстағы инерттілігін сипаттайды.
-            Масса айналу өсінен неғұрлым алыс орналасса, инерция моменті соғұрлым үлкен болады.
+            <strong>Массалар центрі</strong> — жүйенің барлық массасын шартты түрде жинақтауға
+            болатын нүкте. Дененің ілгерілемелі қозғалысын көбіне осы нүкте арқылы сипаттайды.
           </p>
-          <p>
-            Сондықтан бірдей массалы екі дененің айналуы әртүрлі болуы мүмкін:
-            масса өске жақын болса, денені айналдыру жеңіл; масса өстен алыс болса, қиын.
-          </p>
-        </div>
-      </div>
 
-      <div class="section-title">1 · Жүйенің толық массасы</div>
+          <div class="formula green">
+            <div class="label">Массалар центрінің координаталары</div>
+            $$x_c=\frac{1}{M}\sum m_kx_k$$
+            $$y_c=\frac{1}{M}\sum m_ky_k$$
+            $$z_c=\frac{1}{M}\sum m_kz_k$$
+          </div>
 
-      <div class="card">
-        <p>
-          Механикалық жүйе бірнеше материалдық нүктеден тұрса, оның толық массасы
-          барлық нүктелер массаларының қосындысына тең.
-        </p>
+          <div class="svg-box">
+            <svg viewBox="0 0 760 300">
+              <defs>
+                <marker id="arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6 Z" fill="#38bdf8"></path>
+                </marker>
+              </defs>
 
-        <div class="formula">
-          <div class="label">Формула</div>
-          $$M=\sum_{k=1}^{n}m_k$$
-          <div class="note">
-            Мұндағы \(M\) — жүйенің толық массасы, \(m_k\) — жеке материалдық нүктелердің массалары.
+              <line x1="80" y1="230" x2="690" y2="230" stroke="#64748b" stroke-width="2" marker-end="url(#arrow1)"></line>
+              <text x="690" y="255" fill="#94a3b8" font-size="14">x</text>
+
+              <circle cx="150" cy="170" r="18" fill="#38bdf8"></circle>
+              <text x="118" y="135" fill="#e2e8f0" font-size="14">m₁ = 2 кг</text>
+              <text x="140" y="255" fill="#94a3b8" font-size="13">x₁ = 0</text>
+
+              <circle cx="520" cy="170" r="28" fill="#f59e0b"></circle>
+              <text x="482" y="125" fill="#e2e8f0" font-size="14">m₂ = 4 кг</text>
+              <text x="505" y="255" fill="#94a3b8" font-size="13">x₂ = 3 м</text>
+
+              <line x1="397" y1="92" x2="397" y2="230" stroke="#10b981" stroke-width="3" stroke-dasharray="8 7"></line>
+              <circle cx="397" cy="170" r="8" fill="#10b981"></circle>
+              <text x="345" y="76" fill="#6ee7b7" font-size="15">C - массалар центрі</text>
+              <text x="377" y="255" fill="#6ee7b7" font-size="13">x<tspan baseline-shift="-30%" font-size="10">c</tspan> = 2 м</text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              Екі нүкте бір түзудің бойында орналасқан:
+              \(m_1=2\,кг,\;x_1=0\), \(m_2=4\,кг,\;x_2=3\,м\).
+            </p>
+            $$M=2+4=6\,кг$$
+            $$x_c=\frac{m_1x_1+m_2x_2}{M}=\frac{2\cdot0+4\cdot3}{6}=2\,м$$
+            <p>
+              Демек, массалар центрі \(x_c=2\,м\) нүктесінде орналасады.
+              Ол ауыр массаға жақынырақ болады.
+            </p>
           </div>
         </div>
 
-        <div class="svg-box">
-          <svg viewBox="0 0 760 240">
-            <circle cx="180" cy="120" r="24" fill="#38bdf8"></circle>
-            <text x="150" y="170" fill="#e2e8f0" font-size="15">m₁ = 2 кг</text>
+        <div class="section-title">3 · Өске қатысты инерция моменті</div>
 
-            <circle cx="370" cy="120" r="30" fill="#10b981"></circle>
-            <text x="340" y="175" fill="#e2e8f0" font-size="15">m₂ = 3 кг</text>
-
-            <circle cx="580" cy="120" r="38" fill="#f59e0b"></circle>
-            <text x="550" y="185" fill="#e2e8f0" font-size="15">m₃ = 5 кг</text>
-
-            <text x="250" y="50" class="svg-formula" font-size="16">
-              M = m₁ + m₂ + m₃
-            </text>
-          </svg>
-        </div>
-
-        <div class="example">
-          <h4>Мысал есеп</h4>
+        <div class="card">
           <p>
-            Егер жүйеде үш нүкте болса:
-            \(m_1=2\,кг\), \(m_2=3\,кг\), \(m_3=5\,кг\).
+            <strong>Өске қатысты инерция моменті</strong> дене массасының берілген өске қатысты
+            қалай таралғанын сипаттайды. Ол дененің айналмалы қозғалыстағы инерттілігін көрсетеді.
           </p>
-          $$M=2+3+5=10\,кг$$
-          <p>Демек, жүйенің толық массасы \(10\,кг\)-ға тең.</p>
-        </div>
-      </div>
 
-      <div class="section-title">2 · Массалар центрі</div>
+          <div class="formula">
+            <div class="label">Негізгі формула</div>
+            $$I_z=\sum m_kh_k^2$$
+            <div class="note">
+              Мұндағы \(h_k\) — материалдық нүктеден берілген өске дейінгі перпендикуляр қашықтық.
+              Тұтас дене үшін \(I=\int h^2dm\).
+            </div>
+          </div>
 
-      <div class="card">
-        <p>
-          <strong>Массалар центрі</strong> — жүйенің барлық массасын шартты түрде жинақтауға
-          болатын нүкте. Дененің ілгерілемелі қозғалысын көбіне осы нүкте арқылы сипаттайды.
-        </p>
+          <div class="svg-box">
+            <svg viewBox="0 0 760 280">
+              <defs>
+                <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+                  <path d="M0,0 L8,3 L0,6 Z" fill="#2563eb"></path>
+                </marker>
+              </defs>
 
-        <div class="formula green">
-          <div class="label">Массалар центрінің координаталары</div>
-          $$x_c=\frac{1}{M}\sum m_kx_k$$
-          $$y_c=\frac{1}{M}\sum m_ky_k$$
-          $$z_c=\frac{1}{M}\sum m_kz_k$$
-        </div>
+              <line x1="190" y1="40" x2="190" y2="235" stroke="#38bdf8" stroke-width="4"></line>
+              <text x="145" y="30" fill="#38bdf8" font-size="15">айналу өсі</text>
 
-        <div class="svg-box">
-          <svg viewBox="0 0 760 300">
-            <defs>
-              <marker id="arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-                <path d="M0,0 L8,3 L0,6 Z" fill="#38bdf8"></path>
-              </marker>
-            </defs>
+              <circle cx="500" cy="140" r="18" fill="#f59e0b"></circle>
+              <text x="488" y="113" fill="#e2e8f0" font-size="14">m</text>
 
-            <line x1="80" y1="230" x2="690" y2="230" stroke="#64748b" stroke-width="2" marker-end="url(#arrow1)"></line>
-            <text x="690" y="255" fill="#94a3b8" font-size="14">x</text>
+              <line x1="190" y1="140" x2="500" y2="140" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+              <text x="335" y="125" fill="#94a3b8" font-size="15">h</text>
 
-            <circle cx="150" cy="170" r="18" fill="#38bdf8"></circle>
-            <text x="118" y="135" fill="#e2e8f0" font-size="14">m₁ = 2 кг</text>
-            <text x="140" y="255" fill="#94a3b8" font-size="13">x₁ = 0</text>
+              <path d="M190 220 C280 260, 430 260, 500 170" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow2)"></path>
+              <text x="290" y="258" fill="#93c5fd" font-size="14">h үлкен болса, I үлкен</text>
+            </svg>
+          </div>
 
-            <circle cx="520" cy="170" r="28" fill="#f59e0b"></circle>
-            <text x="482" y="125" fill="#e2e8f0" font-size="14">m₂ = 4 кг</text>
-            <text x="505" y="255" fill="#94a3b8" font-size="13">x₂ = 3 м</text>
-
-            <line x1="397" y1="92" x2="397" y2="230" stroke="#10b981" stroke-width="3" stroke-dasharray="8 7"></line>
-            <circle cx="397" cy="170" r="8" fill="#10b981"></circle>
-            <text x="345" y="76" fill="#6ee7b7" font-size="15">C - массалар центрі</text>
-            <text x="377" y="255" fill="#6ee7b7" font-size="13">x<tspan baseline-shift="-30%" font-size="10">c</tspan> = 2 м</text>
-          </svg>
-        </div>
-
-        <div class="example">
-          <h4>Мысал есеп</h4>
-          <p>
-            Екі нүкте бір түзудің бойында орналасқан:
-            \(m_1=2\,кг,\;x_1=0\), \(m_2=4\,кг,\;x_2=3\,м\).
-          </p>
-          $$M=2+4=6\,кг$$
-          $$x_c=\frac{m_1x_1+m_2x_2}{M}=\frac{2\cdot0+4\cdot3}{6}=2\,м$$
-          <p>
-            Демек, массалар центрі \(x_c=2\,м\) нүктесінде орналасады.
-            Ол ауыр массаға жақынырақ болады.
-          </p>
-        </div>
-      </div>
-
-      <div class="section-title">3 · Өске қатысты инерция моменті</div>
-
-      <div class="card">
-        <p>
-          <strong>Өске қатысты инерция моменті</strong> дене массасының берілген өске қатысты
-          қалай таралғанын сипаттайды. Ол дененің айналмалы қозғалыстағы инерттілігін көрсетеді.
-        </p>
-
-        <div class="formula">
-          <div class="label">Негізгі формула</div>
-          $$I_z=\sum m_kh_k^2$$
-          <div class="note">
-            Мұндағы \(h_k\) — материалдық нүктеден берілген өске дейінгі перпендикуляр қашықтық.
-            Тұтас дене үшін \(I=\int h^2dm\).
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              Массасы \(m=3\,кг\) нүкте айналу өсінен \(h=2\,м\) қашықтықта орналасқан.
+            </p>
+            $$I=mh^2=3\cdot2^2=12\,кг\cdot м^2$$
+            <p>
+              Егер сол масса \(h=4\,м\) қашықтықта болса:
+            </p>
+            $$I=3\cdot4^2=48\,кг\cdot м^2$$
+            <p>
+              Қашықтық екі есе артқанда, инерция моменті төрт есе артады.
+            </p>
           </div>
         </div>
 
-        <div class="svg-box">
-          <svg viewBox="0 0 760 280">
-            <defs>
-              <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-                <path d="M0,0 L8,3 L0,6 Z" fill="#2563eb"></path>
-              </marker>
-            </defs>
+        <div class="section-title">4 · Координаталық өстерге қатысты инерция моменттері</div>
 
-            <line x1="190" y1="40" x2="190" y2="235" stroke="#38bdf8" stroke-width="4"></line>
-            <text x="145" y="30" fill="#38bdf8" font-size="15">айналу өсі</text>
-
-            <circle cx="500" cy="140" r="18" fill="#f59e0b"></circle>
-            <text x="488" y="113" fill="#e2e8f0" font-size="14">m</text>
-
-            <line x1="190" y1="140" x2="500" y2="140" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
-            <text x="335" y="125" fill="#94a3b8" font-size="15">h</text>
-
-            <path d="M190 220 C280 260, 430 260, 500 170" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow2)"></path>
-            <text x="290" y="258" fill="#93c5fd" font-size="14">h үлкен болса, I үлкен</text>
-          </svg>
-        </div>
-
-        <div class="example">
-          <h4>Мысал есеп</h4>
+        <div class="card">
           <p>
-            Массасы \(m=3\,кг\) нүкте айналу өсінен \(h=2\,м\) қашықтықта орналасқан.
+            Егер материалдық нүктелердің координаталары \(x_k,y_k,z_k\) белгілі болса,
+            координаталық өстерге қатысты инерция моменттері төмендегі формулалармен жазылады.
           </p>
-          $$I=mh^2=3\cdot2^2=12\,кг\cdot м^2$$
-          <p>
-            Егер сол масса \(h=4\,м\) қашықтықта болса:
-          </p>
-          $$I=3\cdot4^2=48\,кг\cdot м^2$$
-          <p>
-            Қашықтық екі есе артқанда, инерция моменті төрт есе артады.
-          </p>
-        </div>
-      </div>
 
-      <div class="section-title">4 · Координаталық өстерге қатысты инерция моменттері</div>
+          <div class="formula">
+            <div class="label">Координаталық өстер</div>
+            $$I_x=\sum m_k(y_k^2+z_k^2)$$
+            $$I_y=\sum m_k(x_k^2+z_k^2)$$
+            $$I_z=\sum m_k(x_k^2+y_k^2)$$
+            <div class="note">
+              Мысалы, \(z\) өсіне дейінгі қашықтықтың квадраты \(h^2=x^2+y^2\),
+              сондықтан \(I_z=\sum m_k(x_k^2+y_k^2)\).
+            </div>
+          </div>
 
-      <div class="card">
-        <p>
-          Егер материалдық нүктелердің координаталары \(x_k,y_k,z_k\) белгілі болса,
-          координаталық өстерге қатысты инерция моменттері төмендегі формулалармен жазылады.
-        </p>
+          <div class="svg-box">
+            <svg viewBox="0 0 760 300">
+              <line x1="120" y1="240" x2="650" y2="240" stroke="#64748b" stroke-width="2"></line>
+              <line x1="120" y1="240" x2="120" y2="60" stroke="#64748b" stroke-width="2"></line>
+              <text x="660" y="245" fill="#94a3b8" font-size="15">x</text>
+              <text x="105" y="50" fill="#94a3b8" font-size="15">y</text>
 
-        <div class="formula">
-          <div class="label">Координаталық өстер</div>
-          $$I_x=\sum m_k(y_k^2+z_k^2)$$
-          $$I_y=\sum m_k(x_k^2+z_k^2)$$
-          $$I_z=\sum m_k(x_k^2+y_k^2)$$
-          <div class="note">
-            Мысалы, \(z\) өсіне дейінгі қашықтықтың квадраты \(h^2=x^2+y^2\),
-            сондықтан \(I_z=\sum m_k(x_k^2+y_k^2)\).
+              <circle cx="420" cy="130" r="18" fill="#f59e0b"></circle>
+              <text x="445" y="135" fill="#e2e8f0" font-size="14">m</text>
+
+              <line x1="120" y1="130" x2="420" y2="130" stroke="#38bdf8" stroke-width="2" stroke-dasharray="7 6"></line>
+              <line x1="420" y1="240" x2="420" y2="130" stroke="#10b981" stroke-width="2" stroke-dasharray="7 6"></line>
+
+              <text x="260" y="120" fill="#7dd3fc" font-size="14">x</text>
+              <text x="430" y="190" fill="#6ee7b7" font-size="14">y</text>
+
+              <text x="285" y="70" class="svg-formula" font-size="16">
+                I<tspan baseline-shift="-30%" font-size="12">z</tspan> = m(x² + y²)
+              </text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              \(m=4\,кг\), \(x=2\,м\), \(y=1\,м\). \(z\) өсіне қатысты инерция моментін табамыз.
+            </p>
+            $$I_z=m(x^2+y^2)=4(2^2+1^2)=4\cdot5=20\,кг\cdot м^2$$
+            <p>Жауабы: \(I_z=20\,кг\cdot м^2\).</p>
           </div>
         </div>
 
-        <div class="svg-box">
-          <svg viewBox="0 0 760 300">
-            <line x1="120" y1="240" x2="650" y2="240" stroke="#64748b" stroke-width="2"></line>
-            <line x1="120" y1="240" x2="120" y2="60" stroke="#64748b" stroke-width="2"></line>
-            <text x="660" y="245" fill="#94a3b8" font-size="15">x</text>
-            <text x="105" y="50" fill="#94a3b8" font-size="15">y</text>
+        <div class="section-title">5 · Нүктеге қатысты инерция моменті</div>
 
-            <circle cx="420" cy="130" r="18" fill="#f59e0b"></circle>
-            <text x="445" y="135" fill="#e2e8f0" font-size="14">m</text>
-
-            <line x1="120" y1="130" x2="420" y2="130" stroke="#38bdf8" stroke-width="2" stroke-dasharray="7 6"></line>
-            <line x1="420" y1="240" x2="420" y2="130" stroke="#10b981" stroke-width="2" stroke-dasharray="7 6"></line>
-
-            <text x="260" y="120" fill="#7dd3fc" font-size="14">x</text>
-            <text x="430" y="190" fill="#6ee7b7" font-size="14">y</text>
-
-            <text x="285" y="70" class="svg-formula" font-size="16">
-              I<tspan baseline-shift="-30%" font-size="12">z</tspan> = m(x² + y²)
-            </text>
-          </svg>
-        </div>
-
-        <div class="example">
-          <h4>Мысал есеп</h4>
+        <div class="card">
           <p>
-            \(m=4\,кг\), \(x=2\,м\), \(y=1\,м\). \(z\) өсіне қатысты инерция моментін табамыз.
+            <strong>Нүктеге қатысты инерция моменті</strong> материалдық нүктелердің
+            берілген нүктеге дейінгі арақашықтықтарының квадраты арқылы анықталады.
           </p>
-          $$I_z=m(x^2+y^2)=4(2^2+1^2)=4\cdot5=20\,кг\cdot м^2$$
-          <p>Жауабы: \(I_z=20\,кг\cdot м^2\).</p>
-        </div>
-      </div>
 
-      <div class="section-title">5 · Нүктеге қатысты инерция моменті</div>
+          <div class="formula amber">
+            <div class="label">Формула</div>
+            $$J_O=\sum m_k(x_k^2+y_k^2+z_k^2)$$
+            <div class="note">
+              Мұндағы \(O\) — таңдалған нүкте, ал \(x_k^2+y_k^2+z_k^2\)
+              сол нүктеге дейінгі қашықтықтың квадраты.
+            </div>
+          </div>
 
-      <div class="card">
-        <p>
-          <strong>Нүктеге қатысты инерция моменті</strong> материалдық нүктелердің
-          берілген нүктеге дейінгі арақашықтықтарының квадраты арқылы анықталады.
-        </p>
+          <div class="svg-box">
+            <svg viewBox="0 0 760 280">
+              <circle cx="210" cy="205" r="7" fill="#38bdf8"></circle>
+              <text x="185" y="232" fill="#38bdf8" font-size="14">O</text>
 
-        <div class="formula amber">
-          <div class="label">Формула</div>
-          $$J_O=\sum m_k(x_k^2+y_k^2+z_k^2)$$
-          <div class="note">
-            Мұндағы \(O\) — таңдалған нүкте, ал \(x_k^2+y_k^2+z_k^2\)
-            сол нүктеге дейінгі қашықтықтың квадраты.
+              <circle cx="520" cy="95" r="18" fill="#f59e0b"></circle>
+              <text x="545" y="100" fill="#e2e8f0" font-size="14">m</text>
+
+              <line x1="210" y1="205" x2="520" y2="95" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+              <text x="360" y="135" fill="#94a3b8" font-size="15">r</text>
+
+              <text x="285" y="45" class="svg-formula" font-size="16">
+                J₀ = m r²
+              </text>
+
+              <text x="265" y="70" class="svg-small" font-size="14">
+                r² = x² + y² + z²
+              </text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              \(m=2\,кг\), \(x=1\,м\), \(y=2\,м\), \(z=2\,м\).
+            </p>
+            $$J_O=2(1^2+2^2+2^2)=2(1+4+4)=18\,кг\cdot м^2$$
+            <p>Жауабы: \(J_O=18\,кг\cdot м^2\).</p>
           </div>
         </div>
 
-        <div class="svg-box">
-          <svg viewBox="0 0 760 280">
-            <circle cx="210" cy="205" r="7" fill="#38bdf8"></circle>
-            <text x="185" y="232" fill="#38bdf8" font-size="14">O</text>
+        <div class="section-title">6 · Жазықтыққа қатысты инерция моменті</div>
 
-            <circle cx="520" cy="95" r="18" fill="#f59e0b"></circle>
-            <text x="545" y="100" fill="#e2e8f0" font-size="14">m</text>
-
-            <line x1="210" y1="205" x2="520" y2="95" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
-            <text x="360" y="135" fill="#94a3b8" font-size="15">r</text>
-
-            <text x="285" y="45" class="svg-formula" font-size="16">
-              J₀ = m r²
-            </text>
-
-            <text x="265" y="70" class="svg-small" font-size="14">
-              r² = x² + y² + z²
-            </text>
-          </svg>
-        </div>
-
-        <div class="example">
-          <h4>Мысал есеп</h4>
+        <div class="card">
           <p>
-            \(m=2\,кг\), \(x=1\,м\), \(y=2\,м\), \(z=2\,м\).
+            <strong>Жазықтыққа қатысты инерция моменті</strong> дене нүктелерінің
+            берілген жазықтықтан қаншалықты алыста орналасқанын көрсетеді.
           </p>
-          $$J_O=2(1^2+2^2+2^2)=2(1+4+4)=18\,кг\cdot м^2$$
-          <p>Жауабы: \(J_O=18\,кг\cdot м^2\).</p>
-        </div>
-      </div>
 
-      <div class="section-title">6 · Жазықтыққа қатысты инерция моменті</div>
+          <div class="formula">
+            <div class="label">Жазықтықтарға қатысты формулалар</div>
+            $$I_{xOy}=\sum m_kz_k^2$$
+            $$I_{yOz}=\sum m_kx_k^2$$
+            $$I_{xOz}=\sum m_ky_k^2$$
+            <div class="note">
+              Мысалы, \(xOy\) жазықтығына дейінгі қашықтық \(z\)-ке тең.
+            </div>
+          </div>
 
-      <div class="card">
-        <p>
-          <strong>Жазықтыққа қатысты инерция моменті</strong> дене нүктелерінің
-          берілген жазықтықтан қаншалықты алыста орналасқанын көрсетеді.
-        </p>
+          <div class="svg-box">
+            <svg viewBox="0 0 760 300">
+              <polygon points="150,220 580,220 680,120 250,120" fill="rgba(56,189,248,0.10)" stroke="#38bdf8" stroke-width="2"></polygon>
+              <text x="355" y="246" fill="#38bdf8" font-size="16">xOy жазықтығы</text>
 
-        <div class="formula">
-          <div class="label">Жазықтықтарға қатысты формулалар</div>
-          $$I_{xOy}=\sum m_kz_k^2$$
-          $$I_{yOz}=\sum m_kx_k^2$$
-          $$I_{xOz}=\sum m_ky_k^2$$
-          <div class="note">
-            Мысалы, \(xOy\) жазықтығына дейінгі қашықтық \(z\)-ке тең.
+              <circle cx="420" cy="70" r="15" fill="#f59e0b"></circle>
+              <text x="444" y="76" fill="#e2e8f0" font-size="14">m</text>
+
+              <line x1="420" y1="70" x2="420" y2="170" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+              <text x="430" y="125" fill="#94a3b8" font-size="15">z</text>
+
+              <circle cx="420" cy="170" r="5" fill="#38bdf8"></circle>
+              <text x="455" y="165" fill="#94a3b8" font-size="13">проекция</text>
+
+              <text x="235" y="68" class="svg-formula" font-size="16">
+                I<tspan baseline-shift="-30%" font-size="12">xOy</tspan> = m z²
+              </text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              Массасы \(m=5\,кг\) нүкте \(xOy\) жазықтығынан \(z=2\,м\) қашықтықта орналасқан.
+            </p>
+            $$I_{xOy}=mz^2=5\cdot2^2=20\,кг\cdot м^2$$
+            <p>Жауабы: \(I_{xOy}=20\,кг\cdot м^2\).</p>
           </div>
         </div>
 
-        <div class="svg-box">
-          <svg viewBox="0 0 760 300">
-            <polygon points="150,220 580,220 680,120 250,120" fill="rgba(56,189,248,0.10)" stroke="#38bdf8" stroke-width="2"></polygon>
-            <text x="355" y="246" fill="#38bdf8" font-size="16">xOy жазықтығы</text>
+        <div class="section-title">7 · Центрден тепкіш инерция моменттері</div>
 
-            <circle cx="420" cy="70" r="15" fill="#f59e0b"></circle>
-            <text x="444" y="76" fill="#e2e8f0" font-size="14">m</text>
-
-            <line x1="420" y1="70" x2="420" y2="170" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
-            <text x="430" y="125" fill="#94a3b8" font-size="15">z</text>
-
-            <circle cx="420" cy="170" r="5" fill="#38bdf8"></circle>
-            <text x="455" y="165" fill="#94a3b8" font-size="13">проекция</text>
-
-            <text x="235" y="68" class="svg-formula" font-size="16">
-              I<tspan baseline-shift="-30%" font-size="12">xOy</tspan> = m z²
-            </text>
-          </svg>
-        </div>
-
-        <div class="example">
-          <h4>Мысал есеп</h4>
+        <div class="card">
           <p>
-            Массасы \(m=5\,кг\) нүкте \(xOy\) жазықтығынан \(z=2\,м\) қашықтықта орналасқан.
+            <strong>Центрден тепкіш инерция моменттері</strong> массаның координаталарға қатысты
+            аралас таралуын сипаттайды. Олар инерция тензорын және бас инерция өстерін анықтауда қолданылады.
           </p>
-          $$I_{xOy}=mz^2=5\cdot2^2=20\,кг\cdot м^2$$
-          <p>Жауабы: \(I_{xOy}=20\,кг\cdot м^2\).</p>
-        </div>
-      </div>
 
-      <div class="section-title">7 · Центрден тепкіш инерция моменттері</div>
+          <div class="formula amber">
+            <div class="label">Формулалар</div>
+            $$I_{xy}=\sum m_kx_ky_k$$
+            $$I_{xz}=\sum m_kx_kz_k$$
+            $$I_{yz}=\sum m_ky_kz_k$$
+          </div>
 
-      <div class="card">
-        <p>
-          <strong>Центрден тепкіш инерция моменттері</strong> массаның координаталарға қатысты
-          аралас таралуын сипаттайды. Олар инерция тензорын және бас инерция өстерін анықтауда қолданылады.
-        </p>
+          <div class="svg-box">
+            <svg viewBox="0 0 760 280">
+              <line x1="140" y1="230" x2="640" y2="230" stroke="#64748b" stroke-width="2"></line>
+              <line x1="140" y1="230" x2="140" y2="55" stroke="#64748b" stroke-width="2"></line>
+              <text x="650" y="235" fill="#94a3b8" font-size="14">x</text>
+              <text x="125" y="45" fill="#94a3b8" font-size="14">y</text>
 
-        <div class="formula amber">
-          <div class="label">Формулалар</div>
-          $$I_{xy}=\sum m_kx_ky_k$$
-          $$I_{xz}=\sum m_kx_kz_k$$
-          $$I_{yz}=\sum m_ky_kz_k$$
-        </div>
+              <circle cx="450" cy="105" r="18" fill="#f59e0b"></circle>
+              <text x="475" y="110" fill="#e2e8f0" font-size="14">m</text>
 
-        <div class="svg-box">
-          <svg viewBox="0 0 760 280">
-            <line x1="140" y1="230" x2="640" y2="230" stroke="#64748b" stroke-width="2"></line>
-            <line x1="140" y1="230" x2="140" y2="55" stroke="#64748b" stroke-width="2"></line>
-            <text x="650" y="235" fill="#94a3b8" font-size="14">x</text>
-            <text x="125" y="45" fill="#94a3b8" font-size="14">y</text>
+              <line x1="140" y1="105" x2="450" y2="105" stroke="#38bdf8" stroke-width="2" stroke-dasharray="7 6"></line>
+              <line x1="450" y1="230" x2="450" y2="105" stroke="#10b981" stroke-width="2" stroke-dasharray="7 6"></line>
 
-            <circle cx="450" cy="105" r="18" fill="#f59e0b"></circle>
-            <text x="475" y="110" fill="#e2e8f0" font-size="14">m</text>
+              <text x="280" y="95" fill="#7dd3fc" font-size="14">x</text>
+              <text x="460" y="170" fill="#6ee7b7" font-size="14">y</text>
 
-            <line x1="140" y1="105" x2="450" y2="105" stroke="#38bdf8" stroke-width="2" stroke-dasharray="7 6"></line>
-            <line x1="450" y1="230" x2="450" y2="105" stroke="#10b981" stroke-width="2" stroke-dasharray="7 6"></line>
+              <text x="270" y="55" class="svg-formula" font-size="16">
+                I<tspan baseline-shift="-30%" font-size="12">xy</tspan> = m·x·y
+              </text>
+            </svg>
+          </div>
 
-            <text x="280" y="95" fill="#7dd3fc" font-size="14">x</text>
-            <text x="460" y="170" fill="#6ee7b7" font-size="14">y</text>
-
-            <text x="270" y="55" class="svg-formula" font-size="16">
-              I<tspan baseline-shift="-30%" font-size="12">xy</tspan> = m·x·y
-            </text>
-          </svg>
-        </div>
-
-        <div class="example">
-          <h4>Мысал есеп</h4>
-          <p>
-            \(m=2\,кг\), \(x=3\,м\), \(y=4\,м\). \(I_{xy}\)-ті табамыз.
-          </p>
-          $$I_{xy}=mxy=2\cdot3\cdot4=24\,кг\cdot м^2$$
-          <p>Жауабы: \(I_{xy}=24\,кг\cdot м^2\).</p>
-        </div>
-      </div>
-
-      <div class="section-title">8 · Гюйгенс-Штейнер теоремасы</div>
-
-      <div class="card">
-        <p>
-          Егер инерция моментін массалар центрі арқылы өтетін өске емес, оған параллель
-          басқа өске қатысты табу керек болса, <strong>Гюйгенс-Штейнер теоремасы</strong> қолданылады.
-        </p>
-
-        <div class="formula green">
-          <div class="label">Параллель өстер теоремасы</div>
-          $$I=I_C+Md^2$$
-          <div class="note">
-            Мұндағы \(I_C\) — массалар центрі арқылы өтетін өске қатысты инерция моменті,
-            \(M\) — дене массасы, \(d\) — екі параллель өстің арақашықтығы.
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              \(m=2\,кг\), \(x=3\,м\), \(y=4\,м\). \(I_{xy}\)-ті табамыз.
+            </p>
+            $$I_{xy}=mxy=2\cdot3\cdot4=24\,кг\cdot м^2$$
+            <p>Жауабы: \(I_{xy}=24\,кг\cdot м^2\).</p>
           </div>
         </div>
 
-        <div class="svg-box">
-          <svg viewBox="0 0 760 280">
-            <rect x="220" y="130" width="320" height="24" rx="12" fill="rgba(245,158,11,0.7)" stroke="#f59e0b"></rect>
-            <line x1="380" y1="65" x2="380" y2="220" stroke="#10b981" stroke-width="3" stroke-dasharray="8 7"></line>
-            <text x="340" y="55" fill="#6ee7b7" font-size="14">центрлік өс</text>
+        <div class="section-title">8 · Гюйгенс-Штейнер теоремасы</div>
 
-            <line x1="220" y1="65" x2="220" y2="220" stroke="#38bdf8" stroke-width="3"></line>
-            <text x="170" y="55" fill="#7dd3fc" font-size="14">параллель өс</text>
+        <div class="card">
+          <p>
+            Егер инерция моментін массалар центрі арқылы өтетін өске емес, оған параллель
+            басқа өске қатысты табу керек болса, <strong>Гюйгенс-Штейнер теоремасы</strong> қолданылады.
+          </p>
 
-            <line x1="220" y1="205" x2="380" y2="205" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
-            <text x="292" y="195" fill="#94a3b8" font-size="14">d</text>
+          <div class="formula green">
+            <div class="label">Параллель өстер теоремасы</div>
+            $$I=I_C+Md^2$$
+            <div class="note">
+              Мұндағы \(I_C\) — массалар центрі арқылы өтетін өске қатысты инерция моменті,
+              \(M\) — дене массасы, \(d\) — екі параллель өстің арақашықтығы.
+            </div>
+          </div>
 
-            <text x="275" y="250" class="svg-formula" font-size="16">
-              I = I<tspan baseline-shift="-30%" font-size="12">C</tspan> + Md²
-            </text>
-          </svg>
+          <div class="svg-box">
+            <svg viewBox="0 0 760 280">
+              <rect x="220" y="130" width="320" height="24" rx="12" fill="rgba(245,158,11,0.7)" stroke="#f59e0b"></rect>
+              <line x1="380" y1="65" x2="380" y2="220" stroke="#10b981" stroke-width="3" stroke-dasharray="8 7"></line>
+              <text x="340" y="55" fill="#6ee7b7" font-size="14">центрлік өс</text>
+
+              <line x1="220" y1="65" x2="220" y2="220" stroke="#38bdf8" stroke-width="3"></line>
+              <text x="170" y="55" fill="#7dd3fc" font-size="14">параллель өс</text>
+
+              <line x1="220" y1="205" x2="380" y2="205" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 6"></line>
+              <text x="292" y="195" fill="#94a3b8" font-size="14">d</text>
+
+              <text x="275" y="250" class="svg-formula" font-size="16">
+                I = I<tspan baseline-shift="-30%" font-size="12">C</tspan> + Md²
+              </text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              Жіңішке сырықтың центрінен өтетін өске қатысты инерция моменті:
+            </p>
+            $$I_C=\frac{Ml^2}{12}$$
+            <p>
+              Егер ось сырықтың шетінен өтсе, онда \(d=\frac{l}{2}\).
+            </p>
+            $$I=I_C+Md^2=\frac{Ml^2}{12}+M\left(\frac{l}{2}\right)^2$$
+            $$I=\frac{Ml^2}{12}+\frac{Ml^2}{4}
+            =\frac{Ml^2}{12}+\frac{3Ml^2}{12}
+            =\frac{Ml^2}{3}$$
+            <p>
+              Демек, сырықтың шетінен өтетін өске қатысты инерция моменті
+              \(I=\frac{Ml^2}{3}\).
+            </p>
+          </div>
         </div>
 
-        <div class="example">
-          <h4>Мысал есеп</h4>
+        <div class="section-title">9 · Қысқаша емтихан жауабы</div>
+
+        <div class="card quick">
+          <h3>Емтиханда айтуға дайын нұсқа</h3>
           <p>
-            Жіңішке сырықтың центрінен өтетін өске қатысты инерция моменті:
+            <strong>Массалар геометриясы</strong> қатты денеде немесе механикалық жүйеде
+            массаның кеңістікте қалай таралғанын зерттейді. Жүйенің толық массасы
+            \(M=\sum m_k\). Массалар центрінің координаталары
+            \(x_c=\frac{1}{M}\sum m_kx_k\),
+            \(y_c=\frac{1}{M}\sum m_ky_k\),
+            \(z_c=\frac{1}{M}\sum m_kz_k\).
           </p>
-          $$I_C=\frac{Ml^2}{12}$$
           <p>
-            Егер ось сырықтың шетінен өтсе, онда \(d=\frac{l}{2}\).
+            Өске қатысты инерция моменті \(I=\sum m_kh_k^2\) формуласымен анықталады
+            және дененің айналмалы қозғалыстағы инерттілігін сипаттайды.
+            Нүктеге қатысты инерция моменті
+            \(J_O=\sum m_k(x_k^2+y_k^2+z_k^2)\), жазықтыққа қатысты
+            \(I_{xOy}=\sum m_kz_k^2\) түрінде жазылады.
           </p>
-          $$I=I_C+Md^2=\frac{Ml^2}{12}+M\left(\frac{l}{2}\right)^2$$
-          $$I=\frac{Ml^2}{12}+\frac{Ml^2}{4}
-          =\frac{Ml^2}{12}+\frac{3Ml^2}{12}
-          =\frac{Ml^2}{3}$$
           <p>
-            Демек, сырықтың шетінен өтетін өске қатысты инерция моменті
-            \(I=\frac{Ml^2}{3}\).
+            Центрден тепкіш инерция моменттері \(I_{xy}, I_{xz}, I_{yz}\)
+            инерция тензорын және бас инерция өстерін анықтауда қолданылады.
+            Параллель өстер үшін Гюйгенс-Штейнер теоремасы қолданылады:
+            \(I=I_C+Md^2\).
           </p>
         </div>
-      </div>
 
-      <div class="section-title">9 · Қысқаша емтихан жауабы</div>
+        <div class="section-title">10 · Өзіңді тексер</div>
 
-      <div class="card quick">
-        <h3>Емтиханда айтуға дайын нұсқа</h3>
-        <p>
-          <strong>Массалар геометриясы</strong> қатты денеде немесе механикалық жүйеде
-          массаның кеңістікте қалай таралғанын зерттейді. Жүйенің толық массасы
-          \(M=\sum m_k\). Массалар центрінің координаталары
-          \(x_c=\frac{1}{M}\sum m_kx_k\),
-          \(y_c=\frac{1}{M}\sum m_ky_k\),
-          \(z_c=\frac{1}{M}\sum m_kz_k\).
-        </p>
-        <p>
-          Өске қатысты инерция моменті \(I=\sum m_kh_k^2\) формуласымен анықталады
-          және дененің айналмалы қозғалыстағы инерттілігін сипаттайды.
-          Нүктеге қатысты инерция моменті
-          \(J_O=\sum m_k(x_k^2+y_k^2+z_k^2)\), жазықтыққа қатысты
-          \(I_{xOy}=\sum m_kz_k^2\) түрінде жазылады.
-        </p>
-        <p>
-          Центрден тепкіш инерция моменттері \(I_{xy}, I_{xz}, I_{yz}\)
-          инерция тензорын және бас инерция өстерін анықтауда қолданылады.
-          Параллель өстер үшін Гюйгенс-Штейнер теоремасы қолданылады:
-          \(I=I_C+Md^2\).
-        </p>
-      </div>
-
-      <div class="section-title">10 · Өзіңді тексер</div>
-
-      <div class="card">
-        <h3>Ауызша жауапқа дайындық сұрақтары</h3>
-        <div class="mini-list">
-          <div class="mini-item">1. Массалар геометриясы нені зерттейді?</div>
-          <div class="mini-item">2. Массалар центрі қалай анықталады?</div>
-          <div class="mini-item">3. Өске қатысты инерция моментінің физикалық мағынасы қандай?</div>
-          <div class="mini-item">4. Нүктеге қатысты инерция моменті қалай жазылады?</div>
-          <div class="mini-item">5. Жазықтыққа қатысты инерция моменті қандай қашықтық арқылы табылады?</div>
-          <div class="mini-item">6. Центрден тепкіш инерция моменттері не үшін қолданылады?</div>
-          <div class="mini-item">7. Гюйгенс-Штейнер теоремасының формуласы қандай?</div>
+        <div class="card">
+          <h3>Ауызша жауапқа дайындық сұрақтары</h3>
+          <div class="mini-list">
+            <div class="mini-item">1. Массалар геометриясы нені зерттейді?</div>
+            <div class="mini-item">2. Массалар центрі қалай анықталады?</div>
+            <div class="mini-item">3. Өске қатысты инерция моментінің физикалық мағынасы қандай?</div>
+            <div class="mini-item">4. Нүктеге қатысты инерция моменті қалай жазылады?</div>
+            <div class="mini-item">5. Жазықтыққа қатысты инерция моменті қандай қашықтық арқылы табылады?</div>
+            <div class="mini-item">6. Центрден тепкіш инерция моменттері не үшін қолданылады?</div>
+            <div class="mini-item">7. Гюйгенс-Штейнер теоремасының формуласы қандай?</div>
+          </div>
         </div>
-      </div>
+      </section>
+
+      <!-- 2-СҰРАҚ -->
+      <section class="question-section" id="q2">
+        <div class="card question-card">
+          <h2>2-сұрақ</h2>
+          <p><strong>Толық емтихан сұрағы:</strong></p>
+          <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+            Массалар геометриясы. Оське, жазықтыққа қатысты дененің инерция моменттерін
+            түсіндіріп, біртекті сырыққа перпендикуляр бір ұшы арқылы өтетін оське қатысты
+            инерция моментін есептеңіз.
+          </p>
+        </div>
+
+        <div class="section-title">1 · Массалар геометриясы</div>
+
+        <div class="card">
+          <p>
+            <strong>Массалар геометриясы</strong> — қатты денедегі массаның кеңістікте қалай
+            таралғанын зерттейтін бөлім. Қатты дененің айналмалы қозғалысын зерттеу үшін
+            тек оның массасын ғана емес, массаның айналу өсіне немесе жазықтыққа қатысты
+            қалай орналасқанын білу керек.
+          </p>
+
+          <div class="formula">
+            <div class="label">Негізгі идея</div>
+            $$I=\sum m_kh_k^2$$
+            <div class="note">
+              Мұндағы \(h_k\) — материалдық нүктеден берілген өске дейінгі қашықтық.
+              Масса өстен неғұрлым алыс болса, инерция моменті соғұрлым үлкен болады.
+            </div>
+          </div>
+
+          <div class="svg-box">
+            <svg viewBox="0 0 760 260">
+              <line x1="170" y1="45" x2="170" y2="220" stroke="#38bdf8" stroke-width="4"></line>
+              <text x="125" y="35" fill="#38bdf8" font-size="15">айналу өсі</text>
+
+              <circle cx="500" cy="135" r="22" fill="#f59e0b"></circle>
+              <text x="530" y="140" fill="#e2e8f0" font-size="15">m</text>
+
+              <line x1="170" y1="135" x2="500" y2="135" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+              <text x="325" y="122" fill="#94a3b8" font-size="15">h</text>
+
+              <text x="285" y="65" class="svg-formula" font-size="17">
+                I = m h²
+              </text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              Егер \(m=2\,кг\) нүкте айналу өсінен \(h=3\,м\) қашықтықта орналасса:
+            </p>
+            $$I=mh^2=2\cdot3^2=18\,кг\cdot м^2$$
+            <p>Демек, инерция моменті \(18\,кг\cdot м^2\)-ге тең.</p>
+          </div>
+        </div>
+
+        <div class="section-title">2 · Оське қатысты инерция моменті</div>
+
+        <div class="card">
+          <p>
+            <strong>Оське қатысты инерция моменті</strong> дене массасының берілген оське
+            қатысты қалай таралғанын сипаттайды. Бұл шама дененің айналмалы қозғалыстағы
+            инерттілігін көрсетеді.
+          </p>
+
+          <div class="formula">
+            <div class="label">Дискретті жүйе үшін</div>
+            $$I_z=\sum m_kh_k^2$$
+          </div>
+
+          <div class="formula green">
+            <div class="label">Тұтас дене үшін</div>
+            $$I_z=\int h^2dm$$
+          </div>
+
+          <div class="svg-box">
+            <svg viewBox="0 0 760 300">
+              <line x1="180" y1="230" x2="650" y2="230" stroke="#64748b" stroke-width="2"></line>
+              <text x="660" y="235" fill="#94a3b8" font-size="15">x</text>
+
+              <line x1="180" y1="230" x2="180" y2="60" stroke="#38bdf8" stroke-width="4"></line>
+              <text x="122" y="50" fill="#38bdf8" font-size="15">z өсі</text>
+
+              <circle cx="430" cy="125" r="18" fill="#f59e0b"></circle>
+              <text x="455" y="130" fill="#e2e8f0" font-size="14">mₖ</text>
+
+              <line x1="180" y1="125" x2="430" y2="125" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+              <text x="295" y="112" fill="#94a3b8" font-size="15">hₖ</text>
+
+              <text x="285" y="70" class="svg-formula" font-size="17">
+                I<tspan baseline-shift="-30%" font-size="12">z</tspan> = Σmₖhₖ²
+              </text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              Екі материалдық нүкте берілген: \(m_1=2\,кг,\;h_1=1\,м\),
+              \(m_2=3\,кг,\;h_2=2\,м\). Оське қатысты инерция моментін табамыз.
+            </p>
+            $$I= m_1h_1^2+m_2h_2^2$$
+            $$I=2\cdot1^2+3\cdot2^2=2+12=14\,кг\cdot м^2$$
+            <p>Жауабы: \(I=14\,кг\cdot м^2\).</p>
+          </div>
+        </div>
+
+        <div class="section-title">3 · Жазықтыққа қатысты инерция моменті</div>
+
+        <div class="card">
+          <p>
+            <strong>Жазықтыққа қатысты инерция моменті</strong> дене нүктелерінің берілген
+            жазықтықтан қаншалықты алыста орналасқанын көрсетеді.
+          </p>
+
+          <div class="formula">
+            <div class="label">Жазықтықтарға қатысты формулалар</div>
+            $$I_{xOy}=\sum m_kz_k^2$$
+            $$I_{yOz}=\sum m_kx_k^2$$
+            $$I_{xOz}=\sum m_ky_k^2$$
+          </div>
+
+          <div class="svg-box">
+            <svg viewBox="0 0 760 300">
+              <polygon points="150,220 590,220 680,125 240,125" fill="rgba(56,189,248,0.10)" stroke="#38bdf8" stroke-width="2"></polygon>
+              <text x="350" y="247" fill="#38bdf8" font-size="16">xOy жазықтығы</text>
+
+              <circle cx="430" cy="70" r="16" fill="#f59e0b"></circle>
+              <text x="455" y="76" fill="#e2e8f0" font-size="14">m</text>
+
+              <line x1="430" y1="70" x2="430" y2="170" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+              <text x="440" y="125" fill="#94a3b8" font-size="15">z</text>
+
+              <circle cx="430" cy="170" r="5" fill="#38bdf8"></circle>
+
+              <text x="240" y="70" class="svg-formula" font-size="17">
+                I<tspan baseline-shift="-30%" font-size="12">xOy</tspan> = m z²
+              </text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал есеп</h4>
+            <p>
+              Массасы \(m=5\,кг\) нүкте \(xOy\) жазықтығынан \(z=2\,м\) қашықтықта орналасқан.
+            </p>
+            $$I_{xOy}=mz^2=5\cdot2^2=20\,кг\cdot м^2$$
+            <p>Жауабы: \(I_{xOy}=20\,кг\cdot м^2\).</p>
+          </div>
+        </div>
+
+        <div class="section-title">4 · Біртекті сырықтың инерция моменті</div>
+
+        <div class="card">
+          <p>
+            Енді ұзындығы \(l\), массасы \(M\) болатын <strong>біртекті жіңішке сырықты</strong>
+            қарастырамыз. Ось сырықтың бір ұшы арқылы өтеді және сырыққа перпендикуляр бағытталған.
+          </p>
+
+          <div class="formula green">
+            <div class="label">Сызықтық тығыздық</div>
+            $$\rho=\frac{M}{l}$$
+          </div>
+
+          <div class="formula">
+            <div class="label">Кішкентай элемент массасы</div>
+            $$dm=\rho\,dx$$
+          </div>
+
+          <div class="svg-box">
+            <svg viewBox="0 0 760 320">
+              <line x1="170" y1="70" x2="170" y2="255" stroke="#38bdf8" stroke-width="4"></line>
+              <text x="115" y="58" fill="#38bdf8" font-size="15">айналу осі</text>
+
+              <rect x="170" y="150" width="430" height="28" rx="14" fill="rgba(245,158,11,0.75)" stroke="#f59e0b"></rect>
+              <text x="335" y="135" fill="#e2e8f0" font-size="15">біртекті сырық</text>
+
+              <rect x="360" y="146" width="24" height="36" fill="rgba(56,189,248,0.55)" stroke="#38bdf8"></rect>
+              <text x="354" y="205" fill="#7dd3fc" font-size="14">dx</text>
+
+              <line x1="170" y1="235" x2="600" y2="235" stroke="#94a3b8" stroke-width="2"></line>
+              <text x="382" y="258" fill="#94a3b8" font-size="15">l</text>
+
+              <line x1="170" y1="110" x2="372" y2="110" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
+              <text x="260" y="98" fill="#94a3b8" font-size="15">x</text>
+
+              <text x="270" y="60" class="svg-formula" font-size="17">
+                dI = x²dm
+              </text>
+            </svg>
+          </div>
+
+          <div class="example">
+            <h4>Мысал түсіндіру</h4>
+            <p>
+              Егер сырықтың кішкентай бөлігі айналу осінен \(x\) қашықтықта болса,
+              сол бөліктің инерция моменті:
+            </p>
+            $$dI=x^2dm$$
+            <p>Ал \(dm=\rho dx\), сондықтан:</p>
+            $$dI=x^2\rho dx$$
+          </div>
+        </div>
+
+        <div class="section-title">5 · Біртекті сырық үшін формуланы шығару</div>
+
+        <div class="card">
+          <p>
+            Толық инерция моментін табу үшін сырықтың барлық кішкентай бөліктерінің
+            инерция моменттерін қосамыз.
+          </p>
+
+          <div class="formula">
+            <div class="label">Интеграл түрі</div>
+            $$I=\int_0^l x^2dm$$
+            $$I=\int_0^l x^2\rho dx$$
+            $$I=\rho\int_0^l x^2dx$$
+          </div>
+
+          <div class="formula amber">
+            $$\int_0^l x^2dx=\frac{l^3}{3}$$
+          </div>
+
+          <div class="formula green">
+            $$I=\rho\frac{l^3}{3}$$
+            $$I=\frac{M}{l}\cdot\frac{l^3}{3}$$
+            $$I=\frac{Ml^2}{3}$$
+          </div>
+
+          <div class="example">
+            <h4>Қорытынды формула</h4>
+            <p>
+              Біртекті сырықтың бір ұшы арқылы өтетін және сырыққа перпендикуляр оське
+              қатысты инерция моменті:
+            </p>
+            $$\boxed{I=\frac{Ml^2}{3}}$$
+          </div>
+        </div>
+
+        <div class="section-title">6 · Сандық мысал</div>
+
+        <div class="card">
+          <p>
+            Біртекті сырықтың массасы \(M=6\,кг\), ұзындығы \(l=2\,м\).
+            Сырықтың бір ұшы арқылы өтетін перпендикуляр оське қатысты инерция моментін табамыз.
+          </p>
+
+          <div class="formula green">
+            <div class="label">Формула</div>
+            $$I=\frac{Ml^2}{3}$$
+          </div>
+
+          <div class="example">
+            <h4>Шешуі</h4>
+            $$I=\frac{6\cdot2^2}{3}$$
+            $$I=\frac{6\cdot4}{3}=8\,кг\cdot м^2$$
+            <p>Жауабы: \(I=8\,кг\cdot м^2\).</p>
+          </div>
+        </div>
+
+        <div class="section-title">7 · Қысқаша емтихан жауабы</div>
+
+        <div class="card quick">
+          <h3>Емтиханда айтуға дайын нұсқа</h3>
+
+          <p>
+            Массалар геометриясы қатты денеде массаның кеңістікте қалай таралғанын зерттейді.
+            Оське қатысты инерция моменті дене массасының берілген оське қатысты таралуын
+            сипаттайды және \(I=\sum m_kh_k^2\) формуласымен анықталады.
+          </p>
+
+          <p>
+            Тұтас дене үшін \(I=\int h^2dm\). Жазықтыққа қатысты инерция моменті дене
+            нүктелерінің сол жазықтыққа дейінгі қашықтықтарының квадраты арқылы табылады.
+            Мысалы, \(I_{xOy}=\sum m_kz_k^2\).
+          </p>
+
+          <p>
+            Біртекті сырық үшін ось сырықтың бір ұшы арқылы өтіп, сырыққа перпендикуляр
+            болса, \(dm=\rho dx\), \(\rho=\frac{M}{l}\). Сондықтан:
+          </p>
+
+          $$I=\int_0^l x^2dm=\int_0^l x^2\rho dx=\frac{Ml^2}{3}$$
+
+          <p>
+            Демек, біртекті сырықтың бір ұшы арқылы өтетін перпендикуляр оське қатысты
+            инерция моменті \(I=\frac{Ml^2}{3}\).
+          </p>
+        </div>
+
+        <div class="section-title">8 · Өзіңді тексер</div>
+
+        <div class="card">
+          <h3>Ауызша жауапқа дайындық сұрақтары</h3>
+
+          <div class="mini-list">
+            <div class="mini-item">1. Оське қатысты инерция моменті нені сипаттайды?</div>
+            <div class="mini-item">2. Жазықтыққа қатысты инерция моменті қалай анықталады?</div>
+            <div class="mini-item">3. Тұтас дене үшін неге интеграл қолданылады?</div>
+            <div class="mini-item">4. Біртекті сырықтың сызықтық тығыздығы қалай жазылады?</div>
+            <div class="mini-item">5. Неге \(dm=\rho dx\) деп аламыз?</div>
+            <div class="mini-item">6. Біртекті сырық үшін соңғы формула қандай?</div>
+            <div class="mini-item">7. \(I=\frac{Ml^2}{3}\) формуласы қай ось үшін қолданылады?</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3–39-СҰРАҚТАР: ОСЫЛАЙ ДАЙЫН ТҰР. КЕЙІН ІШІНЕ КОД ҚОЯСЫҢ. -->
+      <section class="question-section" id="q3">
+        <div class="card question-card">
+          <h2>3-сұрақ</h2>
+          <p><strong>Толық емтихан сұрағы:</strong></p>
+          <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
+            Бұл жерге 3-сұрақтың толық тақырыбын қоямыз.
+          </p>
+        </div>
+        <div class="card placeholder">
+          <h3>3-сұрақ контенті әзірге бос</h3>
+          <p>Кейін осы section ішіне 3-сұрақтың толық жауабын, суретін және мысал есептерін қоямыз.</p>
+        </div>
+      </section>
+
+      <section class="question-section" id="q4"><div class="card question-card"><h2>4-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 4-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>4-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q5"><div class="card question-card"><h2>5-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 5-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>5-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q6"><div class="card question-card"><h2>6-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 6-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>6-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q7"><div class="card question-card"><h2>7-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 7-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>7-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q8"><div class="card question-card"><h2>8-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 8-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>8-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q9"><div class="card question-card"><h2>9-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 9-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>9-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q10"><div class="card question-card"><h2>10-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 10-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>10-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q11"><div class="card question-card"><h2>11-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 11-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>11-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q12"><div class="card question-card"><h2>12-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 12-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>12-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q13"><div class="card question-card"><h2>13-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 13-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>13-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q14"><div class="card question-card"><h2>14-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 14-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>14-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q15"><div class="card question-card"><h2>15-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 15-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>15-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q16"><div class="card question-card"><h2>16-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 16-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>16-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q17"><div class="card question-card"><h2>17-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 17-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>17-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q18"><div class="card question-card"><h2>18-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 18-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>18-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q19"><div class="card question-card"><h2>19-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 19-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>19-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q20"><div class="card question-card"><h2>20-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 20-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>20-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q21"><div class="card question-card"><h2>21-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 21-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>21-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q22"><div class="card question-card"><h2>22-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 22-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>22-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q23"><div class="card question-card"><h2>23-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 23-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>23-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q24"><div class="card question-card"><h2>24-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 24-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>24-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q25"><div class="card question-card"><h2>25-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 25-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>25-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q26"><div class="card question-card"><h2>26-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 26-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>26-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q27"><div class="card question-card"><h2>27-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 27-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>27-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q28"><div class="card question-card"><h2>28-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 28-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>28-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q29"><div class="card question-card"><h2>29-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 29-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>29-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q30"><div class="card question-card"><h2>30-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 30-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>30-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q31"><div class="card question-card"><h2>31-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 31-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>31-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q32"><div class="card question-card"><h2>32-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 32-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>32-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q33"><div class="card question-card"><h2>33-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 33-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>33-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q34"><div class="card question-card"><h2>34-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 34-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>34-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q35"><div class="card question-card"><h2>35-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 35-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>35-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q36"><div class="card question-card"><h2>36-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 36-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>36-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q37"><div class="card question-card"><h2>37-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 37-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>37-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q38"><div class="card question-card"><h2>38-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 38-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>38-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
+      <section class="question-section" id="q39"><div class="card question-card"><h2>39-сұрақ</h2><p><strong>Толық емтихан сұрағы:</strong></p><p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">Бұл жерге 39-сұрақтың толық тақырыбын қоямыз.</p></div><div class="card placeholder"><h3>39-сұрақ контенті әзірге бос</h3><p>Кейін осы section ішіне толық жауап қойылады.</p></div></section>
     </main>
 
-    <!-- =========================
-     2-СҰРАҚ
-========================= -->
-
-<div class="card question-card">
-  <h2>2-сұрақ</h2>
-  <p>
-    <strong>Толық емтихан сұрағы:</strong>
-  </p>
-  <p style="font-size:17px; color:#ffffff; font-weight:700; line-height:1.8;">
-    Массалар геометриясы. Оське, жазықтыққа қатысты дененің инерция моменттерін
-    түсіндіріп, біртекті сырыққа перпендикуляр бір ұшы арқылы өтетін оське қатысты
-    инерция моментін есептеңіз.
-  </p>
-</div>
-
-<div class="section-title">1 · Массалар геометриясы</div>
-
-<div class="card">
-  <p>
-    <strong>Массалар геометриясы</strong> — қатты денедегі массаның кеңістікте қалай
-    таралғанын зерттейтін бөлім. Қатты дененің айналмалы қозғалысын зерттеу үшін
-    тек оның массасын ғана емес, массаның айналу өсіне немесе жазықтыққа қатысты
-    қалай орналасқанын білу керек.
-  </p>
-
-  <p>
-    Бұл тақырыпта негізгі шамалар ретінде массалар центрі, өске қатысты инерция моменті
-    және жазықтыққа қатысты инерция моменті қарастырылады.
-  </p>
-
-  <div class="formula">
-    <div class="label">Негізгі идея</div>
-    $$I=\sum m_kh_k^2$$
-    <div class="note">
-      Мұндағы \(h_k\) — материалдық нүктеден берілген өске дейінгі қашықтық.
-      Масса өстен неғұрлым алыс болса, инерция моменті соғұрлым үлкен болады.
-    </div>
-  </div>
-
-  <div class="svg-box">
-    <svg viewBox="0 0 760 260">
-      <line x1="170" y1="45" x2="170" y2="220" stroke="#38bdf8" stroke-width="4"></line>
-      <text x="125" y="35" fill="#38bdf8" font-size="15">айналу өсі</text>
-
-      <circle cx="500" cy="135" r="22" fill="#f59e0b"></circle>
-      <text x="530" y="140" fill="#e2e8f0" font-size="15">m</text>
-
-      <line x1="170" y1="135" x2="500" y2="135" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
-      <text x="325" y="122" fill="#94a3b8" font-size="15">h</text>
-
-      <text x="285" y="65" class="svg-formula" font-size="17">
-        I = m h²
-      </text>
-    </svg>
-  </div>
-
-  <div class="example">
-    <h4>Мысал есеп</h4>
-    <p>
-      Егер \(m=2\,кг\) нүкте айналу өсінен \(h=3\,м\) қашықтықта орналасса:
-    </p>
-    $$I=mh^2=2\cdot3^2=18\,кг\cdot м^2$$
-    <p>
-      Демек, инерция моменті \(18\,кг\cdot м^2\)-ге тең.
-    </p>
-  </div>
-</div>
-
-<div class="section-title">2 · Оське қатысты инерция моменті</div>
-
-<div class="card">
-  <p>
-    <strong>Оське қатысты инерция моменті</strong> дене массасының берілген оське
-    қатысты қалай таралғанын сипаттайды. Бұл шама дененің айналмалы қозғалыстағы
-    инерттілігін көрсетеді.
-  </p>
-
-  <div class="formula">
-    <div class="label">Дискретті жүйе үшін</div>
-    $$I_z=\sum m_kh_k^2$$
-    <div class="note">
-      Мұндағы \(m_k\) — материалдық нүктенің массасы,
-      \(h_k\) — осы нүктеден айналу осіне дейінгі перпендикуляр қашықтық.
-    </div>
-  </div>
-
-  <div class="formula green">
-    <div class="label">Тұтас дене үшін</div>
-    $$I_z=\int h^2dm$$
-    <div class="note">
-      Егер дене тұтас болса, онда қосындының орнына интеграл қолданылады.
-    </div>
-  </div>
-
-  <div class="svg-box">
-    <svg viewBox="0 0 760 300">
-      <defs>
-        <marker id="axisArrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-          <path d="M0,0 L8,3 L0,6 Z" fill="#38bdf8"></path>
-        </marker>
-      </defs>
-
-      <line x1="180" y1="230" x2="650" y2="230" stroke="#64748b" stroke-width="2" marker-end="url(#axisArrow2)"></line>
-      <text x="660" y="235" fill="#94a3b8" font-size="15">x</text>
-
-      <line x1="180" y1="230" x2="180" y2="60" stroke="#38bdf8" stroke-width="4"></line>
-      <text x="122" y="50" fill="#38bdf8" font-size="15">z өсі</text>
-
-      <circle cx="430" cy="125" r="18" fill="#f59e0b"></circle>
-      <text x="455" y="130" fill="#e2e8f0" font-size="14">mₖ</text>
-
-      <line x1="180" y1="125" x2="430" y2="125" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
-      <text x="295" y="112" fill="#94a3b8" font-size="15">hₖ</text>
-
-      <text x="285" y="70" class="svg-formula" font-size="17">
-        I<tspan baseline-shift="-30%" font-size="12">z</tspan> = Σmₖhₖ²
-      </text>
-    </svg>
-  </div>
-
-  <div class="example">
-    <h4>Мысал есеп</h4>
-    <p>
-      Екі материалдық нүкте берілген: \(m_1=2\,кг,\;h_1=1\,м\),
-      \(m_2=3\,кг,\;h_2=2\,м\). Оське қатысты инерция моментін табамыз.
-    </p>
-    $$I= m_1h_1^2+m_2h_2^2$$
-    $$I=2\cdot1^2+3\cdot2^2=2+12=14\,кг\cdot м^2$$
-    <p>
-      Жауабы: \(I=14\,кг\cdot м^2\).
-    </p>
-  </div>
-</div>
-
-<div class="section-title">3 · Жазықтыққа қатысты инерция моменті</div>
-
-<div class="card">
-  <p>
-    <strong>Жазықтыққа қатысты инерция моменті</strong> дене нүктелерінің берілген
-    жазықтықтан қаншалықты алыста орналасқанын көрсетеді. Яғни бұл шама нүктелердің
-    жазықтыққа дейінгі қашықтықтарының квадраты арқылы анықталады.
-  </p>
-
-  <div class="formula">
-    <div class="label">Жазықтықтарға қатысты формулалар</div>
-    $$I_{xOy}=\sum m_kz_k^2$$
-    $$I_{yOz}=\sum m_kx_k^2$$
-    $$I_{xOz}=\sum m_ky_k^2$$
-    <div class="note">
-      Мысалы, \(xOy\) жазықтығына дейінгі қашықтық \(z\)-ке тең,
-      сондықтан \(I_{xOy}=\sum m_kz_k^2\).
-    </div>
-  </div>
-
-  <div class="svg-box">
-    <svg viewBox="0 0 760 300">
-      <polygon points="150,220 590,220 680,125 240,125" fill="rgba(56,189,248,0.10)" stroke="#38bdf8" stroke-width="2"></polygon>
-      <text x="350" y="247" fill="#38bdf8" font-size="16">xOy жазықтығы</text>
-
-      <circle cx="430" cy="70" r="16" fill="#f59e0b"></circle>
-      <text x="455" y="76" fill="#e2e8f0" font-size="14">m</text>
-
-      <line x1="430" y1="70" x2="430" y2="170" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
-      <text x="440" y="125" fill="#94a3b8" font-size="15">z</text>
-
-      <circle cx="430" cy="170" r="5" fill="#38bdf8"></circle>
-
-      <text x="240" y="70" class="svg-formula" font-size="17">
-        I<tspan baseline-shift="-30%" font-size="12">xOy</tspan> = m z²
-      </text>
-    </svg>
-  </div>
-
-  <div class="example">
-    <h4>Мысал есеп</h4>
-    <p>
-      Массасы \(m=5\,кг\) нүкте \(xOy\) жазықтығынан \(z=2\,м\) қашықтықта орналасқан.
-    </p>
-    $$I_{xOy}=mz^2=5\cdot2^2=20\,кг\cdot м^2$$
-    <p>
-      Жауабы: \(I_{xOy}=20\,кг\cdot м^2\).
-    </p>
-  </div>
-</div>
-
-<div class="section-title">4 · Біртекті сырықтың инерция моменті</div>
-
-<div class="card">
-  <p>
-    Енді ұзындығы \(l\), массасы \(M\) болатын <strong>біртекті жіңішке сырықты</strong>
-    қарастырамыз. Ось сырықтың бір ұшы арқылы өтеді және сырыққа перпендикуляр
-    бағытталған.
-  </p>
-
-  <p>
-    Сырық біртекті болғандықтан, оның сызықтық тығыздығы тұрақты болады:
-  </p>
-
-  <div class="formula green">
-    <div class="label">Сызықтық тығыздық</div>
-    $$\rho=\frac{M}{l}$$
-    <div class="note">
-      Мұндағы \(\rho\) — сызықтық тығыздық, \(M\) — сырық массасы, \(l\) — сырық ұзындығы.
-    </div>
-  </div>
-
-  <div class="formula">
-    <div class="label">Кішкентай элемент массасы</div>
-    $$dm=\rho\,dx$$
-    <div class="note">
-      \(dx\) — сырықтың өте кіші бөлігі, \(dm\) — сол бөліктің массасы.
-    </div>
-  </div>
-
-  <div class="svg-box">
-    <svg viewBox="0 0 760 320">
-      <defs>
-        <marker id="rodArrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-          <path d="M0,0 L8,3 L0,6 Z" fill="#94a3b8"></path>
-        </marker>
-      </defs>
-
-      <line x1="170" y1="70" x2="170" y2="255" stroke="#38bdf8" stroke-width="4"></line>
-      <text x="115" y="58" fill="#38bdf8" font-size="15">айналу осі</text>
-
-      <rect x="170" y="150" width="430" height="28" rx="14" fill="rgba(245,158,11,0.75)" stroke="#f59e0b"></rect>
-      <text x="335" y="135" fill="#e2e8f0" font-size="15">біртекті сырық</text>
-
-      <rect x="360" y="146" width="24" height="36" fill="rgba(56,189,248,0.55)" stroke="#38bdf8"></rect>
-      <text x="354" y="205" fill="#7dd3fc" font-size="14">dx</text>
-
-      <line x1="170" y1="235" x2="600" y2="235" stroke="#94a3b8" stroke-width="2" marker-end="url(#rodArrow2)"></line>
-      <text x="382" y="258" fill="#94a3b8" font-size="15">l</text>
-
-      <line x1="170" y1="110" x2="372" y2="110" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"></line>
-      <text x="260" y="98" fill="#94a3b8" font-size="15">x</text>
-
-      <text x="270" y="60" class="svg-formula" font-size="17">
-        dI = x²dm
-      </text>
-    </svg>
-  </div>
-
-  <div class="example">
-    <h4>Мысал түсіндіру</h4>
-    <p>
-      Егер сырықтың кішкентай бөлігі айналу осінен \(x\) қашықтықта болса,
-      сол бөліктің инерция моменті:
-    </p>
-    $$dI=x^2dm$$
-    <p>
-      Ал \(dm=\rho dx\), сондықтан:
-    </p>
-    $$dI=x^2\rho dx$$
-  </div>
-</div>
-
-<div class="section-title">5 · Біртекті сырық үшін формуланы шығару</div>
-
-<div class="card">
-  <p>
-    Толық инерция моментін табу үшін сырықтың барлық кішкентай бөліктерінің
-    инерция моменттерін қосамыз. Тұтас дене болғандықтан, интеграл қолданамыз.
-  </p>
-
-  <div class="formula">
-    <div class="label">Интеграл түрі</div>
-    $$I=\int_0^l x^2dm$$
-  </div>
-
-  <p>
-    \(dm=\rho dx\) болғандықтан:
-  </p>
-
-  <div class="formula">
-    $$I=\int_0^l x^2\rho dx$$
-    $$I=\rho\int_0^l x^2dx$$
-  </div>
-
-  <p>
-    Интегралды есептейміз:
-  </p>
-
-  <div class="formula amber">
-    $$\int_0^l x^2dx=\frac{l^3}{3}$$
-  </div>
-
-  <p>
-    Сондықтан:
-  </p>
-
-  <div class="formula">
-    $$I=\rho\frac{l^3}{3}$$
-  </div>
-
-  <p>
-    Ал \(\rho=\frac{M}{l}\), оны орнына қоямыз:
-  </p>
-
-  <div class="formula green">
-    $$I=\frac{M}{l}\cdot\frac{l^3}{3}$$
-    $$I=\frac{Ml^2}{3}$$
-  </div>
-
-  <div class="example">
-    <h4>Қорытынды формула</h4>
-    <p>
-      Біртекті сырықтың бір ұшы арқылы өтетін және сырыққа перпендикуляр оське
-      қатысты инерция моменті:
-    </p>
-    $$\boxed{I=\frac{Ml^2}{3}}$$
-  </div>
-</div>
-
-<div class="section-title">6 · Сандық мысал</div>
-
-<div class="card">
-  <p>
-    Біртекті сырықтың массасы \(M=6\,кг\), ұзындығы \(l=2\,м\).
-    Сырықтың бір ұшы арқылы өтетін перпендикуляр оське қатысты инерция моментін табамыз.
-  </p>
-
-  <div class="formula green">
-    <div class="label">Формула</div>
-    $$I=\frac{Ml^2}{3}$$
-  </div>
-
-  <div class="example">
-    <h4>Шешуі</h4>
-    $$I=\frac{6\cdot2^2}{3}$$
-    $$I=\frac{6\cdot4}{3}=8\,кг\cdot м^2$$
-    <p>
-      Жауабы: \(I=8\,кг\cdot м^2\).
-    </p>
-  </div>
-</div>
-
-<div class="section-title">7 · Қысқаша емтихан жауабы</div>
-
-<div class="card quick">
-  <h3>Емтиханда айтуға дайын нұсқа</h3>
-
-  <p>
-    Массалар геометриясы қатты денеде массаның кеңістікте қалай таралғанын зерттейді.
-    Оське қатысты инерция моменті дене массасының берілген оське қатысты таралуын
-    сипаттайды және \(I=\sum m_kh_k^2\) формуласымен анықталады.
-  </p>
-
-  <p>
-    Тұтас дене үшін \(I=\int h^2dm\). Жазықтыққа қатысты инерция моменті дене
-    нүктелерінің сол жазықтыққа дейінгі қашықтықтарының квадраты арқылы табылады.
-    Мысалы, \(I_{xOy}=\sum m_kz_k^2\).
-  </p>
-
-  <p>
-    Біртекті сырық үшін ось сырықтың бір ұшы арқылы өтіп, сырыққа перпендикуляр
-    болса, \(dm=\rho dx\), \(\rho=\frac{M}{l}\). Сондықтан:
-  </p>
-
-  $$I=\int_0^l x^2dm=\int_0^l x^2\rho dx=\frac{Ml^2}{3}$$
-
-  <p>
-    Демек, біртекті сырықтың бір ұшы арқылы өтетін перпендикуляр оське қатысты
-    инерция моменті \(I=\frac{Ml^2}{3}\).
-  </p>
-</div>
-
-<div class="section-title">8 · Өзіңді тексер</div>
-
-<div class="card">
-  <h3>Ауызша жауапқа дайындық сұрақтары</h3>
-
-  <div class="mini-list">
-    <div class="mini-item">1. Оське қатысты инерция моменті нені сипаттайды?</div>
-    <div class="mini-item">2. Жазықтыққа қатысты инерция моменті қалай анықталады?</div>
-    <div class="mini-item">3. Тұтас дене үшін неге интеграл қолданылады?</div>
-    <div class="mini-item">4. Біртекті сырықтың сызықтық тығыздығы қалай жазылады?</div>
-    <div class="mini-item">5. Неге \(dm=\rho dx\) деп аламыз?</div>
-    <div class="mini-item">6. Біртекті сырық үшін соңғы формула қандай?</div>
-    <div class="mini-item">7. \(I=\frac{Ml^2}{3}\) формуласы қай ось үшін қолданылады?</div>
-  </div>
-</div>
-
     <div class="footer">
-      Qainar · Қатты дене механикасы емтиханға дайындық · 1-сұрақ
+      Qainar · Қатты дене механикасы емтиханға дайындық
     </div>
   </div>
+
+  <script>
+    function showQuestion(id, button) {
+      const sections = document.querySelectorAll('.question-section');
+      sections.forEach(section => section.classList.remove('active'));
+
+      const target = document.getElementById(id);
+      if (target) {
+        target.classList.add('active');
+      }
+
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+
+      if (button) {
+        button.classList.add('active');
+      }
+
+      if (window.MathJax && MathJax.typesetPromise && target) {
+        MathJax.typesetPromise([target]);
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    window.addEventListener('load', () => {
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise();
+      }
+    });
+  </script>
 </body>
 </html>

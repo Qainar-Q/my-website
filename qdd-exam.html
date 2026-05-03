@@ -102,7 +102,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 /* ─── INTERACTIVE ─── */
 .interactive{padding:0;border-radius:16px;overflow:hidden;background:rgba(56,189,248,.03);
   border:1px solid rgba(56,189,248,.18);margin:14px 0}
-.interactive canvas{display:block;width:100%;cursor:pointer}
+.interactive canvas{display:block;width:100%;cursor:pointer;max-width:100%}
 .ctrl{padding:14px 18px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;
   background:rgba(0,0,0,.25);border-top:1px solid var(--border)}
 .ctrl label{color:var(--muted);font-size:12px;font-weight:600}
@@ -2179,36 +2179,70 @@ footer{text-align:center;color:var(--muted);padding:28px 0 0;font-size:12px;bord
 </div><!-- .page -->
 
 <script>
-// ─── TAB SWITCHING ───
+// ═══════════════════════════════════════════════════════════
+// TAB SWITCHING — no page scroll
+// ═══════════════════════════════════════════════════════════
+let currentQ = 1;
 function showQ(n, btn) {
   document.querySelectorAll('.qs').forEach(s => s.classList.remove('active'));
   document.getElementById('q'+n).classList.add('active');
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   if (btn) btn.classList.add('active');
+  currentQ = n;
   if (window.MathJax && MathJax.typesetPromise) {
     MathJax.typesetPromise([document.getElementById('q'+n)]);
   }
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  // Redraw newly visible canvas
+  setTimeout(redrawAll, 50);
 }
 
-// ─── CANVAS HELPER ───
+// ═══════════════════════════════════════════════════════════
+// CANVAS HELPERS — fixed logical sizes, no growth bug
+// ═══════════════════════════════════════════════════════════
+const CANVAS_SIZES = {
+  cmCanvas: 260, inertCanvas: 260, steinerCanvas: 240,
+  rodCanvas: 230, diskCanvas: 280, stCanvas: 260,
+  rotCanvas: 280, rotorCanvas: 280, gyroCanvas: 280, gyroStab: 260
+};
+
 function setupCanvas(id) {
   const c = document.getElementById(id);
   if (!c) return null;
-  const ratio = window.devicePixelRatio || 1;
+  // If canvas not visible (parent hidden), getBoundingClientRect width may be 0
   const rect = c.getBoundingClientRect();
-  c.width = rect.width * ratio;
-  c.height = c.height * ratio;
+  if (rect.width < 10) return null;
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  const cssH = CANVAS_SIZES[id] || 260;
+  // Set CSS height (fixed) and internal pixel size
+  c.style.height = cssH + 'px';
+  c.width = Math.round(rect.width * ratio);
+  c.height = Math.round(cssH * ratio);
   const ctx = c.getContext('2d');
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // reset any previous scale
   ctx.scale(ratio, ratio);
-  return {c, ctx, w: rect.width, h: c.height/ratio};
+  return {c, ctx, w: rect.width, h: cssH};
 }
 
-// ═══════════ Q1: MASS CENTER ═══════════
+function arrow(ctx, x1, y1, x2, y2, color, lw) {
+  ctx.strokeStyle = color; ctx.fillStyle = color;
+  ctx.lineWidth = lw || 2;
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  const ang = Math.atan2(y2-y1, x2-x1);
+  const sz = 9;
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(x2 - sz*Math.cos(ang-0.4), y2 - sz*Math.sin(ang-0.4));
+  ctx.lineTo(x2 - sz*Math.cos(ang+0.4), y2 - sz*Math.sin(ang+0.4));
+  ctx.closePath(); ctx.fill();
+}
+
+// ═══════════════════════════════════════════════════════════
+// Q1.1 — MASS CENTER
+// ═══════════════════════════════════════════════════════════
 function drawCM() {
-  const r = setupCanvas('cmCanvas');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('cmCanvas');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const m1 = +document.getElementById('m1').value;
   const m2 = +document.getElementById('m2').value;
   const m3 = +document.getElementById('m3').value;
@@ -2220,158 +2254,153 @@ function drawCM() {
   const xc = (m1*x1 + m2*x2 + m3*x3)/M;
   document.getElementById('cmResult').textContent = `xc = ${xc.toFixed(2)} м`;
   ctx.clearRect(0,0,w,h);
-  // axis line
-  const px = (x) => 80 + (x-0)*(w-160)/8;
+  const baseY = h - 60;
+  const px = (x) => 60 + x * (w-100)/8;
+  // axis
   ctx.strokeStyle='#475569'; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.moveTo(60,h-50); ctx.lineTo(w-30,h-50); ctx.stroke();
-  // tick marks
-  ctx.fillStyle='#64748b'; ctx.font='10px IBM Plex Mono';
-  for(let i=0;i<=8;i++){
+  ctx.beginPath(); ctx.moveTo(40, baseY); ctx.lineTo(w-20, baseY); ctx.stroke();
+  ctx.fillStyle='#64748b'; ctx.font='10px IBM Plex Mono'; ctx.textAlign='center';
+  for (let i=0; i<=8; i++) {
     const x = px(i);
-    ctx.beginPath(); ctx.moveTo(x,h-46); ctx.lineTo(x,h-54); ctx.stroke();
-    ctx.fillText(i, x-3, h-32);
+    ctx.beginPath(); ctx.moveTo(x, baseY-3); ctx.lineTo(x, baseY+3); ctx.stroke();
+    ctx.fillText(i, x, baseY+15);
   }
-  // masses (radius proportional to mass)
+  // masses
   function drawMass(x, m, color, label) {
-    const px_ = px(x);
-    const rad = 8 + m*2;
-    ctx.fillStyle = color+'CC'; ctx.strokeStyle = color; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.arc(px_, h-50-rad, rad, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-    ctx.fillStyle='#fff'; ctx.font='bold 12px IBM Plex Mono';
-    ctx.textAlign='center';
-    ctx.fillText(label, px_, h-50-rad+4);
-    ctx.fillStyle='#94a3b8'; ctx.font='11px IBM Plex Sans';
-    ctx.fillText(m+' кг', px_, h-50-rad-rad-7);
+    const cx = px(x);
+    const r = 8 + m*2;
+    ctx.fillStyle = color + 'C0';
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx, baseY-r-2, r, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 11px IBM Plex Mono'; ctx.textAlign='center';
+    ctx.fillText(label, cx, baseY-r+2);
+    ctx.fillStyle='#94a3b8'; ctx.font='10px IBM Plex Sans';
+    ctx.fillText(m+' кг', cx, baseY-r-r-7);
   }
   drawMass(x1, m1, '#38bdf8', 'm₁');
   drawMass(x2, m2, '#f59e0b', 'm₂');
   drawMass(x3, m3, '#10b981', 'm₃');
-  // mass center
-  const pxc = px(xc);
-  ctx.strokeStyle='#10b981'; ctx.lineWidth=2.5;
-  ctx.setLineDash([8,5]);
-  ctx.beginPath(); ctx.moveTo(pxc, 30); ctx.lineTo(pxc, h-25); ctx.stroke();
+  // C
+  const pcx = px(xc);
+  ctx.strokeStyle='#10b981'; ctx.lineWidth=2;
+  ctx.setLineDash([6,4]);
+  ctx.beginPath(); ctx.moveTo(pcx, 30); ctx.lineTo(pcx, baseY+5); ctx.stroke();
   ctx.setLineDash([]);
   ctx.fillStyle='#10b981';
-  ctx.beginPath(); ctx.arc(pxc, h-50, 6, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle='#6ee7b7'; ctx.font='bold 13px IBM Plex Sans'; ctx.textAlign='center';
-  ctx.fillText('C ↓', pxc, 22);
-  ctx.fillText(`xc = ${xc.toFixed(2)} м`, pxc, h-12);
+  ctx.beginPath(); ctx.moveTo(pcx-7, 22); ctx.lineTo(pcx, 35); ctx.lineTo(pcx+7, 22); ctx.closePath(); ctx.fill();
+  ctx.fillStyle='#6ee7b7'; ctx.font='bold 12px IBM Plex Sans'; ctx.textAlign='center';
+  ctx.fillText(`C: xc=${xc.toFixed(2)} м`, pcx, 16);
 }
-['m1','m2','m3'].forEach(id => document.getElementById(id)?.addEventListener('input', drawCM));
 
-// ═══════════ Q1: INERTIA (h²) ═══════════
+// ═══════════════════════════════════════════════════════════
+// Q1.2 — INERTIA h²
+// ═══════════════════════════════════════════════════════════
 function drawInert() {
-  const r = setupCanvas('inertCanvas');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('inertCanvas');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const m = +document.getElementById('imass').value;
   const dist = +document.getElementById('idist').value;
   document.getElementById('imassv').textContent = m;
   document.getElementById('idistv').textContent = dist.toFixed(1);
-  const I = m * dist*dist;
+  const I = m*dist*dist;
   document.getElementById('iResult').textContent = `I = ${I.toFixed(2)} кг·м²`;
   ctx.clearRect(0,0,w,h);
-  const cx = 130, cy = h/2;
-  // axis (vertical)
+  const cx = 100, cy = h/2;
+  // z axis
   ctx.strokeStyle='#38bdf8'; ctx.lineWidth=4;
-  ctx.beginPath(); ctx.moveTo(cx, 30); ctx.lineTo(cx, h-30); ctx.stroke();
-  ctx.fillStyle='#38bdf8'; ctx.font='bold 12px IBM Plex Sans'; ctx.textAlign='center';
-  ctx.fillText('z айналу өсі', cx, 22);
-  // mass position based on dist
-  const maxDist = 4;
-  const mx = cx + (dist/maxDist)*(w-cx-100);
-  // perpendicular distance line h
-  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=2;
-  ctx.setLineDash([8,5]);
-  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(mx, cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx, 25); ctx.lineTo(cx, h-25); ctx.stroke();
+  ctx.fillStyle='#38bdf8'; ctx.font='bold 11px IBM Plex Sans'; ctx.textAlign='center';
+  ctx.fillText('z ось', cx, 18);
+  // mass position
+  const maxD = 4;
+  const mx = cx + (dist/maxD)*(w-cx-90);
+  // h line
+  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.6;
+  ctx.setLineDash([6,4]);
+  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(mx-15, cy); ctx.stroke();
   ctx.setLineDash([]);
-  // arrowhead
-  ctx.fillStyle='#94a3b8';
-  ctx.beginPath();
-  ctx.moveTo(mx-12, cy-6); ctx.lineTo(mx-2, cy); ctx.lineTo(mx-12, cy+6); ctx.closePath(); ctx.fill();
-  // h label
-  ctx.fillStyle='#94a3b8'; ctx.font='bold 14px IBM Plex Mono';
-  ctx.fillText(`h=${dist.toFixed(1)} м`, (cx+mx)/2, cy-12);
-  // right angle mark at axis
-  ctx.strokeStyle='#38bdf8'; ctx.lineWidth=1.5;
-  ctx.strokeRect(cx, cy-12, 12, 12);
+  arrow(ctx, mx-25, cy, mx-12, cy, '#94a3b8', 1.2);
+  ctx.fillStyle='#94a3b8'; ctx.font='bold 13px IBM Plex Mono'; ctx.textAlign='center';
+  ctx.fillText(`h=${dist.toFixed(1)} м`, (cx+mx)/2, cy-9);
+  // right angle
+  ctx.strokeStyle='#38bdf8'; ctx.lineWidth=1.4;
+  ctx.strokeRect(cx, cy-10, 10, 10);
   // mass
-  const rad = 12 + m*2.5;
+  const r = 14 + m*2.2;
   ctx.fillStyle='rgba(245,158,11,0.78)';
   ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.arc(mx, cy, rad, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  ctx.fillStyle='#fff'; ctx.font='bold 14px IBM Plex Mono'; ctx.textAlign='center';
-  ctx.fillText('m='+m, mx, cy+5);
-  // I formula display
-  ctx.fillStyle='#fbbf24'; ctx.font='bold 18px IBM Plex Mono';
-  ctx.fillText(`I = ${m}·${dist.toFixed(1)}² = ${I.toFixed(2)} кг·м²`, w/2, h-25);
+  ctx.beginPath(); ctx.arc(mx, cy, r, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#fff'; ctx.font='bold 12px IBM Plex Mono'; ctx.textAlign='center';
+  ctx.fillText('m='+m, mx, cy+4);
+  // formula display
+  ctx.fillStyle='#fbbf24'; ctx.font='bold 16px IBM Plex Mono'; ctx.textAlign='center';
+  ctx.fillText(`I = m·h² = ${m}·${dist.toFixed(1)}² = ${I.toFixed(2)} кг·м²`, w/2, h-20);
 }
-['imass','idist'].forEach(id => document.getElementById(id)?.addEventListener('input', drawInert));
 
-// ═══════════ Q1: STEINER ═══════════
+// ═══════════════════════════════════════════════════════════
+// Q1.3 — STEINER
+// ═══════════════════════════════════════════════════════════
 function drawSteiner() {
-  const r = setupCanvas('steinerCanvas');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('steinerCanvas');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const l = +document.getElementById('sl').value;
   const M = +document.getElementById('sm').value;
   document.getElementById('slv').textContent = l.toFixed(1);
   document.getElementById('smv').textContent = M;
   const Ic = M*l*l/12;
-  const Io = M*l*l/3;  // distance d = l/2
+  const Io = M*l*l/3;
   document.getElementById('steinResult').textContent = `IC=${Ic.toFixed(2)}  IO=${Io.toFixed(2)} кг·м²`;
   ctx.clearRect(0,0,w,h);
-  const cy = h/2;
-  const rodStart = 130, rodEnd = w-80;
-  const rodLen = rodEnd - rodStart;
+  const cy = h/2 + 5;
+  const rs = 90, re = w - 70;
+  const rl = re - rs;
   // rod
   ctx.fillStyle='rgba(245,158,11,0.5)';
   ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2;
-  ctx.fillRect(rodStart, cy-12, rodLen, 24);
-  ctx.strokeRect(rodStart, cy-12, rodLen, 24);
-  // O axis (left end)
+  ctx.fillRect(rs, cy-12, rl, 24); ctx.strokeRect(rs, cy-12, rl, 24);
+  // O axis
   ctx.strokeStyle='#38bdf8'; ctx.lineWidth=3;
-  ctx.beginPath(); ctx.moveTo(rodStart, 22); ctx.lineTo(rodStart, h-22); ctx.stroke();
-  ctx.fillStyle='#38bdf8'; ctx.font='bold 12px IBM Plex Sans'; ctx.textAlign='center';
-  ctx.fillText('O', rodStart, 16);
-  ctx.font='11px IBM Plex Mono';
-  ctx.fillText(`IO=${Io.toFixed(2)}`, rodStart, h-6);
-  // C axis (middle)
-  const cx = rodStart + rodLen/2;
+  ctx.beginPath(); ctx.moveTo(rs, 25); ctx.lineTo(rs, h-25); ctx.stroke();
+  ctx.fillStyle='#38bdf8'; ctx.font='bold 11px IBM Plex Sans'; ctx.textAlign='center';
+  ctx.fillText('O', rs, 18);
+  ctx.font='10px IBM Plex Mono';
+  ctx.fillText(`IO=${Io.toFixed(2)}`, rs, h-8);
+  // C axis
+  const cx = rs + rl/2;
   ctx.strokeStyle='#10b981'; ctx.lineWidth=3;
-  ctx.setLineDash([9,6]);
-  ctx.beginPath(); ctx.moveTo(cx, 22); ctx.lineTo(cx, h-22); ctx.stroke();
+  ctx.setLineDash([8,5]);
+  ctx.beginPath(); ctx.moveTo(cx, 25); ctx.lineTo(cx, h-25); ctx.stroke();
   ctx.setLineDash([]);
   ctx.fillStyle='#10b981';
   ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle='#6ee7b7'; ctx.font='bold 12px IBM Plex Sans';
-  ctx.fillText('C', cx, 16);
-  ctx.font='11px IBM Plex Mono';
-  ctx.fillText(`IC=${Ic.toFixed(2)}`, cx, h-6);
-  // d distance bracket
-  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.5;
-  const yBr = cy + 28;
+  ctx.fillStyle='#6ee7b7'; ctx.font='bold 11px IBM Plex Sans';
+  ctx.fillText('C', cx, 18);
+  ctx.font='10px IBM Plex Mono';
+  ctx.fillText(`IC=${Ic.toFixed(2)}`, cx, h-8);
+  // d
+  const yBr = cy + 32;
+  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.4;
   ctx.beginPath();
-  ctx.moveTo(rodStart, yBr); ctx.lineTo(cx, yBr);
-  ctx.moveTo(rodStart, yBr-4); ctx.lineTo(rodStart, yBr+4);
+  ctx.moveTo(rs, yBr); ctx.lineTo(cx, yBr);
+  ctx.moveTo(rs, yBr-4); ctx.lineTo(rs, yBr+4);
   ctx.moveTo(cx, yBr-4); ctx.lineTo(cx, yBr+4);
   ctx.stroke();
-  ctx.fillStyle='#94a3b8'; ctx.font='bold 13px IBM Plex Mono';
-  ctx.fillText(`d=l/2=${(l/2).toFixed(2)}м`, (rodStart+cx)/2, yBr+18);
-  // formula at top
-  ctx.fillStyle='#e2e8f0'; ctx.font='13px IBM Plex Mono';
-  ctx.textAlign='left';
-  ctx.fillText(`IC = Ml²/12 = ${Ic.toFixed(2)}`, 30, 35);
-  ctx.fillText(`IO = IC + Md² = ${Ic.toFixed(2)} + ${(M*l*l/4).toFixed(2)} = ${Io.toFixed(2)}`, 30, 55);
+  ctx.fillStyle='#94a3b8'; ctx.font='bold 12px IBM Plex Mono'; ctx.textAlign='center';
+  ctx.fillText(`d=l/2=${(l/2).toFixed(2)}`, (rs+cx)/2, yBr+15);
+  // formulas
+  ctx.fillStyle='#e2e8f0'; ctx.font='12px IBM Plex Mono'; ctx.textAlign='left';
+  ctx.fillText(`IO = IC + Md² = ${Ic.toFixed(2)} + ${(M*l*l/4).toFixed(2)} = ${Io.toFixed(2)}`, 25, 30);
 }
-['sl','sm'].forEach(id => document.getElementById(id)?.addEventListener('input', drawSteiner));
 
-// ═══════════ Q2: ROD ═══════════
+// ═══════════════════════════════════════════════════════════
+// Q2 — ROD INTEGRAL
+// ═══════════════════════════════════════════════════════════
 function drawRod() {
-  const r = setupCanvas('rodCanvas');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('rodCanvas');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const M = +document.getElementById('rM').value;
   const l = +document.getElementById('rl').value;
   document.getElementById('rMv').textContent = M;
@@ -2381,61 +2410,59 @@ function drawRod() {
   document.getElementById('rodResult').textContent = `IC=${Ic.toFixed(2)}  IO=${Io.toFixed(2)} кг·м²`;
   ctx.clearRect(0,0,w,h);
   const cy = h/2;
-  // axis at left end
-  const ax = 130;
+  const ax = 95;
   ctx.strokeStyle='#38bdf8'; ctx.lineWidth=4;
   ctx.beginPath(); ctx.moveTo(ax, 25); ctx.lineTo(ax, h-25); ctx.stroke();
-  ctx.fillStyle='#38bdf8'; ctx.font='bold 12px IBM Plex Sans'; ctx.textAlign='center';
-  ctx.fillText('ось (бір ұшы)', ax, 18);
+  ctx.fillStyle='#38bdf8'; ctx.font='bold 11px IBM Plex Sans'; ctx.textAlign='center';
+  ctx.fillText('ось', ax, 18);
   // rod
-  const rodLen = Math.min(w-ax-60, l*80);
+  const rl = Math.min(w-ax-50, l*70);
   ctx.fillStyle='rgba(245,158,11,0.5)';
   ctx.strokeStyle='#f59e0b'; ctx.lineWidth=1.8;
-  ctx.fillRect(ax, cy-13, rodLen, 26);
-  ctx.strokeRect(ax, cy-13, rodLen, 26);
-  // right angle
-  ctx.strokeStyle='#38bdf8'; ctx.lineWidth=1.5;
-  ctx.strokeRect(ax, cy-13, 14, 14);
-  // dx element
-  const dxX = ax + rodLen*0.45;
+  ctx.fillRect(ax, cy-13, rl, 26);
+  ctx.strokeRect(ax, cy-13, rl, 26);
+  ctx.strokeStyle='#38bdf8'; ctx.lineWidth=1.4;
+  ctx.strokeRect(ax, cy-13, 12, 12);
+  // dx
+  const dxX = ax + rl*0.45;
   ctx.fillStyle='rgba(56,189,248,0.55)';
   ctx.strokeStyle='#38bdf8'; ctx.lineWidth=2;
-  ctx.fillRect(dxX, cy-17, 22, 34);
-  ctx.strokeRect(dxX, cy-17, 22, 34);
-  ctx.fillStyle='#38bdf8'; ctx.font='bold 12px IBM Plex Mono';
-  ctx.fillText('dx', dxX+11, cy-22);
-  ctx.fillStyle='#e2e8f0'; ctx.font='11px IBM Plex Mono';
-  ctx.fillText('dm', dxX+11, cy+2);
-  // x distance dashed
+  ctx.fillRect(dxX, cy-17, 20, 34);
+  ctx.strokeRect(dxX, cy-17, 20, 34);
+  ctx.fillStyle='#38bdf8'; ctx.font='bold 11px IBM Plex Mono'; ctx.textAlign='center';
+  ctx.fillText('dx', dxX+10, cy-22);
+  ctx.fillStyle='#e2e8f0'; ctx.font='10px IBM Plex Mono';
+  ctx.fillText('dm', dxX+10, cy+3);
+  // x
   ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.2;
   ctx.setLineDash([4,3]);
-  ctx.beginPath(); ctx.moveTo(ax, cy+38); ctx.lineTo(dxX+11, cy+38); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(ax, cy+34); ctx.lineTo(dxX+10, cy+34); ctx.stroke();
   ctx.setLineDash([]);
   ctx.fillStyle='#94a3b8'; ctx.font='bold 12px IBM Plex Mono';
-  ctx.fillText('x', (ax+dxX)/2+5, cy+52);
-  // l length
+  ctx.fillText('x', (ax+dxX)/2+5, cy+47);
+  // l
   ctx.strokeStyle='#64748b'; ctx.lineWidth=1.2;
+  const yL = h - 28;
   ctx.beginPath();
-  ctx.moveTo(ax, cy+62); ctx.lineTo(ax+rodLen, cy+62);
-  ctx.moveTo(ax, cy+58); ctx.lineTo(ax, cy+66);
-  ctx.moveTo(ax+rodLen, cy+58); ctx.lineTo(ax+rodLen, cy+66);
+  ctx.moveTo(ax, yL); ctx.lineTo(ax+rl, yL);
+  ctx.moveTo(ax, yL-4); ctx.lineTo(ax, yL+4);
+  ctx.moveTo(ax+rl, yL-4); ctx.lineTo(ax+rl, yL+4);
   ctx.stroke();
-  ctx.fillStyle='#64748b'; ctx.font='12px IBM Plex Mono';
-  ctx.fillText(`l = ${l.toFixed(1)} м`, ax+rodLen/2, cy+78);
-  // formulas top
-  ctx.fillStyle='#fbbf24'; ctx.font='bold 14px IBM Plex Mono'; ctx.textAlign='left';
-  ctx.fillText(`I = Ml²/3 = ${M}·${l.toFixed(1)}²/3 = ${Io.toFixed(2)} кг·м²`, 30, 35);
-  ctx.fillStyle='#6ee7b7'; ctx.font='13px IBM Plex Mono';
-  ctx.fillText(`(Тексеру: IC=${Ic.toFixed(2)}, Md²=${(M*l*l/4).toFixed(2)}, сум=${Io.toFixed(2)} ✓)`, 30, 55);
+  ctx.fillStyle='#64748b'; ctx.font='11px IBM Plex Mono';
+  ctx.fillText(`l = ${l.toFixed(1)} м`, ax+rl/2, yL+13);
+  // formula
+  ctx.fillStyle='#fbbf24'; ctx.font='bold 13px IBM Plex Mono'; ctx.textAlign='left';
+  ctx.fillText(`I = Ml²/3 = ${Io.toFixed(2)} кг·м²`, 25, 30);
 }
-['rM','rl'].forEach(id => document.getElementById(id)?.addEventListener('input', drawRod));
 
-// ═══════════ Q3: DISK ═══════════
-let diskAngle = 0;
+// ═══════════════════════════════════════════════════════════
+// Q3 — DISK
+// ═══════════════════════════════════════════════════════════
+let diskAng = 0;
 function drawDisk() {
-  const r = setupCanvas('diskCanvas');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('diskCanvas');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const R = +document.getElementById('dR').value;
   const M = +document.getElementById('dM').value;
   document.getElementById('dRv').textContent = R.toFixed(1);
@@ -2444,202 +2471,166 @@ function drawDisk() {
   document.getElementById('diskResult').textContent = `Iz = ${Iz.toFixed(2)} кг·м²`;
   ctx.clearRect(0,0,w,h);
   const cx = w/2, cy = h/2 + 10;
-  const visR = 50 + R*22;
+  const visR = 40 + R*22;
   // disk
   ctx.fillStyle='rgba(245,158,11,0.10)';
   ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2;
   ctx.beginPath(); ctx.arc(cx, cy, visR, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  // animated ring (dm)
+  // ring (highlighted)
   const ringR = visR * 0.55;
-  ctx.strokeStyle='#38bdf8'; ctx.lineWidth=10;
-  ctx.globalAlpha = 0.45;
+  ctx.strokeStyle='#38bdf8'; ctx.globalAlpha=0.45; ctx.lineWidth=10;
   ctx.beginPath(); ctx.arc(cx, cy, ringR, 0, Math.PI*2); ctx.stroke();
-  ctx.globalAlpha = 1;
-  ctx.lineWidth=1.4;
+  ctx.globalAlpha=1; ctx.lineWidth=1.4;
   ctx.beginPath(); ctx.arc(cx, cy, ringR, 0, Math.PI*2); ctx.stroke();
   ctx.setLineDash([5,3]); ctx.lineWidth=1;
   ctx.beginPath(); ctx.arc(cx, cy, ringR+8, 0, Math.PI*2); ctx.stroke();
   ctx.setLineDash([]);
-  // center
-  ctx.fillStyle='#fff';
-  ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI*2); ctx.fill();
-  // r arrow
-  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.6;
-  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx+ringR, cy); ctx.stroke();
-  ctx.fillStyle='#94a3b8';
-  ctx.beginPath(); ctx.moveTo(cx+ringR-8, cy-4); ctx.lineTo(cx+ringR-2, cy); ctx.lineTo(cx+ringR-8, cy+4); ctx.closePath(); ctx.fill();
-  ctx.font='bold 14px IBM Plex Mono'; ctx.textAlign='center';
+  // rotating mass element on ring
+  diskAng += 0.04;
+  const dx = cx + ringR*Math.cos(diskAng);
+  const dy = cy + ringR*Math.sin(diskAng);
+  ctx.fillStyle='#38bdf8';
+  ctx.beginPath(); ctx.arc(dx, dy, 5, 0, Math.PI*2); ctx.fill();
+  // r
+  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.5;
+  arrow(ctx, cx, cy, cx+ringR-2, cy, '#94a3b8', 1.5);
+  ctx.fillStyle='#94a3b8'; ctx.font='bold 13px IBM Plex Mono'; ctx.textAlign='center';
   ctx.fillText('r', cx+ringR/2, cy-8);
-  // dr label
-  ctx.fillStyle='#38bdf8'; ctx.font='12px IBM Plex Mono';
-  ctx.fillText('dr', cx+ringR+12, cy-4);
-  // R arrow
+  // R outline
   ctx.strokeStyle='#64748b'; ctx.lineWidth=1;
   ctx.setLineDash([4,3]);
   ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx+visR, cy); ctx.stroke();
   ctx.setLineDash([]);
-  ctx.fillStyle='#64748b'; ctx.font='12px IBM Plex Sans';
-  ctx.fillText(`R=${R.toFixed(1)} м`, cx+visR-30, cy+18);
-  // z axis (perpendicular - dot at center)
-  ctx.fillStyle='#f59e0b'; ctx.strokeStyle='#fff'; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  ctx.fillStyle='#fbbf24'; ctx.font='11px IBM Plex Sans';
-  ctx.fillText('z (перп. ось)', cx, cy-visR-15);
+  ctx.fillStyle='#64748b'; ctx.font='11px IBM Plex Sans';
+  ctx.fillText(`R=${R.toFixed(1)}`, cx+visR-25, cy+16);
+  // center
+  ctx.fillStyle='#fff';
+  ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI*2); ctx.fill();
   // formula
-  ctx.fillStyle='#e2e8f0'; ctx.font='bold 14px IBM Plex Mono'; ctx.textAlign='left';
-  ctx.fillText(`Iz = MR²/2 = ${M}·${R.toFixed(1)}²/2 = ${Iz.toFixed(2)} кг·м²`, 25, 30);
+  ctx.fillStyle='#e2e8f0'; ctx.font='bold 13px IBM Plex Mono'; ctx.textAlign='left';
+  ctx.fillText(`Iz = MR²/2 = ${Iz.toFixed(2)} кг·м²`, 25, 28);
 }
-['dR','dM'].forEach(id => document.getElementById(id)?.addEventListener('input', drawDisk));
 
-// ═══════════ Q5: STEINER ═══════════
+// ═══════════════════════════════════════════════════════════
+// Q5 — STEINER PARAMETRIC
+// ═══════════════════════════════════════════════════════════
 function drawSt() {
-  const r = setupCanvas('stCanvas');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('stCanvas');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const d = +document.getElementById('std').value;
   const M = +document.getElementById('stm').value;
   document.getElementById('stdv').textContent = d.toFixed(1);
   document.getElementById('stmv').textContent = M;
-  const Ic = 4;  // assume centered I_C = 4 for body
+  const Ic = 4;
   const Io = Ic + M*d*d;
   document.getElementById('stResult').textContent = `IC=${Ic.toFixed(2)}  IO=${Io.toFixed(2)} кг·м²`;
   ctx.clearRect(0,0,w,h);
-  const cy = h/2;
-  const cx = w/2 + 30;
-  // body ellipse
+  const cy = h/2 + 5;
+  const cx = w*0.6;
+  // body
   ctx.fillStyle='rgba(245,158,11,0.13)';
   ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.ellipse(cx, cy, 130, 50, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(cx, cy, 110, 42, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
   // C axis
   ctx.strokeStyle='#10b981'; ctx.lineWidth=3;
-  ctx.setLineDash([9,6]);
+  ctx.setLineDash([8,5]);
   ctx.beginPath(); ctx.moveTo(cx, 25); ctx.lineTo(cx, h-25); ctx.stroke();
   ctx.setLineDash([]);
   ctx.fillStyle='#10b981';
-  ctx.beginPath(); ctx.arc(cx, cy, 6, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle='#6ee7b7'; ctx.font='bold 12px IBM Plex Sans'; ctx.textAlign='center';
-  ctx.fillText('C', cx+10, cy-3);
-  ctx.font='11px IBM Plex Sans'; ctx.textAlign='center';
-  ctx.fillText('центрлік', cx, 18);
-  // O axis (offset by d)
-  const ox = cx - d*45;
+  ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle='#6ee7b7'; ctx.font='bold 11px IBM Plex Sans'; ctx.textAlign='center';
+  ctx.fillText('C', cx, 18);
+  // O axis (offset)
+  const ox = Math.max(60, cx - d*38);
   ctx.strokeStyle='#38bdf8'; ctx.lineWidth=3;
   ctx.beginPath(); ctx.moveTo(ox, 25); ctx.lineTo(ox, h-25); ctx.stroke();
-  ctx.fillStyle='#38bdf8'; ctx.font='bold 12px IBM Plex Sans'; ctx.textAlign='center';
+  ctx.fillStyle='#38bdf8'; ctx.font='bold 11px IBM Plex Sans';
   ctx.fillText('O', ox, 18);
-  // d distance
-  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.5;
-  const yBr = cy+72;
+  // d
+  const yBr = cy + 56;
+  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.4;
   ctx.beginPath();
   ctx.moveTo(ox, yBr); ctx.lineTo(cx, yBr);
   ctx.moveTo(ox, yBr-4); ctx.lineTo(ox, yBr+4);
   ctx.moveTo(cx, yBr-4); ctx.lineTo(cx, yBr+4);
   ctx.stroke();
-  ctx.fillStyle='#94a3b8'; ctx.font='bold 13px IBM Plex Mono';
-  ctx.fillText(`d=${d.toFixed(1)} м`, (ox+cx)/2, yBr+17);
-  // formulas
-  ctx.fillStyle='#e2e8f0'; ctx.font='13px IBM Plex Mono'; ctx.textAlign='left';
-  ctx.fillText(`IO = IC + Md² = ${Ic.toFixed(2)} + ${M}·${d.toFixed(1)}² = ${Io.toFixed(2)}`, 25, 30);
+  ctx.fillStyle='#94a3b8'; ctx.font='bold 12px IBM Plex Mono'; ctx.textAlign='center';
+  ctx.fillText(`d=${d.toFixed(1)}`, (ox+cx)/2, yBr+14);
+  // formula
+  ctx.fillStyle='#e2e8f0'; ctx.font='12px IBM Plex Mono'; ctx.textAlign='left';
+  ctx.fillText(`IO = IC + Md² = ${Ic} + ${M}·${d.toFixed(1)}² = ${Io.toFixed(2)}`, 20, 28);
 }
-['std','stm'].forEach(id => document.getElementById(id)?.addEventListener('input', drawSt));
 
-// ═══════════ Q8: ROTATION ═══════════
+// ═══════════════════════════════════════════════════════════
+// Q8 — ROTATION (animated)
+// ═══════════════════════════════════════════════════════════
 let rotPhase = 0;
 function drawRot() {
-  const r = setupCanvas('rotCanvas');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('rotCanvas');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const omega = +document.getElementById('romega').value;
   const eps = +document.getElementById('repsilon').value;
   const rad = +document.getElementById('rrad').value;
   document.getElementById('romegav').textContent = omega.toFixed(1);
   document.getElementById('repsilonv').textContent = eps.toFixed(1);
   document.getElementById('rradv').textContent = rad.toFixed(1);
-  const v = omega*rad;
-  const at = eps*rad;
-  const an = omega*omega*rad;
+  const v = omega*rad, at = eps*rad, an = omega*omega*rad;
   document.getElementById('rotResult').textContent = `v=${v.toFixed(1)}  aτ=${at.toFixed(1)}  aₙ=${an.toFixed(1)} м/с²`;
   ctx.clearRect(0,0,w,h);
-  const cx = 200, cy = h/2;
+  const cx = 160, cy = h/2 + 5;
   // z axis
   ctx.strokeStyle='#38bdf8'; ctx.lineWidth=4;
-  ctx.beginPath(); ctx.moveTo(cx, 22); ctx.lineTo(cx, h-22); ctx.stroke();
-  ctx.fillStyle='#38bdf8'; ctx.font='bold 12px IBM Plex Sans'; ctx.textAlign='center';
-  ctx.fillText('z (қозғалмайтын ось)', cx, 16);
+  ctx.beginPath(); ctx.moveTo(cx, 25); ctx.lineTo(cx, h-25); ctx.stroke();
+  ctx.fillStyle='#38bdf8'; ctx.font='bold 11px IBM Plex Sans'; ctx.textAlign='center';
+  ctx.fillText('z ось', cx, 18);
   // body circle
-  const bodyR = 50 + rad*30;
+  const bodyR = 40 + rad*22;
   ctx.fillStyle='rgba(245,158,11,0.09)';
-  ctx.strokeStyle='#f59e0b'; ctx.lineWidth=1.8;
+  ctx.strokeStyle='#f59e0b'; ctx.lineWidth=1.6;
   ctx.beginPath(); ctx.arc(cx, cy, bodyR, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  // point on rim (animated)
-  rotPhase += omega*0.02;
+  // animated point
+  rotPhase += omega*0.018;
   const ang = rotPhase;
   const ax_ = cx + bodyR*Math.cos(ang);
   const ay_ = cy + bodyR*Math.sin(ang);
-  // r line
-  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.4;
-  ctx.setLineDash([7,4]);
+  // r
+  ctx.strokeStyle='#94a3b8'; ctx.lineWidth=1.3;
+  ctx.setLineDash([6,4]);
   ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ax_, ay_); ctx.stroke();
   ctx.setLineDash([]);
-  ctx.fillStyle='#94a3b8'; ctx.font='bold 13px IBM Plex Mono';
-  ctx.fillText(`r=${rad.toFixed(1)}`, (cx+ax_)/2-15, (cy+ay_)/2-8);
-  // mass point
+  // mass
   ctx.fillStyle='#f59e0b'; ctx.strokeStyle='#fbbf24'; ctx.lineWidth=1.5;
-  ctx.beginPath(); ctx.arc(ax_, ay_, 13, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  ctx.fillStyle='#fff'; ctx.font='bold 11px IBM Plex Mono'; ctx.textAlign='center';
-  ctx.fillText('A', ax_, ay_+4);
-  // v vector (tangent, perpendicular to r)
+  ctx.beginPath(); ctx.arc(ax_, ay_, 11, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.fillStyle='#fff'; ctx.font='bold 10px IBM Plex Mono'; ctx.textAlign='center';
+  ctx.fillText('A', ax_, ay_+3);
+  // tangent direction
   const tx = -Math.sin(ang), ty = Math.cos(ang);
-  const vScale = 12;
-  const vx = ax_ + tx*v*vScale, vy = ay_ + ty*v*vScale;
-  ctx.strokeStyle='#10b981'; ctx.lineWidth=2.5;
-  ctx.beginPath(); ctx.moveTo(ax_, ay_); ctx.lineTo(vx, vy); ctx.stroke();
-  ctx.fillStyle='#10b981';
-  const vAng = Math.atan2(ty, tx);
-  ctx.beginPath();
-  ctx.moveTo(vx, vy);
-  ctx.lineTo(vx-9*Math.cos(vAng-0.4), vy-9*Math.sin(vAng-0.4));
-  ctx.lineTo(vx-9*Math.cos(vAng+0.4), vy-9*Math.sin(vAng+0.4));
-  ctx.closePath(); ctx.fill();
-  ctx.fillStyle='#6ee7b7'; ctx.font='bold 12px IBM Plex Mono';
-  ctx.fillText(`v=${v.toFixed(1)}`, vx+12, vy);
-  // an vector (centripetal, toward center)
+  // v
+  const sc = 8;
+  arrow(ctx, ax_, ay_, ax_+tx*v*sc, ay_+ty*v*sc, '#10b981', 2.2);
+  ctx.fillStyle='#6ee7b7'; ctx.font='bold 11px IBM Plex Mono';
+  ctx.fillText(`v=${v.toFixed(1)}`, ax_+tx*v*sc+12, ay_+ty*v*sc);
+  // an (centripetal)
   const nx = -Math.cos(ang), ny = -Math.sin(ang);
-  const aScale = 8;
-  const anx = ax_ + nx*an*aScale, any_ = ay_ + ny*an*aScale;
-  ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2.5;
-  ctx.beginPath(); ctx.moveTo(ax_, ay_); ctx.lineTo(anx, any_); ctx.stroke();
-  ctx.fillStyle='#f59e0b';
-  const anAng = Math.atan2(ny, nx);
-  ctx.beginPath();
-  ctx.moveTo(anx, any_);
-  ctx.lineTo(anx-9*Math.cos(anAng-0.4), any_-9*Math.sin(anAng-0.4));
-  ctx.lineTo(anx-9*Math.cos(anAng+0.4), any_-9*Math.sin(anAng+0.4));
-  ctx.closePath(); ctx.fill();
-  ctx.fillStyle='#fbbf24'; ctx.font='11px IBM Plex Mono';
-  ctx.fillText(`aₙ=${an.toFixed(1)}`, anx-30, any_-5);
-  // at vector (tangential, same dir as v if eps>0)
-  const atx = ax_ + tx*at*aScale, aty = ay_ + ty*at*aScale;
-  ctx.strokeStyle='#f43f5e'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.moveTo(ax_, ay_); ctx.lineTo(atx, aty); ctx.stroke();
-  ctx.fillStyle='#f43f5e';
-  const atAng = Math.atan2(ty, tx);
-  ctx.beginPath();
-  ctx.moveTo(atx, aty);
-  ctx.lineTo(atx-7*Math.cos(atAng-0.4), aty-7*Math.sin(atAng-0.4));
-  ctx.lineTo(atx-7*Math.cos(atAng+0.4), aty-7*Math.sin(atAng+0.4));
-  ctx.closePath(); ctx.fill();
+  arrow(ctx, ax_, ay_, ax_+nx*an*4, ay_+ny*an*4, '#f59e0b', 2);
+  ctx.fillStyle='#fbbf24'; ctx.font='10px IBM Plex Mono';
+  ctx.fillText(`aₙ=${an.toFixed(1)}`, ax_+nx*an*4-25, ay_+ny*an*4-5);
+  // at (tangential)
+  arrow(ctx, ax_, ay_, ax_+tx*at*8, ay_+ty*at*8, '#f43f5e', 1.8);
   ctx.fillStyle='#f87171'; ctx.font='10px IBM Plex Mono';
-  ctx.fillText(`aτ=${at.toFixed(1)}`, atx+5, aty-3);
+  ctx.fillText(`aτ=${at.toFixed(1)}`, ax_+tx*at*8+5, ay_+ty*at*8-3);
 }
-['romega','repsilon','rrad'].forEach(id => document.getElementById(id)?.addEventListener('input', drawRot));
 
-// ═══════════ Q9: ROTOR ═══════════
-let rotorPhase = 0;
+// ═══════════════════════════════════════════════════════════
+// Q9 — ROTOR (animated)
+// ═══════════════════════════════════════════════════════════
+let rotorPh = 0;
 function drawRotor() {
-  const r = setupCanvas('rotorCanvas');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('rotorCanvas');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const e = +document.getElementById('recc').value;
   const omg = +document.getElementById('romg').value;
   const M = +document.getElementById('rmass2').value;
@@ -2649,71 +2640,60 @@ function drawRotor() {
   const Fdyn = M*omg*omg*e;
   document.getElementById('rotorResult').textContent = `F_дин = ${Fdyn.toFixed(1)} Н`;
   ctx.clearRect(0,0,w,h);
-  const cx = w/2, cy = h/2;
+  const cx = w/2, cy = h/2 + 5;
   // bearings
   ctx.fillStyle='rgba(56,189,248,0.22)'; ctx.strokeStyle='#38bdf8'; ctx.lineWidth=2;
-  ctx.fillRect(80, cy-50, 22, 100); ctx.strokeRect(80, cy-50, 22, 100);
-  ctx.fillRect(w-102, cy-50, 22, 100); ctx.strokeRect(w-102, cy-50, 22, 100);
-  // shaft line
+  ctx.fillRect(60, cy-45, 20, 90); ctx.strokeRect(60, cy-45, 20, 90);
+  ctx.fillRect(w-80, cy-45, 20, 90); ctx.strokeRect(w-80, cy-45, 20, 90);
+  // shaft
   ctx.strokeStyle='#475569'; ctx.lineWidth=1;
   ctx.setLineDash([5,3]);
-  ctx.beginPath(); ctx.moveTo(102, cy); ctx.lineTo(w-102, cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(80, cy); ctx.lineTo(w-80, cy); ctx.stroke();
   ctx.setLineDash([]);
-  // rotor (tilted ellipse showing imbalance)
-  rotorPhase += omg*0.005;
+  // rotor body
+  rotorPh += omg*0.008;
   ctx.fillStyle='rgba(245,158,11,0.16)';
-  ctx.strokeStyle='#f59e0b'; ctx.lineWidth=1.8;
-  ctx.beginPath(); ctx.ellipse(cx, cy, 145, 52, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  // center of mass C — offset
-  const eScale = 800;
-  const cmX = cx + e*eScale*Math.cos(rotorPhase);
-  const cmY = cy + e*eScale*Math.sin(rotorPhase);
+  ctx.strokeStyle='#f59e0b'; ctx.lineWidth=1.6;
+  ctx.beginPath(); ctx.ellipse(cx, cy, 120, 42, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+  // C off-axis
+  const eSc = 700;
+  const cmX = cx + e*eSc*Math.cos(rotorPh);
+  const cmY = cy + e*eSc*Math.sin(rotorPh);
   ctx.fillStyle='#10b981';
-  ctx.beginPath(); ctx.arc(cmX, cmY, 8, 0, Math.PI*2); ctx.fill();
-  ctx.fillStyle='#6ee7b7'; ctx.font='bold 11px IBM Plex Sans'; ctx.textAlign='center';
-  ctx.fillText('C', cmX, cmY-12);
-  // e arrow from axis to C
+  ctx.beginPath(); ctx.arc(cmX, cmY, 7, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle='#6ee7b7'; ctx.font='bold 10px IBM Plex Sans'; ctx.textAlign='center';
+  ctx.fillText('C', cmX, cmY-10);
+  // e line
   ctx.strokeStyle='#64748b'; ctx.lineWidth=1.2;
-  ctx.setLineDash([4,3]);
+  ctx.setLineDash([3,3]);
   ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cmX, cmY); ctx.stroke();
   ctx.setLineDash([]);
-  // dynamic force at C
-  const fx_ = (cmX-cx); const fy_ = (cmY-cy);
-  const fmag = Math.sqrt(fx_*fx_+fy_*fy_);
-  if (fmag > 0.5) {
-    const fScale = 60 / fmag * Math.min(Fdyn/200, 2);
-    const fxe = cmX + fx_*fScale, fye = cmY + fy_*fScale;
-    ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2.5;
-    ctx.beginPath(); ctx.moveTo(cmX, cmY); ctx.lineTo(fxe, fye); ctx.stroke();
-    ctx.fillStyle='#f59e0b';
-    const fAng = Math.atan2(fy_, fx_);
-    ctx.beginPath();
-    ctx.moveTo(fxe, fye);
-    ctx.lineTo(fxe-9*Math.cos(fAng-0.4), fye-9*Math.sin(fAng-0.4));
-    ctx.lineTo(fxe-9*Math.cos(fAng+0.4), fye-9*Math.sin(fAng+0.4));
-    ctx.closePath(); ctx.fill();
+  // dynamic force
+  const fx = (cmX-cx), fy = (cmY-cy);
+  const fLen = Math.sqrt(fx*fx+fy*fy);
+  if (fLen > 0.5 && Fdyn > 0.1) {
+    const sc = Math.min(50/fLen * Math.min(Fdyn/100, 1.5), 80/fLen);
+    arrow(ctx, cmX, cmY, cmX+fx*sc, cmY+fy*sc, '#f59e0b', 2.2);
   }
-  // bearing reaction arrows
-  ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.moveTo(80, cy); ctx.lineTo(40, cy); ctx.stroke();
-  ctx.fillStyle='#f59e0b';
-  ctx.beginPath(); ctx.moveTo(40, cy-5); ctx.lineTo(32, cy); ctx.lineTo(40, cy+5); ctx.closePath(); ctx.fill();
-  ctx.beginPath(); ctx.moveTo(w-80, cy); ctx.lineTo(w-40, cy); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(w-40, cy-5); ctx.lineTo(w-32, cy); ctx.lineTo(w-40, cy+5); ctx.closePath(); ctx.fill();
-  ctx.fillStyle='#fbbf24'; ctx.font='bold 11px IBM Plex Mono'; ctx.textAlign='center';
-  ctx.fillText('R_A', 60, cy-10); ctx.fillText('R_B', w-60, cy-10);
+  // bearing reactions
+  arrow(ctx, 60, cy, 25, cy, '#f59e0b', 2);
+  arrow(ctx, w-60, cy, w-25, cy, '#f59e0b', 2);
+  ctx.fillStyle='#fbbf24'; ctx.font='bold 10px IBM Plex Mono'; ctx.textAlign='center';
+  ctx.fillText('R_A', 45, cy-8);
+  ctx.fillText('R_B', w-45, cy-8);
   // formula
-  ctx.fillStyle='#f87171'; ctx.font='bold 14px IBM Plex Mono'; ctx.textAlign='left';
-  ctx.fillText(`F_дин = M·ω²·e = ${M}·${omg}²·${e.toFixed(3)} = ${Fdyn.toFixed(1)} Н`, 25, 28);
+  ctx.fillStyle='#f87171'; ctx.font='bold 13px IBM Plex Mono'; ctx.textAlign='left';
+  ctx.fillText(`F_дин = M·ω²·e = ${Fdyn.toFixed(1)} Н`, 25, 28);
 }
-['recc','romg','rmass2'].forEach(id => document.getElementById(id)?.addEventListener('input', drawRotor));
 
-// ═══════════ Q21: GYROSCOPE ═══════════
-let gyroPhase = 0;
+// ═══════════════════════════════════════════════════════════
+// Q21 — GYROSCOPE PRECESSION
+// ═══════════════════════════════════════════════════════════
+let gyroPh = 0;
 function drawGyro() {
-  const r = setupCanvas('gyroCanvas');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('gyroCanvas');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const w3 = +document.getElementById('gw3').value;
   const I3 = +document.getElementById('gI3').value;
   const M = +document.getElementById('gM').value;
@@ -2724,66 +2704,50 @@ function drawGyro() {
   const Omega = M/K;
   document.getElementById('gyroResult').textContent = `K=${K.toFixed(1)}  Ω=${Omega.toFixed(3)} рад/с`;
   ctx.clearRect(0,0,w,h);
-  const cx = w/2, cy = h/2 + 20;
-  gyroPhase += Omega*0.5;
-  // K vector precessing around vertical Ω
-  const tilt = 0.5; // tilt angle from vertical
-  const Kx = cx + 80*Math.sin(tilt)*Math.cos(gyroPhase);
-  const Ky_ = cy - 80*Math.cos(tilt);
+  const cx = w/2, cy = h/2 + 25;
+  gyroPh += Omega*0.4;
+  const tilt = 0.55;
+  const Klen = 100;
+  const Kx = cx + Klen*Math.sin(tilt)*Math.cos(gyroPh);
+  const Ky = cy - Klen*Math.cos(tilt);
   // origin
   ctx.fillStyle='#fff';
-  ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI*2); ctx.fill();
-  // Omega (vertical)
-  ctx.strokeStyle='#10b981'; ctx.lineWidth=2.5;
-  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx, cy-130); ctx.stroke();
-  ctx.fillStyle='#10b981';
-  ctx.beginPath(); ctx.moveTo(cx-6, cy-122); ctx.lineTo(cx, cy-138); ctx.lineTo(cx+6, cy-122); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI*2); ctx.fill();
+  // Omega vertical
+  arrow(ctx, cx, cy, cx, cy-110, '#10b981', 2.5);
   ctx.fillStyle='#6ee7b7'; ctx.font='bold 13px IBM Plex Mono'; ctx.textAlign='center';
-  ctx.fillText('Ω', cx+18, cy-130);
-  // K vector
-  ctx.strokeStyle='#38bdf8'; ctx.lineWidth=3;
-  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(Kx, Ky_); ctx.stroke();
-  const kAng = Math.atan2(Ky_-cy, Kx-cx);
-  ctx.fillStyle='#38bdf8';
-  ctx.beginPath();
-  ctx.moveTo(Kx, Ky_);
-  ctx.lineTo(Kx-10*Math.cos(kAng-0.35), Ky_-10*Math.sin(kAng-0.35));
-  ctx.lineTo(Kx-10*Math.cos(kAng+0.35), Ky_-10*Math.sin(kAng+0.35));
-  ctx.closePath(); ctx.fill();
+  ctx.fillText('Ω', cx+15, cy-105);
+  // K
+  arrow(ctx, cx, cy, Kx, Ky, '#38bdf8', 3);
   ctx.fillStyle='#38bdf8'; ctx.font='bold 13px IBM Plex Mono';
-  ctx.fillText('K', Kx+12, Ky_-5);
-  // M = Ω×K (perpendicular to both, in horizontal plane, tangent to precession circle)
-  const Mx = cx - 70*Math.sin(gyroPhase);
-  const My = cy - 80*Math.cos(tilt);
-  ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2.5;
-  ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(Mx, My); ctx.stroke();
-  const mAng = Math.atan2(My-cy, Mx-cx);
-  ctx.fillStyle='#f59e0b';
-  ctx.beginPath();
-  ctx.moveTo(Mx, My);
-  ctx.lineTo(Mx-10*Math.cos(mAng-0.35), My-10*Math.sin(mAng-0.35));
-  ctx.lineTo(Mx-10*Math.cos(mAng+0.35), My-10*Math.sin(mAng+0.35));
-  ctx.closePath(); ctx.fill();
-  ctx.fillStyle='#fbbf24'; ctx.font='bold 13px IBM Plex Mono';
+  ctx.fillText('K', Kx+12, Ky);
+  // M = Ω×K
+  const Mx = cx - 70*Math.sin(gyroPh);
+  const My = cy - Klen*Math.cos(tilt);
+  arrow(ctx, cx, cy, Mx, My, '#f59e0b', 2.5);
+  ctx.fillStyle='#fbbf24'; ctx.font='bold 12px IBM Plex Mono';
   ctx.fillText('M=Ω×K', Mx-30, My+18);
-  // precession circle
-  ctx.strokeStyle='#38bdf8'; ctx.lineWidth=1.4;
-  ctx.setLineDash([6,4]);
-  ctx.beginPath(); ctx.ellipse(cx, cy-80*Math.cos(tilt), 80*Math.sin(tilt), 28, 0, 0, Math.PI*2); ctx.stroke();
+  // precession circle (top)
+  ctx.strokeStyle='#38bdf8'; ctx.lineWidth=1.3;
+  ctx.setLineDash([5,4]);
+  ctx.beginPath();
+  ctx.ellipse(cx, cy-Klen*Math.cos(tilt), Klen*Math.sin(tilt), 22, 0, 0, Math.PI*2);
+  ctx.stroke();
   ctx.setLineDash([]);
   // formulas
-  ctx.fillStyle='#e2e8f0'; ctx.font='13px IBM Plex Mono'; ctx.textAlign='left';
-  ctx.fillText(`K = I₃·ω₃ = ${I3.toFixed(2)}·${w3} = ${K.toFixed(1)}`, 25, 25);
-  ctx.fillText(`Ω = M/K = ${M.toFixed(1)}/${K.toFixed(1)} = ${Omega.toFixed(3)} рад/с`, 25, 45);
+  ctx.fillStyle='#e2e8f0'; ctx.font='12px IBM Plex Mono'; ctx.textAlign='left';
+  ctx.fillText(`K = I₃ω₃ = ${K.toFixed(1)}`, 20, 25);
+  ctx.fillText(`Ω = M/K = ${Omega.toFixed(3)} рад/с`, 20, 43);
 }
-['gw3','gI3','gM'].forEach(id => document.getElementById(id)?.addEventListener('input', drawGyro));
 
-// ═══════════ Q20: GYRO STAB ═══════════
-let gsPhase = 0;
+// ═══════════════════════════════════════════════════════════
+// Q20 — GYRO STABILITY
+// ═══════════════════════════════════════════════════════════
+let gsPh = 0;
 function drawGS() {
-  const r = setupCanvas('gyroStab');
-  if (!r) return;
-  const {ctx, w, h} = r;
+  const s = setupCanvas('gyroStab');
+  if (!s) return;
+  const {ctx, w, h} = s;
   const w3 = +document.getElementById('gsw').value;
   const I3 = +document.getElementById('gsI').value;
   const M = +document.getElementById('gsM').value;
@@ -2794,58 +2758,77 @@ function drawGS() {
   const Omega = M/K;
   document.getElementById('gsResult').textContent = `K=${K.toFixed(1)}  Ω=${Omega.toFixed(3)} рад/с`;
   ctx.clearRect(0,0,w,h);
-  const cx = w/2, cy = h/2 + 10;
-  gsPhase += Omega*0.4;
-  // Rotor as tilted ellipse precessing
+  const cx = w/2, cy = h/2 + 5;
+  gsPh += Omega*0.3;
   const tilt = 0.4;
-  const offX = 60*Math.sin(tilt)*Math.cos(gsPhase);
-  // rotor disk
-  ctx.save();
-  ctx.translate(cx+offX, cy-50);
-  ctx.rotate(0.2*Math.cos(gsPhase));
-  ctx.fillStyle='rgba(245,158,11,0.18)';
-  ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.ellipse(0, 0, 65, 18, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-  // spin indicator
-  ctx.strokeStyle='#fbbf24'; ctx.lineWidth=2;
-  ctx.beginPath(); ctx.moveTo(-50, 0); ctx.lineTo(50, 0); ctx.stroke();
-  ctx.restore();
+  const offX = 50*Math.sin(tilt)*Math.cos(gsPh);
   // base
-  ctx.strokeStyle='#475569'; ctx.lineWidth=1.8;
+  ctx.strokeStyle='#475569'; ctx.lineWidth=2;
   ctx.beginPath(); ctx.moveTo(cx-25, cy+50); ctx.lineTo(cx+25, cy+50); ctx.stroke();
-  ctx.beginPath(); ctx.moveTo(cx, cy+50); ctx.lineTo(cx+offX, cy-50); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx, cy+50); ctx.lineTo(cx+offX, cy-30); ctx.stroke();
+  // rotor disk tilted
+  ctx.save();
+  ctx.translate(cx+offX, cy-30);
+  ctx.rotate(0.18*Math.cos(gsPh));
+  ctx.fillStyle='rgba(245,158,11,0.2)';
+  ctx.strokeStyle='#f59e0b'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.ellipse(0,0,55,15,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle='#fbbf24'; ctx.lineWidth=1.8;
+  ctx.beginPath(); ctx.moveTo(-45,0); ctx.lineTo(45,0); ctx.stroke();
+  ctx.restore();
   // labels
-  ctx.fillStyle='#fbbf24'; ctx.font='bold 13px IBM Plex Mono'; ctx.textAlign='center';
-  ctx.fillText(`ω₃=${w3} рад/с`, cx, cy+85);
-  ctx.fillStyle='#6ee7b7'; ctx.font='12px IBM Plex Mono';
-  ctx.fillText(`Ω прецессия = ${Omega.toFixed(3)} рад/с`, cx, cy+105);
-  ctx.fillStyle='#94a3b8'; ctx.font='11px IBM Plex Sans';
-  ctx.fillText(M < 0.5 ? '(M≈0 → ось тіпті)' : 'ω₃↑ → Ω↓ (тұрақтылық)', cx, cy+125);
-  // top formula
-  ctx.fillStyle='#e2e8f0'; ctx.font='13px IBM Plex Mono'; ctx.textAlign='left';
-  ctx.fillText(`Ω = M/K = M/(I₃·ω₃) = ${Omega.toFixed(4)} рад/с`, 25, 25);
-}
-['gsw','gsI','gsM'].forEach(id => document.getElementById(id)?.addEventListener('input', drawGS));
-
-// ─── ANIMATION LOOP ───
-function animate() {
-  drawRot();
-  drawRotor();
-  drawDisk();
-  drawGyro();
-  drawGS();
-  requestAnimationFrame(animate);
+  ctx.fillStyle='#fbbf24'; ctx.font='bold 12px IBM Plex Mono'; ctx.textAlign='center';
+  ctx.fillText(`ω₃=${w3} рад/с`, cx, cy+75);
+  ctx.fillStyle='#6ee7b7'; ctx.font='11px IBM Plex Mono';
+  ctx.fillText(`Ω = ${Omega.toFixed(3)} рад/с`, cx, cy+92);
+  // formula
+  ctx.fillStyle='#e2e8f0'; ctx.font='12px IBM Plex Mono'; ctx.textAlign='left';
+  ctx.fillText(`Ω = M/(I₃ω₃) = ${Omega.toFixed(4)}`, 20, 25);
 }
 
-// ─── INIT ───
+// ═══════════════════════════════════════════════════════════
+// REGISTRATION
+// ═══════════════════════════════════════════════════════════
+const drawers = {
+  '1':[drawCM, drawInert, drawSteiner],
+  '2':[drawRod],
+  '3':[drawDisk],
+  '5':[drawSt],
+  '8':[drawRot],
+  '9':[drawRotor],
+  '20':[drawGS],
+  '21':[drawGyro]
+};
+
+const animatedQs = ['3','8','9','20','21']; // these have continuous animations
+
+function redrawAll() {
+  const fns = drawers[String(currentQ)];
+  if (!fns) return;
+  fns.forEach(f => { try { f(); } catch(e) { console.warn(e); } });
+}
+
+// Hook input listeners
+document.querySelectorAll('.ctrl input[type=range]').forEach(inp => {
+  inp.addEventListener('input', redrawAll);
+});
+
+// Animation only for current section
+function animLoop() {
+  if (animatedQs.includes(String(currentQ))) {
+    redrawAll();
+  }
+  requestAnimationFrame(animLoop);
+}
+
 window.addEventListener('load', () => {
-  drawCM(); drawInert(); drawSteiner(); drawRod(); drawDisk();
-  drawSt(); drawRot(); drawRotor(); drawGyro(); drawGS();
-  animate();
+  redrawAll();
+  animLoop();
   if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
 });
+
 window.addEventListener('resize', () => {
-  drawCM(); drawInert(); drawSteiner(); drawRod(); drawSt();
+  setTimeout(redrawAll, 100);
 });
 </script>
 </body>

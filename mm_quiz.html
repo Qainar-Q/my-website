@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MM Тест — Емтихан дайындығы</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff;
+  --off: #f7f8fc;
+  --border: #e4e7ef;
+  --text: #1a1d2e;
+  --muted: #7b82a0;
+  --accent: #2563eb;
+  --accent-light: #eff4ff;
+  --green: #16a34a;
+  --green-bg: #f0fdf4;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --yellow: #d97706;
+  --yellow-bg: #fffbeb;
+  --radius: 12px;
+  --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* NAV */
+nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-brand {
+  font-weight: 600; font-size: 15px;
+  display: flex; align-items: center; gap: 8px; color: var(--text);
+  text-decoration: none;
+}
+.nav-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+.nav-right { font-size: 13px; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+/* MAIN */
+.main { max-width: 720px; margin: 0 auto; padding: 40px 20px 80px; }
+
+/* SCREEN SYSTEM */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ── HOME ── */
+.hero { margin-bottom: 36px; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--accent-light); color: var(--accent);
+  font-size: 12px; font-weight: 500; padding: 4px 12px;
+  border-radius: 20px; margin-bottom: 16px;
+}
+.hero h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 8px; line-height: 1.2; }
+.hero h1 span { color: var(--accent); }
+.hero p { color: var(--muted); font-size: 15px; }
+
+.filter-row {
+  display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.chip {
+  padding: 6px 16px;
+  border: 1.5px solid var(--border);
+  background: var(--white);
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  border-radius: 20px; cursor: pointer;
+  transition: all 0.15s;
+}
+.chip:hover, .chip.on {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+.topic-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.topic-row {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.topic-row:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+.tl-left { display: flex; align-items: center; gap: 14px; }
+.tl-num {
+  width: 36px; height: 36px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px; font-weight: 500;
+  flex-shrink: 0;
+}
+.tl-title { font-size: 14px; font-weight: 500; }
+.tl-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.tl-right { display: flex; align-items: center; gap: 12px; }
+.tl-count { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; white-space: nowrap; }
+.btn-go {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.btn-go:hover { opacity: 0.85; }
+
+.all-row {
+  background: var(--accent);
+  color: white;
+  border-radius: var(--radius);
+  padding: 18px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; transition: opacity 0.15s;
+}
+.all-row:hover { opacity: 0.9; }
+.all-row h3 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+.all-row p { font-size: 13px; opacity: 0.8; }
+.all-row .arr { font-size: 20px; }
+
+/* ── QUIZ ── */
+.quiz-header {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 16px;
+}
+.qh-info { flex: 1; }
+.qh-label { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+.qh-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.qh-scores { display: flex; gap: 16px; align-items: center; }
+.score-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.score-pill.ok { background: var(--green-bg); color: var(--green); }
+.score-pill.bad { background: var(--red-bg); color: var(--red); }
+.prog {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.prog-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.btn-exit {
+  background: none; border: 1.5px solid var(--border);
+  color: var(--muted); font-size: 13px; font-weight: 500;
+  padding: 7px 14px; border-radius: 8px; cursor: pointer;
+  transition: all 0.15s; white-space: nowrap;
+}
+.btn-exit:hover { border-color: var(--red); color: var(--red); }
+
+.q-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 28px 24px;
+  margin-bottom: 16px;
+  animation: slideIn 0.25s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.q-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 14px;
+}
+.q-num-badge {
+  background: var(--accent);
+  color: white;
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+}
+.q-text { font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--text); margin-bottom: 18px; }
+.q-hint {
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; color: var(--accent);
+}
+
+.options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.opt {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 16px;
+  display: flex; align-items: flex-start; gap: 12px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; color: var(--text);
+  transition: all 0.12s;
+  text-align: left;
+  width: 100%;
+}
+.opt:hover:not(:disabled) {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+.opt-lbl {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: var(--off);
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+  transition: all 0.12s;
+}
+.opt-txt { flex: 1; line-height: 1.5; }
+.opt.correct {
+  border-color: var(--green);
+  background: var(--green-bg);
+}
+.opt.correct .opt-lbl { background: var(--green); color: white; }
+.opt.wrong {
+  border-color: var(--red);
+  background: var(--red-bg);
+}
+.opt.wrong .opt-lbl { background: var(--red); color: white; }
+.opt:disabled { cursor: default; }
+
+.exp-box {
+  display: none;
+  background: var(--yellow-bg);
+  border: 1.5px solid #fde68a;
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  font-size: 14px; line-height: 1.65; color: #78350f;
+  margin-bottom: 16px;
+  animation: fadeIn 0.2s ease;
+}
+.exp-box.show { display: block; }
+.exp-box strong { color: var(--yellow); }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.btn-next {
+  display: none;
+  background: var(--accent); color: white;
+  border: none; padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: opacity 0.15s;
+}
+.btn-next.show { display: inline-flex; align-items: center; gap: 8px; }
+.btn-next:hover { opacity: 0.85; }
+
+/* ── RESULT ── */
+.result-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 48px 32px;
+  text-align: center;
+  animation: slideIn 0.3s ease;
+}
+.res-emoji { font-size: 48px; margin-bottom: 16px; }
+.res-pct {
+  font-size: 64px; font-weight: 700;
+  letter-spacing: -2px; line-height: 1;
+  margin-bottom: 6px;
+}
+.res-sub { font-size: 15px; color: var(--muted); margin-bottom: 32px; }
+.res-row {
+  display: flex; gap: 12px; justify-content: center;
+  margin-bottom: 32px; flex-wrap: wrap;
+}
+.res-chip {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px; font-weight: 600;
+}
+.res-chip.g { background: var(--green-bg); color: var(--green); }
+.res-chip.r { background: var(--red-bg); color: var(--red); }
+.res-chip.b { background: var(--accent-light); color: var(--accent); }
+.res-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-outline {
+  background: white;
+  border: 1.5px solid var(--border);
+  color: var(--text);
+  padding: 11px 22px;
+  border-radius: 10px;
+  font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.15s;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="nav-dot"></div>
+    ММ Тест
+  </a>
+  <div class="nav-right" id="navInfo">Емтихан дайындығы</div>
+</nav>
+
+<div class="main">
+
+  <!-- HOME -->
+  <div id="homeScreen" class="screen active">
+    <div class="hero">
+      <div class="hero-tag">🎓 ҚазҰУ · МехМат</div>
+      <h1>Материалдар<br><span>Механикасы</span></h1>
+      <p>Тақырып бойынша жаттықтыр немесе аралас тест тапсыр</p>
+    </div>
+
+    <div class="filter-row">
+      <button class="chip on" onclick="setFilter('all',this)">Барлығы</button>
+      <button class="chip" onclick="setFilter('theory',this)">Теория</button>
+    </div>
+
+    <div class="topic-list" id="topicList"></div>
+
+    <div class="all-row" onclick="begin(null)">
+      <div>
+        <h3>Барлық сұрақтар — Аралас тест</h3>
+        <p id="allSubtitle">20 тақырып · кездейсоқ ретпен</p>
+      </div>
+      <div class="arr">→</div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizScreen" class="screen">
+    <div class="quiz-header">
+      <div class="qh-info">
+        <div class="qh-label" id="qhLabel">Тест</div>
+        <div class="qh-title" id="qhTitle">—</div>
+        <div class="prog"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+      </div>
+      <div class="qh-scores">
+        <div class="score-pill ok">✓ <span id="sOk">0</span></div>
+        <div class="score-pill bad">✗ <span id="sBad">0</span></div>
+      </div>
+      <button class="btn-exit" onclick="goHome()">Шығу</button>
+    </div>
+
+    <div class="q-card" id="qCard">
+      <div class="q-badge">
+        <div class="q-num-badge" id="qNumBadge">1</div>
+        <span id="qTopic">—</span>
+      </div>
+      <div class="q-text" id="qText"></div>
+      <div class="q-hint" id="qHint" style="display:none"></div>
+    </div>
+
+    <div class="options" id="optsWrap"></div>
+    <div class="exp-box" id="expBox"></div>
+    <button class="btn-next" id="btnNext" onclick="next()">Келесі →</button>
+  </div>
+
+  <!-- RESULT -->
+  <div id="resultScreen" class="screen">
+    <div class="result-card">
+      <div class="res-emoji" id="resEmoji">🎯</div>
+      <div class="res-pct" id="resPct">—</div>
+      <div class="res-sub" id="resSub">—</div>
+      <div class="res-row" id="resRow"></div>
+      <div class="res-btns">
+        <button class="btn-outline" onclick="retryWrong()">✗ Қателерді қайта жаса</button>
+        <button class="btn-outline" onclick="goHome()">↺ Басты бет</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// QUESTION BANK — 20 topics, 3-4 Qs each
+// ans = 0-indexed correct option
+// ══════════════════════════════════════════
+const TOPICS = [
+  {
+    id: 1,
+    title: 'Ішкі күш факторлары',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Сырықтағы ішкі күш факторлары нешеу және олар қандай?',
+        opts: [
+          'Екеу: N және Q',
+          'Төртеу: N, Q, M, Мб',
+          'Алтау: N, Qx, Qy, Mx, My, Mz',
+          'Бесеу: N, Qx, Qy, M, Мб',
+        ],
+        ans: 2,
+        exp: '<strong>Алты ішкі күш факторы:</strong> N — бойлық күш (созылу/сығылу), Qx, Qy — көлденең күштер (ығысу), Mx, My — июші моменттер, Mz (Мб) — бұраушы момент.',
+        formula: 'N · Qx · Qy · Mx · My · Mz'
+      },
+      {
+        q: 'Қию әдісінде сырықты ойша кесіп, бір бөлікке мыналарды жазамыз:',
+        opts: [
+          '∑Fx = 0 ғана жеткілікті',
+          '∑F = 0 және ∑M = 0 — үш-үш теңдеу, барлығы 6',
+          'Тек ∑M = 0 теңдеулері',
+          'Тік кернеу теңдеуі σ = N/A',
+        ],
+        ans: 1,
+        exp: '<strong>Қию әдісінде</strong> бір бөлік үшін 6 тепе-теңдік теңдеуі жазылады: ∑Fx=0, ∑Fy=0, ∑Fz=0 (үш күш теңдеуі) және ∑Mx=0, ∑My=0, ∑Mz=0 (үш момент теңдеуі). Осылардан N, Qx, Qy, Mx, My, Mz табылады.',
+        formula: '∑Fx=0, ∑Fy=0, ∑Fz=0, ∑Mx=0, ∑My=0, ∑Mz=0'
+      },
+      {
+        q: 'N > 0 болса сырық қандай жүктеме астында, N < 0 болса ше?',
+        opts: [
+          'N > 0 — сығылу, N < 0 — созылу',
+          'N > 0 — июші момент, N < 0 — бұраушы момент',
+          'N > 0 — созылу, N < 0 — сығылу',
+          'Таңба мәнсіз, тек шама маңызды',
+        ],
+        ans: 2,
+        exp: '<strong>Таңба ережесі:</strong> N > 0 болса — сырық созылып тұр (созушы күш), N < 0 болса — сырық сығылып тұр (сығушы күш).',
+        formula: 'N > 0 → созылу | N < 0 → сығылу'
+      },
+      {
+        q: 'Ішкі күш факторлары мен сыртқы күштердің айырмашылығы?',
+        opts: [
+          'Ешқандай айырмашылық жоқ, олар бірдей',
+          'Ішкі күштер — сырық ішіндегі бөліктердің бір-біріне тигізетін әсері; сыртқы — қолданылатын жүктемелер мен реакциялар',
+          'Сыртқы күштер қимада пайда болады, ішкі — тіректерде',
+          'Ішкі күштер тек металл сырықтарда болады',
+        ],
+        ans: 1,
+        exp: '<strong>Ішкі күш факторлары</strong> — сыртқы жүктеменің әсерінен сырықтың кез-келген қимасында пайда болатын, бір бөліктің екінші бөлікке тигізетін күштер мен моменттер. Оларды сыртқы жүктемелерден ажырату маңызды.',
+        formula: 'Ішкі ↔ сырық ішіндегі әсерлесу'
+      },
+    ]
+  },
+  {
+    id: 2,
+    title: 'Кернеу мен деформация',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Созылу кезіндегі тік кернеу формуласы және оның бірлігі?',
+        opts: [
+          'σ = M/Wx, бірлігі Н·м',
+          'σ = N/A, бірлігі Па (немесе МПа)',
+          'σ = Q/A, бірлігі Н',
+          'σ = E·l, бірлігі м',
+        ],
+        ans: 1,
+        exp: '<strong>Тік кернеу:</strong> σ = N/A, мұнда N — бойлық күш (Н), A — қима ауданы (м²). Бірлігі: Па = Н/м². Тәжірибеде МПа (мегапаскаль) қолданылады: 1 МПа = 10⁶ Па.',
+        formula: 'σ = N/A  [Па = Н/м²]'
+      },
+      {
+        q: 'Гук заңы серпімді аймақта кернеу мен деформацияны қалай байланыстырады?',
+        opts: [
+          'σ = E/ε',
+          'σ = ε/E',
+          'σ = E·ε',
+          'E = σ + ε',
+        ],
+        ans: 2,
+        exp: '<strong>Гук заңы:</strong> σ = E·ε. Мұнда E — серпімділік модулі (материалдың қаттылығын сипаттайды). E неғұрлым үлкен болса, материал аз деформацияланады. Болатта E ≈ 2×10⁵ МПа.',
+        formula: 'σ = E · ε  →  E = σ/ε'
+      },
+      {
+        q: 'Абсолюттік ұзару Δl және салыстырмалы деформация ε — олардың байланысы?',
+        opts: [
+          'Δl = ε/l₀ және ε = l₀/Δl',
+          'ε = Δl · l₀',
+          'Δl = l₁ − l₀ және ε = Δl/l₀',
+          'ε = l₀ − l₁ және Δl = l₀·ε',
+        ],
+        ans: 2,
+        exp: '<strong>Деформация анықтамасы:</strong> Δl = l₁ − l₀ — абсолюттік өзгеріс (м), ε = Δl/l₀ — салыстырмалы (өлшемсіз). Созылуда ε > 0, сығылуда ε < 0.',
+        formula: 'ε = Δl/l₀ = (l₁ − l₀)/l₀'
+      },
+      {
+        q: 'Серпімді және пластикалық деформациялардың айырмашылығы?',
+        opts: [
+          'Серпімді — күш алынғанда қалдық қалады; пластикалық — бастапқы қалпына келеді',
+          'Серпімді — бастапқы қалпына келеді; пластикалық — күш алынғаннан кейін қалдық деформация қалады',
+          'Олардың айырмашылығы жоқ',
+          'Серпімді тек сығылуда, пластикалық тек созылуда болады',
+        ],
+        ans: 1,
+        exp: '<strong>Серпімді деформация:</strong> күш алынғаннан кейін дене бастапқы қалпына оралады. <strong>Пластикалық деформация:</strong> күш алынғаннан кейін қалдық деформация (тұрақты өзгеріс) қалады.',
+        formula: 'Серпімді: σ ≤ σ_уп → қайта оралады'
+      },
+    ]
+  },
+  {
+    id: 3,
+    title: 'Бойлық күш эпюрасы',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Бойлық күш эпюрасын тұрғызу үшін қандай тепе-теңдік теңдеуі қолданылады?',
+        opts: ['∑Fy = 0', '∑Mz = 0', '∑Fx = 0', '∑My = 0'],
+        ans: 2,
+        exp: '<strong>Бойлық күш N</strong> сырықтың x-өсі бойынша (ұзындық бойымен) пайда болады. Тепе-теңдік: ∑Fx = 0. Осы теңдеуден кесіндінің сол немесе оң жағындағы күштерді қарастырып N табылады.',
+        formula: '∑Fx = 0  →  N табылады'
+      },
+      {
+        q: 'Шоғырланған бойлық күш түскен нүктеде бойлық күш эпюрасы қалай өзгереді?',
+        opts: [
+          'Бірқалыпты өзгереді (сызықты)',
+          'Эпюра секіреді (кенеттен өзгереді) — секіріс шамасы күшке тең',
+          'Нөлге тең болады',
+          'Параболамен өзгереді',
+        ],
+        ans: 1,
+        exp: '<strong>Шоғырланған бойлық күш</strong> N эпюрасында секіріс тудырады. Секіріс шамасы сол нүктедегі сыртқы күшке тең. Аралықта сыртқы күш болмаса N тұрақты (эпюра — тік сызық).',
+        formula: 'Шоғырланған P → N эпюрасында секіріс ΔN = P'
+      },
+      {
+        q: 'Бойлық күш эпюрасы неге қажет?',
+        opts: [
+          'Тек реакцияларды табу үшін',
+          'Қауіпті қиманы анықтауға (N_max нүктесі) және σ = N/A ≤ [σ] беріктік шартын тексеруге',
+          'Тек бұраушы момент эпюрасын тексеруге',
+          'Тіректер санын анықтауға',
+        ],
+        ans: 1,
+        exp: '<strong>Эпюраның мақсаты:</strong> сырық бойымен N-тің қалай өзгеретінін кескіндейді. N_max болатын жер — қауіпті қима. Осы жерде σ = N_max/A ≤ [σ] беріктік шарты тексеріледі.',
+        formula: 'N_max → σ_max = N_max/A → σ_max ≤ [σ]'
+      },
+    ]
+  },
+  {
+    id: 4,
+    title: 'Бұраушы момент эпюрасы',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Бұраушы момент Мб сырықты қайда бұрайды?',
+        opts: [
+          'Сырықтың y-өсінің айналасында иеді',
+          'Сырықтың өз бойлық (ұзындық) өсінің айналасында бұрайды',
+          'Сырықты ығыстырады',
+          'Сырықты сығады',
+        ],
+        ans: 1,
+        exp: '<strong>Бұраушы момент Мб</strong> — сырықты өзінің бойлық өсінің айналасында бұруға тырысатын ішкі момент. Тепе-теңдік теңдеуі: ∑Mz = 0.',
+        formula: 'Мб: сырықты өз өсімен бұрайды ∑Mz = 0'
+      },
+      {
+        q: 'Мб эпюрасы аралықта сыртқы бұраушы момент болмаса қандай болады?',
+        opts: [
+          'Параболамен өзгереді',
+          'Нөлге тең болады',
+          'Тұрақты (горизонталь сызық)',
+          'Сызықты өседі',
+        ],
+        ans: 2,
+        exp: '<strong>Тұрақты Мб:</strong> аралықта сыртқы бұраушы момент болмаса, Мб сол аралықта тұрақты болады. Сыртқы момент түскен нүктеде эпюра секіреді — секіріс шамасы = сыртқы момент.',
+        formula: 'Аралықта сыртқы Мб = 0  →  Мб = const'
+      },
+      {
+        q: 'Мысалда: бірінші аралықта Мб = 6 кН·м, одан кейін 2 кН·м момент қарама-қарсы бағытта берілген. Екінші аралықтағы Мб = ?',
+        opts: ['8 кН·м', '6 кН·м', '4 кН·м', '2 кН·м'],
+        ans: 2,
+        exp: '<strong>Секіріс шамасы:</strong> ∑Mz = 0 теңдеуі бойынша, 6 − 2 = 4 кН·м. Қарама-қарсы бағыттағы момент азайтады: Мб₂ = 6 − 2 = 4 кН·м.',
+        formula: 'Мб₂ = Мб₁ − M_сыртқы = 6 − 2 = 4 кН·м'
+      },
+    ]
+  },
+  {
+    id: 5,
+    title: 'Q және M эпюралары',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Q және M эпюраларын тұрғызу үшін қандай тепе-теңдік теңдеулері қолданылады?',
+        opts: [
+          '∑Fx = 0 және ∑Fz = 0',
+          '∑Fy = 0 (Q үшін) және ∑M = 0 (M үшін)',
+          'Тек ∑M = 0',
+          '∑F = 0 ғана жеткілікті',
+        ],
+        ans: 1,
+        exp: '<strong>Q және M:</strong> Q — ∑Fy = 0 теңдеуінен табылады. M — ∑M = 0 теңдеуінен табылады. Алдымен тірек реакциялары RA, RB анықталады, содан кейін аралықтарда Q, M есептеледі.',
+        formula: '∑Fy = 0 → Q;   ∑M = 0 → M'
+      },
+      {
+        q: 'Q = 0 болатын нүктеде июші момент M не болады? (маңызды ереже!)',
+        opts: [
+          'M = 0 болады',
+          'M секіреді',
+          'M экстремумға жетеді (максимум немесе минимум)',
+          'M тұрақты болады',
+        ],
+        ans: 2,
+        exp: '<strong>Маңызды байланыс:</strong> dM/dx = Q. Демек Q = 0 болған нүктеде M экстремум болады (максимум немесе минимум). Бұл қауіпті қиманы табудың негізгі тәсілі.',
+        formula: 'dM/dx = Q  →  Q = 0 жерде M = экстремум'
+      },
+      {
+        q: 'Аралықта таралған жүктеме q болса, Q эпюрасы қандай болады?',
+        opts: [
+          'Q тұрақты болады',
+          'Q параболамен өзгереді',
+          'Q сызықты өзгереді (биіктігі q-ға тең сызықпен)',
+          'Q нөлге тең болады',
+        ],
+        ans: 2,
+        exp: '<strong>Таралған жүктеме q:</strong> Q эпюрасы сызықты өзгереді (еңісі = q). M эпюрасы параболамен өзгереді. Таралған жүктемесіз аралықта Q тұрақты, M сызықты.',
+        formula: 'dQ/dx = −q  →  Q сызықты; d²M/dx² = −q → M парабола'
+      },
+      {
+        q: 'Екі тіректі арқалықтың ортасына P = 20 кН күш түссе, RA = ?',
+        opts: [
+          'RA = 20 кН',
+          'RA = 10 кН',
+          'RA = 5 кН',
+          'RA = 40 кН',
+        ],
+        ans: 1,
+        exp: '<strong>Симметриялы жүктеме:</strong> RA = RB = P/2 = 20/2 = 10 кН. Тепе-теңдік теңдеулерінен: ∑MA = 0 → RB·l = P·l/2 → RB = P/2 = 10 кН.',
+        formula: 'RA = RB = P/2 = 10 кН'
+      },
+    ]
+  },
+  {
+    id: 6,
+    title: 'Механикалық сипаттамалар',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Созылу сынағында серпімділік модулі E қалай анықталады?',
+        opts: [
+          'E = F · l₀',
+          'E = σ/ε (кернеуді деформацияға бөлу)',
+          'E = A · Δl',
+          'E = F · A / Δl',
+        ],
+        ans: 1,
+        exp: '<strong>Серпімділік модулі:</strong> E = σ/ε = (N/A)/(Δl/l₀). Диаграммада пропорционалдық аймақта σ−ε графигінің еңісі E береді. Болатта E ≈ 2·10⁵ МПа.',
+        formula: 'E = σ/ε  [МПа немесе ГПа]'
+      },
+      {
+        q: 'Созылу диаграммасындағы "аққыштық алаңы" деп не атайды?',
+        opts: [
+          'Кернеу пропорционалды өскен аймақ',
+          'Кернеу өсімсіз деформация ұлғаятын аймақ — "аққыштық" (σт)',
+          'Материал жарылар алдындағы аймақ',
+          'Серпімділік шегінен кейінгі бірден үзілу',
+        ],
+        ans: 1,
+        exp: '<strong>Аққыштық алаңы:</strong> σт — аққыштық шегінде кернеу іс жүзінде өспей, деформация бірден ұлғаяды. Бұл металл конструкцияларды есептеуде өте маңызды шама.',
+        formula: 'σт — аққыштық шегі (тек деформация өседі)'
+      },
+      {
+        q: 'Беріктік шегі σу (немесе σв) дегеніміз не?',
+        opts: [
+          'Серпімді деформация аяқталатын нүкте',
+          'Аққыштық алаңының басы',
+          'Созылу диаграммасындағы максималды кернеу — материалдың шыдай алатын ең жоғары кернеуі',
+          'Үзілу кезіндегі кернеу',
+        ],
+        ans: 2,
+        exp: '<strong>Беріктік шегі σу (σв):</strong> σ−ε диаграммасының максимумы. Осыдан жоғары кернеуде материал жарылуға кіреді. Рұқсат етілген кернеу: [σ] = σу / n (n — қауіпсіздік коэффициенті).',
+        formula: '[σ] = σу / n  немесе  [σ] = σт / n'
+      },
+    ]
+  },
+  {
+    id: 7,
+    title: 'Созылу-сығылуда беріктік',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Созылу-сығылудағы беріктік шарты дұрыс жазылған нұсқа?',
+        opts: [
+          'σ = N · A ≤ [σ]',
+          'σ = A / N ≥ [σ]',
+          'σ_max = N_max / A ≤ [σ]',
+          'σ = N / A ≥ [σ]',
+        ],
+        ans: 2,
+        exp: '<strong>Беріктік шарты:</strong> σ_max = N_max/A ≤ [σ]. Мағынасы: сырықтағы нақты кернеу рұқсат етілген кернеуден аспауы керек. N_max — бойлық күш эпюрасынан алынады.',
+        formula: 'σ_max = N_max / A  ≤  [σ]'
+      },
+      {
+        q: 'Беріктік шартынан туындайтын "қима ауданын табу" есебінің формуласы?',
+        opts: [
+          'A ≤ N_max / [σ]',
+          'A ≥ N_max / [σ]',
+          'A = N_max · [σ]',
+          'A = [σ] / N_max',
+        ],
+        ans: 1,
+        exp: '<strong>Қажетті қима ауданы:</strong> σ ≤ [σ] шартынан → N/A ≤ [σ] → A ≥ N_max/[σ]. Демек ең кіші рұқсат ауданы A_min = N_max/[σ].',
+        formula: 'A_min = N_max / [σ]'
+      },
+      {
+        q: 'Рұқсат етілген күшті табу есебінде [F] = ?',
+        opts: [
+          '[F] = A / [σ]',
+          '[F] = A + [σ]',
+          '[F] = [σ] · A',
+          '[F] = [σ] / A',
+        ],
+        ans: 2,
+        exp: '<strong>Рұқсат күші:</strong> σ = F/A ≤ [σ] шартынан → F ≤ [σ]·A → [F] = [σ]·A. Бұл — сырықты жеңіп өтпейтін максималды күш.',
+        formula: '[F] = [σ] · A'
+      },
+      {
+        q: 'Беріктікке тексеру есебі дегені не?',
+        opts: [
+          'Қима өлшемін табу',
+          'σ = N_max/A есептеп, оны [σ]-ға салыстыру: σ ≤ [σ] ма?',
+          'Рұқсат күшін анықтау',
+          'Деформацияны анықтау',
+        ],
+        ans: 1,
+        exp: '<strong>Беріктікті тексеру:</strong> белгілі N_max, A және [σ] бойынша σ = N_max/A есептеп, σ ≤ [σ] шартын тексереміз. Шарт орындалса — берік, орындалмаса — конструкция жарамсыз.',
+        formula: 'σ = N_max/A  →  σ ≤ [σ]? (ИӘ → берік)'
+      },
+    ]
+  },
+  {
+    id: 8,
+    title: 'Бұралу кернеулері',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Дөңгелек қима сырықтағы бұралу кернеуінің жалпы формуласы?',
+        opts: [
+          'τ = Мб / A',
+          'τ = Мб · ρ / Jp',
+          'τ = M · y / I',
+          'τ = N / Wp',
+        ],
+        ans: 1,
+        exp: '<strong>Бұралу кернеуі:</strong> τ = Мб·ρ/Jp, мұнда ρ — центрден қашықтық (м), Jp — полярлық инерция моменті (м⁴). Максимал кернеу сыртқы жиекте: τ_max = Мб·r/Jp = Мб/Wp.',
+        formula: 'τ = Мб·ρ/Jp,   τ_max = Мб/Wp'
+      },
+      {
+        q: 'Полярлық беріктік моменті Wp дөңгелек қима үшін?',
+        opts: [
+          'Wp = πd⁴/32',
+          'Wp = πd³/16',
+          'Wp = πd²/4',
+          'Wp = πd³/32',
+        ],
+        ans: 1,
+        exp: '<strong>Дөңгелек қима үшін:</strong> Jp = πd⁴/32, Wp = Jp/r = πd⁴/32 ÷ (d/2) = πd³/16. Ішкі тесіктері бар (іші қуыс) дөңгелек үшін Jp = π(D⁴−d⁴)/32.',
+        formula: 'Wp = πd³/16'
+      },
+      {
+        q: 'Бұралу кезінде кернеу сырық қимасы бойынша қалай таралады?',
+        opts: [
+          'Біркелкі таралады',
+          'Ортада максималды, шетте нөл',
+          'Центрде нөл, сыртқы жиекте максималды — сызықты таралу',
+          'Тек жиекте таралады',
+        ],
+        ans: 2,
+        exp: '<strong>Бұралудағы кернеу таралуы:</strong> τ = Мб·ρ/Jp — центрде ρ = 0, сондықтан τ = 0. Сыртқы жиекте ρ = r (максималды). Таралу сызықты (центрден жиекке дейін өседі).',
+        formula: 'ρ = 0 → τ = 0;   ρ = r → τ = τ_max'
+      },
+    ]
+  },
+  {
+    id: 9,
+    title: 'Бұралуда беріктік пен қатаңдық',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Бұралуда беріктік шарты?',
+        opts: [
+          'φ ≤ [φ]',
+          'σ = N/A ≤ [σ]',
+          'τ_max = Мб_max/Wp ≤ [τ]',
+          'Мб/Jp ≤ [τ]',
+        ],
+        ans: 2,
+        exp: '<strong>Беріктік шарты:</strong> τ_max = Мб_max/Wp ≤ [τ]. [τ] — рұқсат етілген жанама кернеу. Металдар үшін [τ] ≈ 0.5·[σ] ~ 0.6·[σ].',
+        formula: 'τ_max = Мб_max / Wp  ≤  [τ]'
+      },
+      {
+        q: 'Бұралуда қатаңдық шарты (бір метрдегі бұралу бұрышы)?',
+        opts: [
+          'φ = Мб·l/(G·Jp) ≤ [φ]',
+          'φ_уд = Мб/(G·Jp) ≤ [φ_уд]',
+          'φ_уд = G·Jp/Мб ≤ [φ_уд]',
+          'τ = Мб/Wp ≤ [τ]',
+        ],
+        ans: 1,
+        exp: '<strong>Қатаңдық шарты:</strong> φ_уд = Мб/(G·Jp) ≤ [φ_уд]. G — ығысу модулі (болатта G ≈ 8·10⁴ МПа), [φ_уд] ≈ 0.5°~1°/м. Жалпы бұралу бұрышы: φ = Мб·l/(G·Jp).',
+        formula: 'φ_уд = Мб/(G·Jp)  ≤  [φ_уд]  [рад/м]'
+      },
+      {
+        q: 'Бұралу кезінде бір нүктенің бұралу бұрышын табу формуласы?',
+        opts: [
+          'φ_B = Мб/(G·A)',
+          'φ_B = ∑ Мб_i · l_i / (G·Jp)',
+          'φ_B = Мб·Jp/G',
+          'φ_B = M/(E·I)',
+        ],
+        ans: 1,
+        exp: '<strong>Бұралу бұрышы:</strong> φ_B = ∑(Мб_i·l_i)/(G·Jp). В нүктесіне дейінгі барлық аралықтардың үлестері алгебралық қосылады. G — ығысу модулі, Jp — полярлық инерция моменті.',
+        formula: 'φ_B = ∑ Мб_i · l_i / (G · Jp)'
+      },
+    ]
+  },
+  {
+    id: 10,
+    title: 'Иілу кернеулері',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Таза иілудегі тік кернеу формуласы?',
+        opts: [
+          'σ = Q·S/(I·b)',
+          'σ = N/A',
+          'σ = M·y/I',
+          'σ = Мб·ρ/Jp',
+        ],
+        ans: 2,
+        exp: '<strong>Иілудегі тік кернеу:</strong> σ = M·y/I. M — июші момент, y — бейтарап осьтен қашықтық, I — инерция моменті. Бейтарап осьте y = 0 → σ = 0. Максимум: σ_max = M·y_max/I = M/Wx.',
+        formula: 'σ = M·y/I,   σ_max = M/Wx'
+      },
+      {
+        q: 'Иілу беріктік моменті Wx тіктөртбұрышты қима үшін?',
+        opts: [
+          'Wx = bh²/12',
+          'Wx = b²h/6',
+          'Wx = bh²/6',
+          'Wx = bh³/12',
+        ],
+        ans: 2,
+        exp: '<strong>Тіктөртбұрышты қима:</strong> Ix = bh³/12 (инерция моменті), Wx = Ix/y_max = (bh³/12)/(h/2) = bh²/6. Мұнда b — ен, h — биіктік.',
+        formula: 'Wx = bh²/6  (тіктөртбұрышты)'
+      },
+      {
+        q: 'Бейтарап ось — иілу кезінде бұл қандай сызық?',
+        opts: [
+          'Кернеу максималды болатын сызық',
+          'Кернеу нөлге тең болатын, деформация болмайтын сызық',
+          'Жүктеме түскен нүктелерді байланыстыратын сызық',
+          'Тіректер арасындағы сызық',
+        ],
+        ans: 1,
+        exp: '<strong>Бейтарап ось:</strong> иілу кезінде σ = M·y/I = 0 болатын қима. y = 0 дегені — кернеу нөл. Созылатын зонада σ > 0, сығылатын зонада σ < 0. Симметриялы қимада бейтарап ось — симметрия өсі.',
+        formula: 'y = 0  →  σ = 0  (бейтарап ось)'
+      },
+    ]
+  },
+  {
+    id: 11,
+    title: 'Иілуде беріктік',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Иілуде беріктік шарты?',
+        opts: [
+          'τ_max = Q·S/(I·b) ≤ [τ]',
+          'φ ≤ [φ]',
+          'σ_max = M_max/Wx ≤ [σ]',
+          'N_max/A ≤ [σ]',
+        ],
+        ans: 2,
+        exp: '<strong>Иілуде беріктік:</strong> σ_max = M_max/Wx ≤ [σ]. Мұнда Wx = I/y_max — беріктік моменті. Қауіпті қима — M_max болатын жер (Q = 0 нүктесі).',
+        formula: 'σ_max = M_max / Wx  ≤  [σ]'
+      },
+      {
+        q: 'Дөңгелек қималы арқалықтың диаметрін беріктік шартынан табу?',
+        opts: [
+          'd = M_max / [σ]',
+          'd ≥ ∛(32·M_max / (π·[σ]))',
+          'd = √(4·M_max / (π·[σ]))',
+          'd² = M_max / [σ]',
+        ],
+        ans: 1,
+        exp: '<strong>Дөңгелек қима:</strong> Wx = πd³/32. Беріктік шартынан: M/Wx ≤ [σ] → Wx ≥ M/[σ] → πd³/32 ≥ M/[σ] → d ≥ ∛(32·M/(π·[σ])).',
+        formula: 'd ≥ ∛(32·M_max / (π·[σ]))'
+      },
+      {
+        q: 'Иілуде жанама кернеу τ қалай есептеледі?',
+        opts: [
+          'τ = M·y/I',
+          'τ = Мб/Wp',
+          'τ = Q·S / (I·b)',
+          'τ = N/A',
+        ],
+        ans: 2,
+        exp: '<strong>Жанама (қиратушы) кернеу:</strong> τ = Q·S/(I·b). Q — көлденең күш, S — қарастырылатын нүктенің үстіндегі статикалық момент, I — инерция моменті, b — кесіндінің ені. Бейтарап осьте τ = τ_max.',
+        formula: 'τ = Q·S / (I·b)'
+      },
+    ]
+  },
+  {
+    id: 12,
+    title: 'Мор интегралы',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Мор интегралы не есептейді?',
+        opts: [
+          'Кернеуді',
+          'Белгілі нүктенің орын ауысуын (прогиб немесе бұрыштық орын ауысу)',
+          'Реакцияларды',
+          'Серпімділік модулін',
+        ],
+        ans: 1,
+        exp: '<strong>Мор интегралы:</strong> δ = ∫M̄·Mp/(EI) dx — белгілі бір нүктенің орын ауысуын табады. Конструкцияны жобалауда максималды прогиб [f] ≤ l/250...l/500 шартымен тексеріледі.',
+        formula: 'δ = ∫M̄·Mp / (EI) dx'
+      },
+      {
+        q: 'Верещагин ережесі (Мор интегралын жеңілдету) — ол не?',
+        opts: [
+          'δ = ω̄·yс, мұнда ω̄ — M̄ эпюрасының ауданы, yс — Mp эпюрасының центроидтік ординаты',
+          'δ = ω·ȳс, мұнда ω — Mp эпюрасының ауданы, ȳс — M̄ эпюрасының центроидтік ординаты',
+          'δ = M̄·Mp·l/(EI)',
+          'Верещагин ережесі тек үшбұрышты эпюраларға жарамды',
+        ],
+        ans: 1,
+        exp: '<strong>Верещагин ережесі:</strong> δ = ω·ȳс/(EI). ω — Mp (жүктемеден) эпюрасының ауданы, ȳс — сол аудан центрінен M̄ (бірлік күштен) эпюрасының ординатасы. Бұл формула интегралдауды алмастырады.',
+        formula: 'δ = ω · ȳс / (EI)'
+      },
+      {
+        q: 'Мор интегралында М̄ (M-тиле) дегеніміз не?',
+        opts: [
+          'Нақты жүктемеден болатын момент',
+          'Бірлік (F = 1) күштен болатын момент — орын ауысу бағыты мен нүктесіне сәйкес қойылады',
+          'Рұқсат etілген момент',
+          'Максималды момент',
+        ],
+        ans: 1,
+        exp: '<strong>М̄ (бірлік момент):</strong> орын ауысуын табқымыз келген нүктеге бағытымен сәйкес F = 1 бірлік күш (немесе момент) қою арқылы алынатын момент эпюрасы. Mp — нақты жүктемеден.',
+        formula: 'M̄ → F=1 қою;   Mp → нақты жүктеме'
+      },
+    ]
+  },
+  {
+    id: 13,
+    title: 'Статикалық анықталмаған жүйе',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Статикалық анықталмау дәрежесі n = r − s. n = 2 дегені не?',
+        opts: [
+          '2 тепе-теңдік теңдеуі жазылады',
+          '2 сыртқы күш бар',
+          '2 артық байланыс бар — 2 белгісіз реакция тепе-теңдік теңдеулерінен табылмайды',
+          'Тек 2 тіректі жүйе',
+        ],
+        ans: 2,
+        exp: '<strong>n = r − s:</strong> r — белгісіз реакциялар саны, s — тәуелсіз тепе-теңдік теңдеулер саны. n = 2 → 2 артық байланыс бар. Оларды шешу үшін деформация үйлесімдігі шарттары қосымша керек.',
+        formula: 'n = r − s  (n > 0 → статикалық анықталмаған)'
+      },
+      {
+        q: '"Артық байланыс" дегеніміз не?',
+        opts: [
+          'Жүйені бұзатын байланыс',
+          'Жүйенің тепе-теңдігі үшін міндетті емес, бірақ бар қосымша байланыс — ол қосымша белгісіз тудырады',
+          'Тіректерді байланыстыратын сызық',
+          'Сыртқы жүктеме',
+        ],
+        ans: 1,
+        exp: '<strong>Артық байланыс:</strong> алып тастасаң да жүйе тепе-теңдікте тұра береді, бірақ ол кезде деформация шарттары бұзылады. Мысалы: үш тіректі арқалықта үшінші тірек артық байланыс.',
+        formula: 'n = 1 → 1 артық байланыс → 1 қосымша теңдеу керек'
+      },
+      {
+        q: 'Статикалық анықталмаған жүйелерді шешуде тепе-теңдік теңдеулерінен басқа не керек?',
+        opts: [
+          'Материал тығыздығы',
+          'Деформация үйлесімдігі (орын ауысулар) шарттары',
+          'Температуралық коэффициент',
+          'Ешнәрсе керек емес',
+        ],
+        ans: 1,
+        exp: '<strong>Деформация шарттары:</strong> статикалық анықталмаған жүйеде белгісіздер > теңдеулер. Артық байланыстарды шешу үшін орын ауысулар үйлесімдігі (geometry condition) қосымша теңдеу береді.',
+        formula: 'Тепе-теңдік (r) + Деформация шарттары (n) = r теңдеу'
+      },
+    ]
+  },
+  {
+    id: 14,
+    title: 'Күш әдісі',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Күш әдісінде "негізгі жүйе" дегеніміз не?',
+        opts: [
+          'Барлық тіректері сақталған бастапқы жүйе',
+          'Артық байланыстар алынып, олардың орнына Xi белгісіз күштер қойылған статикалық анықталған жүйе',
+          'Тек сыртқы жүктемелер түсірілген жүйе',
+          'Деформациясы нөлге тең жүйе',
+        ],
+        ans: 1,
+        exp: '<strong>Негізгі жүйе:</strong> n артық байланыс алынады, орнына X1, X2,..., Xn белгісіз күштер қойылады. Алынған жүйе статикалық анықталған болуы, геометриялық өзгермейтін болуы керек.',
+        formula: 'Бастапқы жүйе → n артық байланыс алу → Негізгі жүйе + Xi'
+      },
+      {
+        q: 'Күш әдісінің негізгі мақсаты?',
+        opts: [
+          'Жүктемені анықтау',
+          'Статикалық анықталмаған жүйелердегі Xi артық күштерді табу, сонан барлық күш факторларын есептеу',
+          'Тек деформацияны анықтау',
+          'Материалды таңдау',
+        ],
+        ans: 1,
+        exp: '<strong>Күш әдісінің мақсаты:</strong> Xi табу арқылы статикалық анықталмаған жүйені статикалық анықталған негізгі жүйеге аудару, содан барлық ішкі күш факторларын (N, Q, M) есептеу.',
+        formula: 'Xi табылды → N, Q, M, деформация есептеледі'
+      },
+    ]
+  },
+  {
+    id: 15,
+    title: 'Канондық теңдеулер',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Бір артық белгісізі бар жүйенің канондық теңдеуі?',
+        opts: [
+          'δ11 + Δ1P = X1',
+          'X1 = δ11 / Δ1P',
+          'δ11·X1 + Δ1P = 0',
+          'δ11·X1 = 1',
+        ],
+        ans: 2,
+        exp: '<strong>Канондық теңдеу:</strong> δ11·X1 + Δ1P = 0. δ11 — бірлік күш X1=1 қойғандағы орын ауысу коэффициенті (Верещагиннен). Δ1P — нақты жүктемеден орын ауысу. Осыдан X1 = −Δ1P/δ11.',
+        formula: 'δ11·X1 + Δ1P = 0  →  X1 = −Δ1P/δ11'
+      },
+      {
+        q: 'δ11 мен Δ1P Мор интегралымен қалай табылады?',
+        opts: [
+          'δ11 = ∫M̄₁·Mp/(EI)dx; Δ1P = ∫M̄₁²/(EI)dx',
+          'δ11 = ∫M̄₁²/(EI)dx; Δ1P = ∫M̄₁·Mp/(EI)dx',
+          'δ11 = Mp·EI; Δ1P = M̄₁·EI',
+          'δ11 = EI/l; Δ1P = Mp/l',
+        ],
+        ans: 1,
+        exp: '<strong>Коэффициенттер:</strong> δ11 = ∫M̄₁²/(EI)dx — бірлік·бірлік (Верещагин: ω̄₁·ȳс₁/(EI)), Δ1P = ∫M̄₁·Mp/(EI)dx — бірлік·жүктеме (Верещагин: ωP·ȳс1/(EI)).',
+        formula: 'δ11 = ∫M̄₁²/(EI)dx;  Δ1P = ∫M̄₁·Mp/(EI)dx'
+      },
+      {
+        q: 'n = 2 болса (екі артық белгісіз), канондық теңдеулер жүйесі?',
+        opts: [
+          'δ11X1 + Δ1P = 0 (тек бір теңдеу)',
+          'δ11X1 + δ12X2 + Δ1P = 0 және δ21X1 + δ22X2 + Δ2P = 0',
+          'X1 + X2 = Δ1P + Δ2P',
+          'δ11X1 = δ22X2',
+        ],
+        ans: 1,
+        exp: '<strong>Жалпы жүйе:</strong> n белгісіз үшін n теңдеу жазылады. n = 2: δ11X1+δ12X2+Δ1P = 0 және δ21X1+δ22X2+Δ2P = 0. δij = δji (реципроктылық теоремасы бойынша).',
+        formula: '∑ δij·Xj + ΔiP = 0,  i = 1..n'
+      },
+    ]
+  },
+  {
+    id: 16,
+    title: 'Орнықтылық. Дағдарыс күш',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Эйлер формуласы бойынша сығылған сырықтың дағдарыс күші?',
+        opts: [
+          'Pcr = π·E·Imin·μl',
+          'Pcr = π²·E·Imin / (μl)²',
+          'Pcr = E·Imin / l²',
+          'Pcr = μ·l / (E·Imin)',
+        ],
+        ans: 1,
+        exp: '<strong>Эйлер формуласы:</strong> Pcr = π²·E·Imin/(μl)². μl — сырықтың тиімді (есептеу) ұзындығы, μ — бекіту коэффициенті. P < Pcr → орнықты; P ≥ Pcr → майысу қаупі.',
+        formula: 'Pcr = π² · E · Imin / (μl)²'
+      },
+      {
+        q: '"Дағдарыс күш" анықтамасы?',
+        opts: [
+          'Сырықты жеңіп өтетін максималды созушы күш',
+          'Сығылған сырықтың түзу тепе-теңдік қалпы орнықсыз болатын ең кіші сығушы күш',
+          'Рұқсат etілген максималды сыртқы күш',
+          'Реакция күші',
+        ],
+        ans: 1,
+        exp: '<strong>Дағдарыс күш Pcr:</strong> осы күшке жеткенде сырық түзу қалпын жоғалтып, майысуға кіреді. P < Pcr болса — орнықты; P ≥ Pcr болса — орнықсыз. Орнықтылыққа есептеу: P ≤ Pcr/n (n — коэффициент).',
+        formula: 'P < Pcr → орнықты | P ≥ Pcr → майысу!'
+      },
+      {
+        q: 'Сырықтың иілгіштігі λ формуласы?',
+        opts: [
+          'λ = μl · A / Imin',
+          'λ = μl / imin (мұнда imin = √(Imin/A))',
+          'λ = l / E',
+          'λ = Pcr · l²',
+        ],
+        ans: 1,
+        exp: '<strong>Иілгіштік:</strong> λ = μl/imin, мұнда imin = √(Imin/A) — инерция радиусы. λ үлкен болса — сырық иілгіш, Pcr аз. Эйлер формуласы тек λ ≥ λlim жағдайда дұрыс.',
+        formula: 'λ = μl / imin,  imin = √(Imin/A)'
+      },
+    ]
+  },
+  {
+    id: 17,
+    title: 'Бекіту коэффициенті μ',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Екі ұшы шарнирлі бекітілген сырықтың μ = ?',
+        opts: ['μ = 0.5', 'μ = 0.7', 'μ = 1', 'μ = 2'],
+        ans: 2,
+        exp: '<strong>Екі шарнир:</strong> μ = 1. Тиімді ұзындық = l. Бұл — ең жиі қолданылатын бекіту жағдайы, Эйлер формуласының негізгі жағдайы.',
+        formula: 'Екі шарнир → μ = 1 → μl = l'
+      },
+      {
+        q: 'Бір ұшы қатаң бекітілген, екіншісі БОС (консоль) μ = ?',
+        opts: ['μ = 0.5', 'μ = 0.7', 'μ = 1', 'μ = 2'],
+        ans: 3,
+        exp: '<strong>Консоль (бір қатаң, бірі бос):</strong> μ = 2. Ең кіші дағдарыс күш. Тиімді ұзындық = 2l. Pcr = π²EI/(2l)² = π²EI/(4l²) — базалық жағдайдан 4 есе аз.',
+        formula: 'Консоль → μ = 2 → Pcr ең кіші'
+      },
+      {
+        q: 'Pcr ең ҮЛКЕН болатын бекіту (ең берік)?',
+        opts: [
+          'Екі шарнир (μ = 1)',
+          'Консоль (μ = 2)',
+          'Екі ұшы қатаң (μ = 0.5)',
+          'Бір қатаң + бір шарнир (μ ≈ 0.7)',
+        ],
+        ans: 2,
+        exp: '<strong>Pcr ∼ 1/(μl)².</strong> μ кіші болса → Pcr үлкен. Екі ұшы қатаң μ = 0.5 — ең кіші μ → Pcr ең үлкен. Мысалы: базалыққа (μ=1) қарағанда 4 есе берік.',
+        formula: 'μ = 0.5 → Pcr = π²EI/(0.5l)² = 4·π²EI/l²'
+      },
+      {
+        q: 'Бекіту коэффициенттерінің толық кестесі?',
+        opts: [
+          'Екі шарнир = 1; Консоль = 2; Екі қатаң = 0.5; Бір қатаң + шарнир ≈ 0.7',
+          'Екі шарнир = 2; Консоль = 1; Екі қатаң = 0.7; Бір қатаң + шарнир = 0.5',
+          'Барлығы μ = 1',
+          'Екі шарнир = 0.5; Консоль = 1; Екі қатаң = 2',
+        ],
+        ans: 0,
+        exp: '<strong>Бекіту коэффициенттері:</strong> Екі шарнир — μ = 1 (базалық). Консоль (қатаң+бос) — μ = 2. Екі ұшы қатаң — μ = 0.5. Бір қатаң + бір шарнир — μ ≈ 0.7.',
+        formula: 'μ: 0.5 → 0.7 → 1 → 2  (беріктен нашарға)'
+      },
+    ]
+  },
+  {
+    id: 18,
+    title: 'Эйлер шегі. Ясинский',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'Эйлер формуласы қолданылмайтын жағдай?',
+        opts: [
+          'λ ≥ λlim (ұзын, иілгіш сырықтар)',
+          'λ < λlim (қысқа немесе орташа сырықтар)',
+          'μ = 1 болғанда ғана',
+          'I_min үлкен болғанда',
+        ],
+        ans: 1,
+        exp: '<strong>Эйлер формуласы шегі:</strong> тек λ ≥ λlim болғанда дұрыс (материал серпімді аймақта). Болат үшін λlim ≈ 100. λ < λlim болса — Эйлер берік мән бермейді, Ясинский қолданылады.',
+        formula: 'λ ≥ λlim → Эйлер;  λ < λlim → Ясинский'
+      },
+      {
+        q: 'Ясинский формуласы?',
+        opts: [
+          'σcr = π²E/λ²',
+          'σcr = a − b·λ (a, b — материалға байланысты тәжірибелік коэффициенттер)',
+          'σcr = E/λ',
+          'σcr = a + b·λ',
+        ],
+        ans: 1,
+        exp: '<strong>Ясинский формуласы:</strong> σcr = a − b·λ. a, b — материалдың тәжірибелік коэффициенттері (кестеден алынады). Дағдарыс күш: Pcr = σcr·A.',
+        formula: 'σcr = a − b·λ,  Pcr = σcr · A'
+      },
+      {
+        q: 'Pcr табылғаннан кейін орнықтылыққа тексеру шарты?',
+        opts: [
+          'P = Pcr',
+          'P ≥ Pcr/n',
+          'P ≤ Pcr/n (n — орнықтылық қауіпсіздік коэффициенті)',
+          'P = [σ]·A',
+        ],
+        ans: 2,
+        exp: '<strong>Орнықтылыққа тексеру:</strong> P ≤ Pcr/n, мұнда n — орнықтылық қауіпсіздік коэффициенті (n = 1.5...3). Немесе: σ_нақты ≤ σcr/n.',
+        formula: 'P ≤ Pcr/n  немесе  σ ≤ σcr/n'
+      },
+    ]
+  },
+  {
+    id: 19,
+    title: 'Дағдарыс күш есебі',
+    cat: 'theory',
+    qs: [
+      {
+        q: 'E = 2×10⁵ МПа, l = 2π м, Imin = 114 см⁴, μ = 1. Pcr = ?',
+        opts: ['≈ 570 кН', '≈ 28.5 кН', '≈ 142 кН', '≈ 285 кН'],
+        ans: 1,
+        exp: '<strong>Есеп:</strong> Pcr = π²EI/(μl)² = π²·(2×10⁵·10⁶)·(114×10⁻⁸) / (1·2π)² = π²·2×10¹¹·114×10⁻⁸ / (4π²) = 2×10¹¹·114×10⁻⁸/4 = 57 000/4 = 28 500 Н ≈ 28.5 кН.',
+        formula: 'Pcr = π²·2×10¹¹·114×10⁻⁸/(2π)² = 28 500 Н'
+      },
+      {
+        q: 'E = 2×10⁵ МПа, l = 1 м, Imin = 260 см⁴, μ = 1. Pcr = ?',
+        opts: ['≈ 51 кН', '≈ 512 кН', '≈ 5 120 кН', '≈ 128 кН'],
+        ans: 1,
+        exp: '<strong>Есеп:</strong> 260 см⁴ = 260×10⁻⁸ м⁴. Pcr = π²·2×10¹¹·260×10⁻⁸/1² = 9.87·2×10¹¹·260×10⁻⁸ = 9.87·52 000 ≈ 513 000 Н ≈ 512 кН.',
+        formula: 'Pcr = π²·E·I/l² ≈ 512 кН'
+      },
+      {
+        q: 'Pcr есебінде (μl)² дегені — бекіту коэффициентінің маңызы неде?',
+        opts: [
+          'μ тек таңбаны анықтайды',
+          'μ үлкен болса (нашар бекіту) → (μl)² үлкен → Pcr кіші — сырық оңай майысады',
+          'μ Pcr-ге әсер etпейді',
+          'μ тек Ясинский формуласында қолданылады',
+        ],
+        ans: 1,
+        exp: '<strong>μ-тің физикалық мағынасы:</strong> μl — тиімді (эквивалентті) ұзындық. Бекіту нашар болса μ үлкен → тиімді ұзындық үлкен → Pcr = π²EI/(μl)² кіші → сырық оңай майысады.',
+        formula: 'μ↑ → μl↑ → Pcr = π²EI/(μl)² ↓'
+      },
+    ]
+  },
+  {
+    id: 20,
+    title: 'Гипотезалар мен принциптер',
+    cat: 'theory',
+    qs: [
+      {
+        q: '"Материалдың қасиеттері барлық бағытта бірдей" — қандай гипотеза?',
+        opts: [
+          'Үздіксіздік гипотезасы',
+          'Біртектілік гипотезасы',
+          'Изотроптылық гипотезасы',
+          'Жазық қималар гипотезасы',
+        ],
+        ans: 2,
+        exp: '<strong>Изотроптылық:</strong> материал қасиеттері барлық бағытта бірдей. Біртектілік — барлық нүктеде бірдей. Ажырату маңызды: кейбір материалдар анизотропты (ағаш, композит).',
+        formula: 'Изотроп: E_x = E_y = E_z'
+      },
+      {
+        q: '"Деформацияға дейін жазық болған қима кейін де жазық" — қандай гипотеза?',
+        opts: [
+          'Кіші деформациялар гипотезасы',
+          'Үздіксіздік гипотезасы',
+          'Жазық қималар гипотезасы (Бернулли гипотезасы)',
+          'Изотроптылық гипотезасы',
+        ],
+        ans: 2,
+        exp: '<strong>Жазық қималар (Бернулли) гипотезасы:</strong> иілу және бұралу есептерінде негіз. Осы гипотезасыз σ = M·y/I және τ = Мб·ρ/Jp формулаларын шығару мүмкін болмас еді.',
+        formula: 'Жазық қима → σ = M·y/I, τ = Мб·ρ/Jp'
+      },
+      {
+        q: '"Бірнеше күштің жалпы әсері — жеке әсерлердің қосындысы" — бұл не?',
+        opts: [
+          'Гук заңы',
+          'Паскаль принципі',
+          'Күштердің тәуелсіз әсер ету принципі (суперпозиция)',
+          'Сен-Венан принципі',
+        ],
+        ans: 2,
+        exp: '<strong>Суперпозиция принципі:</strong> серпімді аймақта бірнеше күштің жалпы кернеуі = жеке күштердің кернеулерінің қосындысы. Бұл принцип Гук заңы орындалатын кезде ғана жарамды.',
+        formula: 'σ_жалпы = σ₁ + σ₂ + ... (суперпозиция)'
+      },
+      {
+        q: '"Жүктеменің берілу тәсілі жүктеме аймағынан алыста аз маңызды" — не?',
+        opts: [
+          'Гук заңы',
+          'Бернулли гипотезасы',
+          'Сен-Венан принципі',
+          'Изотроптылық гипотезасы',
+        ],
+        ans: 2,
+        exp: '<strong>Сен-Венан принципі:</strong> жүктеменің нақты берілу тәсілі тек жүктеме аймағының маңайында маңызды. Алыста (>3–5 есе өлшемнен) жүктемені балама жүктемемен алмастыруға болады.',
+        formula: 'Сен-Венан: жүктемені алыста ауыстыруға болады'
+      },
+    ]
+  },
+];
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let pool = [], cur = 0, sc = {ok:0, bad:0}, answered = false, wrongs = [];
+let filterCat = 'all', quizTitle = '';
+
+// ══════════════════════════════════════════
+// HOME
+// ══════════════════════════════════════════
+function setFilter(cat, btn) {
+  filterCat = cat;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+  btn.classList.add('on');
+  renderList();
+}
+
+function renderList() {
+  const src = filterCat === 'all' ? TOPICS : TOPICS.filter(t => t.cat === filterCat);
+  document.getElementById('allSubtitle').textContent = src.length + ' тақырып · кездейсоқ ретпен';
+  document.getElementById('topicList').innerHTML = src.map(t => `
+    <div class="topic-row">
+      <div class="tl-left">
+        <div class="tl-num">${t.id}</div>
+        <div>
+          <div class="tl-title">${t.title}</div>
+          <div class="tl-sub">${t.qs.length} сұрақ</div>
+        </div>
+      </div>
+      <div class="tl-right">
+        <div class="tl-count">${t.qs.length} Q</div>
+        <button class="btn-go" onclick="begin('${t.title.replace(/'/g,"\\'")}')">▶ Бастау</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function begin(topicTitle) {
+  let src;
+  if (!topicTitle) {
+    const pool_src = filterCat === 'all' ? TOPICS : TOPICS.filter(t => t.cat === filterCat);
+    src = pool_src.flatMap(t => t.qs.map(q => ({...q, topic: t.title, topicId: t.id})));
+    quizTitle = 'Аралас тест';
+  } else {
+    const topic = TOPICS.find(t => t.title === topicTitle);
+    src = topic.qs.map(q => ({...q, topic: topic.title, topicId: topic.id}));
+    quizTitle = topicTitle;
+  }
+  pool = shuffle([...src]);
+  sc = {ok:0, bad:0}; cur = 0; wrongs = [];
+  show('quizScreen');
+  loadQ();
+}
+
+function goHome() { show('homeScreen'); }
+
+// ══════════════════════════════════════════
+// QUIZ
+// ══════════════════════════════════════════
+function loadQ() {
+  answered = false;
+  const q = pool[cur], total = pool.length;
+
+  document.getElementById('navInfo').textContent = `${cur+1} / ${total}`;
+  document.getElementById('qhLabel').textContent = quizTitle;
+  document.getElementById('qhTitle').textContent = q.topic || quizTitle;
+  document.getElementById('progFill').style.width = `${(cur/total)*100}%`;
+  document.getElementById('sOk').textContent = sc.ok;
+  document.getElementById('sBad').textContent = sc.bad;
+  document.getElementById('qNumBadge').textContent = cur + 1;
+  document.getElementById('qTopic').textContent = q.topic;
+  document.getElementById('qText').textContent = q.q;
+
+  const hi = document.getElementById('qHint');
+  if (q.formula) { hi.textContent = q.formula; hi.style.display='block'; }
+  else hi.style.display='none';
+
+  const keys = ['A','B','C','D','E'];
+  document.getElementById('optsWrap').innerHTML = q.opts.map((o,i) => `
+    <button class="opt" id="o${i}" onclick="pick(${i})">
+      <span class="opt-lbl">${keys[i]}</span>
+      <span class="opt-txt">${o}</span>
+    </button>
+  `).join('');
+
+  document.getElementById('expBox').className = 'exp-box';
+  document.getElementById('btnNext').className = 'btn-next';
+
+  const card = document.getElementById('qCard');
+  card.style.animation = 'none'; card.offsetHeight; card.style.animation = '';
+}
+
+function pick(i) {
+  if (answered) return;
+  answered = true;
+  const q = pool[cur];
+  document.querySelectorAll('.opt').forEach(b => b.disabled = true);
+  document.getElementById('o'+q.ans).classList.add('correct');
+  if (i !== q.ans) {
+    document.getElementById('o'+i).classList.add('wrong');
+    sc.bad++; wrongs.push(q);
+  } else {
+    sc.ok++;
+  }
+  document.getElementById('sOk').textContent = sc.ok;
+  document.getElementById('sBad').textContent = sc.bad;
+  const eb = document.getElementById('expBox');
+  eb.innerHTML = q.exp; eb.className = 'exp-box show';
+  document.getElementById('btnNext').className = 'btn-next show';
+}
+
+function next() {
+  cur++;
+  if (cur >= pool.length) showResult();
+  else loadQ();
+}
+
+// ══════════════════════════════════════════
+// RESULT
+// ══════════════════════════════════════════
+function showResult() {
+  show('resultScreen');
+  const pct = Math.round((sc.ok / pool.length) * 100);
+  const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '💪' : pct >= 40 ? '📚' : '😅';
+  const sub = pct >= 80 ? 'Тамаша! Емтиханға дайынсыз.' : pct >= 60 ? 'Жақсы! Аз жетіспейді.' : 'Жалғастырыңыз, болады!';
+  document.getElementById('resEmoji').textContent = emoji;
+  const el = document.getElementById('resPct');
+  el.textContent = pct + '%';
+  el.style.color = pct >= 70 ? '#16a34a' : pct >= 50 ? '#d97706' : '#dc2626';
+  document.getElementById('resSub').textContent = sub;
+  document.getElementById('resRow').innerHTML = `
+    <div class="res-chip g">✓ Дұрыс: ${sc.ok}</div>
+    <div class="res-chip r">✗ Қате: ${sc.bad}</div>
+    <div class="res-chip b">Барлығы: ${pool.length}</div>
+  `;
+  document.getElementById('navInfo').textContent = 'Нәтиже';
+}
+
+function retryWrong() {
+  if (!wrongs.length) { goHome(); return; }
+  pool = shuffle([...wrongs]);
+  sc = {ok:0,bad:0}; cur = 0; wrongs = [];
+  quizTitle = 'Қателерді қайталау';
+  show('quizScreen'); loadQ();
+}
+
+// ══════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function shuffle(a) {
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+// INIT
+renderList();
+</script>
+</body>
+</html>
